@@ -66,7 +66,7 @@ const Checkout = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [cart, setCart] = useState<Array<{product: any, quantity: number}>>([]);
   const [paymentMethod, setPaymentMethod] = useState("Card");
-  const [cardNumber, setCardNumber] = useState("1234 5678 9012 3456");
+  const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
   const [mpesaPhone, setMpesaPhone] = useState("");
@@ -172,11 +172,45 @@ const Checkout = () => {
           <div className="space-y-4 mb-6">
             {cart.map((item, index) => (
               <div key={index} className="flex justify-between items-center">
-                <div>
+                <div className="flex-1">
                   <p className="font-medium">{item.product.name}</p>
-                  <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-6 w-6 p-0 rounded-full"
+                      onClick={() => {
+                        if (item.quantity > 1) {
+                          setCart(cart.map(cartItem => 
+                            cartItem.product.id === item.product.id 
+                              ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                              : cartItem
+                          ));
+                        } else {
+                          setCart(cart.filter(cartItem => cartItem.product.id !== item.product.id));
+                        }
+                      }}
+                    >
+                      -
+                    </Button>
+                    <span className="text-sm text-muted-foreground min-w-[2rem] text-center">{item.quantity}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-6 w-6 p-0 rounded-full"
+                      onClick={() => {
+                        setCart(cart.map(cartItem => 
+                          cartItem.product.id === item.product.id 
+                            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                            : cartItem
+                        ));
+                      }}
+                    >
+                      +
+                    </Button>
+                  </div>
                 </div>
-                <p className="font-semibold">${(item.product.price * item.quantity).toFixed(2)}</p>
+                <p className="font-semibold text-success">${(item.product.price * item.quantity).toFixed(2)}</p>
               </div>
             ))}
           </div>
@@ -188,11 +222,11 @@ const Checkout = () => {
         <div className="space-y-2 mb-6">
           <div className="flex justify-between">
             <span>Subtotal</span>
-            <span>${cartTotal.toFixed(2)}</span>
+            <span className="text-success">${cartTotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>Tax (8%)</span>
-            <span>${tax.toFixed(2)}</span>
+            <span className="text-success">${tax.toFixed(2)}</span>
           </div>
           <Separator />
           <div className="flex justify-between font-bold text-lg">
