@@ -135,7 +135,7 @@ All colors MUST be HSL.
   .pos-topbar {
     @apply fixed top-0 right-0 h-16 flex items-center justify-between px-6 transition-all duration-300 z-30;
     left: 16rem; /* 256px */
-    background: hsl(var(--glass-bg));
+    background: hsl(220, 13%, 18%);
     backdrop-filter: var(--blur-strength);
     -webkit-backdrop-filter: var(--blur-strength);
     border-bottom: 1px solid hsl(var(--glass-border));
