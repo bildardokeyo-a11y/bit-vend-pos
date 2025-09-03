@@ -84,7 +84,7 @@ const Topbar: React.FC<TopbarProps> = ({
         {/* Quick Action Buttons */}
         <Button
           onClick={() => navigate('/products/add')}
-          className="btn-pos-accent gap-2"
+          className="bg-orange-500 hover:bg-orange-600 text-white gap-2"
           size="sm"
         >
           <Plus size={16} />
