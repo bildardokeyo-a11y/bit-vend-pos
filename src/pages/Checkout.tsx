@@ -155,23 +155,25 @@ const Checkout = () => {
             <Card key={product.id} className="product-card group cursor-pointer">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-20 h-20 bg-muted rounded-lg flex items-center justify-center border">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="w-20 h-20 bg-muted rounded-lg flex items-center justify-center border flex-shrink-0">
                       <div className="w-16 h-16 bg-muted-foreground/20 rounded"></div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-card-foreground">{product.name}</h3>
-                      <p className="text-sm text-muted-foreground">{product.description}</p>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-card-foreground truncate">{product.name}</h3>
+                      <p className="text-sm text-muted-foreground truncate">{product.description}</p>
                       <p className="text-lg font-bold text-green-500 mt-1">${product.price}</p>
                     </div>
                   </div>
-                  <Button
-                    onClick={() => addToCart(product)}
-                    size="sm"
-                    className="bg-orange-400 hover:bg-orange-500 text-white rounded-lg h-8 w-8 p-0 group-hover:scale-110 transition-all duration-200 shadow-md border-0"
-                  >
-                    <Plus className="h-4 w-4 font-bold" />
-                  </Button>
+                  <div className="flex-shrink-0 ml-4">
+                    <Button
+                      onClick={() => addToCart(product)}
+                      size="sm"
+                      className="bg-orange-400 hover:bg-orange-500 text-white rounded-lg h-8 w-8 p-0 group-hover:scale-110 transition-all duration-200 shadow-md border-0"
+                    >
+                      <Plus className="h-4 w-4 font-bold" />
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
