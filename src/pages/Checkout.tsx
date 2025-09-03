@@ -80,18 +80,19 @@ const Checkout = () => {
     : products.filter(p => p.category === selectedCategory);
 
   const addToCart = (product: any) => {
-    const existingItem = cart.find(item => item.product.id === product.id);
-    if (existingItem) {
-      setCart(cart.map(item => 
-        item.product.id === product.id 
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ));
-    } else {
-      setCart([...cart, { product, quantity: 1 }]);
-    }
+    setCart((prev) => {
+      const exists = prev.find((item) => item.product.id === product.id)
+      const next = exists
+        ? prev.map((item) =>
+            item.product.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        : [...prev, { product, quantity: 1 }]
+      localStorage.setItem('pos-cart', JSON.stringify(next))
+      return next
+    })
   };
-
   const cartTotal = cart.reduce((total, item) => total + (item.product.price * item.quantity), 0);
   const tax = cartTotal * 0.08;
   const finalTotal = cartTotal + tax;
@@ -171,7 +172,7 @@ const Checkout = () => {
                   <Button
                     onClick={() => addToCart(product)}
                     size="sm"
-                    className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-full h-8 w-8 p-0 group-hover:scale-110 transition-transform shadow-lg"
+                    className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-full h-8 w-8 p-0 group-hover:scale-110 transition-transform shadow-lg ring-2 ring-warning/50 ring-offset-2 ring-offset-background"
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
@@ -207,15 +208,21 @@ const Checkout = () => {
                       size="sm"
                       className="h-6 w-6 p-0 rounded-full hover:scale-110 transition-transform duration-200"
                       onClick={() => {
-                        if (item.quantity > 1) {
-                          setCart(cart.map(cartItem => 
-                            cartItem.product.id === item.product.id 
-                              ? { ...cartItem, quantity: cartItem.quantity - 1 }
-                              : cartItem
-                          ));
-                        } else {
-                          setCart(cart.filter(cartItem => cartItem.product.id !== item.product.id));
-                        }
+                        setCart((prev) => {
+                          const target = prev.find((ci) => ci.product.id === item.product.id)
+                          let next = prev
+                          if (target && target.quantity > 1) {
+                            next = prev.map((cartItem) =>
+                              cartItem.product.id === item.product.id
+                                ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                                : cartItem
+                            )
+                          } else {
+                            next = prev.filter((cartItem) => cartItem.product.id !== item.product.id)
+                          }
+                          localStorage.setItem('pos-cart', JSON.stringify(next))
+                          return next
+                        })
                       }}
                     >
                       <Minus className="h-3 w-3" />
@@ -226,11 +233,15 @@ const Checkout = () => {
                       size="sm"
                       className="h-6 w-6 p-0 rounded-full hover:scale-110 transition-transform duration-200"
                       onClick={() => {
-                        setCart(cart.map(cartItem => 
-                          cartItem.product.id === item.product.id 
-                            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-                            : cartItem
-                        ));
+                        setCart((prev) => {
+                          const next = prev.map((cartItem) =>
+                            cartItem.product.id === item.product.id
+                              ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                              : cartItem
+                          )
+                          localStorage.setItem('pos-cart', JSON.stringify(next))
+                          return next
+                        })
                       }}
                     >
                       <Plus className="h-3 w-3" />
