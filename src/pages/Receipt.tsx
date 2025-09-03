@@ -30,8 +30,8 @@ const Receipt = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <div className="flex items-center gap-4 mb-6">
+    <div className="max-w-2xl mx-auto p-6 print:p-0 print:max-w-full">
+      <div className="flex items-center gap-4 mb-6 print:hidden">
         <Button
           variant="outline"
           onClick={() => navigate('/checkout')}
