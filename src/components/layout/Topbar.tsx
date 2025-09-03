@@ -12,8 +12,6 @@ import {
   User,
   Menu
 } from 'lucide-react';
-import moonIcon from '@/assets/moon-icon.png';
-import sunIcon from '@/assets/sun-icon.png';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -22,6 +20,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import moonIcon from '@/assets/moon-icon.png';
+import sunIcon from '@/assets/sun-icon.png';
 
 interface TopbarProps {
   collapsed: boolean;
@@ -46,7 +46,7 @@ const Topbar: React.FC<TopbarProps> = ({
   };
 
   return (
-    <header className={cn("pos-topbar glass-effect", collapsed && "collapsed")}>
+    <header className={cn('pos-topbar glass-effect', collapsed && 'collapsed')}>
       <div className="flex items-center gap-4">
         <Button
           variant="ghost"
@@ -57,12 +57,13 @@ const Topbar: React.FC<TopbarProps> = ({
           <Menu size={20} />
         </Button>
 
-        <div className="text-lg font-semibold text-foreground">
-          Welcome
-        </div>
+        <div className="text-lg font-semibold text-foreground">Welcome</div>
 
         <form onSubmit={handleSearch} className="relative max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={16} />
+          <Search
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+            size={16}
+          />
           <Input
             type="text"
             placeholder="Search products, sales, customers..."
@@ -117,7 +118,12 @@ const Topbar: React.FC<TopbarProps> = ({
               5
             </span>
           </Button>
-          <Button variant="ghost" size="sm" className="p-2" onClick={() => navigate('/settings')}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="p-2"
+            onClick={() => navigate('/settings')}
+          >
             <Settings size={18} />
           </Button>
         </div>
@@ -128,11 +134,13 @@ const Topbar: React.FC<TopbarProps> = ({
           size="sm"
           onClick={onToggleDarkMode}
           className={`p-2 ${darkMode ? 'theme-toggle-sun' : 'theme-toggle-moon'}`}
+          aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
         >
-          <img 
-            src={darkMode ? sunIcon : moonIcon} 
-            alt={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          <img
+            src={darkMode ? sunIcon : moonIcon}
+            alt={darkMode ? 'Light mode' : 'Dark mode'}
             className="w-[18px] h-[18px]"
+            loading="lazy"
           />
         </Button>
 
