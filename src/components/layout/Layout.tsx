@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+type LayoutProps = { children?: React.ReactNode };
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
-    // Check for saved theme preference
     const saved = localStorage.getItem('pos-theme');
     return saved === 'dark';
   });
 
   useEffect(() => {
-    // Apply theme to document
     const root = document.documentElement;
     if (darkMode) {
       root.classList.add('dark');
@@ -27,31 +24,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
   }, [darkMode]);
 
-  const toggleSidebar = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
-  };
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  const toggleSidebar = () => setSidebarCollapsed((p) => !p);
+  const toggleDarkMode = () => setDarkMode((p) => !p);
 
   return (
     <div className="h-screen overflow-hidden bg-background text-foreground">
-      {/* Sidebar */}
       <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
-
-      {/* Topbar */}
       <Topbar
         collapsed={sidebarCollapsed}
         onToggleSidebar={toggleSidebar}
         darkMode={darkMode}
         onToggleDarkMode={toggleDarkMode}
       />
-
-      {/* Main Content */}
-      <main className={cn("pos-content", sidebarCollapsed && "collapsed")}>
+      <main className={cn('pos-content', sidebarCollapsed && 'collapsed')}>
         <div className="animate-fadeInUp">
-          {children}
+          <Outlet />
         </div>
       </main>
     </div>
