@@ -112,10 +112,6 @@ const Checkout = () => {
       return; // Prevent navigation if payment details are incomplete
     }
     
-    // Clear cart after successful payment
-    setCart([]);
-    localStorage.removeItem('pos-cart');
-    
     navigate('/receipt', {
       state: {
         cart,
@@ -172,9 +168,9 @@ const Checkout = () => {
                   <Button
                     onClick={() => addToCart(product)}
                     size="sm"
-                    className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-full h-8 w-8 p-0 group-hover:scale-110 transition-transform shadow-lg ring-2 ring-warning/50 ring-offset-2 ring-offset-background"
+                    className="bg-orange-400 hover:bg-orange-500 text-white rounded-lg h-8 w-8 p-0 group-hover:scale-110 transition-all duration-200 shadow-md border-0"
                   >
-                    <Plus className="h-4 w-4" />
+                    <Plus className="h-4 w-4 font-bold" />
                   </Button>
                 </div>
               </CardContent>
