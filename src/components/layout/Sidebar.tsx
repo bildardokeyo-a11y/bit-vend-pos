@@ -186,7 +186,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
             <ul className="space-y-1 px-3">
               {section.items.map((item) => {
                 const Icon = item.icon;
-                const isActive = location.pathname === item.href;
+                const isActive = false; // Remove default highlighting
                 
                 return (
                   <li key={item.href}>
