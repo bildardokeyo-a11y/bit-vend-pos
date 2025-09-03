@@ -127,8 +127,7 @@ const Checkout = () => {
     <div className="flex h-full bg-background">
       {/* Products Section */}
       <div className="flex-1 p-6 bg-gradient-to-br from-white to-gray-50 dark:bg-gradient-to-br dark:from-black dark:to-black">
-        <div className="flex items-center gap-2 mb-6">
-          <Crown className="h-6 w-6 text-warning" />
+        <div className="mb-6">
           <h1 className="text-2xl font-bold text-black dark:text-white">Products</h1>
         </div>
 
@@ -162,14 +161,14 @@ const Checkout = () => {
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-card-foreground truncate">{product.name}</h3>
                       <p className="text-sm text-muted-foreground truncate">{product.description}</p>
-                      <p className="text-lg font-bold text-green-500 mt-1">${product.price}</p>
+                      <p className="text-lg font-bold text-green-500 mt-1">${product.price.toFixed(2)}</p>
                     </div>
                   </div>
                   <div className="flex-shrink-0 ml-4">
                     <Button
                       onClick={() => addToCart(product)}
                       size="sm"
-                      className="bg-orange-400 hover:bg-orange-500 text-white rounded-lg h-8 w-8 p-0 group-hover:scale-110 transition-all duration-200 shadow-md border-0"
+                      className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-lg h-8 w-8 p-0 group-hover:scale-110 transition-all duration-200 shadow-md border-0"
                     >
                       <Plus className="h-4 w-4 font-bold" />
                     </Button>
