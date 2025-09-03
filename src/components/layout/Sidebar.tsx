@@ -157,16 +157,16 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-white/10 dark:border-black/10 bg-black">
         {!collapsed && (
-          <Link to="/" className="flex items-center space-x-2 text-white dark:text-black hover:text-white/90 dark:hover:text-black/90 transition-colors">
+          <Link to="/" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
             <span className="text-xl font-bold">
               <span style={{ color: '#FFD000' }}>Bit Vend</span>
-              <span className="text-white dark:text-black"> POS</span>
+              <span className="text-white"> POS</span>
             </span>
           </Link>
         )}
         <button
           onClick={onToggle}
-          className="p-2 rounded-lg hover:bg-white/10 dark:hover:bg-black/10 transition-colors text-white dark:text-black"
+          className="p-2 rounded-lg hover:bg-white/10 dark:hover:bg-black/10 transition-colors text-white"
         >
           {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
@@ -178,7 +178,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
           <div key={section.title} className="mb-6">
             {!collapsed && (
               <div className="px-6 mb-3">
-                <h3 className="text-xs font-semibold text-gray-400 dark:text-black uppercase tracking-wider">
+                <h3 className="text-xs font-semibold text-gray-400 dark:text-white uppercase tracking-wider">
                   {section.title}
                 </h3>
               </div>
@@ -195,8 +195,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                       className={cn(
                         "flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group",
                         isActive
-                          ? "bg-white/10 dark:bg-black/10 text-white dark:text-black shadow-lg"
-                          : "text-gray-300 dark:text-gray-600 hover:bg-white/5 dark:hover:bg-black/5 hover:text-white dark:hover:text-black"
+                          ? "bg-white/10 dark:bg-black/10 text-white shadow-lg"
+                          : "text-gray-300 dark:text-white hover:bg-white/5 dark:hover:bg-black/5 hover:text-white"
                       )}
                     >
                       <Icon size={18} className="flex-shrink-0" />
@@ -204,7 +204,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                         <span className="ml-3 animate-slideInLeft">{item.label}</span>
                       )}
                       {collapsed && (
-                        <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-100 text-white dark:text-black text-xs rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
+                        <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
                           {item.label}
                         </div>
                       )}
