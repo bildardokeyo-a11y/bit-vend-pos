@@ -187,7 +187,8 @@ All colors MUST be HSL.
   }
   
   .dark .product-card {
-    @apply bg-black border-gray-800;
+    background: #1c1c1c;
+    @apply border-gray-800;
     box-shadow: 0 4px 20px hsl(0 0% 0% / 0.3);
   }
   
