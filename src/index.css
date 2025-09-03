@@ -99,7 +99,132 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html, body {
+    @apply h-full overflow-hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer components {
+  /* Glass Effects */
+  .glass-effect {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: var(--blur-strength);
+    -webkit-backdrop-filter: var(--blur-strength);
+    border: 1px solid hsl(var(--glass-border));
+  }
+  
+  /* POS Sidebar Styling */
+  .pos-sidebar {
+    @apply fixed left-0 top-0 h-full w-64 transition-all duration-300;
+    background: linear-gradient(135deg, hsl(var(--sidebar-dark)) 0%, hsl(var(--sidebar-accent)) 100%);
+    border-right: 1px solid hsl(var(--border));
+    z-index: 1040;
+  }
+  
+  .pos-sidebar.collapsed {
+    @apply w-20;
+  }
+  
+  /* POS Topbar */
+  .pos-topbar {
+    @apply fixed top-0 right-0 h-16 flex items-center justify-between px-6 transition-all duration-300 z-30;
+    left: 16rem; /* 256px */
+    background: hsl(var(--glass-bg));
+    backdrop-filter: var(--blur-strength);
+    -webkit-backdrop-filter: var(--blur-strength);
+    border-bottom: 1px solid hsl(var(--glass-border));
+  }
+  
+  .pos-topbar.collapsed {
+    left: 5rem; /* 80px */
+  }
+  
+  /* POS Content Area */
+  .pos-content {
+    @apply transition-all duration-300 overflow-y-auto;
+    margin-left: 16rem; /* 256px */
+    margin-top: 4rem; /* 64px */
+    height: calc(100vh - 4rem);
+    padding: 1.5rem;
+  }
+  
+  .pos-content.collapsed {
+    margin-left: 5rem; /* 80px */
+  }
+  
+  /* POS Button Variants */
+  .btn-pos {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200;
+    @apply hover:scale-95 hover:shadow-lg active:scale-90;
+  }
+  
+  .btn-pos-primary {
+    @apply btn-pos bg-primary text-primary-foreground;
+    @apply hover:bg-primary/90;
+  }
+  
+  .btn-pos-accent {
+    @apply btn-pos text-white;
+    background: hsl(var(--accent-orange));
+  }
+  
+  .btn-pos-accent:hover {
+    background: hsl(var(--accent-orange) / 0.9);
+    box-shadow: 0 0 20px hsl(var(--accent-orange) / 0.4);
+  }
+  
+  /* Product Cards */
+  .product-card {
+    @apply bg-card border rounded-xl p-4 transition-all duration-300;
+    @apply hover:shadow-xl hover:-translate-y-1;
+    box-shadow: 0 4px 20px hsl(var(--primary-blue) / 0.1);
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 8px 30px hsl(var(--primary-blue) / 0.2);
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .animate-fadeInUp {
+    animation: fadeInUp 0.5s ease-out;
+  }
+  
+  .animate-slideInLeft {
+    animation: slideInLeft 0.3s ease-out;
+  }
+  
+  /* Focus States */
+  .pos-input:focus {
+    @apply outline-none ring-2;
+    ring-color: hsl(var(--primary-blue));
+    box-shadow: 0 0 0 2px hsl(var(--primary-blue) / 0.2);
   }
 }
