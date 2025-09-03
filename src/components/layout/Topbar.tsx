@@ -93,7 +93,7 @@ const Topbar: React.FC<TopbarProps> = ({
 
         <Button
           onClick={() => navigate('/checkout')}
-          className="btn-pos-primary gap-2"
+          className="bg-blue-500 hover:bg-blue-600 text-white gap-2"
           size="sm"
         >
           <Calculator size={16} />
