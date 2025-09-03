@@ -187,16 +187,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
               <ul className="space-y-1 px-3">
                 {section.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = false; // Remove default highlighting
+                  const isActive = location.pathname === item.href;
                   
                   return (
                     <li key={item.href}>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          // TODO: Navigate to page when implemented
-                          console.log(`Navigating to ${item.label} - Page not yet built`);
-                        }}
+                      <Link
+                        to={item.href}
                         className={cn(
                           "w-full flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group relative overflow-hidden",
                           "before:absolute before:inset-0 before:bg-gradient-to-r before:from-gray-800/80 before:to-gray-700/60 before:opacity-0 before:transition-opacity before:duration-300",
@@ -217,7 +213,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                         )}
                         {/* Hover glow effect */}
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 -translate-x-full transition-transform duration-700 group-hover:translate-x-full" />
-                      </button>
+                      </Link>
                     </li>
                   );
                 })}
