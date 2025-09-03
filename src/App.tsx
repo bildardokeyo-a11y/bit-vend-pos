@@ -9,6 +9,7 @@ import SuperAdmin from "./pages/SuperAdmin";
 import Application from "./pages/Application";
 import LayoutPage from "./pages/LayoutPage";
 import Checkout from "./pages/Checkout";
+import Receipt from "./pages/Receipt";
 import Sales from "./pages/Sales";
 import SalesReturn from "./pages/SalesReturn";
 import Quotation from "./pages/Quotation";
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="application" element={<Application />} />
             <Route path="layout" element={<LayoutPage />} />
             <Route path="checkout" element={<Checkout />} />
+            <Route path="receipt" element={<Receipt />} />
             <Route path="sales" element={<Sales />} />
             <Route path="sales-return" element={<SalesReturn />} />
             <Route path="quotation" element={<Quotation />} />

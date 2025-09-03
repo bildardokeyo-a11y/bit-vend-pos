@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Plus, Crown, CreditCard, Smartphone, Banknote } from 'lucide-react';
+import { Plus, Crown, CreditCard, Smartphone, Banknote, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Mock product data
@@ -15,7 +16,6 @@ const products = [
     name: "Premium Espresso Blend",
     description: "Artisanal dark roast",
     price: 24.99,
-    icon: "☕",
     category: "Coffee"
   },
   {
@@ -23,7 +23,6 @@ const products = [
     name: "Organic Green Tea",
     description: "Hand-picked leaves",
     price: 18.50,
-    icon: "🍃",
     category: "Tea"
   },
   {
@@ -31,7 +30,6 @@ const products = [
     name: "Gourmet Chocolate Cake",
     description: "Belgian chocolate",
     price: 45.00,
-    icon: "🍰",
     category: "Dessert"
   },
   {
@@ -39,7 +37,6 @@ const products = [
     name: "Vintage Wine Selection",
     description: "Reserve collection",
     price: 89.99,
-    icon: "🍷",
     category: "Beverages"
   },
   {
@@ -47,7 +44,6 @@ const products = [
     name: "Artisan Croissant",
     description: "Buttery perfection",
     price: 12.99,
-    icon: "🥐",
     category: "Pastry"
   },
   {
@@ -55,7 +51,6 @@ const products = [
     name: "Truffle Collection",
     description: "Hand-crafted luxury",
     price: 65.00,
-    icon: "🍫",
     category: "Confectionery"
   }
 ];
@@ -63,6 +58,7 @@ const products = [
 const categories = ["All", "Coffee", "Tea", "Dessert", "Beverages", "Pastry", "Confectionery"];
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [cart, setCart] = useState<Array<{product: any, quantity: number}>>([]);
   const [paymentMethod, setPaymentMethod] = useState("Card");
@@ -93,12 +89,15 @@ const Checkout = () => {
   const finalTotal = cartTotal + tax;
 
   const handlePayment = () => {
-    if (paymentMethod === "Mobile") {
-      // Dummy M-Pesa integration
-      alert(`M-Pesa payment request sent to ${mpesaPhone || "254712345678"}. Please check your phone to complete payment of $${finalTotal.toFixed(2)}`);
-    } else {
-      alert(`Payment of $${finalTotal.toFixed(2)} processed successfully!`);
-    }
+    navigate('/receipt', {
+      state: {
+        cart,
+        total: finalTotal,
+        tax,
+        subtotal: cartTotal,
+        paymentMethod
+      }
+    });
   };
 
   return (
@@ -134,7 +133,9 @@ const Checkout = () => {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">{product.icon}</div>
+                    <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center border">
+                      <div className="w-8 h-8 bg-muted-foreground/20 rounded"></div>
+                    </div>
                     <div>
                       <h3 className="font-semibold text-card-foreground">{product.name}</h3>
                       <p className="text-sm text-muted-foreground">{product.description}</p>
@@ -171,14 +172,14 @@ const Checkout = () => {
         ) : (
           <div className="space-y-4 mb-6">
             {cart.map((item, index) => (
-              <div key={index} className="flex justify-between items-center">
+              <div key={index} className="flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-all duration-200 group">
                 <div className="flex-1">
                   <p className="font-medium">{item.product.name}</p>
                   <div className="flex items-center gap-2 mt-1">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="h-6 w-6 p-0 rounded-full"
+                      className="h-6 w-6 p-0 rounded-full hover:scale-110 transition-transform duration-200"
                       onClick={() => {
                         if (item.quantity > 1) {
                           setCart(cart.map(cartItem => 
@@ -191,13 +192,13 @@ const Checkout = () => {
                         }
                       }}
                     >
-                      -
+                      <Minus className="h-3 w-3" />
                     </Button>
-                    <span className="text-sm text-muted-foreground min-w-[2rem] text-center">{item.quantity}</span>
+                    <span className="text-sm text-muted-foreground min-w-[2rem] text-center font-medium">{item.quantity}</span>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="h-6 w-6 p-0 rounded-full"
+                      className="h-6 w-6 p-0 rounded-full hover:scale-110 transition-transform duration-200"
                       onClick={() => {
                         setCart(cart.map(cartItem => 
                           cartItem.product.id === item.product.id 
@@ -206,11 +207,11 @@ const Checkout = () => {
                         ));
                       }}
                     >
-                      +
+                      <Plus className="h-3 w-3" />
                     </Button>
                   </div>
                 </div>
-                <p className="font-semibold text-green-500">${(item.product.price * item.quantity).toFixed(2)}</p>
+                <p className="font-semibold text-green-500 group-hover:scale-105 transition-transform duration-200">${(item.product.price * item.quantity).toFixed(2)}</p>
               </div>
             ))}
           </div>
