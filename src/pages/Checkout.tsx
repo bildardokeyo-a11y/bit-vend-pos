@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -60,12 +60,20 @@ const categories = ["All", "Coffee", "Tea", "Dessert", "Beverages", "Pastry", "C
 const Checkout = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [cart, setCart] = useState<Array<{product: any, quantity: number}>>([]);
+  const [cart, setCart] = useState<Array<{product: any, quantity: number}>>(() => {
+    const saved = localStorage.getItem('pos-cart');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [paymentMethod, setPaymentMethod] = useState("Card");
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
   const [mpesaPhone, setMpesaPhone] = useState("");
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('pos-cart', JSON.stringify(cart));
+  }, [cart]);
 
   const filteredProducts = selectedCategory === "All" 
     ? products 
@@ -88,7 +96,25 @@ const Checkout = () => {
   const tax = cartTotal * 0.08;
   const finalTotal = cartTotal + tax;
 
+  const isPaymentValid = () => {
+    if (paymentMethod === "Card") {
+      return cardNumber.trim() !== "" && expiry.trim() !== "" && cvv.trim() !== "";
+    }
+    if (paymentMethod === "Mobile") {
+      return mpesaPhone.trim() !== "";
+    }
+    return true; // Cash payment doesn't need validation
+  };
+
   const handlePayment = () => {
+    if (!isPaymentValid()) {
+      return; // Prevent navigation if payment details are incomplete
+    }
+    
+    // Clear cart after successful payment
+    setCart([]);
+    localStorage.removeItem('pos-cart');
+    
     navigate('/receipt', {
       state: {
         cart,
@@ -133,8 +159,8 @@ const Checkout = () => {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center border">
-                      <div className="w-8 h-8 bg-muted-foreground/20 rounded"></div>
+                    <div className="w-20 h-20 bg-muted rounded-lg flex items-center justify-center border">
+                      <div className="w-16 h-16 bg-muted-foreground/20 rounded"></div>
                     </div>
                     <div>
                       <h3 className="font-semibold text-card-foreground">{product.name}</h3>
@@ -322,7 +348,7 @@ const Checkout = () => {
         {/* Complete Payment Button */}
         <Button
           onClick={handlePayment}
-          disabled={cart.length === 0}
+          disabled={cart.length === 0 || !isPaymentValid()}
           className="w-full font-semibold py-3"
           style={{
             background: 'hsl(var(--orange-accent))',
