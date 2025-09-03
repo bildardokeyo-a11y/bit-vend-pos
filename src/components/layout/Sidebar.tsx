@@ -198,11 +198,11 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                       }}
                       className={cn(
                         "w-full flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group relative overflow-hidden",
-                        "before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/20 before:to-white/10 before:opacity-0 before:transition-opacity before:duration-300",
-                        "hover:before:opacity-100 hover:shadow-lg hover:shadow-white/10 hover:scale-[1.02] hover:translate-x-1",
+                        "before:absolute before:inset-0 before:bg-gradient-to-r before:from-gray-800/80 before:to-gray-700/60 before:opacity-0 before:transition-opacity before:duration-300",
+                        "hover:before:opacity-100 hover:shadow-lg hover:shadow-gray-900/30 hover:scale-[1.02] hover:translate-x-1",
                         isActive
-                          ? "bg-gradient-to-r from-white/10 to-white/5 text-white shadow-lg shadow-white/20 border-l-2 border-white"
-                          : "text-gray-300 hover:text-gray-500 hover:bg-white/5"
+                          ? "bg-gradient-to-r from-gray-800/60 to-gray-700/40 text-gray-200 shadow-lg shadow-gray-900/40 border-l-2 border-gray-600"
+                          : "text-gray-300 hover:text-gray-200 hover:bg-gray-800/40"
                       )}
                     >
                       <Icon size={18} className="flex-shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110" />
