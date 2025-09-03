@@ -282,13 +282,28 @@ All colors MUST be HSL.
     background: hsl(0 0% 20%);
   }
 
-  /* Sidebar specific scrollbar */
-  .pos-sidebar ::-webkit-scrollbar-track {
+  /* Sidebar specific scrollbar - target the actual scroll container */
+  .pos-sidebar-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .pos-sidebar-scroll::-webkit-scrollbar-track {
     background: hsl(0 0% 0%) !important;
   }
-  
-  .dark .pos-sidebar ::-webkit-scrollbar-track {
-    background: hsl(var(--background)) !important;
+
+  .pos-sidebar-scroll::-webkit-scrollbar-thumb {
+    background: hsl(0 0% 40%) !important;
+    border-radius: 4px;
+  }
+
+  .pos-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: hsl(0 0% 55%) !important;
+  }
+
+  /* Firefox */
+  .pos-sidebar-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(0 0% 40%) hsl(0 0% 0%);
   }
 
   /* Dark theme scrollbar */
