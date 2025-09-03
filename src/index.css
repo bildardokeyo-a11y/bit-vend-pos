@@ -282,8 +282,8 @@ All colors MUST be HSL.
     border-radius: 4px;
     opacity: 0;
     transition: opacity 0.3s ease;
-    min-height: 20px;
-    max-height: 30px;
+    min-height: 10px;
+    max-height: 15px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -319,8 +319,8 @@ All colors MUST be HSL.
   .pos-sidebar-scroll::-webkit-scrollbar-thumb {
     background: hsl(0 0% 40%) !important;
     border-radius: 4px;
-    min-height: 20px;
-    max-height: 30px;
+    min-height: 10px;
+    max-height: 15px;
   }
 
   .pos-sidebar-scroll::-webkit-scrollbar-thumb:hover {
