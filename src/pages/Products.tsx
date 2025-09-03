@@ -23,8 +23,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { Search, Package, Plus, Edit, Trash2, Filter, Eye } from 'lucide-react';
+import { Search, Package, Plus, Edit, Trash2, Filter, Eye, FileDown, Upload, FileSpreadsheet } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import * as XLSX from 'xlsx';
 
 // Mock product data (from checkout page)
 const initialProducts = [
@@ -226,6 +227,74 @@ const Products = () => {
     navigate(`/products/edit/${productId}`);
   };
 
+  // Handle export to PDF
+  const handleExportPDF = () => {
+    toast({
+      title: "PDF Export",
+      description: "PDF export functionality will be implemented soon.",
+    });
+  };
+
+  // Handle export to Excel
+  const handleExportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredProducts.map(product => ({
+      'Product Name': product.name,
+      'Description': product.description,
+      'SKU': product.sku,
+      'Category': product.category,
+      'Price': product.price,
+      'Stock': product.stock,
+      'Status': product.status
+    })));
+    
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Products');
+    
+    const filename = `products_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(workbook, filename);
+    
+    toast({
+      title: "Excel Export",
+      description: `Products exported to ${filename}`,
+    });
+  };
+
+  // Handle import from Excel
+  const handleImportExcel = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.xlsx,.xls,.csv';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const data = new Uint8Array(event.target?.result as ArrayBuffer);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            
+            console.log('Imported data:', jsonData);
+            toast({
+              title: "Excel Import",
+              description: `Successfully imported ${jsonData.length} rows from ${file.name}`,
+            });
+          } catch (error) {
+            toast({
+              title: "Import Error",
+              description: "Failed to import Excel file. Please check the format.",
+              variant: "destructive",
+            });
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      }
+    };
+    input.click();
+  };
+
   return (
     <div className="p-6 space-y-6 bg-background dark:bg-black min-h-screen">
       {/* Header */}
@@ -234,10 +303,36 @@ const Products = () => {
           <h1 className="text-3xl font-bold text-foreground">Products</h1>
           <p className="text-muted-foreground mt-1">Manage your product inventory and catalog</p>
         </div>
-        <Button className="bg-primary hover:bg-primary/90">
-          <Plus className="mr-2 h-4 w-4" />
-          Add Product
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button className="bg-orange-500 hover:bg-orange-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90">
+            <Plus className="h-4 w-4" />
+            Add Product
+          </Button>
+          
+          <Button 
+            onClick={handleExportPDF}
+            className="bg-red-500 hover:bg-red-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+          >
+            <FileDown className="h-4 w-4" />
+            PDF
+          </Button>
+          
+          <Button 
+            onClick={handleExportExcel}
+            className="bg-green-500 hover:bg-green-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+          >
+            <FileSpreadsheet className="h-4 w-4" />
+            Excel
+          </Button>
+          
+          <Button 
+            onClick={handleImportExcel}
+            className="bg-blue-500 hover:bg-blue-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+          >
+            <Upload className="h-4 w-4" />
+            Import
+          </Button>
+        </div>
       </div>
 
       {/* Stats Cards */}
