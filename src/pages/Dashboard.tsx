@@ -128,7 +128,7 @@ const Dashboard: React.FC = () => {
               <CardContent className="p-6">
                 <div className="text-center space-y-3">
                   <div className={`w-12 h-12 rounded-full ${action.color} mx-auto flex items-center justify-center`}>
-                    <BarChart3 className="h-6 w-6 text-white" />
+                    <BarChart3 className="h-6 w-6" style={{ color: '#ffffff' }} />
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground">{action.title}</h3>
