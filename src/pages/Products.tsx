@@ -342,7 +342,7 @@ const Products = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="rounded-md border">
+          <div className="rounded-md border dark:bg-[#1c1c1c]">
             <Table>
               <TableHeader>
                 <TableRow>
