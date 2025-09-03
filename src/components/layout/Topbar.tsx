@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import {
@@ -38,6 +38,22 @@ const Topbar: React.FC<TopbarProps> = ({
 }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollableElement = document.querySelector('.pos-content');
+      if (scrollableElement) {
+        setIsScrolled(scrollableElement.scrollTop > 10);
+      }
+    };
+
+    const scrollableElement = document.querySelector('.pos-content');
+    if (scrollableElement) {
+      scrollableElement.addEventListener('scroll', handleScroll);
+      return () => scrollableElement.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +61,13 @@ const Topbar: React.FC<TopbarProps> = ({
   };
 
   return (
-    <header className={cn('pos-topbar glass-effect', collapsed && 'collapsed')}>
+    <header className={cn(
+      'pos-topbar transition-all duration-300',
+      collapsed && 'collapsed',
+      isScrolled 
+        ? 'bg-background/80 backdrop-blur-md border-border/50' 
+        : 'bg-background border-border'
+    )}>
       <div className="flex items-center gap-4">
         <Button
           variant="ghost"

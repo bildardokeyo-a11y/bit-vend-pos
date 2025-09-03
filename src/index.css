@@ -133,12 +133,9 @@ All colors MUST be HSL.
   
   /* POS Topbar */
   .pos-topbar {
-    @apply fixed top-0 right-0 h-16 flex items-center justify-between px-6 transition-all duration-300 z-30;
+    @apply fixed top-0 right-0 h-16 flex items-center justify-between px-6 transition-all duration-300 z-50;
     left: 16rem; /* 256px */
-    background: hsl(220, 13%, 18%);
-    backdrop-filter: var(--blur-strength);
-    -webkit-backdrop-filter: var(--blur-strength);
-    border-bottom: 1px solid hsl(var(--glass-border));
+    border-bottom: 1px solid;
   }
   
   .pos-topbar.collapsed {
@@ -152,6 +149,7 @@ All colors MUST be HSL.
     margin-top: 4rem; /* 64px */
     height: calc(100vh - 4rem);
     padding: 1.5rem;
+    scroll-behavior: smooth;
   }
   
   .pos-content.collapsed {
