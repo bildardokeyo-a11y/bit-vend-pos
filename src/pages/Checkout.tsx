@@ -69,6 +69,8 @@ const Checkout = () => {
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
   const [mpesaPhone, setMpesaPhone] = useState("");
+  const [animatingButtons, setAnimatingButtons] = useState<Set<number>>(new Set());
+  const [animatingCartItems, setAnimatingCartItems] = useState<Set<number>>(new Set());
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
@@ -80,8 +82,31 @@ const Checkout = () => {
     : products.filter(p => p.category === selectedCategory);
 
   const addToCart = (product: any) => {
+    // Animate the + button
+    setAnimatingButtons(prev => new Set([...prev, product.id]));
+    setTimeout(() => {
+      setAnimatingButtons(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(product.id);
+        return newSet;
+      });
+    }, 300);
+
     setCart((prev) => {
       const exists = prev.find((item) => item.product.id === product.id)
+      
+      // If item exists, animate the cart item
+      if (exists) {
+        setAnimatingCartItems(prevSet => new Set([...prevSet, product.id]));
+        setTimeout(() => {
+          setAnimatingCartItems(prevSet => {
+            const newSet = new Set(prevSet);
+            newSet.delete(product.id);
+            return newSet;
+          });
+        }, 500);
+      }
+      
       const next = exists
         ? prev.map((item) =>
             item.product.id === product.id
@@ -168,7 +193,10 @@ const Checkout = () => {
                     <Button
                       onClick={() => addToCart(product)}
                       size="sm"
-                      className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-lg h-8 w-8 p-0 group-hover:scale-110 transition-all duration-200 shadow-md border-0"
+                      className={cn(
+                        "bg-warning hover:bg-warning/90 text-warning-foreground rounded-lg h-8 w-8 p-0 group-hover:scale-110 transition-all duration-200 shadow-md border-0",
+                        animatingButtons.has(product.id) && "animate-pulse scale-125"
+                      )}
                     >
                       <Plus className="h-4 w-4 font-bold" />
                     </Button>
@@ -196,7 +224,13 @@ const Checkout = () => {
         ) : (
           <div className="space-y-4 mb-6">
             {cart.map((item, index) => (
-              <div key={index} className="flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-all duration-200 group">
+               <div 
+                 key={index} 
+                 className={cn(
+                   "flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-all duration-200 group",
+                   animatingCartItems.has(item.product.id) && "animate-pulse bg-warning/10 scale-105"
+                 )}
+               >
                 <div className="flex-1">
                   <p className="font-medium">{item.product.name}</p>
                   <div className="flex items-center gap-2 mt-1">
