@@ -144,7 +144,7 @@ const Checkout = () => {
                   <Button
                     onClick={() => addToCart(product)}
                     size="sm"
-                    className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-full h-8 w-8 p-0 group-hover:scale-110 transition-transform"
+                    className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-full h-8 w-8 p-0 group-hover:scale-110 transition-transform shadow-lg"
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
@@ -288,7 +288,11 @@ const Checkout = () => {
         <Button
           onClick={handlePayment}
           disabled={cart.length === 0}
-          className="w-full bg-warning hover:bg-warning/90 text-warning-foreground font-semibold py-3"
+          className="w-full font-semibold py-3"
+          style={{
+            background: 'hsl(var(--orange-accent))',
+            color: 'white'
+          }}
         >
           Complete Payment • ${finalTotal.toFixed(2)}
         </Button>
