@@ -114,7 +114,7 @@ All colors MUST be HSL.
   /* Global Thin Scrollbars */
   * {
     scrollbar-width: thin;
-    scrollbar-color: #888 transparent;
+    scrollbar-color: hsl(0 0% 53%) transparent;
   }
 
   *::-webkit-scrollbar {
@@ -122,11 +122,15 @@ All colors MUST be HSL.
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: #888;
+    background-color: transparent;
     border-radius: 3px;
     border: 2px solid transparent;
     background-clip: content-box;
-    min-height: 8px;
+    background-image: linear-gradient(to bottom, transparent 0, transparent 40%, hsl(0 0% 53%) 40%, hsl(0 0% 53%) 60%, transparent 60%, transparent 100%);
+  }
+
+  *::-webkit-scrollbar-thumb:horizontal {
+    background-image: linear-gradient(to right, transparent 0, transparent 40%, hsl(0 0% 53%) 40%, hsl(0 0% 53%) 60%, transparent 60%, transparent 100%);
   }
 
   *::-webkit-scrollbar-track {
