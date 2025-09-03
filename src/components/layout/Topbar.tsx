@@ -41,7 +41,6 @@ const Topbar: React.FC<TopbarProps> = ({
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // Implement search functionality
     console.log('Searching for:', searchQuery);
   };
 
@@ -75,14 +74,12 @@ const Topbar: React.FC<TopbarProps> = ({
       </div>
 
       <div className="flex items-center gap-3">
-        {/* Store Selector */}
         <select className="px-3 py-1 rounded-md border bg-background text-foreground text-sm">
           <option>Freshmart</option>
           <option>Branch 1</option>
           <option>Branch 2</option>
         </select>
 
-        {/* Quick Action Buttons */}
         <Button
           onClick={() => navigate('/products/add')}
           className="bg-orange-500 hover:bg-orange-600 text-white gap-2"
@@ -101,7 +98,6 @@ const Topbar: React.FC<TopbarProps> = ({
           POS
         </Button>
 
-        {/* Status Icons */}
         <div className="flex items-center gap-3 text-muted-foreground">
           <Button variant="ghost" size="sm" className="p-2">
             <Globe size={18} />
@@ -128,7 +124,6 @@ const Topbar: React.FC<TopbarProps> = ({
           </Button>
         </div>
 
-        {/* Theme Toggle */}
         <Button
           variant="ghost"
           size="sm"
@@ -144,7 +139,6 @@ const Topbar: React.FC<TopbarProps> = ({
           />
         </Button>
 
-        {/* Profile Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm" className="p-2">
