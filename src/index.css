@@ -270,12 +270,12 @@ All colors MUST be HSL.
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted));
+    background: hsl(0 0% 0%);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground));
+    background: hsl(0 0% 20%);
   }
 
   /* Dark theme scrollbar */
@@ -295,7 +295,7 @@ All colors MUST be HSL.
   /* Firefox scrollbar */
   html {
     scrollbar-width: thin;
-    scrollbar-color: hsl(var(--muted)) hsl(var(--background));
+    scrollbar-color: hsl(0 0% 0%) hsl(var(--background));
   }
 
   .dark html {
