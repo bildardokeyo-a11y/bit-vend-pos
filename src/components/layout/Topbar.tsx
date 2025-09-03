@@ -141,7 +141,7 @@ const Topbar: React.FC<TopbarProps> = ({
           </Button>
           <Button variant="ghost" size="sm" className="p-2 relative">
             <Bell size={18} />
-            <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+            <span className={cn("absolute -top-1 -right-1 bg-primary text-xs rounded-full w-4 h-4 flex items-center justify-center", darkMode ? "text-black" : "text-white")}>
               5
             </span>
           </Button>
