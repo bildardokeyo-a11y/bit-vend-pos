@@ -26,6 +26,47 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
+// Custom hook for auto-hide tooltips
+const useAutoHideTooltip = (delay = 2000) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    
+    if (open) {
+      // Clear any existing timeout
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      
+      // Set new timeout to auto-hide
+      const newTimeoutId = setTimeout(() => {
+        setIsOpen(false);
+      }, delay);
+      
+      setTimeoutId(newTimeoutId);
+    } else {
+      // Clear timeout if manually closed
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        setTimeoutId(null);
+      }
+    }
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
+
+  return { isOpen, handleOpenChange };
+};
+
 // ---------------- Theme Toggle ----------------
 const goldenSun = "🌞", goldenMoon = "🌙";
 
@@ -45,6 +86,13 @@ const Topbar: React.FC<TopbarProps> = ({
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  // Auto-hide tooltips
+  const internetTooltip = useAutoHideTooltip(2000);
+  const mailTooltip = useAutoHideTooltip(2000);
+  const notificationTooltip = useAutoHideTooltip(2000);
+  const settingsTooltip = useAutoHideTooltip(2000);
+  const profileTooltip = useAutoHideTooltip(2000);
 
   useEffect(() => {
     const el = document.querySelector('.pos-content');
@@ -129,7 +177,7 @@ const Topbar: React.FC<TopbarProps> = ({
         </Button>
 
         <div className={cn("flex items-center gap-3", darkMode ? "text-white" : "text-black")}>
-          <Tooltip>
+          <Tooltip open={internetTooltip.isOpen} onOpenChange={internetTooltip.handleOpenChange}>
             <TooltipTrigger asChild>
               <Button 
                 variant="ghost" 
@@ -140,12 +188,12 @@ const Topbar: React.FC<TopbarProps> = ({
                 <Globe size={18} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
               Internet
             </TooltipContent>
           </Tooltip>
           
-          <Tooltip>
+          <Tooltip open={mailTooltip.isOpen} onOpenChange={mailTooltip.handleOpenChange}>
             <TooltipTrigger asChild>
               <Button 
                 variant="ghost" 
@@ -159,12 +207,12 @@ const Topbar: React.FC<TopbarProps> = ({
                 </span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
               Mail
             </TooltipContent>
           </Tooltip>
           
-          <Tooltip>
+          <Tooltip open={notificationTooltip.isOpen} onOpenChange={notificationTooltip.handleOpenChange}>
             <TooltipTrigger asChild>
               <Button 
                 variant="ghost" 
@@ -178,12 +226,12 @@ const Topbar: React.FC<TopbarProps> = ({
                 </span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
               Notifications
             </TooltipContent>
           </Tooltip>
           
-          <Tooltip>
+          <Tooltip open={settingsTooltip.isOpen} onOpenChange={settingsTooltip.handleOpenChange}>
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
@@ -194,7 +242,7 @@ const Topbar: React.FC<TopbarProps> = ({
                 <Settings size={18} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
               Settings
             </TooltipContent>
           </Tooltip>
@@ -212,7 +260,7 @@ const Topbar: React.FC<TopbarProps> = ({
           </span>
         </Button>
 
-        <Tooltip>
+        <Tooltip open={profileTooltip.isOpen} onOpenChange={profileTooltip.handleOpenChange}>
           <TooltipTrigger asChild>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -239,7 +287,7 @@ const Topbar: React.FC<TopbarProps> = ({
               </DropdownMenuContent>
             </DropdownMenu>
           </TooltipTrigger>
-          <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+          <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
             Profile
           </TooltipContent>
         </Tooltip>
