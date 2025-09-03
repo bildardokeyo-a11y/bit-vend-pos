@@ -127,7 +127,7 @@ const Topbar: React.FC<TopbarProps> = ({
           variant="ghost"
           size="sm"
           onClick={onToggleDarkMode}
-          className="p-2"
+          className={`p-2 ${darkMode ? 'theme-toggle-sun' : ''}`}
         >
           {darkMode ? <Sun size={18} /> : <Moon size={18} />}
         </Button>

@@ -227,4 +227,18 @@ All colors MUST be HSL.
     ring-color: hsl(var(--primary-blue));
     box-shadow: 0 0 0 2px hsl(var(--primary-blue) / 0.2);
   }
+
+  /* Theme Toggle Button */
+  .dark .theme-toggle-sun {
+    color: hsl(45, 100%, 60%);
+    background: hsl(45, 100%, 60% / 0.1);
+    border-radius: 50%;
+    padding: 0.5rem;
+    box-shadow: 0 0 20px hsl(45, 100%, 60% / 0.3);
+  }
+  
+  .dark .theme-toggle-sun:hover {
+    background: hsl(45, 100%, 60% / 0.2);
+    box-shadow: 0 0 25px hsl(45, 100%, 60% / 0.4);
+  }
 }
