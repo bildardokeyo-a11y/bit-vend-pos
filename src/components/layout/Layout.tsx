@@ -36,7 +36,7 @@ const Layout: React.FC<LayoutProps> = () => {
         darkMode={darkMode}
         onToggleDarkMode={toggleDarkMode}
       />
-      <main className={cn('pos-content bg-background', sidebarCollapsed && 'collapsed')}>
+      <main className={cn('pos-content bg-background dark:bg-black', sidebarCollapsed && 'collapsed')}>
         <div className="animate-fadeInUp">
           <Outlet />
         </div>
