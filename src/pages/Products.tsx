@@ -242,7 +242,7 @@ const Products = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
+        <Card className="dark:bg-[#1c1c1c]">
           <CardContent className="p-6">
             <div className="flex items-center">
               <Package className="h-8 w-8 text-primary" />
@@ -253,7 +253,7 @@ const Products = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="dark:bg-[#1c1c1c]">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
@@ -266,7 +266,7 @@ const Products = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="dark:bg-[#1c1c1c]">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center">
@@ -279,7 +279,7 @@ const Products = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="dark:bg-[#1c1c1c]">
           <CardContent className="p-6">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center">
@@ -295,7 +295,7 @@ const Products = () => {
       </div>
 
       {/* Filters and Search */}
-      <Card>
+      <Card className="dark:bg-[#1c1c1c]">
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             {/* Search */}
@@ -332,7 +332,7 @@ const Products = () => {
       </Card>
 
       {/* Products Table */}
-      <Card>
+      <Card className="dark:bg-[#1c1c1c]">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>Products ({filteredProducts.length})</span>
