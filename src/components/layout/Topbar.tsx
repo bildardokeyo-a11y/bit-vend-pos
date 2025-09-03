@@ -69,13 +69,9 @@ const Topbar: React.FC<TopbarProps> = ({
     <header className={cn(
       'pos-topbar transition-all duration-300',
       collapsed && 'collapsed',
-      isScrolled 
-        ? darkMode 
-          ? 'bg-black/80 backdrop-blur-md border-border/50' 
-          : 'bg-white/80 backdrop-blur-md border-border/50'
-        : darkMode 
-          ? 'bg-black border-border'
-          : 'bg-white border-border'
+      darkMode 
+        ? 'bg-black/70 backdrop-blur-md border-border/50' 
+        : 'bg-white/70 backdrop-blur-md border-border/50'
     )}>
       <div className="flex items-center gap-4">
         <Button
