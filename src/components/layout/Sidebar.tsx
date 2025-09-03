@@ -42,7 +42,8 @@ import {
   Database,
   ChevronLeft,
   ChevronRight,
-  Menu
+  Menu,
+  ShoppingCart
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -158,9 +159,10 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
       <div className="flex items-center justify-between p-6 border-b border-white/10 dark:border-black/10 bg-black dark:bg-black">
         {!collapsed && (
           <Link to="/" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
-            <span className="text-xl font-bold">
+            <span className="text-xl font-bold flex items-center">
               <span style={{ color: '#FFD000' }}>Bit Vend</span>
-              <span className="text-white"> POS</span>
+              <span className="text-white ml-1">POS</span>
+              <ShoppingCart size={20} className="ml-2 text-yellow-400" />
             </span>
           </Link>
         )}
