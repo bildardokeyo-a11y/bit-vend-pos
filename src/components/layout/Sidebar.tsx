@@ -160,7 +160,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
         {!collapsed && (
           <Link to="/" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
             <span className="text-xl font-bold flex items-center">
-              <span style={{ color: '#FFD000' }}>Bit Vend</span>
+              <span style={{ color: '#FF8C00' }}>Bit Vend</span>
               <span className="text-white ml-1">POS</span>
               <ShoppingCart size={20} className="ml-2 text-yellow-400" />
             </span>
