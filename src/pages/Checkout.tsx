@@ -104,10 +104,10 @@ const Checkout = () => {
   return (
     <div className="flex h-full bg-background">
       {/* Products Section */}
-      <div className="flex-1 p-6 bg-black">
+      <div className="flex-1 p-6 bg-gradient-to-br from-white to-gray-50 dark:bg-black">
         <div className="flex items-center gap-2 mb-6">
           <Crown className="h-6 w-6 text-warning" />
-          <h1 className="text-2xl font-bold text-white">Products</h1>
+          <h1 className="text-2xl font-bold text-black dark:text-white">Products</h1>
         </div>
 
         {/* Categories */}
