@@ -1,47 +1,121 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, X } from 'lucide-react';
+import { ArrowLeft, Save, X, Upload, RotateCcw, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Progress } from '@/components/ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 import { toast } from "sonner";
 
-const categories = ["Coffee", "Tea", "Dessert", "Beverages", "Pastry", "Confectionery"];
+const categories = ["Electronics", "Beverages", "Food", "Clothing", "Books", "Health"];
+const brands = ["Apple", "Samsung", "Nike", "Adidas", "Generic"];
+const suppliers = ["Supplier A", "Supplier B", "Supplier C"];
+const units = ["Piece", "Kg", "Liter", "Meter", "Box"];
+const productTypes = ["Standard", "Variable", "Service"];
+const statusOptions = ["Active", "Inactive", "Draft"];
 
 const ProductAdd = () => {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('general');
+  const [createdDate, setCreatedDate] = useState<Date>();
+  const [expiryDate, setExpiryDate] = useState<Date>();
+  
   const [formData, setFormData] = useState({
+    // General
     name: '',
-    description: '',
-    price: '',
     category: '',
-    stock: '',
+    addedBy: 'Admin',
+    warranty: '',
+    productType: 'Standard',
     sku: '',
+    barcode: '',
+    brand: '',
+    supplier: '',
+    batchLotNo: '',
+    multipleBarcodes: '',
+    
+    // Pricing
+    purchasePrice: '',
+    sellingPrice: '',
+    discount: '',
+    discountType: '%',
+    tax: '',
+    profitMargin: '',
+    taxable: true,
+    
+    // Inventory
+    unit: 'Piece',
+    stockQuantity: '',
+    minStockAlert: '',
+    reorderPoint: '',
+    advancedInventory: false,
+    
+    // Extras
+    description: '',
+    featuredProduct: false,
+    status: 'Active',
+    tags: '',
   });
 
-  const handleInputChange = (field: string, value: string) => {
+  const tabs = [
+    { id: 'general', label: 'General', step: 1 },
+    { id: 'pricing', label: 'Pricing', step: 2 },
+    { id: 'inventory', label: 'Inventory', step: 3 },
+    { id: 'extras', label: 'Extras', step: 4 },
+  ];
+
+  const currentStep = tabs.find(tab => tab.id === activeTab)?.step || 1;
+  const progress = (currentStep / 4) * 100;
+
+  const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const generateSKU = () => {
+    const randomSKU = `SKU-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+    setFormData(prev => ({ ...prev, sku: randomSKU }));
+  };
+
+  const generateBarcode = () => {
+    const randomBarcode = `BC-${Math.random().toString().substr(2, 10)}`;
+    setFormData(prev => ({ ...prev, barcode: randomBarcode }));
+  };
+
+  const handleSubmit = () => {
     // Basic validation
-    if (!formData.name || !formData.price || !formData.category || !formData.stock || !formData.sku) {
+    if (!formData.name || !formData.category || !formData.sku) {
       toast.error("Please fill in all required fields.");
       return;
     }
 
     // Simulate saving the product
-    console.log('Saving product:', formData);
+    console.log('Saving product:', { ...formData, createdDate, expiryDate });
     
     toast.success(`${formData.name} has been successfully added to your inventory.`);
-
-    // Navigate back to products page
     navigate('/products');
+  };
+
+  const handleReset = () => {
+    setFormData({
+      name: '', category: '', addedBy: 'Admin', warranty: '', productType: 'Standard',
+      sku: '', barcode: '', brand: '', supplier: '', batchLotNo: '', multipleBarcodes: '',
+      purchasePrice: '', sellingPrice: '', discount: '', discountType: '%', tax: '',
+      profitMargin: '', taxable: true, unit: 'Piece', stockQuantity: '', minStockAlert: '',
+      reorderPoint: '', advancedInventory: false, description: '', featuredProduct: false,
+      status: 'Active', tags: '',
+    });
+    setCreatedDate(undefined);
+    setExpiryDate(undefined);
+    setActiveTab('general');
   };
 
   const handleCancel = () => {
@@ -51,136 +125,517 @@ const ProductAdd = () => {
   return (
     <div className="p-6 space-y-6 bg-background dark:bg-black min-h-screen">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => navigate('/products')}
-          className="transition-all duration-200 hover:scale-95"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Products
-        </Button>
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Add New Product</h1>
-          <p className="text-muted-foreground mt-1">Create a new product for your inventory</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+            <span className="text-white text-lg font-bold">+</span>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Add New Product</h1>
+          </div>
+        </div>
+        <div className="text-sm text-muted-foreground">
+          All fields marked * are required
         </div>
       </div>
 
-      {/* Add Product Form */}
-      <Card className="max-w-2xl dark:bg-[#1c1c1c]">
-        <CardHeader>
-          <CardTitle>Product Details</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Product Name */}
-              <div className="space-y-2">
-                <Label htmlFor="name">Product Name *</Label>
-                <Input
-                  id="name"
-                  placeholder="Enter product name"
-                  value={formData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
-                  required
-                />
+      {/* Progress Bar */}
+      <div className="space-y-2">
+        <div className="flex justify-between text-sm">
+          <span className="text-foreground">Step {currentStep} of 4</span>
+          <span className="text-foreground">{Math.round(progress)}%</span>
+        </div>
+        <Progress value={progress} className="h-2" />
+      </div>
+
+      {/* Form */}
+      <Card className="dark:bg-gray-800 bg-white shadow-lg">
+        <CardContent className="p-0">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="w-full h-12 bg-gray-100 dark:bg-gray-700 rounded-none border-b">
+              {tabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.id}
+                  value={tab.id}
+                  className={cn(
+                    "flex-1 h-10 text-sm font-medium transition-all duration-200",
+                    activeTab === tab.id
+                      ? "bg-orange-500 text-white shadow-md"
+                      : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+                  )}
+                >
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {/* General Tab */}
+            <TabsContent value="general" className="p-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Product Name *</Label>
+                  <Input
+                    id="name"
+                    placeholder="e.g. Apple iPhone 15"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="category">Category *</Label>
+                  <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
+                    <SelectTrigger className="dark:bg-gray-700">
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent className="dark:bg-gray-700">
+                      {categories.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="addedBy">Added By</Label>
+                  <Select value={formData.addedBy} onValueChange={(value) => handleInputChange('addedBy', value)}>
+                    <SelectTrigger className="dark:bg-gray-700">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="dark:bg-gray-700">
+                      <SelectItem value="Admin">Admin</SelectItem>
+                      <SelectItem value="Manager">Manager</SelectItem>
+                      <SelectItem value="Staff">Staff</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              {/* SKU */}
-              <div className="space-y-2">
-                <Label htmlFor="sku">SKU *</Label>
-                <Input
-                  id="sku"
-                  placeholder="Enter SKU (e.g., PRD-001)"
-                  value={formData.sku}
-                  onChange={(e) => handleInputChange('sku', e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Description */}
-            <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                placeholder="Enter product description"
-                value={formData.description}
-                onChange={(e) => handleInputChange('description', e.target.value)}
-                rows={3}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Category */}
-              <div className="space-y-2">
-                <Label htmlFor="category">Category *</Label>
-                <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Price */}
-              <div className="space-y-2">
-                <Label htmlFor="price">Price *</Label>
-                <Input
-                  id="price"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  placeholder="0.00"
-                  value={formData.price}
-                  onChange={(e) => handleInputChange('price', e.target.value)}
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label>Created Date</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal dark:bg-gray-700",
+                          !createdDate && "text-muted-foreground"
+                        )}
+                      >
+                        <Calendar className="mr-2 h-4 w-4" />
+                        {createdDate ? format(createdDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 dark:bg-gray-700" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={createdDate}
+                        onSelect={setCreatedDate}
+                        initialFocus
+                        className="pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="warranty">Warranty (months)</Label>
+                  <Input
+                    id="warranty"
+                    type="number"
+                    placeholder="e.g. 12"
+                    value={formData.warranty}
+                    onChange={(e) => handleInputChange('warranty', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="productType">Product Type</Label>
+                  <Select value={formData.productType} onValueChange={(value) => handleInputChange('productType', value)}>
+                    <SelectTrigger className="dark:bg-gray-700">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="dark:bg-gray-700">
+                      {productTypes.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              {/* Stock */}
-              <div className="space-y-2">
-                <Label htmlFor="stock">Initial Stock *</Label>
-                <Input
-                  id="stock"
-                  type="number"
-                  min="0"
-                  placeholder="0"
-                  value={formData.stock}
-                  onChange={(e) => handleInputChange('stock', e.target.value)}
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="sku">SKU / Code *</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="sku"
+                      placeholder="SKU-XXXXX"
+                      value={formData.sku}
+                      onChange={(e) => handleInputChange('sku', e.target.value)}
+                      className="dark:bg-gray-700"
+                    />
+                    <Button type="button" variant="outline" onClick={generateSKU} className="dark:bg-gray-700">
+                      Generate
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Click generate to create a unique SKU</p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="barcode">Barcode</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="barcode"
+                      placeholder="e.g. BC-20250829-1234"
+                      value={formData.barcode}
+                      onChange={(e) => handleInputChange('barcode', e.target.value)}
+                      className="dark:bg-gray-700"
+                    />
+                    <Button type="button" variant="outline" onClick={generateBarcode} className="dark:bg-gray-700">
+                      Generate
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Barcode auto-renders below when generated or typed</p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="brand">Brand</Label>
+                  <Input
+                    id="brand"
+                    placeholder="Brand name"
+                    value={formData.brand}
+                    onChange={(e) => handleInputChange('brand', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Action Buttons */}
-            <div className="flex gap-4 pt-4">
-              <Button
-                type="submit"
-                className="bg-green-500 hover:bg-green-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
-              >
-                <Save className="h-4 w-4" />
-                Add Product
-              </Button>
-              
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleCancel}
-                className="gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
-              >
-                <X className="h-4 w-4" />
-                Cancel
-              </Button>
-            </div>
-          </form>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="supplier">Supplier</Label>
+                  <Select value={formData.supplier} onValueChange={(value) => handleInputChange('supplier', value)}>
+                    <SelectTrigger className="dark:bg-gray-700">
+                      <SelectValue placeholder="Select Supplier" />
+                    </SelectTrigger>
+                    <SelectContent className="dark:bg-gray-700">
+                      {suppliers.map((supplier) => (
+                        <SelectItem key={supplier} value={supplier}>
+                          {supplier}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="batchLotNo">Batch / Lot No.</Label>
+                  <Input
+                    id="batchLotNo"
+                    placeholder="Batch or lot number"
+                    value={formData.batchLotNo}
+                    onChange={(e) => handleInputChange('batchLotNo', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Barcode Preview</Label>
+                  <div className="h-10 bg-gray-100 dark:bg-gray-700 rounded border flex items-center justify-center text-xs text-muted-foreground">
+                    {formData.barcode || 'Generate barcode to preview'}
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Expiry Date</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal dark:bg-gray-700",
+                          !expiryDate && "text-muted-foreground"
+                        )}
+                      >
+                        <Calendar className="mr-2 h-4 w-4" />
+                        {expiryDate ? format(expiryDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 dark:bg-gray-700" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={expiryDate}
+                        onSelect={setExpiryDate}
+                        initialFocus
+                        className="pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="multipleBarcodes">Multiple Barcodes</Label>
+                  <Input
+                    id="multipleBarcodes"
+                    placeholder="Comma-separated (optional)"
+                    value={formData.multipleBarcodes}
+                    onChange={(e) => handleInputChange('multipleBarcodes', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Pricing Tab */}
+            <TabsContent value="pricing" className="p-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="purchasePrice">Purchase Price *</Label>
+                  <Input
+                    id="purchasePrice"
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    value={formData.purchasePrice}
+                    onChange={(e) => handleInputChange('purchasePrice', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="sellingPrice">Selling Price *</Label>
+                  <Input
+                    id="sellingPrice"
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    value={formData.sellingPrice}
+                    onChange={(e) => handleInputChange('sellingPrice', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="discount">Discount</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="discount"
+                      type="number"
+                      placeholder="0"
+                      value={formData.discount}
+                      onChange={(e) => handleInputChange('discount', e.target.value)}
+                      className="dark:bg-gray-700"
+                    />
+                    <Select value={formData.discountType} onValueChange={(value) => handleInputChange('discountType', value)}>
+                      <SelectTrigger className="w-20 dark:bg-gray-700">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="dark:bg-gray-700">
+                        <SelectItem value="%">%</SelectItem>
+                        <SelectItem value="$">$</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="tax">Tax (%)</Label>
+                  <Input
+                    id="tax"
+                    type="number"
+                    placeholder="0"
+                    value={formData.tax}
+                    onChange={(e) => handleInputChange('tax', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="profitMargin">Profit Margin</Label>
+                  <Input
+                    id="profitMargin"
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    value={formData.profitMargin}
+                    onChange={(e) => handleInputChange('profitMargin', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end">
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={formData.taxable}
+                    onCheckedChange={(checked) => handleInputChange('taxable', checked)}
+                  />
+                  <Label>Taxable</Label>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Inventory Tab */}
+            <TabsContent value="inventory" className="p-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="unit">Unit *</Label>
+                  <Select value={formData.unit} onValueChange={(value) => handleInputChange('unit', value)}>
+                    <SelectTrigger className="dark:bg-gray-700">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="dark:bg-gray-700">
+                      {units.map((unit) => (
+                        <SelectItem key={unit} value={unit}>
+                          {unit}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="stockQuantity">Stock Quantity *</Label>
+                  <Input
+                    id="stockQuantity"
+                    type="number"
+                    placeholder="0"
+                    value={formData.stockQuantity}
+                    onChange={(e) => handleInputChange('stockQuantity', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="minStockAlert">Min Stock Alert</Label>
+                  <Input
+                    id="minStockAlert"
+                    type="number"
+                    placeholder="0"
+                    value={formData.minStockAlert}
+                    onChange={(e) => handleInputChange('minStockAlert', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="reorderPoint">Reorder Point</Label>
+                  <Input
+                    id="reorderPoint"
+                    type="number"
+                    placeholder="0"
+                    value={formData.reorderPoint}
+                    onChange={(e) => handleInputChange('reorderPoint', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded">
+                <div>
+                  <h3 className="font-medium">Advanced Inventory Settings</h3>
+                  <p className="text-sm text-muted-foreground">Track serial numbers? lot/expiry? batch-level stock?</p>
+                </div>
+                <Button variant="outline" className="dark:bg-gray-600">
+                  Toggle
+                </Button>
+              </div>
+            </TabsContent>
+
+            {/* Extras Tab */}
+            <TabsContent value="extras" className="p-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Product Image</Label>
+                    <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
+                      <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                      <p className="text-sm text-muted-foreground mb-2">Upload image</p>
+                      <p className="text-xs text-muted-foreground">PNG/JPG, recommended 800×800</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      checked={formData.featuredProduct}
+                      onCheckedChange={(checked) => handleInputChange('featuredProduct', checked)}
+                    />
+                    <Label>Featured Product</Label>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="description">Description</Label>
+                    <Textarea
+                      id="description"
+                      placeholder="Long product description, ingredients, usage instructions..."
+                      value={formData.description}
+                      onChange={(e) => handleInputChange('description', e.target.value)}
+                      rows={8}
+                      className="dark:bg-gray-700"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="status">Status</Label>
+                  <Select value={formData.status} onValueChange={(value) => handleInputChange('status', value)}>
+                    <SelectTrigger className="dark:bg-gray-700">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="dark:bg-gray-700">
+                      {statusOptions.map((status) => (
+                        <SelectItem key={status} value={status}>
+                          {status}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="tags">Tags</Label>
+                  <Input
+                    id="tags"
+                    placeholder="comma, separated, tags"
+                    value={formData.tags}
+                    onChange={(e) => handleInputChange('tags', e.target.value)}
+                    className="dark:bg-gray-700"
+                  />
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          {/* Action Buttons */}
+          <div className="flex justify-end gap-4 p-6 border-t dark:border-gray-600">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleReset}
+              className="gap-2 transition-all duration-200 hover:scale-95 active:scale-90 dark:bg-gray-700"
+            >
+              <RotateCcw className="h-4 w-4" />
+              Reset
+            </Button>
+            
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleCancel}
+              className="gap-2 transition-all duration-200 hover:scale-95 active:scale-90 text-red-600 border-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 dark:bg-gray-700"
+            >
+              <X className="h-4 w-4" />
+              Cancel
+            </Button>
+
+            <Button
+              type="button"
+              onClick={handleSubmit}
+              className="bg-green-500 hover:bg-green-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+            >
+              <Save className="h-4 w-4" />
+              Save Product
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
