@@ -264,22 +264,22 @@ All colors MUST be HSL.
     background: hsl(var(--muted) / 0.5);
   }
 
-  /* Scrollbar Styling */
+  /* Scrollbar Styling - Global */
   ::-webkit-scrollbar {
     width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: hsl(var(--background));
+    background: hsl(0 0% 0%) !important;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(0 0% 0%);
+    background: hsl(0 0% 40%);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(0 0% 20%);
+    background: hsl(0 0% 55%);
   }
 
   /* Sidebar specific scrollbar - target the actual scroll container */
@@ -300,33 +300,16 @@ All colors MUST be HSL.
     background: hsl(0 0% 55%) !important;
   }
 
-  /* Firefox */
+  /* Firefox - Global */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(0 0% 40%) hsl(0 0% 0%);
+  }
+
+  /* Firefox - Sidebar */
   .pos-sidebar-scroll {
     scrollbar-width: thin;
     scrollbar-color: hsl(0 0% 40%) hsl(0 0% 0%);
   }
 
-  /* Dark theme scrollbar */
-  .dark ::-webkit-scrollbar-track {
-    background: hsl(var(--background));
-  }
-
-  .dark ::-webkit-scrollbar-thumb {
-    background: hsl(217.2 32.6% 25%);
-    border-radius: 4px;
-  }
-
-  .dark ::-webkit-scrollbar-thumb:hover {
-    background: hsl(217.2 32.6% 35%);
-  }
-
-  /* Firefox scrollbar */
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: hsl(0 0% 0%) hsl(var(--background));
-  }
-
-  .dark html {
-    scrollbar-color: hsl(217.2 32.6% 25%) hsl(var(--background));
-  }
 }
