@@ -26,6 +26,8 @@ import {
 import { Search, Package, Plus, Edit, Trash2, Filter, Eye, FileDown, Upload, FileSpreadsheet } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 // Mock product data (from checkout page)
 const initialProducts = [
@@ -154,12 +156,14 @@ const initialProducts = [
 const categories = ["All", "Coffee", "Tea", "Dessert", "Beverages", "Pastry", "Confectionery"];
 
 const getStatusBadge = (status: string, stock: number) => {
+  const baseClasses = "w-20 text-center justify-center";
+  
   if (stock === 0) {
-    return <Badge variant="destructive">Out of Stock</Badge>;
+    return <Badge variant="destructive" className={baseClasses}>Out of Stock</Badge>;
   } else if (stock <= 10) {
-    return <Badge variant="secondary" className="bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200">Low Stock</Badge>;
+    return <Badge variant="secondary" className={`${baseClasses} bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200`}>Low Stock</Badge>;
   } else {
-    return <Badge variant="default" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Active</Badge>;
+    return <Badge variant="default" className={`${baseClasses} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200`}>Active</Badge>;
   }
 };
 
@@ -229,9 +233,56 @@ const Products = () => {
 
   // Handle export to PDF
   const handleExportPDF = () => {
+    const doc = new jsPDF();
+    
+    // Add title
+    doc.setFontSize(20);
+    doc.text('Products Report', 14, 22);
+    
+    // Add date
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 32);
+    doc.text(`Total Products: ${filteredProducts.length}`, 14, 40);
+    
+    // Prepare table data
+    const tableData = filteredProducts.map(product => [
+      product.name,
+      product.sku,
+      product.category,
+      `$${product.price.toFixed(2)}`,
+      product.stock.toString(),
+      product.stock === 0 ? 'Out of Stock' : product.stock <= 10 ? 'Low Stock' : 'Active'
+    ]);
+    
+    // Add table
+    autoTable(doc, {
+      head: [['Product Name', 'SKU', 'Category', 'Price', 'Stock', 'Status']],
+      body: tableData,
+      startY: 50,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [41, 128, 185],
+        textColor: 255,
+      },
+      columnStyles: {
+        0: { cellWidth: 40 },
+        1: { cellWidth: 25 },
+        2: { cellWidth: 25 },
+        3: { cellWidth: 20 },
+        4: { cellWidth: 15 },
+        5: { cellWidth: 25 },
+      },
+    });
+    
+    const filename = `products_report_${new Date().toISOString().split('T')[0]}.pdf`;
+    doc.save(filename);
+    
     toast({
       title: "PDF Export",
-      description: "PDF export functionality will be implemented soon.",
+      description: `Products report exported to ${filename}`,
     });
   };
 
