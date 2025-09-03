@@ -173,7 +173,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-4">
+      <nav className="flex-1 overflow-y-auto py-4 bg-black">
         {menuItems.map((section) => (
           <div key={section.title} className="mb-6">
             {!collapsed && (
