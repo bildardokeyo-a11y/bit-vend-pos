@@ -49,8 +49,13 @@ const Receipt = () => {
         </Button>
       </div>
 
-      <Card className="print:shadow-none">
-        <CardHeader className="text-center">
+      <Card className="print:shadow-none dark:bg-black dark:border-gray-800 print:bg-white print:text-black">
+        <CardHeader className="text-center border-b dark:border-gray-800 print:border-gray-300">
+          <div className="mb-4">
+            <h2 className="text-3xl font-bold text-primary">TechStore Plus</h2>
+            <p className="text-sm text-muted-foreground">Your Premium Electronics Retailer</p>
+            <p className="text-xs text-muted-foreground">123 Tech Street, Digital City, DC 12345</p>
+          </div>
           <CardTitle className="text-2xl">Payment Receipt</CardTitle>
           <p className="text-muted-foreground">
             {new Date().toLocaleDateString()} - {new Date().toLocaleTimeString()}
