@@ -284,11 +284,11 @@ All colors MUST be HSL.
 
   /* Sidebar specific scrollbar */
   .pos-sidebar ::-webkit-scrollbar-track {
-    background: hsl(0 0% 0%);
+    background: hsl(0 0% 0%) !important;
   }
   
   .dark .pos-sidebar ::-webkit-scrollbar-track {
-    background: hsl(var(--background));
+    background: hsl(var(--background)) !important;
   }
 
   /* Dark theme scrollbar */
