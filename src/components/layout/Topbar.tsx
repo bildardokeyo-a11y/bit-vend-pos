@@ -41,17 +41,21 @@ const Topbar: React.FC<TopbarProps> = ({
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    const el = document.querySelector('.pos-content');
     const handleScroll = () => {
-      const scrollableElement = document.querySelector('.pos-content');
-      if (scrollableElement) {
-        setIsScrolled(scrollableElement.scrollTop > 10);
-      }
+      const y = (el as HTMLElement | null)?.scrollTop ?? window.scrollY;
+      setIsScrolled(y > 8);
     };
 
-    const scrollableElement = document.querySelector('.pos-content');
-    if (scrollableElement) {
-      scrollableElement.addEventListener('scroll', handleScroll);
-      return () => scrollableElement.removeEventListener('scroll', handleScroll);
+    // Initialize state on mount
+    handleScroll();
+
+    if (el) {
+      el.addEventListener('scroll', handleScroll);
+      return () => el.removeEventListener('scroll', handleScroll);
+    } else {
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
     }
   }, []);
 
