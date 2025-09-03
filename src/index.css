@@ -57,7 +57,7 @@ All colors MUST be HSL.
     /* POS Colors */
     --success: 142 76% 36%;
     --success-foreground: 355.7 100% 97.3%;
-    --warning: 60 100% 60%;
+    --warning: 49 100% 50%;
     --warning-foreground: 0 0% 0%;
     --orange-accent: 25 95% 53%;
   }
@@ -102,7 +102,7 @@ All colors MUST be HSL.
     /* POS Colors Dark */
     --success: 142 76% 36%;
     --success-foreground: 355.7 100% 97.3%;
-    --warning: 60 100% 60%;
+    --warning: 49 100% 50%;
     --warning-foreground: 0 0% 0%;
     --orange-accent: 25 95% 53%;
   }
