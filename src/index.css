@@ -186,8 +186,17 @@ All colors MUST be HSL.
     box-shadow: 0 4px 20px hsl(var(--primary-blue) / 0.1);
   }
   
+  .dark .product-card {
+    @apply bg-black border-gray-800;
+    box-shadow: 0 4px 20px hsl(0 0% 0% / 0.3);
+  }
+  
   .product-card:hover {
     box-shadow: 0 8px 30px hsl(var(--primary-blue) / 0.2);
+  }
+  
+  .dark .product-card:hover {
+    box-shadow: 0 8px 30px hsl(0 0% 0% / 0.4);
   }
   
   /* Animations */
