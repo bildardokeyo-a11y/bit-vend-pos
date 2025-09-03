@@ -31,6 +31,7 @@ const Receipt = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6 print:p-0 print:max-w-full">
+      <style>{`@media print { body * { visibility: hidden !important; } #receipt-print, #receipt-print * { visibility: visible !important; } #receipt-print { position: absolute; left: 0; top: 0; width: 100%; padding: 0.5in; background: white !important; color: black !important; } }`}</style>
       <div className="flex items-center gap-4 mb-6 print:hidden">
         <Button
           variant="outline"
@@ -49,7 +50,7 @@ const Receipt = () => {
         </Button>
       </div>
 
-      <Card className="print:shadow-none dark:bg-black dark:border-gray-800 print:bg-white print:text-black">
+      <Card id="receipt-print" className="print:shadow-none dark:bg-black dark:border-gray-800 print:bg-white print:text-black">
         <CardHeader className="text-center border-b dark:border-gray-800 print:border-gray-300">
           <div className="mb-4">
             <h2 className="text-3xl font-bold text-primary">TechStore Plus</h2>
