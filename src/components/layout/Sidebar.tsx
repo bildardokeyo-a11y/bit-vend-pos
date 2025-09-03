@@ -190,25 +190,33 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                 
                 return (
                   <li key={item.href}>
-                    <Link
-                      to={item.href}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // TODO: Navigate to page when implemented
+                        console.log(`Navigating to ${item.label} - Page not yet built`);
+                      }}
                       className={cn(
-                        "flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group",
+                        "w-full flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group relative overflow-hidden",
+                        "before:absolute before:inset-0 before:bg-gradient-to-r before:from-yellow-400/20 before:to-amber-500/20 before:opacity-0 before:transition-opacity before:duration-300",
+                        "hover:before:opacity-100 hover:shadow-lg hover:shadow-yellow-500/10 hover:scale-[1.02] hover:translate-x-1",
                         isActive
-                          ? "bg-white/10 dark:bg-black/10 text-white shadow-lg"
-                          : "text-gray-300 dark:text-white hover:bg-white/5 dark:hover:bg-black/5 hover:text-white"
+                          ? "bg-gradient-to-r from-yellow-400/10 to-amber-500/10 text-yellow-400 shadow-lg shadow-yellow-500/20 border-l-2 border-yellow-400"
+                          : "text-gray-300 hover:text-yellow-400 hover:bg-white/5"
                       )}
                     >
-                      <Icon size={18} className="flex-shrink-0" />
+                      <Icon size={18} className="flex-shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110" />
                       {!collapsed && (
-                        <span className="ml-3 animate-slideInLeft">{item.label}</span>
+                        <span className="ml-3 relative z-10 transition-all duration-300 group-hover:font-semibold">{item.label}</span>
                       )}
                       {collapsed && (
-                        <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
+                        <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900/95 backdrop-blur-sm border border-yellow-400/20 text-yellow-400 text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-50 shadow-lg shadow-yellow-500/20">
                           {item.label}
                         </div>
                       )}
-                    </Link>
+                      {/* Hover glow effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/5 to-transparent transform -skew-x-12 -translate-x-full transition-transform duration-700 group-hover:translate-x-full" />
+                    </button>
                   </li>
                 );
               })}
