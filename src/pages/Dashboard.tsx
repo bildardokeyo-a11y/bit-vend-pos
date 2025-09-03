@@ -127,7 +127,7 @@ const Dashboard: React.FC = () => {
             <Card key={action.title} className="product-card cursor-pointer" onClick={action.action}>
               <CardContent className="p-6">
                 <div className="text-center space-y-3">
-                  <div className={`w-12 h-12 rounded-full ${action.color} mx-auto flex items-center justify-center`}>
+                  <div className={`w-12 h-12 rounded-full ${action.color} ${action.title === 'Start POS Session' ? 'dark:bg-black' : ''} mx-auto flex items-center justify-center`}>
                     <BarChart3 className="h-6 w-6" style={{ color: '#ffffff' }} />
                   </div>
                   <div>
