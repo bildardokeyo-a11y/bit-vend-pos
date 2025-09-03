@@ -264,22 +264,45 @@ All colors MUST be HSL.
     background: hsl(var(--muted) / 0.5);
   }
 
-  /* Scrollbar Styling - Global */
+  /* Auto-hiding Scrollbar Styling - Global */
   ::-webkit-scrollbar {
     width: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
   ::-webkit-scrollbar-track {
     background: hsl(0 0% 0%) !important;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
   ::-webkit-scrollbar-thumb {
     background: hsl(0 0% 40%);
     border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(0 0% 55%);
+  }
+
+  /* Show scrollbar on hover or scroll */
+  *:hover::-webkit-scrollbar,
+  *:hover::-webkit-scrollbar-track,
+  *:hover::-webkit-scrollbar-thumb {
+    opacity: 1;
+  }
+
+  /* Show scrollbar during scroll */
+  html:active ::-webkit-scrollbar,
+  html:active ::-webkit-scrollbar-track,
+  html:active ::-webkit-scrollbar-thumb,
+  *:active::-webkit-scrollbar,
+  *:active::-webkit-scrollbar-track,
+  *:active::-webkit-scrollbar-thumb {
+    opacity: 1;
   }
 
   /* Sidebar specific scrollbar - target the actual scroll container */
