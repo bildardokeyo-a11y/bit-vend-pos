@@ -168,7 +168,7 @@ const Checkout = () => {
                     <Button
                       onClick={() => addToCart(product)}
                       size="sm"
-                      className="bg-warning hover:bg-warning/90 text-black rounded-lg h-8 w-8 p-0 group-hover:scale-110 transition-all duration-200 shadow-md border-0"
+                      className="bg-warning hover:bg-warning/90 text-warning-foreground rounded-lg h-8 w-8 p-0 group-hover:scale-110 transition-all duration-200 shadow-md border-0"
                     >
                       <Plus className="h-4 w-4 font-bold" />
                     </Button>
