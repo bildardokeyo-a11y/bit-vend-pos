@@ -198,11 +198,11 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                       }}
                       className={cn(
                         "w-full flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group relative overflow-hidden",
-                        "before:absolute before:inset-0 before:bg-gradient-to-r before:from-yellow-400/20 before:to-amber-500/20 before:opacity-0 before:transition-opacity before:duration-300",
-                        "hover:before:opacity-100 hover:shadow-lg hover:shadow-yellow-500/10 hover:scale-[1.02] hover:translate-x-1",
+                        "before:absolute before:inset-0 before:bg-gradient-to-r before:from-white/20 before:to-white/10 before:opacity-0 before:transition-opacity before:duration-300",
+                        "hover:before:opacity-100 hover:shadow-lg hover:shadow-white/10 hover:scale-[1.02] hover:translate-x-1",
                         isActive
-                          ? "bg-gradient-to-r from-yellow-400/10 to-amber-500/10 text-yellow-400 shadow-lg shadow-yellow-500/20 border-l-2 border-yellow-400"
-                          : "text-gray-300 hover:text-yellow-400 hover:bg-white/5"
+                          ? "bg-gradient-to-r from-white/10 to-white/5 text-white shadow-lg shadow-white/20 border-l-2 border-white"
+                          : "text-gray-300 hover:text-gray-500 hover:bg-white/5"
                       )}
                     >
                       <Icon size={18} className="flex-shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110" />
@@ -210,12 +210,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                         <span className="ml-3 relative z-10 transition-all duration-300 group-hover:font-semibold">{item.label}</span>
                       )}
                       {collapsed && (
-                        <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900/95 backdrop-blur-sm border border-yellow-400/20 text-yellow-400 text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-50 shadow-lg shadow-yellow-500/20">
+                        <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900/95 backdrop-blur-sm border border-white/20 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-50 shadow-lg shadow-white/20">
                           {item.label}
                         </div>
                       )}
                       {/* Hover glow effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/5 to-transparent transform -skew-x-12 -translate-x-full transition-transform duration-700 group-hover:translate-x-full" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 -translate-x-full transition-transform duration-700 group-hover:translate-x-full" />
                     </button>
                   </li>
                 );
