@@ -138,7 +138,7 @@ const Checkout = () => {
                     <div>
                       <h3 className="font-semibold text-card-foreground">{product.name}</h3>
                       <p className="text-sm text-muted-foreground">{product.description}</p>
-                      <p className="text-lg font-bold text-success mt-1">${product.price}</p>
+                      <p className="text-lg font-bold text-green-500 mt-1">${product.price}</p>
                     </div>
                   </div>
                   <Button
@@ -156,7 +156,7 @@ const Checkout = () => {
       </div>
 
       {/* Cart Panel */}
-      <div className="w-96 bg-card border-l border-border p-6 flex flex-col">
+      <div className="w-96 bg-card dark:bg-black border-l border-border p-6 flex flex-col">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold">Cart</h2>
           <Badge variant="secondary" className="rounded-full">
@@ -210,7 +210,7 @@ const Checkout = () => {
                     </Button>
                   </div>
                 </div>
-                <p className="font-semibold text-success">${(item.product.price * item.quantity).toFixed(2)}</p>
+                <p className="font-semibold text-green-500">${(item.product.price * item.quantity).toFixed(2)}</p>
               </div>
             ))}
           </div>
@@ -222,16 +222,16 @@ const Checkout = () => {
         <div className="space-y-2 mb-6">
           <div className="flex justify-between">
             <span>Subtotal</span>
-            <span className="text-success">${cartTotal.toFixed(2)}</span>
+            <span className="text-green-500">${cartTotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>Tax (8%)</span>
-            <span className="text-success">${tax.toFixed(2)}</span>
+            <span className="text-green-500">${tax.toFixed(2)}</span>
           </div>
           <Separator />
           <div className="flex justify-between font-bold text-lg">
             <span>Total</span>
-            <span className="text-success">${finalTotal.toFixed(2)}</span>
+            <span className="text-green-500">${finalTotal.toFixed(2)}</span>
           </div>
         </div>
 
