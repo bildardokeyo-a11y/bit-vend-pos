@@ -156,7 +156,7 @@ const initialProducts = [
 const categories = ["All", "Coffee", "Tea", "Dessert", "Beverages", "Pastry", "Confectionery"];
 
 const getStatusBadge = (status: string, stock: number) => {
-  const baseClasses = "w-20 text-center justify-center";
+  const baseClasses = "w-24 text-center justify-center text-xs px-2 py-1";
   
   if (stock === 0) {
     return <Badge variant="destructive" className={baseClasses}>Out of Stock</Badge>;
@@ -513,8 +513,8 @@ const Products = () => {
                     </TableCell>
                   </TableRow>
                  ) : (
-                   paginatedProducts.map((product) => (
-                     <TableRow key={product.id} className="hover:bg-muted/50 hover:shadow-sm transition-all duration-200 cursor-pointer group">
+                    paginatedProducts.map((product) => (
+                     <TableRow key={product.id} className="hover:bg-muted/50 hover:shadow-lg transition-all duration-300 cursor-pointer group hover:scale-[1.02] hover:z-10 relative">
                       <TableCell>
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center">
