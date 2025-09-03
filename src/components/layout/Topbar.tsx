@@ -107,7 +107,7 @@ const Topbar: React.FC<TopbarProps> = ({
 
         <Button
           onClick={() => navigate('/products/add')}
-          className="bg-orange-500 hover:bg-orange-600 text-white gap-2"
+          className="bg-orange-500 hover:bg-orange-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
           size="sm"
         >
           <Plus size={16} />
@@ -116,7 +116,7 @@ const Topbar: React.FC<TopbarProps> = ({
 
         <Button
           onClick={() => navigate('/checkout')}
-          className="bg-blue-500 hover:bg-blue-600 text-white gap-2"
+          className="bg-blue-500 hover:bg-blue-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
           size="sm"
         >
           <Calculator size={16} />
