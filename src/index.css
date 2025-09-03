@@ -146,9 +146,10 @@ All colors MUST be HSL.
   .pos-content {
     @apply transition-all duration-300 overflow-y-auto;
     margin-left: 16rem; /* 256px */
-    margin-top: 4rem; /* 64px */
-    height: calc(100vh - 4rem);
+    margin-top: 0; /* Allow content to flow under fixed topbar */
+    height: 100vh; /* Full viewport height; header overlays */
     padding: 1.5rem;
+    padding-top: calc(1.5rem + 4rem); /* Space for the 64px topbar */
     scroll-behavior: smooth;
   }
   
