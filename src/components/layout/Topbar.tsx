@@ -125,7 +125,7 @@ const Topbar: React.FC<TopbarProps> = ({
           POS
         </Button>
 
-        <div className="flex items-center gap-3 text-muted-foreground">
+        <div className={cn("flex items-center gap-3", darkMode ? "text-white" : "text-black")}>
           <Button variant="ghost" size="sm" className="p-2">
             <Globe size={18} />
           </Button>
