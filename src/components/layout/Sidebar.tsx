@@ -153,20 +153,20 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
   ];
 
   return (
-    <div className={cn("pos-sidebar bg-card border-r", collapsed && "collapsed")}>
+    <div className={cn("pos-sidebar", collapsed && "collapsed")}>
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-border">
+      <div className="flex items-center justify-between p-6 border-b border-white/10">
         {!collapsed && (
-          <Link to="/" className="flex items-center space-x-2 text-foreground hover:text-primary transition-colors">
+          <Link to="/" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
             <span className="text-xl font-bold">
               <span style={{ color: '#FFD000' }}>Bit Vend</span>
-              <span className="text-foreground"> POS</span>
+              <span className="text-white"> POS</span>
             </span>
           </Link>
         )}
         <button
           onClick={onToggle}
-          className="p-2 rounded-lg hover:bg-accent/20 transition-colors text-foreground"
+          className="p-2 rounded-lg hover:bg-white/10 transition-colors text-white"
         >
           {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
@@ -178,7 +178,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
           <div key={section.title} className="mb-6">
             {!collapsed && (
               <div className="px-6 mb-3">
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
                   {section.title}
                 </h3>
               </div>
@@ -204,7 +204,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                         <span className="ml-3 animate-slideInLeft">{item.label}</span>
                       )}
                       {collapsed && (
-                        <div className="absolute left-full ml-2 px-2 py-1 bg-popover text-popover-foreground border border-border text-xs rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
+                        <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
                           {item.label}
                         </div>
                       )}
