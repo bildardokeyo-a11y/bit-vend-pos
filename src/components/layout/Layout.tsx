@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 type LayoutProps = { children?: React.ReactNode };
 
@@ -36,10 +37,12 @@ const Layout: React.FC<LayoutProps> = () => {
         darkMode={darkMode}
         onToggleDarkMode={toggleDarkMode}
       />
-      <main className={cn('pos-content bg-background dark:bg-black', sidebarCollapsed && 'collapsed')}>
-        <div className="animate-fadeInUp">
-          <Outlet />
-        </div>
+      <main className={cn('pos-content bg-background dark:bg-black overflow-y-hidden', sidebarCollapsed && 'collapsed')}>
+        <ScrollArea className="h-full">
+          <div className="animate-fadeInUp">
+            <Outlet />
+          </div>
+        </ScrollArea>
       </main>
     </div>
   );
