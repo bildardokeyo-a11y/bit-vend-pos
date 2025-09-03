@@ -20,8 +20,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import moonIcon from '@/assets/moon-icon.png';
-import sunIcon from '@/assets/sun-icon.png';
+
+// ---------------- Theme Toggle ----------------
+const goldenSun = "🌞", goldenMoon = "🌙";
 
 interface TopbarProps {
   collapsed: boolean;
@@ -157,12 +158,9 @@ const Topbar: React.FC<TopbarProps> = ({
           className={`p-2 ${darkMode ? 'theme-toggle-sun' : 'theme-toggle-moon'}`}
           aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
         >
-          <img
-            src={darkMode ? sunIcon : moonIcon}
-            alt={darkMode ? 'Light mode' : 'Dark mode'}
-            className="w-[18px] h-[18px]"
-            loading="lazy"
-          />
+          <span className="text-lg">
+            {darkMode ? goldenSun : goldenMoon}
+          </span>
         </Button>
 
         <DropdownMenu>
