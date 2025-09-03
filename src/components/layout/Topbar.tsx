@@ -20,6 +20,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 // ---------------- Theme Toggle ----------------
 const goldenSun = "🌞", goldenMoon = "🌙";
@@ -124,29 +129,75 @@ const Topbar: React.FC<TopbarProps> = ({
         </Button>
 
         <div className={cn("flex items-center gap-3", darkMode ? "text-white" : "text-black")}>
-          <Button variant="ghost" size="sm" className="p-2">
-            <Globe size={18} />
-          </Button>
-          <Button variant="ghost" size="sm" className="p-2 relative">
-            <Mail size={18} />
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-              3
-            </span>
-          </Button>
-          <Button variant="ghost" size="sm" className="p-2 relative">
-            <Bell size={18} />
-            <span className={cn("absolute -top-1 -right-1 bg-primary text-xs rounded-full w-4 h-4 flex items-center justify-center", darkMode ? "text-black" : "text-white")}>
-              5
-            </span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="p-2"
-            onClick={() => navigate('/settings')}
-          >
-            <Settings size={18} />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="p-2 transition-all duration-200 hover:scale-90 active:scale-75"
+                onClick={() => window.open('https://google.com', '_blank')}
+              >
+                <Globe size={18} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+              Internet
+            </TooltipContent>
+          </Tooltip>
+          
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="p-2 relative transition-all duration-200 hover:scale-90 active:scale-75"
+                onClick={() => window.open('mailto:', '_blank')}
+              >
+                <Mail size={18} />
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  3
+                </span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+              Mail
+            </TooltipContent>
+          </Tooltip>
+          
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="p-2 relative transition-all duration-200 hover:scale-90 active:scale-75"
+                onClick={() => console.log('Open notifications')}
+              >
+                <Bell size={18} />
+                <span className={cn("absolute -top-1 -right-1 bg-primary text-xs rounded-full w-4 h-4 flex items-center justify-center", darkMode ? "text-black" : "text-white")}>
+                  5
+                </span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+              Notifications
+            </TooltipContent>
+          </Tooltip>
+          
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2 transition-all duration-200 hover:scale-90 active:scale-75"
+                onClick={() => navigate('/settings')}
+              >
+                <Settings size={18} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+              Settings
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <Button
@@ -161,26 +212,37 @@ const Topbar: React.FC<TopbarProps> = ({
           </span>
         </Button>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="p-2">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <User size={18} className="text-primary" />
-              </div>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem onClick={() => navigate('/profile')}>
-              Profile Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate('/settings')}>
-              System Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log('Logout')}>
-              Logout
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="p-2 transition-all duration-200 hover:scale-90 active:scale-75"
+                >
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <User size={18} className="text-primary" />
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuItem onClick={() => navigate('/profile')}>
+                  Profile Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/settings')}>
+                  System Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('Logout')}>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </TooltipTrigger>
+          <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+            Profile
+          </TooltipContent>
+        </Tooltip>
       </div>
     </header>
   );

@@ -355,7 +355,10 @@ const Products = () => {
           <p className="text-muted-foreground mt-1">Manage your product inventory and catalog</p>
         </div>
         <div className="flex items-center gap-3">
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90">
+          <Button 
+            onClick={() => navigate('/products/add')}
+            className="bg-orange-500 hover:bg-orange-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+          >
             <Plus className="h-4 w-4" />
             Add Product
           </Button>

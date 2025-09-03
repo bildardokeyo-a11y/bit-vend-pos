@@ -15,6 +15,7 @@ import SalesReturn from "./pages/SalesReturn";
 import Quotation from "./pages/Quotation";
 import Purchases from "./pages/Purchases";
 import Products from "./pages/Products";
+import ProductAdd from "./pages/ProductAdd";
 import ProductView from "./pages/ProductView";
 import ProductEdit from "./pages/ProductEdit";
 import Categories from "./pages/Categories";
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="quotation" element={<Quotation />} />
             <Route path="purchases" element={<Purchases />} />
             <Route path="products" element={<Products />} />
+            <Route path="products/add" element={<ProductAdd />} />
             <Route path="products/view/:id" element={<ProductView />} />
             <Route path="products/edit/:id" element={<ProductEdit />} />
             <Route path="categories" element={<Categories />} />
