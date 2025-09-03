@@ -3,6 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 import { 
   Table, 
   TableBody, 
@@ -20,11 +23,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { Search, Package, Plus, Edit, Trash2, Filter } from 'lucide-react';
+import { Search, Package, Plus, Edit, Trash2, Filter, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Mock product data (from checkout page)
-const products = [
+const initialProducts = [
   {
     id: 1,
     name: "Premium Espresso Blend",
@@ -160,6 +163,9 @@ const getStatusBadge = (status: string, stock: number) => {
 };
 
 const Products = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [products, setProducts] = useState(initialProducts);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
@@ -201,8 +207,27 @@ const Products = () => {
     setCurrentPage(1);
   }, [searchTerm, selectedCategory]);
 
+  // Handle delete product
+  const handleDeleteProduct = (productId: number, productName: string) => {
+    setProducts(prev => prev.filter(product => product.id !== productId));
+    toast({
+      title: "Product Deleted",
+      description: `${productName} has been removed from inventory.`,
+      variant: "destructive",
+    });
+  };
+
+  // Handle navigation
+  const handleViewProduct = (productId: number) => {
+    navigate(`/products/view/${productId}`);
+  };
+
+  const handleEditProduct = (productId: number) => {
+    navigate(`/products/edit/${productId}`);
+  };
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 bg-background dark:bg-black min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -341,9 +366,9 @@ const Products = () => {
                       </div>
                     </TableCell>
                   </TableRow>
-                ) : (
-                  paginatedProducts.map((product) => (
-                    <TableRow key={product.id} className="hover:bg-muted/50">
+                 ) : (
+                   paginatedProducts.map((product) => (
+                     <TableRow key={product.id} className="hover:bg-muted/50 hover:shadow-sm transition-all duration-200 cursor-pointer group">
                       <TableCell>
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center">
@@ -377,16 +402,57 @@ const Products = () => {
                       <TableCell>
                         {getStatusBadge(product.status, product.stock)}
                       </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
+                       <TableCell className="text-right">
+                         <div className="flex items-center justify-end gap-1 sm:gap-2">
+                           <Tooltip>
+                             <TooltipTrigger asChild>
+                               <Button 
+                                 variant="ghost" 
+                                 size="sm" 
+                                 className="h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950 dark:hover:text-blue-400 transition-colors"
+                                 onClick={() => handleViewProduct(product.id)}
+                               >
+                                 <Eye className="h-4 w-4" />
+                               </Button>
+                             </TooltipTrigger>
+                             <TooltipContent>
+                               <p>View Product</p>
+                             </TooltipContent>
+                           </Tooltip>
+                           
+                           <Tooltip>
+                             <TooltipTrigger asChild>
+                               <Button 
+                                 variant="ghost" 
+                                 size="sm" 
+                                 className="h-8 w-8 p-0 hover:bg-amber-50 hover:text-amber-600 dark:hover:bg-amber-950 dark:hover:text-amber-400 transition-colors"
+                                 onClick={() => handleEditProduct(product.id)}
+                               >
+                                 <Edit className="h-4 w-4" />
+                               </Button>
+                             </TooltipTrigger>
+                             <TooltipContent>
+                               <p>Edit Product</p>
+                             </TooltipContent>
+                           </Tooltip>
+                           
+                           <Tooltip>
+                             <TooltipTrigger asChild>
+                               <Button 
+                                 variant="ghost" 
+                                 size="sm" 
+                                 className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950 dark:hover:text-red-400 transition-colors"
+                                 onClick={() => handleDeleteProduct(product.id, product.name)}
+                               >
+                                 <Trash2 className="h-4 w-4" />
+                               </Button>
+                             </TooltipTrigger>
+                             <TooltipContent>
+                               <p>Delete Product</p>
+                             </TooltipContent>
+                           </Tooltip>
+                         </div>
+                       </TableCell>
                     </TableRow>
                   ))
                 )}
