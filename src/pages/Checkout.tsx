@@ -228,7 +228,7 @@ const Checkout = () => {
                  key={index} 
                  className={cn(
                    "flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-all duration-200 group",
-                   animatingCartItems.has(item.product.id) && "animate-pulse bg-warning/10 scale-105"
+                   animatingCartItems.has(item.product.id) && "scale-110"
                  )}
                >
                 <div className="flex-1">
@@ -239,6 +239,16 @@ const Checkout = () => {
                       size="sm"
                       className="h-6 w-6 p-0 rounded-full hover:scale-110 transition-transform duration-200"
                       onClick={() => {
+                        // Animate cart item
+                        setAnimatingCartItems(prev => new Set([...prev, item.product.id]));
+                        setTimeout(() => {
+                          setAnimatingCartItems(prev => {
+                            const newSet = new Set(prev);
+                            newSet.delete(item.product.id);
+                            return newSet;
+                          });
+                        }, 200);
+                        
                         setCart((prev) => {
                           const target = prev.find((ci) => ci.product.id === item.product.id)
                           let next = prev
@@ -264,6 +274,16 @@ const Checkout = () => {
                       size="sm"
                       className="h-6 w-6 p-0 rounded-full hover:scale-110 transition-transform duration-200"
                       onClick={() => {
+                        // Animate cart item
+                        setAnimatingCartItems(prev => new Set([...prev, item.product.id]));
+                        setTimeout(() => {
+                          setAnimatingCartItems(prev => {
+                            const newSet = new Set(prev);
+                            newSet.delete(item.product.id);
+                            return newSet;
+                          });
+                        }, 200);
+                        
                         setCart((prev) => {
                           const next = prev.map((cartItem) =>
                             cartItem.product.id === item.product.id
