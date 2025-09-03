@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import Sidebar from './Sidebar';
@@ -24,32 +24,6 @@ const Layout: React.FC<LayoutProps> = () => {
     }
   }, [darkMode]);
 
-  // Auto-hide scrollbars: mark when scrolling
-  const mainRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const root = document.documentElement;
-    let timeout: number | undefined;
-
-    const onScroll = () => {
-      root.setAttribute('data-scrolling', 'true');
-      if (timeout) window.clearTimeout(timeout);
-      timeout = window.setTimeout(() => {
-        root.removeAttribute('data-scrolling');
-      }, 800);
-    };
-
-    const mainEl = mainRef.current;
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    mainEl?.addEventListener('scroll', onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      mainEl?.removeEventListener('scroll', onScroll);
-      if (timeout) window.clearTimeout(timeout);
-    };
-  }, []);
-
   const toggleSidebar = () => setSidebarCollapsed((p) => !p);
   const toggleDarkMode = () => setDarkMode((p) => !p);
 
@@ -62,7 +36,7 @@ const Layout: React.FC<LayoutProps> = () => {
         darkMode={darkMode}
         onToggleDarkMode={toggleDarkMode}
       />
-      <main ref={mainRef} className={cn('pos-content bg-background dark:bg-black', sidebarCollapsed && 'collapsed')}>
+      <main className={cn('pos-content bg-background dark:bg-black', sidebarCollapsed && 'collapsed')}>
         <div className="animate-fadeInUp">
           <Outlet />
         </div>

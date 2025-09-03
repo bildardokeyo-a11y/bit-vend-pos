@@ -323,52 +323,6 @@ All colors MUST be HSL.
     background: hsl(0 0% 55%) !important;
   }
 
-  /* Auto-hide for sidebar and main content containers */
-  .pos-content::-webkit-scrollbar,
-  .pos-sidebar-scroll::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
-
-  .pos-content:hover::-webkit-scrollbar,
-  .pos-sidebar-scroll:hover::-webkit-scrollbar,
-  html[data-scrolling="true"] .pos-content::-webkit-scrollbar,
-  html[data-scrolling="true"] .pos-sidebar-scroll::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  .pos-content::-webkit-scrollbar-track,
-  .pos-sidebar-scroll::-webkit-scrollbar-track,
-  .pos-content::-webkit-scrollbar-thumb,
-  .pos-sidebar-scroll::-webkit-scrollbar-thumb {
-    opacity: 0;
-  }
-
-  .pos-content:hover::-webkit-scrollbar-track,
-  .pos-sidebar-scroll:hover::-webkit-scrollbar-track,
-  .pos-content:hover::-webkit-scrollbar-thumb,
-  .pos-sidebar-scroll:hover::-webkit-scrollbar-thumb,
-  html[data-scrolling="true"] .pos-content::-webkit-scrollbar-track,
-  html[data-scrolling="true"] .pos-sidebar-scroll::-webkit-scrollbar-track,
-  html[data-scrolling="true"] .pos-content::-webkit-scrollbar-thumb,
-  html[data-scrolling="true"] .pos-sidebar-scroll::-webkit-scrollbar-thumb {
-    opacity: 1;
-  }
-
-  /* Firefox - Containers */
-  .pos-content,
-  .pos-sidebar-scroll {
-    scrollbar-width: none;
-  }
-
-  html[data-scrolling="true"] .pos-content,
-  html[data-scrolling="true"] .pos-sidebar-scroll,
-  .pos-content:hover,
-  .pos-sidebar-scroll:hover {
-    scrollbar-width: thin;
-  }
-
   /* Firefox - Global */
   html {
     scrollbar-width: thin;
