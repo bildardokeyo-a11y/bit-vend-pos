@@ -9,11 +9,11 @@ import {
   Mail,
   Bell,
   Settings,
-  Moon,
-  Sun,
   User,
   Menu
 } from 'lucide-react';
+import moonIcon from '@/assets/moon-icon.png';
+import sunIcon from '@/assets/sun-icon.png';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -127,9 +127,13 @@ const Topbar: React.FC<TopbarProps> = ({
           variant="ghost"
           size="sm"
           onClick={onToggleDarkMode}
-          className={`p-2 ${darkMode ? 'theme-toggle-sun' : ''}`}
+          className={`p-2 ${darkMode ? 'theme-toggle-sun' : 'theme-toggle-moon'}`}
         >
-          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+          <img 
+            src={darkMode ? sunIcon : moonIcon} 
+            alt={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="w-[18px] h-[18px]"
+          />
         </Button>
 
         {/* Profile Menu */}
