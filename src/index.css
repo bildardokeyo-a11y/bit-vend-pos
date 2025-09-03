@@ -122,9 +122,13 @@ All colors MUST be HSL.
   /* POS Sidebar Styling */
   .pos-sidebar {
     @apply fixed left-0 top-0 h-full w-64 transition-all duration-300;
-    background: linear-gradient(135deg, hsl(220 39% 11%) 0%, hsl(220 39% 8%) 100%);
+    background: linear-gradient(135deg, hsl(0 0% 85%) 0%, hsl(0 0% 80%) 100%);
     border-right: 1px solid hsl(var(--border));
     z-index: 1040;
+  }
+  
+  .dark .pos-sidebar {
+    background: linear-gradient(135deg, hsl(220 39% 11%) 0%, hsl(220 39% 8%) 100%);
   }
   
   .pos-sidebar.collapsed {
@@ -276,6 +280,15 @@ All colors MUST be HSL.
 
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(0 0% 20%);
+  }
+
+  /* Sidebar specific scrollbar */
+  .pos-sidebar ::-webkit-scrollbar-track {
+    background: hsl(0 0% 0%);
+  }
+  
+  .dark .pos-sidebar ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
   }
 
   /* Dark theme scrollbar */

@@ -155,7 +155,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
   return (
     <div className={cn("pos-sidebar", collapsed && "collapsed")}>
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-white/10 dark:border-black/10 bg-black">
+      <div className="flex items-center justify-between p-6 border-b border-white/10 dark:border-black/10 bg-gray-500 dark:bg-black">
         {!collapsed && (
           <Link to="/" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
             <span className="text-xl font-bold">
@@ -173,7 +173,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 bg-black h-full overflow-hidden">
+      <nav className="flex-1 bg-gray-500 dark:bg-black h-full overflow-hidden">
         <div className="h-full overflow-y-auto py-4 px-0">
           {menuItems.map((section) => (
             <div key={section.title} className="mb-6">
