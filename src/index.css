@@ -121,10 +121,7 @@ All colors MUST be HSL.
   
   /* POS Sidebar Styling */
   .pos-sidebar {
-    @apply fixed left-0 top-0 h-full w-64 transition-all duration-300;
-    background: linear-gradient(135deg, hsl(var(--sidebar-dark)) 0%, hsl(var(--sidebar-accent)) 100%);
-    border-right: 1px solid hsl(var(--border));
-    z-index: 1040;
+    @apply fixed left-0 top-0 h-full w-64 transition-all duration-300 z-40;
   }
   
   .pos-sidebar.collapsed {
