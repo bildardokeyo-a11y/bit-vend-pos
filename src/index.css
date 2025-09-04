@@ -325,7 +325,9 @@ All colors MUST be HSL.
   input:focus,
   textarea:focus,
   select:focus,
-  .pos-input:focus {
+  .pos-input:focus,
+  button:focus,
+  [role="button"]:focus {
     border-color: #0d6efd !important;      /* Blue border */
     box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important; /* Blue glow */
     outline: none !important;              /* Remove default outline */

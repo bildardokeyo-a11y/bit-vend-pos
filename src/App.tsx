@@ -23,6 +23,9 @@ import Brands from "./pages/Brands";
 import Customers from "./pages/Customers";
 import Employees from "./pages/Employees";
 import Settings from "./pages/Settings";
+import StockIn from "./pages/StockIn";
+import Expenses from "./pages/Expenses";
+import SalesReport from "./pages/SalesReport";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +57,9 @@ const App = () => (
             <Route path="customers" element={<Customers />} />
             <Route path="employees" element={<Employees />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="stock-in" element={<StockIn />} />
+            <Route path="expenses" element={<Expenses />} />
+            <Route path="sales-report" element={<SalesReport />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

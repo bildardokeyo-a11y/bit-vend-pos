@@ -169,13 +169,20 @@ const Topbar: React.FC<TopbarProps> = ({
               type="text"
               placeholder="Search products, sales, customers..."
               value={query}
-              onChange={(e) => handleQueryChange(e.target.value)}
-              onFocus={() => {
+              onChange={(e) => {
+                e.stopPropagation();
+                handleQueryChange(e.target.value);
+              }}
+              onFocus={(e) => {
+                e.stopPropagation();
                 if (query.length > 0 || recentSearches.length > 0) {
                   setIsOpen(true);
                 }
               }}
-              className="pl-10 w-80 pos-input"
+              onKeyDown={(e) => {
+                e.stopPropagation();
+              }}
+              className="pl-10 w-80 pos-input focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
             />
           </form>
         </SearchDropdown>
