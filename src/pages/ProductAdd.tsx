@@ -98,9 +98,12 @@ const ProductAdd = () => {
     }
 
     // Simulate saving the product
-    console.log('Saving product:', { ...formData, createdDate, expiryDate });
-    
-    toast.success(`${formData.name} has been successfully added to your inventory.`);
+    console.log('Product data:', formData);
+    toast.success("Product added successfully!");
+    navigate('/products');
+  };
+
+  const handleCancel = () => {
     navigate('/products');
   };
 
@@ -118,9 +121,20 @@ const ProductAdd = () => {
     setActiveTab('general');
   };
 
-  const handleCancel = () => {
-    navigate('/products');
+  // Calculate profit margin when pricing changes
+  const calculateProfitMargin = (purchasePrice: string, sellingPrice: string) => {
+    const purchase = parseFloat(purchasePrice) || 0;
+    const selling = parseFloat(sellingPrice) || 0;
+    if (purchase > 0 && selling > 0) {
+      const margin = ((selling - purchase) / selling * 100).toFixed(2);
+      setFormData(prev => ({ ...prev, profitMargin: margin }));
+    }
   };
+
+  // Update profit margin when prices change
+  React.useEffect(() => {
+    calculateProfitMargin(formData.purchasePrice, formData.sellingPrice);
+  }, [formData.purchasePrice, formData.sellingPrice]);
 
   return (
     <div className="p-6 space-y-6 bg-background dark:bg-black min-h-screen">

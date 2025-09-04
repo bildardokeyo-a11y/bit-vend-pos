@@ -60,6 +60,10 @@ All colors MUST be HSL.
     --warning: 49 100% 50%;
     --warning-foreground: 0 0% 0%;
     --orange-accent: 25 95% 53%;
+    
+    /* Settings Form Background */
+    --settings-form-bg: 0 0% 100%;
+    --settings-card-bg: 0 0% 98%;
   }
 
   .dark {
@@ -105,6 +109,10 @@ All colors MUST be HSL.
     --warning: 49 100% 50%;
     --warning-foreground: 0 0% 0%;
     --orange-accent: 25 95% 53%;
+    
+    /* Settings Form Background Dark */
+    --settings-form-bg: 217.2 32.6% 17.5%;
+    --settings-card-bg: 222.2 84% 4.9%;
   }
 }
 

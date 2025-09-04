@@ -8,6 +8,26 @@ import { ArrowLeft, Printer } from 'lucide-react';
 const Receipt = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  
+  // Get company settings from localStorage or use defaults
+  const getCompanySettings = () => {
+    try {
+      const saved = localStorage.getItem('companySettings');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (error) {
+      console.error('Error loading company settings:', error);
+    }
+    return {
+      companyName: 'BitVend POS',
+      companyAddress: '123 Business Street\nSuite 400\nNew York, NY 10001',
+      companyPhone: '+1 555-123-4567',
+      companyEmail: 'info@bitvendpos.com'
+    };
+  };
+
+  const { companyName, companyAddress, companyPhone, companyEmail } = getCompanySettings();
   const { cart, total, tax, subtotal, paymentMethod } = location.state || {};
   
   // Get company details from localStorage (set from settings)
