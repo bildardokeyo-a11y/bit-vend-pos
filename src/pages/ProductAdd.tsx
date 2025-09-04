@@ -177,7 +177,7 @@ const ProductAdd = () => {
                   key={tab.id}
                   value={tab.id}
                   className={cn(
-                    "flex-1 h-10 text-sm font-medium transition-all duration-200 hover:scale-105",
+                    "flex-1 h-10 text-sm font-medium transition-all duration-200",
                     activeTab === tab.id
                       ? "bg-gradient-to-r from-success to-success/80 text-success-foreground shadow-md"
                       : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
@@ -198,16 +198,16 @@ const ProductAdd = () => {
                     placeholder="e.g. Apple iPhone 15"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="category">Category *</Label>
                   <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                    <SelectTrigger className="dark:bg-gray-700">
+                    <SelectTrigger className="dark:bg-settings-form dark:text-white">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent className="dark:bg-gray-700">
+                    <SelectContent className="dark:bg-settings-form">
                       {categories.map((category) => (
                         <SelectItem key={category} value={category}>
                           {category}
@@ -219,10 +219,10 @@ const ProductAdd = () => {
                 <div className="space-y-2">
                   <Label htmlFor="addedBy">Added By</Label>
                   <Select value={formData.addedBy} onValueChange={(value) => handleInputChange('addedBy', value)}>
-                    <SelectTrigger className="dark:bg-gray-700">
+                    <SelectTrigger className="dark:bg-settings-form dark:text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="dark:bg-gray-700">
+                    <SelectContent className="dark:bg-settings-form">
                       <SelectItem value="Admin">Admin</SelectItem>
                       <SelectItem value="Manager">Manager</SelectItem>
                       <SelectItem value="Staff">Staff</SelectItem>
@@ -239,7 +239,7 @@ const ProductAdd = () => {
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-full justify-start text-left font-normal dark:bg-gray-700",
+                          "w-full justify-start text-left font-normal dark:bg-settings-form dark:text-white",
                           !createdDate && "text-muted-foreground"
                         )}
                       >
@@ -247,7 +247,7 @@ const ProductAdd = () => {
                         {createdDate ? format(createdDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 dark:bg-gray-700" align="start">
+                    <PopoverContent className="w-auto p-0 dark:bg-settings-form" align="start">
                       <CalendarComponent
                         mode="single"
                         selected={createdDate}
@@ -266,16 +266,16 @@ const ProductAdd = () => {
                     placeholder="e.g. 12"
                     value={formData.warranty}
                     onChange={(e) => handleInputChange('warranty', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="productType">Product Type</Label>
                   <Select value={formData.productType} onValueChange={(value) => handleInputChange('productType', value)}>
-                    <SelectTrigger className="dark:bg-gray-700">
+                    <SelectTrigger className="dark:bg-settings-form dark:text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="dark:bg-gray-700">
+                    <SelectContent className="dark:bg-settings-form">
                       {productTypes.map((type) => (
                         <SelectItem key={type} value={type}>
                           {type}
@@ -295,9 +295,9 @@ const ProductAdd = () => {
                       placeholder="SKU-XXXXX"
                       value={formData.sku}
                       onChange={(e) => handleInputChange('sku', e.target.value)}
-                      className="dark:bg-gray-700"
+                      className="dark:bg-settings-form dark:text-white"
                     />
-                    <Button type="button" variant="outline" onClick={generateSKU} className="dark:bg-gray-700">
+                    <Button type="button" variant="outline" onClick={generateSKU} className="dark:bg-settings-form dark:text-white">
                       Generate
                     </Button>
                   </div>
@@ -311,9 +311,9 @@ const ProductAdd = () => {
                       placeholder="e.g. BC-20250829-1234"
                       value={formData.barcode}
                       onChange={(e) => handleInputChange('barcode', e.target.value)}
-                      className="dark:bg-gray-700"
+                      className="dark:bg-settings-form dark:text-white"
                     />
-                    <Button type="button" variant="outline" onClick={generateBarcode} className="dark:bg-gray-700">
+                    <Button type="button" variant="outline" onClick={generateBarcode} className="dark:bg-settings-form dark:text-white">
                       Generate
                     </Button>
                   </div>
@@ -326,7 +326,7 @@ const ProductAdd = () => {
                     placeholder="Brand name"
                     value={formData.brand}
                     onChange={(e) => handleInputChange('brand', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
               </div>
@@ -335,10 +335,10 @@ const ProductAdd = () => {
                 <div className="space-y-2">
                   <Label htmlFor="supplier">Supplier</Label>
                   <Select value={formData.supplier} onValueChange={(value) => handleInputChange('supplier', value)}>
-                    <SelectTrigger className="dark:bg-gray-700">
+                    <SelectTrigger className="dark:bg-settings-form dark:text-white">
                       <SelectValue placeholder="Select Supplier" />
                     </SelectTrigger>
-                    <SelectContent className="dark:bg-gray-700">
+                    <SelectContent className="dark:bg-settings-form">
                       {suppliers.map((supplier) => (
                         <SelectItem key={supplier} value={supplier}>
                           {supplier}
@@ -354,12 +354,12 @@ const ProductAdd = () => {
                     placeholder="Batch or lot number"
                     value={formData.batchLotNo}
                     onChange={(e) => handleInputChange('batchLotNo', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Barcode Preview</Label>
-                  <div className="h-10 bg-gray-100 dark:bg-gray-700 rounded border flex items-center justify-center text-xs text-muted-foreground">
+                  <div className="h-10 bg-gray-100 dark:bg-settings-form rounded border flex items-center justify-center text-xs text-muted-foreground">
                     {formData.barcode || 'Generate barcode to preview'}
                   </div>
                 </div>
@@ -373,7 +373,7 @@ const ProductAdd = () => {
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-full justify-start text-left font-normal dark:bg-gray-700",
+                          "w-full justify-start text-left font-normal dark:bg-settings-form dark:text-white",
                           !expiryDate && "text-muted-foreground"
                         )}
                       >
@@ -381,7 +381,7 @@ const ProductAdd = () => {
                         {expiryDate ? format(expiryDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 dark:bg-gray-700" align="start">
+                    <PopoverContent className="w-auto p-0 dark:bg-settings-form" align="start">
                       <CalendarComponent
                         mode="single"
                         selected={expiryDate}
@@ -399,7 +399,7 @@ const ProductAdd = () => {
                     placeholder="Comma-separated (optional)"
                     value={formData.multipleBarcodes}
                     onChange={(e) => handleInputChange('multipleBarcodes', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
               </div>
@@ -417,7 +417,7 @@ const ProductAdd = () => {
                     placeholder="0.00"
                     value={formData.purchasePrice}
                     onChange={(e) => handleInputChange('purchasePrice', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
                 <div className="space-y-2">
@@ -429,7 +429,7 @@ const ProductAdd = () => {
                     placeholder="0.00"
                     value={formData.sellingPrice}
                     onChange={(e) => handleInputChange('sellingPrice', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
                 <div className="space-y-2">
@@ -441,13 +441,13 @@ const ProductAdd = () => {
                       placeholder="0"
                       value={formData.discount}
                       onChange={(e) => handleInputChange('discount', e.target.value)}
-                      className="dark:bg-gray-700"
+                      className="dark:bg-settings-form dark:text-white"
                     />
                     <Select value={formData.discountType} onValueChange={(value) => handleInputChange('discountType', value)}>
-                      <SelectTrigger className="w-20 dark:bg-gray-700">
+                      <SelectTrigger className="w-20 dark:bg-settings-form dark:text-white">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="dark:bg-gray-700">
+                      <SelectContent className="dark:bg-settings-form">
                         <SelectItem value="%">%</SelectItem>
                         <SelectItem value="$">$</SelectItem>
                       </SelectContent>
@@ -465,7 +465,7 @@ const ProductAdd = () => {
                     placeholder="0"
                     value={formData.tax}
                     onChange={(e) => handleInputChange('tax', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
                 <div className="space-y-2">
@@ -477,7 +477,7 @@ const ProductAdd = () => {
                     placeholder="0.00"
                     value={formData.profitMargin}
                     onChange={(e) => handleInputChange('profitMargin', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
               </div>
@@ -499,10 +499,10 @@ const ProductAdd = () => {
                 <div className="space-y-2">
                   <Label htmlFor="unit">Unit *</Label>
                   <Select value={formData.unit} onValueChange={(value) => handleInputChange('unit', value)}>
-                    <SelectTrigger className="dark:bg-gray-700">
+                    <SelectTrigger className="dark:bg-settings-form dark:text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="dark:bg-gray-700">
+                    <SelectContent className="dark:bg-settings-form">
                       {units.map((unit) => (
                         <SelectItem key={unit} value={unit}>
                           {unit}
@@ -519,7 +519,7 @@ const ProductAdd = () => {
                     placeholder="0"
                     value={formData.stockQuantity}
                     onChange={(e) => handleInputChange('stockQuantity', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
                 <div className="space-y-2">
@@ -530,7 +530,7 @@ const ProductAdd = () => {
                     placeholder="0"
                     value={formData.minStockAlert}
                     onChange={(e) => handleInputChange('minStockAlert', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
                 <div className="space-y-2">
@@ -541,17 +541,17 @@ const ProductAdd = () => {
                     placeholder="0"
                     value={formData.reorderPoint}
                     onChange={(e) => handleInputChange('reorderPoint', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded">
+              <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-settings-form rounded">
                 <div>
                   <h3 className="font-medium">Advanced Inventory Settings</h3>
                   <p className="text-sm text-muted-foreground">Track serial numbers? lot/expiry? batch-level stock?</p>
                 </div>
-                <Button variant="outline" className="dark:bg-gray-600">
+                <Button variant="outline" className="dark:bg-settings-form dark:text-white">
                   Toggle
                 </Button>
               </div>
@@ -588,7 +588,7 @@ const ProductAdd = () => {
                       value={formData.description}
                       onChange={(e) => handleInputChange('description', e.target.value)}
                       rows={8}
-                      className="dark:bg-gray-700"
+                      className="dark:bg-settings-form dark:text-white"
                     />
                   </div>
                 </div>
@@ -598,10 +598,10 @@ const ProductAdd = () => {
                 <div className="space-y-2">
                   <Label htmlFor="status">Status</Label>
                   <Select value={formData.status} onValueChange={(value) => handleInputChange('status', value)}>
-                    <SelectTrigger className="dark:bg-gray-700">
+                    <SelectTrigger className="dark:bg-settings-form dark:text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="dark:bg-gray-700">
+                    <SelectContent className="dark:bg-settings-form">
                       {statusOptions.map((status) => (
                         <SelectItem key={status} value={status}>
                           {status}
@@ -617,7 +617,7 @@ const ProductAdd = () => {
                     placeholder="comma, separated, tags"
                     value={formData.tags}
                     onChange={(e) => handleInputChange('tags', e.target.value)}
-                    className="dark:bg-gray-700"
+                    className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
               </div>
@@ -630,7 +630,7 @@ const ProductAdd = () => {
               type="button"
               variant="outline"
               onClick={handleReset}
-              className="gap-2 transition-all duration-200 hover:scale-95 active:scale-90 dark:bg-gray-700"
+              className="gap-2 transition-all duration-200 dark:bg-settings-form dark:text-white"
             >
               <RotateCcw className="h-4 w-4" />
               Reset
@@ -640,7 +640,7 @@ const ProductAdd = () => {
               type="button"
               variant="outline"
               onClick={handleCancel}
-              className="gap-2 transition-all duration-200 hover:scale-95 active:scale-90 border-cancel text-cancel hover:bg-cancel/10 dark:border-cancel dark:text-cancel dark:hover:bg-cancel/10"
+              className="gap-2 transition-all duration-200 border-cancel text-cancel hover:bg-cancel/10 dark:border-cancel dark:text-cancel dark:hover:bg-cancel/10"
             >
               <X className="h-4 w-4" />
               Cancel
@@ -649,7 +649,7 @@ const ProductAdd = () => {
             <Button
               type="button"
               onClick={handleSubmit}
-              className="bg-success hover:bg-success/90 text-success-foreground gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+              className="bg-success hover:bg-success/90 text-success-foreground gap-2 transition-all duration-200"
             >
               <Save className="h-4 w-4" />
               Save Product

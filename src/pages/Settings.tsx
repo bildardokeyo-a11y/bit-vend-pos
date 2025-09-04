@@ -166,7 +166,7 @@ const subscriptionPlans = [
 
 const Settings = () => {
   const [activeSection, setActiveSection] = useState('general');
-  const [activeSubsection, setActiveSubsection] = useState('profile');
+  const [activeSubsection, setActiveSubsection] = useState('');
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     general: true
   });
@@ -292,14 +292,14 @@ const Settings = () => {
       case 'general-profile':
         return (
           <div className="space-y-6">
-            <div className="flex items-center space-x-4 mb-6 hover:scale-105 transition-transform duration-200">
+            <div className="flex items-center space-x-4 mb-6 transition-transform duration-200">
               <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center">
                 <User className="w-8 h-8 text-muted-foreground" />
               </div>
               <div>
                 <Button 
                   variant="outline" 
-                  className="mr-2 hover:scale-105 transition-transform duration-200" 
+                  className="mr-2 transition-transform duration-200" 
                   onClick={handleAvatarUpload}
                 >
                   <Upload className="w-4 h-4 mr-2" />
@@ -310,7 +310,7 @@ const Settings = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="hover:scale-105 transition-transform duration-200">
+              <div className="transition-transform duration-200">
                 <Label htmlFor="firstName">First Name</Label>
                 <Input 
                   id="firstName" 
@@ -319,7 +319,7 @@ const Settings = () => {
                   placeholder="John" 
                 />
               </div>
-              <div className="hover:scale-105 transition-transform duration-200">
+              <div className="transition-transform duration-200">
                 <Label htmlFor="lastName">Last Name</Label>
                 <Input 
                   id="lastName" 
@@ -331,7 +331,7 @@ const Settings = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="hover:scale-105 transition-transform duration-200">
+              <div className="transition-transform duration-200">
                 <Label htmlFor="username">Username</Label>
                 <Input 
                   id="username" 
@@ -340,7 +340,7 @@ const Settings = () => {
                   placeholder="johndoe123" 
                 />
               </div>
-              <div className="hover:scale-105 transition-transform duration-200">
+              <div className="transition-transform duration-200">
                 <Label htmlFor="phone">Phone Number</Label>
                 <Input 
                   id="phone" 
@@ -352,7 +352,7 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className="hover:scale-105 transition-transform duration-200">
+            <div className="transition-transform duration-200">
               <Label htmlFor="email">Email</Label>
               <Input 
                 id="email" 
@@ -363,7 +363,7 @@ const Settings = () => {
               />
             </div>
 
-            <div className="hover:scale-105 transition-transform duration-200">
+            <div className="transition-transform duration-200">
               <Label htmlFor="address">Address</Label>
               <Textarea 
                 id="address" 
@@ -375,7 +375,7 @@ const Settings = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="hover:scale-105 transition-transform duration-200">
+              <div className="transition-transform duration-200">
                 <Label htmlFor="country">Country</Label>
                 <Select value={profileData.country} onValueChange={handleCountryChange}>
                   <SelectTrigger>
@@ -390,7 +390,7 @@ const Settings = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="hover:scale-105 transition-transform duration-200">
+              <div className="transition-transform duration-200">
                 <Label htmlFor="state">State</Label>
                 <Select value={profileData.state} onValueChange={handleStateChange}>
                   <SelectTrigger>
@@ -405,7 +405,7 @@ const Settings = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="hover:scale-105 transition-transform duration-200">
+              <div className="transition-transform duration-200">
                 <Label htmlFor="city">City</Label>
                 <Select 
                   value={profileData.city} 
@@ -425,7 +425,7 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className="hover:scale-105 transition-transform duration-200">
+            <div className="transition-transform duration-200">
               <Label htmlFor="postal">Postal Code</Label>
               <Input 
                 id="postal" 
@@ -446,7 +446,7 @@ const Settings = () => {
               </Button>
               <Button 
                 onClick={handleSave}
-                className="bg-success hover:bg-success/90 text-success-foreground hover:scale-105 transition-transform duration-200"
+                className="bg-success hover:bg-success/90 text-success-foreground transition-transform duration-200"
               >
                 <Save className="w-4 h-4 mr-2" />
                 Save Changes
@@ -458,7 +458,7 @@ const Settings = () => {
       case 'website-company-settings':
         return (
           <div className="space-y-6">
-            <div className="hover:scale-105 transition-transform duration-200">
+            <div className="transition-transform duration-200">
               <Label htmlFor="companyName">Company Name</Label>
               <Input 
                 id="companyName" 
@@ -468,7 +468,7 @@ const Settings = () => {
               />
             </div>
             
-            <div className="hover:scale-105 transition-transform duration-200">
+            <div className="transition-transform duration-200">
               <Label htmlFor="companyEmail">Company Email</Label>
               <Input 
                 id="companyEmail" 
@@ -479,7 +479,7 @@ const Settings = () => {
               />
             </div>
             
-            <div className="hover:scale-105 transition-transform duration-200">
+            <div className="transition-transform duration-200">
               <Label htmlFor="companyPhone">Company Phone</Label>
               <Input 
                 id="companyPhone" 
@@ -490,7 +490,7 @@ const Settings = () => {
               />
             </div>
             
-            <div className="hover:scale-105 transition-transform duration-200">
+            <div className="transition-transform duration-200">
               <Label htmlFor="companyAddress">Company Address</Label>
               <Textarea 
                 id="companyAddress" 
@@ -501,7 +501,7 @@ const Settings = () => {
               />
             </div>
             
-            <div className="hover:scale-105 transition-transform duration-200">
+            <div className="transition-transform duration-200">
               <Label htmlFor="website">Website URL</Label>
               <Input 
                 id="website" 
@@ -523,7 +523,7 @@ const Settings = () => {
               </Button>
               <Button 
                 onClick={handleSave}
-                className="bg-success hover:bg-success/90 text-success-foreground hover:scale-105 transition-transform duration-200"
+                className="bg-success hover:bg-success/90 text-success-foreground transition-transform duration-200"
               >
                 <Save className="w-4 h-4 mr-2" />
                 Save Changes
@@ -539,7 +539,7 @@ const Settings = () => {
               {subscriptionPlans.map((plan, index) => (
                 <div 
                   key={index} 
-                  className={`relative p-6 rounded-xl border-2 transition-all duration-300 hover:shadow-lg hover:scale-105 ${
+                  className={`relative p-6 rounded-xl border-2 transition-all duration-300 hover:shadow-lg ${
                     plan.popular 
                       ? 'border-primary bg-primary/5 shadow-lg' 
                       : 'border-border bg-background/50 hover:border-primary/50'
@@ -577,7 +577,7 @@ const Settings = () => {
                     </div>
                     
                     <Button 
-                      className={`w-full hover:scale-105 transition-transform ${
+                      className={`w-full transition-transform ${
                         plan.popular ? 'bg-success hover:bg-success/90' : ''
                       }`}
                       variant={plan.popular ? "default" : "outline"}
@@ -626,7 +626,7 @@ const Settings = () => {
           
           <div className="space-y-2">
             {settingsSections.map((section) => (
-              <div key={section.id} className="hover:scale-105 transition-transform duration-200">
+              <div key={section.id} className="transition-transform duration-200">
                 <Button
                   variant="ghost"
                   className="w-full justify-between p-3 h-auto"
@@ -653,7 +653,7 @@ const Settings = () => {
                             ? "secondary"
                             : "ghost"
                         }
-                        className="w-full justify-start p-2 h-auto text-sm hover:scale-105 transition-transform duration-200"
+                        className="w-full justify-start p-2 h-auto text-sm transition-transform duration-200"
                         onClick={() => handleSubsectionClick(section.id, subsection.id)}
                       >
                         <subsection.icon className="w-3 h-3 mr-2" />
