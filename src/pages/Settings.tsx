@@ -165,11 +165,9 @@ const subscriptionPlans = [
 ];
 
 const Settings = () => {
-  const [activeSection, setActiveSection] = useState('general');
+  const [activeSection, setActiveSection] = useState('');
   const [activeSubsection, setActiveSubsection] = useState('');
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-    general: true
-  });
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const [selectedCountry, setSelectedCountry] = useState<string>('US');
   const [selectedState, setSelectedState] = useState<string>('CA');
   const [availableStates, setAvailableStates] = useState<State[]>(countries[0].states);
@@ -310,72 +308,78 @@ const Settings = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="transition-transform duration-200">
+              <div>
                 <Label htmlFor="firstName">First Name</Label>
                 <Input 
                   id="firstName" 
                   value={profileData.firstName}
                   onChange={(e) => setProfileData(prev => ({ ...prev, firstName: e.target.value }))}
-                  placeholder="John" 
+                  placeholder="John"
+                  className="dark:placeholder:text-gray-500"
                 />
               </div>
-              <div className="transition-transform duration-200">
+              <div>
                 <Label htmlFor="lastName">Last Name</Label>
                 <Input 
                   id="lastName" 
                   value={profileData.lastName}
                   onChange={(e) => setProfileData(prev => ({ ...prev, lastName: e.target.value }))}
-                  placeholder="Doe" 
+                  placeholder="Doe"
+                  className="dark:placeholder:text-gray-500"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="transition-transform duration-200">
+              <div>
                 <Label htmlFor="username">Username</Label>
                 <Input 
                   id="username" 
                   value={profileData.username}
                   onChange={(e) => setProfileData(prev => ({ ...prev, username: e.target.value }))}
-                  placeholder="johndoe123" 
+                  placeholder="johndoe123"
+                  className="dark:placeholder:text-gray-500"
                 />
               </div>
-              <div className="transition-transform duration-200">
+              <div>
                 <Label htmlFor="phone">Phone Number</Label>
                 <Input 
                   id="phone" 
                   type="tel" 
                   value={profileData.phone}
                   onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
-                  placeholder="+1 555 123 4567" 
+                  placeholder="+1 555 123 4567"
+                  className="dark:placeholder:text-gray-500"
                 />
               </div>
             </div>
 
-            <div className="transition-transform duration-200">
+            <div>
               <Label htmlFor="email">Email</Label>
               <Input 
                 id="email" 
                 type="email" 
                 value={profileData.email}
                 onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="john.doe@email.com" 
+                placeholder="john.doe@email.com"
+                className="dark:placeholder:text-gray-500"
               />
             </div>
 
-            <div className="transition-transform duration-200">
+            <div>
               <Label htmlFor="address">Address</Label>
               <Textarea 
                 id="address" 
                 value={profileData.address}
                 onChange={(e) => setProfileData(prev => ({ ...prev, address: e.target.value }))}
-                placeholder="123 Main Street, Suite 400" 
+                placeholder="123 Main Street, Suite 400"
+                className="dark:placeholder:text-gray-500"
                 rows={3} 
               />
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="transition-transform duration-200">
+              <div>
                 <Label htmlFor="country">Country</Label>
                 <Select value={profileData.country} onValueChange={handleCountryChange}>
                   <SelectTrigger>
@@ -390,7 +394,7 @@ const Settings = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="transition-transform duration-200">
+              <div>
                 <Label htmlFor="state">State</Label>
                 <Select value={profileData.state} onValueChange={handleStateChange}>
                   <SelectTrigger>
@@ -405,7 +409,7 @@ const Settings = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="transition-transform duration-200">
+              <div>
                 <Label htmlFor="city">City</Label>
                 <Select 
                   value={profileData.city} 
@@ -425,13 +429,14 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className="transition-transform duration-200">
+            <div>
               <Label htmlFor="postal">Postal Code</Label>
               <Input 
                 id="postal" 
                 value={profileData.postalCode}
                 onChange={(e) => setProfileData(prev => ({ ...prev, postalCode: e.target.value }))}
-                placeholder="90001" 
+                placeholder="90001"
+                className="dark:placeholder:text-gray-500"
               />
             </div>
 
