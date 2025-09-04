@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import { 
   Settings as SettingsIcon, 
   User, 
@@ -46,7 +47,27 @@ import {
   Star,
   Check,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  Monitor,
+  Receipt,
+  Clock,
+  Package,
+  TrendingUp,
+  Scan,
+  Tag,
+  Calculator,
+  FileSpreadsheet,
+  Users,
+  UserCheck,
+  Megaphone,
+  BarChart,
+  Archive,
+  Download,
+  CheckCircle,
+  Cog,
+  Cloud,
+  Wrench,
+  DollarSign
 } from 'lucide-react';
 import { toast } from "sonner";
 
@@ -63,75 +84,103 @@ type SettingsSection = {
 
 const settingsSections: SettingsSection[] = [
   {
-    id: 'general',
-    title: 'General Settings',
-    icon: SettingsIcon,
+    id: 'business',
+    title: 'Business Settings',
+    icon: Building,
     subsections: [
-      { id: 'general-settings', title: 'General Settings', icon: Building },
-      { id: 'profile', title: 'Profile', icon: User },
-      { id: 'security', title: 'Security', icon: Lock },
-      { id: 'notifications', title: 'Notifications', icon: Bell }
+      { id: 'business-info', title: 'Business Information', icon: Building },
+      { id: 'operating-hours', title: 'Operating Hours', icon: Clock },
+      { id: 'locations', title: 'Locations & Branches', icon: MapPin }
     ]
   },
   {
-    id: 'website',
-    title: 'Website Settings',
-    icon: Globe,
+    id: 'pos-terminal',
+    title: 'POS Terminal',
+    icon: Monitor,
     subsections: [
-      { id: 'web-settings', title: 'Web Settings', icon: Globe },
-      { id: 'company-settings', title: 'Company Settings', icon: Building },
-      { id: 'system-settings', title: 'System Settings', icon: Zap }
+      { id: 'receipt-settings', title: 'Receipt Settings', icon: Receipt },
+      { id: 'terminal-behavior', title: 'Terminal Behavior', icon: SettingsIcon },
+      { id: 'cash-drawer', title: 'Cash Drawer', icon: DollarSign }
     ]
   },
   {
-    id: 'app',
-    title: 'App Settings',
-    icon: Smartphone,
+    id: 'inventory',
+    title: 'Inventory Management',
+    icon: Package,
     subsections: [
-      { id: 'app-settings', title: 'App Settings', icon: Smartphone },
-      { id: 'invoice-settings', title: 'Invoice Settings', icon: FileText },
-      { id: 'invoice-templates', title: 'Invoice Templates', icon: FileText },
-      { id: 'subscription', title: 'Subscription Plans', icon: Crown }
+      { id: 'stock-management', title: 'Stock Management', icon: TrendingUp },
+      { id: 'barcode-settings', title: 'Barcode Settings', icon: Scan },
+      { id: 'pricing-rules', title: 'Pricing Rules', icon: Tag }
+    ]
+  },
+  {
+    id: 'tax-finance',
+    title: 'Tax & Finance',
+    icon: Calculator,
+    subsections: [
+      { id: 'tax-configuration', title: 'Tax Configuration', icon: Percent },
+      { id: 'payment-methods', title: 'Payment Methods', icon: CreditCard },
+      { id: 'accounting', title: 'Accounting Integration', icon: FileSpreadsheet }
+    ]
+  },
+  {
+    id: 'employees',
+    title: 'Employee Management',
+    icon: Users,
+    subsections: [
+      { id: 'employee-access', title: 'Access Control', icon: Lock },
+      { id: 'roles-permissions', title: 'Roles & Permissions', icon: Shield },
+      { id: 'time-tracking', title: 'Time Tracking', icon: Clock }
+    ]
+  },
+  {
+    id: 'customers',
+    title: 'Customer Management',
+    icon: UserCheck,
+    subsections: [
+      { id: 'customer-data', title: 'Customer Data', icon: Database },
+      { id: 'loyalty-program', title: 'Loyalty Program', icon: Star },
+      { id: 'marketing', title: 'Marketing & Promotions', icon: Megaphone }
+    ]
+  },
+  {
+    id: 'hardware',
+    title: 'Hardware Integration',
+    icon: Printer,
+    subsections: [
+      { id: 'receipt-printer', title: 'Receipt Printer', icon: Printer },
+      { id: 'barcode-scanner', title: 'Barcode Scanner', icon: Scan },
+      { id: 'payment-terminal', title: 'Payment Terminal', icon: CreditCard }
+    ]
+  },
+  {
+    id: 'reports',
+    title: 'Reports & Analytics',
+    icon: BarChart,
+    subsections: [
+      { id: 'report-settings', title: 'Report Settings', icon: FileText },
+      { id: 'data-retention', title: 'Data Retention', icon: Archive },
+      { id: 'export-options', title: 'Export Options', icon: Download }
+    ]
+  },
+  {
+    id: 'security',
+    title: 'Security & Compliance',
+    icon: Shield,
+    subsections: [
+      { id: 'access-security', title: 'Access Security', icon: Lock },
+      { id: 'audit-logging', title: 'Audit & Logging', icon: FileText },
+      { id: 'compliance', title: 'Compliance Standards', icon: CheckCircle }
     ]
   },
   {
     id: 'system',
-    title: 'System Settings',
-    icon: Zap,
+    title: 'System Configuration',
+    icon: Cog,
     subsections: [
-      { id: 'email-templates', title: 'Email Templates', icon: Mail },
-      { id: 'signature-templates', title: 'Signature Templates', icon: Edit },
-      { id: 'email', title: 'Email Config', icon: Mail },
-      { id: 'sms', title: 'SMS', icon: MessageSquare }
-    ]
-  },
-  {
-    id: 'financial',
-    title: 'Financial Settings',
-    icon: CreditCard,
-    subsections: [
-      { id: 'financial-settings', title: 'Financial Settings', icon: CreditCard },
-      { id: 'payment-gateway', title: 'Payment Gateway', icon: Plug },
-      { id: 'bank-accounts', title: 'Bank Accounts', icon: University }
-    ]
-  },
-  {
-    id: 'admin',
-    title: 'User Management',
-    icon: User,
-    subsections: [
-      { id: 'users', title: 'Users', icon: User },
-      { id: 'roles', title: 'Roles & Permissions', icon: Shield },
-      { id: 'user-profile', title: 'User Profile', icon: User }
-    ]
-  },
-  {
-    id: 'other',
-    title: 'Other Settings',
-    icon: Zap,
-    subsections: [
-      { id: 'other-settings', title: 'Other Settings', icon: Zap },
-      { id: 'storage', title: 'Storage', icon: Database }
+      { id: 'backup-sync', title: 'Backup & Sync', icon: Cloud },
+      { id: 'integrations', title: 'Third-party Integrations', icon: Plug },
+      { id: 'maintenance', title: 'System Maintenance', icon: Wrench }
     ]
   }
 ];
@@ -177,7 +226,7 @@ const Settings = () => {
   const [availableCities, setAvailableCities] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
-  // Settings state
+  // Legacy state variables for compatibility
   const [profileData, setProfileData] = useState({
     firstName: '',
     lastName: '',
@@ -219,7 +268,7 @@ const Settings = () => {
     linkedinLogin: false
   });
 
-  // New settings state
+  // Additional legacy state
   const [invoiceSettings, setInvoiceSettings] = useState({
     invoicePrefix: 'INV-',
     startingNumber: 1000,
@@ -281,6 +330,349 @@ const Settings = () => {
     defaultLanguage: 'en',
     emailNotifications: true,
     googleMapsApiKey: ''
+  });
+  const [businessSettings, setBusinessSettings] = useState({
+    // Basic Business Info
+    businessName: 'BitVend POS',
+    businessType: 'retail',
+    taxId: '',
+    businessLicense: '',
+    phone: '+1 555-123-4567',
+    email: 'contact@bitvendpos.com',
+    website: 'https://www.bitvendpos.com',
+    
+    // Address
+    address: '123 Business Street',
+    city: 'New York',
+    state: 'NY',
+    country: 'US',
+    postalCode: '10001',
+    
+    // Operating Hours
+    operatingHours: {
+      monday: { open: '09:00', close: '18:00', closed: false },
+      tuesday: { open: '09:00', close: '18:00', closed: false },
+      wednesday: { open: '09:00', close: '18:00', closed: false },
+      thursday: { open: '09:00', close: '18:00', closed: false },
+      friday: { open: '09:00', close: '18:00', closed: false },
+      saturday: { open: '10:00', close: '16:00', closed: false },
+      sunday: { open: '12:00', close: '16:00', closed: false }
+    },
+    
+    // Preferences
+    currency: 'USD',
+    timezone: 'America/New_York',
+    dateFormat: 'MM/DD/YYYY',
+    numberFormat: 'en-US'
+  });
+
+  const [posTerminalSettings, setPosTerminalSettings] = useState({
+    // Receipt Settings
+    receiptHeader: 'Thank you for your business!',
+    receiptFooter: 'Please come again',
+    showBarcode: true,
+    showQRCode: false,
+    autoPrintReceipt: true,
+    receiptCopies: 1,
+    
+    // Terminal Behavior
+    autoLockTime: 15, // minutes
+    requirePINForVoids: true,
+    requirePINForDiscounts: true,
+    requirePINForRefunds: true,
+    allowOfflineMode: true,
+    syncInterval: 5, // minutes
+    
+    // Display Settings
+    screenTimeout: 30, // seconds
+    showCustomerDisplay: false,
+    displayBrightness: 80,
+    
+    // Cash Drawer
+    cashDrawerKickCode: '\x1B\x70\x00\x19\xFA',
+    openDrawerForCash: true,
+    openDrawerForCheck: false,
+    requireCountAtClose: true
+  });
+
+  const [inventorySettings, setInventorySettings] = useState({
+    // Stock Management
+    enableLowStockAlerts: true,
+    lowStockThreshold: 10,
+    enableNegativeInventory: false,
+    autoReorderEnabled: false,
+    defaultReorderQuantity: 50,
+    
+    // Barcode Settings
+    defaultBarcodeType: 'UPC-A',
+    autogenerateBarcodes: true,
+    barcodePrefix: '2',
+    
+    // Category & Product Settings
+    requireProductCategories: true,
+    allowDuplicateProductNames: false,
+    trackSerialNumbers: false,
+    enableBatchTracking: false,
+    
+    // Pricing
+    allowZeroPricing: false,
+    roundPrices: true,
+    priceRoundingMethod: 'nearest_cent', // nearest_cent, round_up, round_down
+    
+    // Import/Export
+    autoBackupInventory: true,
+    backupFrequency: 'daily' // daily, weekly, monthly
+  });
+
+  const [taxSettings, setTaxSettings] = useState({
+    // Tax Configuration
+    enableTax: true,
+    taxInclusivePricing: false,
+    
+    // Tax Rates
+    defaultTaxRate: 8.25,
+    taxRates: [
+      { id: '1', name: 'Standard Rate', rate: 8.25, isDefault: true },
+      { id: '2', name: 'Food Items', rate: 4.0, isDefault: false },
+      { id: '3', name: 'Luxury Items', rate: 12.5, isDefault: false }
+    ],
+    
+    // Tax Exemptions
+    enableTaxExemptions: true,
+    requireExemptionID: true,
+    exemptionTypes: ['nonprofit', 'government', 'reseller', 'senior'],
+    
+    // Reporting
+    taxReportingPeriod: 'monthly', // weekly, monthly, quarterly
+    autoGenerateTaxReports: false,
+    taxJurisdiction: 'state'
+  });
+
+  const [paymentSettings, setPaymentSettings] = useState({
+    // Accepted Payment Methods
+    acceptCash: true,
+    acceptCreditCard: true,
+    acceptDebitCard: true,
+    acceptCheck: false,
+    acceptGiftCard: true,
+    acceptMobile: true,
+    acceptCrypto: false,
+    
+    // Cash Handling
+    enableCashDenominations: true,
+    countCashAtOpen: true,
+    countCashAtClose: true,
+    requireExactChange: false,
+    
+    // Credit Card Processing
+    creditCardProcessor: 'stripe', // stripe, square, paypal
+    enableTipping: true,
+    tipSuggestions: [15, 18, 20, 25],
+    allowCustomTip: true,
+    tipOnCardPayments: true,
+    
+    // Payment Security
+    requireSignatureAmount: 25.00,
+    requirePINAmount: 50.00,
+    enablePaymentEncryption: true,
+    
+    // Partial Payments
+    allowPartialPayments: true,
+    allowSplitPayments: true,
+    minimumPartialAmount: 5.00,
+    
+    // Refunds & Returns
+    allowRefunds: true,
+    refundTimeLimit: 30, // days
+    requireReceiptForRefund: true,
+    allowStoreCredit: true
+  });
+
+  const [employeeSettings, setEmployeeSettings] = useState({
+    // Access Control
+    requireEmployeeLogin: true,
+    enableTimeTracking: true,
+    allowMultipleLogins: false,
+    sessionTimeout: 30, // minutes
+    
+    // Permissions
+    roles: [
+      {
+        id: '1',
+        name: 'Manager',
+        permissions: {
+          sales: { create: true, read: true, update: true, delete: true },
+          inventory: { create: true, read: true, update: true, delete: true },
+          reports: { read: true, export: true },
+          settings: { read: true, update: true },
+          employees: { create: true, read: true, update: true, delete: false },
+          discounts: { apply: true, create: true },
+          voids: { authorize: true },
+          refunds: { authorize: true }
+        }
+      },
+      {
+        id: '2',
+        name: 'Cashier',
+        permissions: {
+          sales: { create: true, read: true, update: false, delete: false },
+          inventory: { create: false, read: true, update: false, delete: false },
+          reports: { read: false, export: false },
+          settings: { read: false, update: false },
+          employees: { create: false, read: false, update: false, delete: false },
+          discounts: { apply: false, create: false },
+          voids: { authorize: false },
+          refunds: { authorize: false }
+        }
+      }
+    ],
+    
+    // Time Tracking
+    requireClockIn: true,
+    enableBreakTracking: true,
+    overtimeThreshold: 40, // hours per week
+    
+    // Security
+    requirePINLength: 4,
+    enableBiometrics: false,
+    lockAfterFailedAttempts: 3
+  });
+
+  const [customerSettings, setCustomerSettings] = useState({
+    // Customer Management
+    requireCustomerInfo: false,
+    enableLoyaltyProgram: true,
+    loyaltyPointsRate: 1, // points per dollar
+    loyaltyRedemptionRate: 100, // points per dollar off
+    
+    // Customer Data
+    collectEmail: true,
+    collectPhone: true,
+    collectAddress: false,
+    collectBirthdate: false,
+    
+    // Marketing
+    enableEmailMarketing: false,
+    enableSMSMarketing: false,
+    marketingOptInRequired: true,
+    
+    // Discounts & Promotions
+    enableCustomerDiscounts: true,
+    enableSeniorDiscount: true,
+    seniorDiscountRate: 10,
+    enableStudentDiscount: false,
+    studentDiscountRate: 5,
+    
+    // Privacy
+    dataRetentionPeriod: 365, // days
+    enableGDPRCompliance: true,
+    allowDataExport: true
+  });
+
+  const [hardwareSettings, setHardwareSettings] = useState({
+    // Receipt Printer
+    printerType: 'thermal', // thermal, impact, inkjet
+    printerModel: 'Epson TM-T88V',
+    printerConnection: 'USB', // USB, Ethernet, Bluetooth
+    paperWidth: '80mm',
+    autoCutEnabled: true,
+    
+    // Barcode Scanner
+    scannerEnabled: true,
+    scannerType: 'laser', // laser, 2d_imager, ccd
+    scannerConnection: 'USB',
+    enableScanBeep: true,
+    scanPrefix: '',
+    scanSuffix: '',
+    
+    // Cash Drawer
+    cashDrawerEnabled: true,
+    drawerConnection: 'RJ12',
+    pulseWidth: 120, // milliseconds
+    
+    // Customer Display
+    customerDisplayEnabled: false,
+    displayType: 'LCD', // LCD, LED, VFD
+    displayLines: 2,
+    displayCharsPerLine: 20,
+    
+    // Scale Integration
+    scaleEnabled: false,
+    scaleType: 'serial',
+    scaleBaudRate: 9600,
+    
+    // Card Reader
+    cardReaderEnabled: true,
+    cardReaderType: 'EMV', // EMV, MSR, Contactless
+    enableContactless: true,
+    enableChip: true,
+    enableSwipe: true
+  });
+
+  const [reportSettings, setReportSettings] = useState({
+    // Report Generation
+    autoGenerateReports: true,
+    reportFrequency: 'daily', // daily, weekly, monthly
+    reportTime: '23:59',
+    
+    // Report Types
+    enableSalesReports: true,
+    enableInventoryReports: true,
+    enableEmployeeReports: true,
+    enableTaxReports: true,
+    enableCustomerReports: true,
+    
+    // Data Retention
+    salesDataRetention: 1095, // days (3 years)
+    inventoryDataRetention: 365, // days (1 year)
+    employeeDataRetention: 2555, // days (7 years)
+    
+    // Export Settings
+    defaultExportFormat: 'PDF', // PDF, Excel, CSV
+    includeGraphs: true,
+    companyLogoOnReports: true,
+    
+    // Email Reports
+    emailReportsEnabled: false,
+    reportEmailRecipients: [],
+    emailReportFormat: 'PDF'
+  });
+
+  const [securitySettings, setSecuritySettings] = useState({
+    // Authentication
+    requireStrongPasswords: true,
+    passwordMinLength: 8,
+    passwordRequireSymbols: true,
+    passwordRequireNumbers: true,
+    passwordExpiryDays: 90,
+    
+    // Session Management
+    maxSessionTime: 8, // hours
+    idleTimeout: 30, // minutes
+    requireReauth: false,
+    
+    // Audit & Logging
+    enableAuditLog: true,
+    logAllTransactions: true,
+    logEmployeeActions: true,
+    logSystemChanges: true,
+    auditLogRetention: 2555, // days (7 years)
+    
+    // Data Protection
+    enableDataEncryption: true,
+    encryptionLevel: 'AES-256',
+    enableBackupEncryption: true,
+    
+    // Network Security
+    enableSSL: true,
+    allowRemoteAccess: false,
+    enableVPN: false,
+    firewallEnabled: true,
+    
+    // Compliance
+    pciComplianceEnabled: true,
+    hipaaComplianceEnabled: false,
+    soxComplianceEnabled: false
   });
 
   const toggleSection = useCallback((sectionId: string) => {
@@ -354,7 +746,648 @@ const Settings = () => {
     const sectionKey = `${activeSection}-${activeSubsection}`;
     
     switch (sectionKey) {
+      // Business Settings
+      case 'business-business-info':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-4">Business Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="businessName">Business Name *</Label>
+                <Input
+                  id="businessName"
+                  value={businessSettings.businessName}
+                  onChange={(e) => setBusinessSettings(prev => ({ ...prev, businessName: e.target.value }))}
+                  placeholder="Your Business Name"
+                />
+              </div>
+              <div>
+                <Label htmlFor="businessType">Business Type</Label>
+                <Select 
+                  value={businessSettings.businessType} 
+                  onValueChange={(value) => setBusinessSettings(prev => ({ ...prev, businessType: value }))}
+                >
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="retail">Retail Store</SelectItem>
+                    <SelectItem value="restaurant">Restaurant</SelectItem>
+                    <SelectItem value="service">Service Business</SelectItem>
+                    <SelectItem value="grocery">Grocery Store</SelectItem>
+                    <SelectItem value="pharmacy">Pharmacy</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="taxId">Tax ID / EIN</Label>
+                <Input
+                  id="taxId"
+                  value={businessSettings.taxId}
+                  onChange={(e) => setBusinessSettings(prev => ({ ...prev, taxId: e.target.value }))}
+                  placeholder="XX-XXXXXXX"
+                />
+              </div>
+              <div>
+                <Label htmlFor="businessLicense">Business License #</Label>
+                <Input
+                  id="businessLicense"
+                  value={businessSettings.businessLicense}
+                  onChange={(e) => setBusinessSettings(prev => ({ ...prev, businessLicense: e.target.value }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="businessPhone">Business Phone</Label>
+                <Input
+                  id="businessPhone"
+                  value={businessSettings.phone}
+                  onChange={(e) => setBusinessSettings(prev => ({ ...prev, phone: e.target.value }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="businessEmail">Business Email</Label>
+                <Input
+                  id="businessEmail"
+                  type="email"
+                  value={businessSettings.email}
+                  onChange={(e) => setBusinessSettings(prev => ({ ...prev, email: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="address">Business Address</Label>
+              <Input
+                id="address"
+                value={businessSettings.address}
+                onChange={(e) => setBusinessSettings(prev => ({ ...prev, address: e.target.value }))}
+                className="mb-2"
+              />
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <Input
+                  placeholder="City"
+                  value={businessSettings.city}
+                  onChange={(e) => setBusinessSettings(prev => ({ ...prev, city: e.target.value }))}
+                />
+                <Input
+                  placeholder="State"
+                  value={businessSettings.state}
+                  onChange={(e) => setBusinessSettings(prev => ({ ...prev, state: e.target.value }))}
+                />
+                <Input
+                  placeholder="ZIP Code"
+                  value={businessSettings.postalCode}
+                  onChange={(e) => setBusinessSettings(prev => ({ ...prev, postalCode: e.target.value }))}
+                />
+                <Select 
+                  value={businessSettings.country} 
+                  onValueChange={(value) => setBusinessSettings(prev => ({ ...prev, country: value }))}
+                >
+                  <SelectTrigger><SelectValue placeholder="Country" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="US">United States</SelectItem>
+                    <SelectItem value="CA">Canada</SelectItem>
+                    <SelectItem value="GB">United Kingdom</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4 border-t">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
+            </div>
+          </div>
+        );
+
+      case 'business-operating-hours':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-4">Operating Hours</h3>
+            <div className="space-y-4">
+              {Object.entries(businessSettings.operatingHours).map(([day, hours]) => (
+                <div key={day} className="flex items-center gap-4 p-4 border rounded-lg">
+                  <div className="w-24 font-medium capitalize">{day}</div>
+                  <Checkbox
+                    checked={!hours.closed}
+                    onCheckedChange={(checked) => 
+                      setBusinessSettings(prev => ({
+                        ...prev,
+                        operatingHours: {
+                          ...prev.operatingHours,
+                          [day]: { ...hours, closed: !checked }
+                        }
+                      }))
+                    }
+                  />
+                  <span className="text-sm">Open</span>
+                  {!hours.closed && (
+                    <>
+                      <Input
+                        type="time"
+                        value={hours.open}
+                        onChange={(e) =>
+                          setBusinessSettings(prev => ({
+                            ...prev,
+                            operatingHours: {
+                              ...prev.operatingHours,
+                              [day]: { ...hours, open: e.target.value }
+                            }
+                          }))
+                        }
+                        className="w-32"
+                      />
+                      <span>to</span>
+                      <Input
+                        type="time"
+                        value={hours.close}
+                        onChange={(e) =>
+                          setBusinessSettings(prev => ({
+                            ...prev,
+                            operatingHours: {
+                              ...prev.operatingHours,
+                              [day]: { ...hours, close: e.target.value }
+                            }
+                          }))
+                        }
+                        className="w-32"
+                      />
+                    </>
+                  )}
+                  {hours.closed && <span className="text-muted-foreground">Closed</span>}
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-end space-x-4 pt-4 border-t">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
+            </div>
+          </div>
+        );
+
+      // POS Terminal Settings
+      case 'pos-terminal-receipt-settings':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-4">Receipt Settings</h3>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="receiptHeader">Receipt Header</Label>
+                <Textarea
+                  id="receiptHeader"
+                  value={posTerminalSettings.receiptHeader}
+                  onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptHeader: e.target.value }))}
+                  placeholder="Thank you for your business!"
+                  rows={2}
+                />
+              </div>
+              <div>
+                <Label htmlFor="receiptFooter">Receipt Footer</Label>
+                <Textarea
+                  id="receiptFooter"
+                  value={posTerminalSettings.receiptFooter}
+                  onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptFooter: e.target.value }))}
+                  placeholder="Please come again"
+                  rows={2}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Show Barcode on Receipt</Label>
+                    <p className="text-sm text-muted-foreground">Display transaction barcode</p>
+                  </div>
+                  <Switch
+                    checked={posTerminalSettings.showBarcode}
+                    onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, showBarcode: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Auto-Print Receipt</Label>
+                    <p className="text-sm text-muted-foreground">Automatically print after payment</p>
+                  </div>
+                  <Switch
+                    checked={posTerminalSettings.autoPrintReceipt}
+                    onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, autoPrintReceipt: checked }))}
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="receiptCopies">Number of Receipt Copies</Label>
+                <Input
+                  id="receiptCopies"
+                  type="number"
+                  min="1"
+                  max="5"
+                  value={posTerminalSettings.receiptCopies}
+                  onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptCopies: parseInt(e.target.value) || 1 }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4 border-t">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
+            </div>
+          </div>
+        );
+
+      case 'pos-terminal-cash-drawer':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-4">Cash Drawer Settings</h3>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Open for Cash Payments</Label>
+                    <p className="text-sm text-muted-foreground">Auto-open drawer for cash sales</p>
+                  </div>
+                  <Switch
+                    checked={posTerminalSettings.openDrawerForCash}
+                    onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, openDrawerForCash: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Require Count at Close</Label>
+                    <p className="text-sm text-muted-foreground">Count cash when closing drawer</p>
+                  </div>
+                  <Switch
+                    checked={posTerminalSettings.requireCountAtClose}
+                    onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, requireCountAtClose: checked }))}
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="kickCode">Cash Drawer Kick Code</Label>
+                <Input
+                  id="kickCode"
+                  value={posTerminalSettings.cashDrawerKickCode}
+                  onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, cashDrawerKickCode: e.target.value }))}
+                  placeholder="\\x1B\\x70\\x00\\x19\\xFA"
+                />
+                <p className="text-sm text-muted-foreground mt-1">ESC/POS command to open cash drawer</p>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4 border-t">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
+            </div>
+          </div>
+        );
+
+      // Tax Configuration
+      case 'tax-finance-tax-configuration':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-4">Tax Configuration</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 border rounded-lg">
+                <div>
+                  <Label>Enable Tax Calculations</Label>
+                  <p className="text-sm text-muted-foreground">Apply tax to all transactions</p>
+                </div>
+                <Switch
+                  checked={taxSettings.enableTax}
+                  onCheckedChange={(checked) => setTaxSettings(prev => ({ ...prev, enableTax: checked }))}
+                />
+              </div>
+              
+              {taxSettings.enableTax && (
+                <>
+                  <div className="space-y-3">
+                    <Label>Tax Rates</Label>
+                    {taxSettings.taxRates.map((rate) => (
+                      <div key={rate.id} className="flex items-center gap-4 p-3 border rounded-lg">
+                        <div className="flex-1">
+                          <Input
+                            value={rate.name}
+                            onChange={(e) => setTaxSettings(prev => ({
+                              ...prev,
+                              taxRates: prev.taxRates.map(r => 
+                                r.id === rate.id ? { ...r, name: e.target.value } : r
+                              )
+                            }))}
+                            placeholder="Tax Rate Name"
+                          />
+                        </div>
+                        <div className="w-24">
+                          <Input
+                            type="number"
+                            step="0.01"
+                            value={rate.rate}
+                            onChange={(e) => setTaxSettings(prev => ({
+                              ...prev,
+                              taxRates: prev.taxRates.map(r => 
+                                r.id === rate.id ? { ...r, rate: parseFloat(e.target.value) || 0 } : r
+                              )
+                            }))}
+                            placeholder="Rate %"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            checked={rate.isDefault}
+                            onCheckedChange={(checked) => setTaxSettings(prev => ({
+                              ...prev,
+                              taxRates: prev.taxRates.map(r => ({
+                                ...r,
+                                isDefault: r.id === rate.id ? !!checked : false
+                              }))
+                            }))}
+                          />
+                          <span className="text-sm">Default</span>
+                        </div>
+                        <Button variant="outline" size="sm">
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button variant="outline" className="w-full">
+                      <User className="w-4 h-4 mr-2" />
+                      Add Tax Rate
+                    </Button>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label>Tax Inclusive Pricing</Label>
+                        <p className="text-sm text-muted-foreground">Prices include tax</p>
+                      </div>
+                      <Switch
+                        checked={taxSettings.taxInclusivePricing}
+                        onCheckedChange={(checked) => setTaxSettings(prev => ({ ...prev, taxInclusivePricing: checked }))}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label>Enable Tax Exemptions</Label>
+                        <p className="text-sm text-muted-foreground">Allow tax-exempt sales</p>
+                      </div>
+                      <Switch
+                        checked={taxSettings.enableTaxExemptions}
+                        onCheckedChange={(checked) => setTaxSettings(prev => ({ ...prev, enableTaxExemptions: checked }))}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="flex justify-end space-x-4 pt-4 border-t">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
+            </div>
+          </div>
+        );
+
+      // Payment Methods
+      case 'tax-finance-payment-methods':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold mb-4">Payment Methods</h3>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { key: 'acceptCash', label: 'Cash', icon: DollarSign },
+                  { key: 'acceptCreditCard', label: 'Credit Card', icon: CreditCard },
+                  { key: 'acceptDebitCard', label: 'Debit Card', icon: CreditCard },
+                  { key: 'acceptCheck', label: 'Check', icon: FileText },
+                  { key: 'acceptGiftCard', label: 'Gift Card', icon: Star },
+                  { key: 'acceptMobile', label: 'Mobile Pay', icon: Smartphone }
+                ].map(({ key, label, icon: Icon }) => (
+                  <div key={key} className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <Icon className="w-4 h-4" />
+                      <Label>{label}</Label>
+                    </div>
+                    <Switch
+                      checked={paymentSettings[key as keyof typeof paymentSettings] as boolean}
+                      onCheckedChange={(checked) => setPaymentSettings(prev => ({ ...prev, [key]: checked }))}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {paymentSettings.acceptCreditCard && (
+                <div className="space-y-3 p-4 border rounded-lg">
+                  <h4 className="font-medium">Credit Card Settings</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Processor</Label>
+                      <Select 
+                        value={paymentSettings.creditCardProcessor} 
+                        onValueChange={(value) => setPaymentSettings(prev => ({ ...prev, creditCardProcessor: value }))}
+                      >
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="stripe">Stripe</SelectItem>
+                          <SelectItem value="square">Square</SelectItem>
+                          <SelectItem value="paypal">PayPal</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Signature Required Amount ($)</Label>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        value={paymentSettings.requireSignatureAmount}
+                        onChange={(e) => setPaymentSettings(prev => ({ ...prev, requireSignatureAmount: parseFloat(e.target.value) || 0 }))}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Enable Tipping</Label>
+                      <p className="text-sm text-muted-foreground">Allow customers to add tips</p>
+                    </div>
+                    <Switch
+                      checked={paymentSettings.enableTipping}
+                      onCheckedChange={(checked) => setPaymentSettings(prev => ({ ...prev, enableTipping: checked }))}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="flex justify-end space-x-4 pt-4 border-t">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
+            </div>
+          </div>
+        );
+
+      // Keep existing legacy cases for compatibility
       case 'general-profile':
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center space-x-4 mb-6 transition-transform duration-200">
+              <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center">
+                <User className="w-8 h-8 text-muted-foreground" />
+              </div>
+              <div>
+                <Button 
+                  variant="outline" 
+                  className="mr-2 transition-transform duration-200" 
+                  onClick={handleAvatarUpload}
+                >
+                  <Upload className="w-4 h-4 mr-2" />
+                  Upload Avatar
+                </Button>
+                <p className="text-sm text-muted-foreground mt-1">JPG or PNG. Max 2MB</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="firstName">First Name</Label>
+                <Input 
+                  id="firstName" 
+                  value={profileData.firstName}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, firstName: e.target.value }))}
+                  placeholder="John"
+                  className="dark:placeholder:text-gray-500"
+                />
+              </div>
+              <div>
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input 
+                  id="lastName" 
+                  value={profileData.lastName}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, lastName: e.target.value }))}
+                  placeholder="Doe"
+                  className="dark:placeholder:text-gray-500"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="username">Username</Label>
+                <Input 
+                  id="username" 
+                  value={profileData.username}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, username: e.target.value }))}
+                  placeholder="johndoe123"
+                  className="dark:placeholder:text-gray-500"
+                />
+              </div>
+              <div>
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input 
+                  id="phone" 
+                  type="tel" 
+                  value={profileData.phone}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
+                  placeholder="+1 555 123 4567"
+                  className="dark:placeholder:text-gray-500"
+                />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input 
+                id="email" 
+                type="email" 
+                value={profileData.email}
+                onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
+                placeholder="john.doe@email.com"
+                className="dark:placeholder:text-gray-500"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="address">Address</Label>
+              <Textarea 
+                id="address" 
+                value={profileData.address}
+                onChange={(e) => setProfileData(prev => ({ ...prev, address: e.target.value }))}
+                placeholder="123 Main Street, Suite 400"
+                className="dark:placeholder:text-gray-500"
+                rows={3} 
+              />
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="country">Country</Label>
+                <Select value={profileData.country} onValueChange={handleCountryChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select country" />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-card dark:bg-settings-form">
+                    {countries.map(country => (
+                      <SelectItem key={`${country.code}-${country.name}`} value={country.code}>
+                        {country.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="state">State</Label>
+                <Select value={profileData.state} onValueChange={handleStateChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select state" />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-card dark:bg-settings-form">
+                    {availableStates.map(state => (
+                      <SelectItem key={`${state.code}-${state.name}`} value={state.code}>
+                        {state.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="city">City</Label>
+                <Select 
+                  value={profileData.city} 
+                  onValueChange={(value) => setProfileData(prev => ({ ...prev, city: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select city" />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-card dark:bg-settings-form">
+                    {availableCities.map(city => (
+                      <SelectItem key={`${profileData.state}-${city}`} value={city}>
+                        {city}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="postal">Postal Code</Label>
+              <Input 
+                id="postal" 
+                value={profileData.postalCode}
+                onChange={(e) => setProfileData(prev => ({ ...prev, postalCode: e.target.value }))}
+                placeholder="90001"
+                className="dark:placeholder:text-gray-500"
+              />
+            </div>
+
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button 
+                variant="outline" 
+                onClick={handleCancel}
+                className="border-cancel text-cancel hover:bg-cancel/10 dark:border-cancel dark:text-cancel dark:hover:bg-cancel/10 transition-colors duration-200"
+              >
+                <X className="w-4 h-4 mr-2" />
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleSave}
+                className="bg-success hover:bg-success/90 text-success-foreground transition-transform duration-200"
+              >
+                <Save className="w-4 h-4 mr-2" />
+                Save Changes
+              </Button>
+            </div>
+          </div>
+        );
         return (
           <div className="space-y-6">
             <div className="flex items-center space-x-4 mb-6 transition-transform duration-200">
