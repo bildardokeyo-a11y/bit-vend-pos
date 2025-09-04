@@ -607,7 +607,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white dark:bg-black">
       <div className="flex">
         <input
           type="file"

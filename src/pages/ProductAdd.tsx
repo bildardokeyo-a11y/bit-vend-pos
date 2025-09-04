@@ -137,7 +137,7 @@ const ProductAdd = () => {
   }, [formData.purchasePrice, formData.sellingPrice]);
 
   return (
-    <div className="p-6 space-y-6 bg-background dark:bg-black min-h-screen">
+    <div className="p-6 space-y-6 bg-background dark:bg-settings-card min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -159,22 +159,27 @@ const ProductAdd = () => {
           <span className="text-foreground">Step {currentStep} of 4</span>
           <span className="text-foreground">{Math.round(progress)}%</span>
         </div>
-        <Progress value={progress} className="h-2" />
+        <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+          <div
+            className="h-2 bg-gradient-to-r from-success to-success/80 rounded-full transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
       </div>
 
       {/* Form */}
-      <Card className="dark:bg-gray-800 bg-white shadow-lg">
+      <Card className="bg-card dark:bg-settings-form shadow-lg border border-border">
         <CardContent className="p-0">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="w-full h-12 bg-gray-100 dark:bg-gray-700 rounded-none border-b">
+            <TabsList className="w-full h-12 bg-muted/50 rounded-none border-b">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.id}
                   value={tab.id}
                   className={cn(
-                    "flex-1 h-10 text-sm font-medium transition-all duration-200",
+                    "flex-1 h-10 text-sm font-medium transition-all duration-200 hover:scale-105",
                     activeTab === tab.id
-                      ? "bg-orange-500 text-white shadow-md"
+                      ? "bg-gradient-to-r from-success to-success/80 text-success-foreground shadow-md"
                       : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
                   )}
                 >
