@@ -74,7 +74,7 @@ const Receipt = () => {
                       ${item.product.price} × {item.quantity}
                     </p>
                   </div>
-                  <p className="font-semibold text-green-500">
+                  <p className="font-semibold print:text-black text-foreground">
                     ${(item.product.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
@@ -82,33 +82,37 @@ const Receipt = () => {
             </div>
           </div>
 
-          <Separator />
-
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span className="text-green-500">${subtotal?.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between text-sm text-muted-foreground">
-              <span>Tax (8%)</span>
-              <span className="text-green-500">${tax?.toFixed(2)}</span>
-            </div>
-            <Separator />
-            <div className="flex justify-between font-bold text-lg">
-              <span>Total</span>
-              <span className="text-green-500">${total?.toFixed(2)}</span>
+          <div className="border-t border-b border-dashed border-gray-300 dark:border-gray-600 py-3 my-3">
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span className="print:text-black text-foreground">${subtotal?.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <span>Tax (8%)</span>
+                <span className="print:text-black">${tax?.toFixed(2)}</span>
+              </div>
+              <div className="border-t border-dashed border-gray-300 dark:border-gray-600 pt-2 mt-2">
+                <div className="flex justify-between font-bold text-lg">
+                  <span>Total</span>
+                  <span className="print:text-black text-foreground">${total?.toFixed(2)}</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <Separator />
-
-          <div className="text-center">
+          <div className="text-center border-t border-dashed border-gray-300 dark:border-gray-600 pt-4">
             <p className="text-sm text-muted-foreground">
               Payment Method: <span className="font-semibold">{paymentMethod}</span>
             </p>
             <p className="text-sm text-muted-foreground mt-2">
               Thank you for your purchase!
             </p>
+            <div className="mt-4 pt-4 border-t border-dashed border-gray-300 dark:border-gray-600">
+              <p className="text-xs text-muted-foreground">
+                Visit us at: <span className="font-semibold">www.Bitvendpos.com</span>
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>
