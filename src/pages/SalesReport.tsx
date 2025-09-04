@@ -617,8 +617,6 @@ const SalesReport: React.FC = () => {
 
       {/* Business Overview Reports */}
       <BusinessReports />
-        </div>
-      )}
 
       {activeView === 'detailed' && (
         <Card className="animate-slideInLeft">

@@ -307,26 +307,26 @@ const StockIn: React.FC = () => {
                     className="transition-all duration-200 focus:scale-105"
                   />
                 </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="addedBy">Added By</Label>
-                    <Input
-                      id="addedBy"
-                      value={formData.addedBy}
-                      onChange={(e) => setFormData({...formData, addedBy: e.target.value})}
-                      className="transition-all duration-200 focus:scale-105"
-                      placeholder="User who added this stock"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="notes">Notes (Optional)</Label>
-                    <Textarea
-                      id="notes"
-                      placeholder="Add any additional notes..."
-                      value={formData.notes}
-                      onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                      className="transition-all duration-200 focus:scale-105"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="addedBy">Added By</Label>
+                  <Input
+                    id="addedBy"
+                    value={formData.addedBy}
+                    onChange={(e) => setFormData({...formData, addedBy: e.target.value})}
+                    className="transition-all duration-200 focus:scale-105"
+                    placeholder="User who added this stock"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="notes">Notes (Optional)</Label>
+                  <Textarea
+                    id="notes"
+                    placeholder="Add any additional notes..."
+                    value={formData.notes}
+                    onChange={(e) => setFormData({...formData, notes: e.target.value})}
+                    className="transition-all duration-200 focus:scale-105"
+                  />
+                </div>
               </CardContent>
             </Card>
 
