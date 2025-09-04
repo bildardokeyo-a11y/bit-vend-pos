@@ -669,7 +669,7 @@ const Settings = () => {
 
         {/* Main Content */}
         <div className="flex-1 p-8 overflow-y-auto">
-          <Card className="bg-settings-card border-border hover:shadow-lg transition-all duration-200 hover:scale-[1.01]">
+          <Card className="bg-settings-card border-border hover:shadow-lg transition-all duration-200">
             <CardHeader>
               <CardTitle className="text-foreground text-xl">
                 {settingsSections
@@ -678,7 +678,7 @@ const Settings = () => {
                   ?.title}
               </CardTitle>
             </CardHeader>
-            <CardContent className="bg-settings-form p-6 rounded-lg">
+            <CardContent className="bg-card p-6 rounded-lg">
               {renderContent()}
             </CardContent>
           </Card>
