@@ -168,24 +168,24 @@ const Settings = () => {
   const [activeSection, setActiveSection] = useState('');
   const [activeSubsection, setActiveSubsection] = useState('');
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
-  const [selectedCountry, setSelectedCountry] = useState<string>('US');
-  const [selectedState, setSelectedState] = useState<string>('CA');
-  const [availableStates, setAvailableStates] = useState<State[]>(countries[0].states);
-  const [availableCities, setAvailableCities] = useState<string[]>(countries[0].states[0].cities);
+  const [selectedCountry, setSelectedCountry] = useState<string>('');
+  const [selectedState, setSelectedState] = useState<string>('');
+  const [availableStates, setAvailableStates] = useState<State[]>([]);
+  const [availableCities, setAvailableCities] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Settings state
   const [profileData, setProfileData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    username: 'johndoe123',
-    phone: '+1 555 123 4567',
-    email: 'john.doe@email.com',
-    address: '123 Main Street, Suite 400',
-    country: 'US',
-    state: 'CA',
-    city: 'Los Angeles',
-    postalCode: '90001',
+    firstName: '',
+    lastName: '',
+    username: '',
+    phone: '',
+    email: '',
+    address: '',
+    country: '',
+    state: '',
+    city: '',
+    postalCode: '',
     avatar: null as File | null
   });
   
@@ -385,7 +385,7 @@ const Settings = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="dark:bg-settings-form">
                     {countries.map(country => (
                       <SelectItem key={country.code} value={country.code}>
                         {country.name}
@@ -400,7 +400,7 @@ const Settings = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select state" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="dark:bg-settings-form">
                     {availableStates.map(state => (
                       <SelectItem key={state.code} value={state.code}>
                         {state.name}
@@ -418,7 +418,7 @@ const Settings = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select city" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="dark:bg-settings-form">
                     {availableCities.map(city => (
                       <SelectItem key={city} value={city}>
                         {city}
