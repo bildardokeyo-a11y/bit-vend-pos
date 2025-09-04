@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useSearch } from '@/hooks/useSearch';
+import { SearchDropdown } from '@/components/ui/search-dropdown';
 import {
   Search,
   Plus,
@@ -84,8 +86,20 @@ const Topbar: React.FC<TopbarProps> = ({
   onToggleDarkMode,
 }) => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  const {
+    query,
+    results,
+    recentSearches,
+    isOpen,
+    setIsOpen,
+    handleQueryChange,
+    handleSearch,
+    handleResultSelect,
+    handleRecentSearchSelect,
+    clearRecentSearches,
+  } = useSearch();
   
   // Auto-hide tooltips
   const internetTooltip = useAutoHideTooltip(2000);
@@ -114,9 +128,9 @@ const Topbar: React.FC<TopbarProps> = ({
     }
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Searching for:', searchQuery);
+    handleSearch();
   };
 
   return (
@@ -137,19 +151,30 @@ const Topbar: React.FC<TopbarProps> = ({
 
         <div className="text-lg font-semibold text-foreground">Welcome</div>
 
-        <form onSubmit={handleSearch} className="relative max-w-md">
-          <Search
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
-            size={16}
-          />
-          <Input
-            type="text"
-            placeholder="Search products, sales, customers..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 w-80 pos-input"
-          />
-        </form>
+        <SearchDropdown
+          results={results}
+          recentSearches={recentSearches}
+          isOpen={isOpen}
+          onSelect={handleResultSelect}
+          onRecentSelect={handleRecentSearchSelect}
+          onClearRecent={clearRecentSearches}
+        >
+          <form onSubmit={handleSearchSubmit} className="relative max-w-md">
+            <Search
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+              size={16}
+            />
+            <Input
+              type="text"
+              placeholder="Search products, sales, customers..."
+              value={query}
+              onChange={(e) => handleQueryChange(e.target.value)}
+              onFocus={() => setIsOpen(query.length > 0 || recentSearches.length > 0)}
+              onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+              className="pl-10 w-80 pos-input"
+            />
+          </form>
+        </SearchDropdown>
       </div>
 
       <div className="flex items-center gap-3">

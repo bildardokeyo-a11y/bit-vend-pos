@@ -311,16 +311,16 @@ const Checkout = () => {
         <div className="space-y-2 mb-6">
           <div className="flex justify-between">
             <span>Subtotal</span>
-            <span className="text-success">${cartTotal.toFixed(2)}</span>
+            <span className="!text-success">${cartTotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>Tax (8%)</span>
-            <span className="text-success">${tax.toFixed(2)}</span>
+            <span className="!text-success">${tax.toFixed(2)}</span>
           </div>
           <Separator />
           <div className="flex justify-between font-bold text-lg">
             <span>Total</span>
-            <span className="text-success">${finalTotal.toFixed(2)}</span>
+            <span className="!text-success">${finalTotal.toFixed(2)}</span>
           </div>
         </div>
 
