@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,28 @@ const Receipt = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { cart, total, tax, subtotal, paymentMethod } = location.state || {};
+  
+  // Get company details from localStorage (set from settings)
+  const [companyInfo, setCompanyInfo] = useState({
+    name: 'BitVend POS',
+    address: '123 Business Street, City, State 12345',
+    phone: '+1 555 123 4567',
+    email: 'info@bitvendpos.com'
+  });
+
+  useEffect(() => {
+    // Load company info from localStorage if available
+    const savedCompanyInfo = localStorage.getItem('companySettings');
+    if (savedCompanyInfo) {
+      const parsed = JSON.parse(savedCompanyInfo);
+      setCompanyInfo({
+        name: parsed.companyName || 'BitVend POS',
+        address: parsed.companyAddress || '123 Business Street, City, State 12345',
+        phone: parsed.companyPhone || '+1 555 123 4567',
+        email: parsed.companyEmail || 'info@bitvendpos.com'
+      });
+    }
+  }, []);
 
   const handlePrint = () => {
     window.print();
@@ -53,9 +75,10 @@ const Receipt = () => {
       <Card id="receipt-print" className="print:shadow-none dark:bg-black dark:border-gray-800 print:bg-white print:text-black">
         <CardHeader className="text-center border-b dark:border-gray-800 print:border-gray-300">
           <div className="mb-4">
-            <h2 className="text-3xl font-bold text-primary">TechStore Plus</h2>
-            <p className="text-sm text-muted-foreground">Your Premium Electronics Retailer</p>
-            <p className="text-xs text-muted-foreground">123 Tech Street, Digital City, DC 12345</p>
+            <h2 className="text-3xl font-bold text-primary">{companyInfo.name}</h2>
+            <p className="text-sm text-muted-foreground">Point of Sale System</p>
+            <p className="text-xs text-muted-foreground">{companyInfo.address}</p>
+            <p className="text-xs text-muted-foreground">Phone: {companyInfo.phone} | Email: {companyInfo.email}</p>
           </div>
           <CardTitle className="text-2xl">Payment Receipt</CardTitle>
           <p className="text-muted-foreground">

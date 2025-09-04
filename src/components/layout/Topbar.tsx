@@ -92,6 +92,7 @@ const Topbar: React.FC<TopbarProps> = ({
   const mailTooltip = useAutoHideTooltip(2000);
   const notificationTooltip = useAutoHideTooltip(2000);
   const settingsTooltip = useAutoHideTooltip(2000);
+  const themeTooltip = useAutoHideTooltip(2000);
   const profileTooltip = useAutoHideTooltip(2000);
 
   useEffect(() => {
@@ -248,17 +249,24 @@ const Topbar: React.FC<TopbarProps> = ({
           </Tooltip>
         </div>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onToggleDarkMode}
-          className={`p-2 ${darkMode ? 'theme-toggle-sun' : 'theme-toggle-moon'}`}
-          aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-        >
-          <span className="text-lg">
-            {darkMode ? goldenSun : goldenMoon}
-          </span>
-        </Button>
+        <Tooltip open={themeTooltip.isOpen} onOpenChange={themeTooltip.handleOpenChange}>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onToggleDarkMode}
+              className={`p-2 transition-all duration-200 hover:scale-90 active:scale-75 ${darkMode ? 'theme-toggle-sun' : 'theme-toggle-moon'}`}
+              aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              <span className="text-lg">
+                {darkMode ? goldenSun : goldenMoon}
+              </span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
+            {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          </TooltipContent>
+        </Tooltip>
 
         <Tooltip open={profileTooltip.isOpen} onOpenChange={profileTooltip.handleOpenChange}>
           <TooltipTrigger asChild>
