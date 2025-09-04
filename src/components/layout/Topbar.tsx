@@ -169,8 +169,18 @@ const Topbar: React.FC<TopbarProps> = ({
               placeholder="Search products, sales, customers..."
               value={query}
               onChange={(e) => handleQueryChange(e.target.value)}
-              onFocus={() => setIsOpen(query.length > 0 || recentSearches.length > 0)}
-              onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+              onFocus={() => {
+                if (query.length > 0 || recentSearches.length > 0) {
+                  setIsOpen(true);
+                }
+              }}
+              onBlur={(e) => {
+                // Delay closing to allow for dropdown clicks
+                const relatedTarget = e.relatedTarget as HTMLElement;
+                if (!relatedTarget || !relatedTarget.closest('[data-radix-popper-content-wrapper]')) {
+                  setTimeout(() => setIsOpen(false), 200);
+                }
+              }}
               className="pl-10 w-80 pos-input"
             />
           </form>

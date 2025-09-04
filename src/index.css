@@ -321,21 +321,35 @@ All colors MUST be HSL.
     box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
   }
 
-  /* Enhanced Accessibility Focus Styles */
+  /* Enhanced Accessibility Focus Styles - Blue theme */
   input:focus,
   textarea:focus,
-  select:focus {
+  select:focus,
+  .pos-input:focus {
     border-color: #0d6efd !important;      /* Blue border */
     box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important; /* Blue glow */
     outline: none !important;              /* Remove default outline */
+    ring-color: #0d6efd !important;
   }
 
   /* Dark mode focus styles */
   .dark input:focus,
   .dark textarea:focus,
-  .dark select:focus {
+  .dark select:focus,
+  .dark .pos-input:focus {
     border-color: #4dabf7 !important;      /* Lighter blue for dark mode */
     box-shadow: 0 0 0 0.2rem rgba(77, 171, 247, 0.25) !important;
+    ring-color: #4dabf7 !important;
+  }
+
+  /* Override any existing focus ring colors */
+  *:focus-visible {
+    outline: 2px solid #0d6efd !important;
+    outline-offset: 2px !important;
+  }
+
+  .dark *:focus-visible {
+    outline-color: #4dabf7 !important;
   }
 
   /* Theme Toggle Button */
