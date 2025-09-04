@@ -678,7 +678,7 @@ const Settings = () => {
                   ?.title}
               </CardTitle>
             </CardHeader>
-            <CardContent className="bg-card p-6 rounded-lg">
+            <CardContent className="bg-settings-form p-6 rounded-lg">
               {renderContent()}
             </CardContent>
           </Card>
