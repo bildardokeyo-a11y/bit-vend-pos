@@ -67,57 +67,84 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 0 0% 11%;
-    --foreground: 210 40% 98%;
+    /* POS Dark Mode Color System */
+    --background: 0 0% 11%; /* #1c1c1c - Main page background */
+    --foreground: 0 0% 100%; /* #ffffff - Headings/Primary text */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 16.5%; /* #2a2a2a - Card/Form/Modal backgrounds */
+    --card-foreground: 0 0% 100%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 16.5%; /* #2a2a2a */
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 134 61% 41%; /* #28a745 - Primary buttons */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 134 62% 56%; /* #34d058 - Primary button hover */
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 27%; /* #444444 - Secondary buttons */
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 0 0% 33%; /* #555555 - Secondary button hover */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 16.5%; /* #2a2a2a */
+    --muted-foreground: 0 0% 69%; /* #b0b0b0 - Labels/Secondary text */
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 0% 16.5%; /* #2a2a2a */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 354 70% 54%; /* #dc3545 - Danger buttons */
+    --destructive-foreground: 0 0% 100%;
+    --destructive-hover: 354 70% 61%; /* #e55361 - Danger button hover */
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --border: 0 0% 23%; /* #3a3a3a - Table borders/dividers */
+    --input: 0 0% 16.5%; /* #2a2a2a - Input background */
+    --input-border: 0 0% 23%; /* #3a3a3a - Input border */
+    --ring: 134 61% 41%;
+
+    /* Table specific colors */
+    --table-header-bg: 0 0% 16.5%; /* #2a2a2a */
+    --table-header-text: 0 0% 100%; /* #ffffff */
+    --table-row-bg: 0 0% 16.5%; /* #2a2a2a */
+    --table-row-hover: 0 0% 20%; /* #333333 */
+    --table-border: 0 0% 23%; /* #3a3a3a */
+
+    /* Text colors */
+    --text-primary: 0 0% 100%; /* #ffffff */
+    --text-secondary: 0 0% 69%; /* #b0b0b0 */
+    --text-placeholder: 0 0% 53%; /* #888888 */
+    --text-disabled: 0 0% 40%; /* #666666 */
+
+    /* Toggle/Switch colors */
+    --toggle-on: 134 61% 41%; /* #28a745 */
+    --toggle-off: 208 7% 46%; /* #6c757d */
+
+    /* Progress bar colors */
+    --progress-fill: 134 62% 56%; /* #34d058 */
+    --progress-track: 0 0% 16.5%; /* #2a2a2a */
+
+    /* Sidebar colors */
+    --sidebar-background: 0 0% 11%;
+    --sidebar-foreground: 0 0% 69%;
+    --sidebar-primary: 134 61% 41%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 0 0% 16.5%;
+    --sidebar-accent-foreground: 0 0% 69%;
+    --sidebar-border: 0 0% 23%;
+    --sidebar-ring: 134 61% 41%;
     
-    
-    /* POS Colors Dark */
-    --success: 142 76% 36%;
-    --success-foreground: 355.7 100% 97.3%;
+    /* Legacy POS Colors for compatibility */
+    --success: 134 61% 41%;
+    --success-foreground: 0 0% 100%;
     --warning: 49 100% 50%;
     --warning-foreground: 0 0% 0%;
     --orange-accent: 25 95% 53%;
     
-    /* Settings Form Background Dark */
+    /* Settings Form Background */
     --settings-form: 0 0% 11%;
-    --settings-card: 0 0% 11%;
+    --settings-card: 0 0% 16.5%;
     
     /* Cancel Button Colors */
-    --cancel: 0 62% 56%;
-    --cancel-foreground: 0 0% 98%;
+    --cancel: 0 0% 27%;
+    --cancel-foreground: 0 0% 100%;
   }
 }
 
@@ -290,8 +317,8 @@ All colors MUST be HSL.
   /* Focus States */
   .pos-input:focus {
     @apply outline-none ring-2;
-    ring-color: hsl(var(--primary-blue));
-    box-shadow: 0 0 0 2px hsl(var(--primary-blue) / 0.2);
+    ring-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
   }
 
   /* Theme Toggle Button */
@@ -317,5 +344,78 @@ All colors MUST be HSL.
     background: hsl(var(--muted) / 0.5);
   }
 
+  /* POS Dark Mode Auto-Applied Styles */
+  .dark form,
+  .dark .form-container,
+  .dark .modal-content,
+  .dark .card,
+  .dark .settings-section {
+    @apply bg-card text-card-foreground border-border;
+  }
 
+  .dark input,
+  .dark textarea,
+  .dark select {
+    @apply bg-input text-text-primary border-input-border;
+  }
+
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    @apply text-text-placeholder;
+  }
+
+  .dark table {
+    @apply border-table-border;
+  }
+
+  .dark table thead,
+  .dark table th {
+    @apply bg-table-header-bg text-table-header-text border-table-border;
+  }
+
+  .dark table tbody tr {
+    @apply bg-table-row-bg border-table-border;
+  }
+
+  .dark table tbody tr:hover {
+    @apply bg-table-row-hover;
+  }
+
+  .dark table td {
+    @apply text-text-primary border-table-border;
+  }
+
+  .dark .progress-bar {
+    @apply bg-progress-track;
+  }
+
+  .dark .progress-fill {
+    @apply bg-progress-fill;
+  }
+
+  .dark label,
+  .dark .form-label {
+    @apply text-text-secondary;
+  }
+
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-text-primary;
+  }
+
+  .dark p, .dark span, .dark div {
+    @apply text-text-primary;
+  }
+
+  .dark .text-disabled {
+    @apply text-text-disabled;
+  }
+
+  /* Switch/Toggle Styles */
+  .dark .toggle-on {
+    @apply bg-toggle-on;
+  }
+
+  .dark .toggle-off {
+    @apply bg-toggle-off;
+  }
 }

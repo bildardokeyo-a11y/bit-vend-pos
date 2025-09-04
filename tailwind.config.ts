@@ -21,20 +21,24 @@ export default {
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
+				'input-border': 'hsl(var(--input-border))',
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					hover: 'hsl(var(--primary-hover))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					foreground: 'hsl(var(--secondary-foreground))',
+					hover: 'hsl(var(--secondary-hover))'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
+					foreground: 'hsl(var(--destructive-foreground))',
+					hover: 'hsl(var(--destructive-hover))'
 				},
 				warning: {
 					DEFAULT: 'hsl(var(--warning))',
@@ -69,6 +73,31 @@ export default {
 				success: {
 					DEFAULT: 'hsl(var(--success))',
 					foreground: 'hsl(var(--success-foreground))'
+				},
+				// Table-specific colors
+				table: {
+					'header-bg': 'hsl(var(--table-header-bg))',
+					'header-text': 'hsl(var(--table-header-text))',
+					'row-bg': 'hsl(var(--table-row-bg))',
+					'row-hover': 'hsl(var(--table-row-hover))',
+					border: 'hsl(var(--table-border))'
+				},
+				// Text-specific colors
+				text: {
+					primary: 'hsl(var(--text-primary))',
+					secondary: 'hsl(var(--text-secondary))',
+					placeholder: 'hsl(var(--text-placeholder))',
+					disabled: 'hsl(var(--text-disabled))'
+				},
+				// Toggle/Switch colors
+				toggle: {
+					on: 'hsl(var(--toggle-on))',
+					off: 'hsl(var(--toggle-off))'
+				},
+				// Progress bar colors
+				progress: {
+					fill: 'hsl(var(--progress-fill))',
+					track: 'hsl(var(--progress-track))'
 				},
 				'settings-form': 'hsl(var(--settings-form))',
 				'settings-card': 'hsl(var(--settings-card))',
