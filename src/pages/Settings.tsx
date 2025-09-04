@@ -385,9 +385,9 @@ const Settings = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
-                  <SelectContent className="dark:bg-settings-form">
+                  <SelectContent className="z-50 bg-card dark:bg-settings-form">
                     {countries.map(country => (
-                      <SelectItem key={country.code} value={country.code}>
+                      <SelectItem key={`${country.code}-${country.name}`} value={country.code}>
                         {country.name}
                       </SelectItem>
                     ))}
@@ -400,9 +400,9 @@ const Settings = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select state" />
                   </SelectTrigger>
-                  <SelectContent className="dark:bg-settings-form">
+                  <SelectContent className="z-50 bg-card dark:bg-settings-form">
                     {availableStates.map(state => (
-                      <SelectItem key={state.code} value={state.code}>
+                      <SelectItem key={`${state.code}-${state.name}`} value={state.code}>
                         {state.name}
                       </SelectItem>
                     ))}
@@ -418,9 +418,9 @@ const Settings = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select city" />
                   </SelectTrigger>
-                  <SelectContent className="dark:bg-settings-form">
+                  <SelectContent className="z-50 bg-card dark:bg-settings-form">
                     {availableCities.map(city => (
-                      <SelectItem key={city} value={city}>
+                      <SelectItem key={`${profileData.state}-${city}`} value={city}>
                         {city}
                       </SelectItem>
                     ))}
