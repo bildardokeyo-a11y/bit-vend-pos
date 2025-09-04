@@ -6,8 +6,10 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { PRODUCTS } from '@/data/posData';
+import ReportsTable from '@/components/ReportsTable';
+import BusinessReports from '@/components/BusinessReports';
 import { 
   BarChart3, 
   TrendingUp, 
@@ -607,6 +609,14 @@ const SalesReport: React.FC = () => {
               </div>
             </CardContent>
           </Card>
+
+          {/* Comprehensive Reports Table */}
+          <ReportsTable />
+        </div>
+      )}
+
+      {/* Business Overview Reports */}
+      <BusinessReports />
         </div>
       )}
 

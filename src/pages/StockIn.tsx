@@ -47,6 +47,8 @@ interface StockInTransaction {
   status: 'pending' | 'received' | 'partial';
   notes?: string;
   items: StockInItem[];
+  addedBy: string;
+  addedAt: string;
 }
 
 const StockIn: React.FC = () => {
@@ -56,7 +58,8 @@ const StockIn: React.FC = () => {
     referenceNo: `SI-${Date.now()}`,
     supplierName: '',
     receivedDate: new Date().toISOString().split('T')[0],
-    notes: ''
+    notes: '',
+    addedBy: 'Current User' // In a real app, this would come from authentication
   });
 
   // Sample stock in history
@@ -70,7 +73,9 @@ const StockIn: React.FC = () => {
       totalAmount: 1250.00,
       status: 'received',
       notes: 'Monthly inventory replenishment',
-      items: []
+      items: [],
+      addedBy: 'Alice Johnson',
+      addedAt: '2024-01-15T09:30:00'
     },
     {
       id: '2',
@@ -81,7 +86,22 @@ const StockIn: React.FC = () => {
       totalAmount: 890.50,
       status: 'pending',
       notes: 'Urgent restock for high-demand items',
-      items: []
+      items: [],
+      addedBy: 'Bob Smith',
+      addedAt: '2024-01-14T14:45:00'
+    },
+    {
+      id: '3',
+      referenceNo: 'SI-003',
+      supplierName: 'Premium Wholesale Co',
+      receivedDate: '2024-01-13',
+      totalItems: 32,
+      totalAmount: 1680.75,
+      status: 'received',
+      notes: 'Bulk order for seasonal items',
+      items: [],
+      addedBy: 'Carol Wilson',
+      addedAt: '2024-01-13T11:20:00'
     }
   ]);
 
@@ -185,7 +205,8 @@ const StockIn: React.FC = () => {
       referenceNo: `SI-${Date.now()}`,
       supplierName: '',
       receivedDate: new Date().toISOString().split('T')[0],
-      notes: ''
+      notes: '',
+      addedBy: 'Current User'
     });
   };
 
@@ -286,16 +307,26 @@ const StockIn: React.FC = () => {
                     className="transition-all duration-200 focus:scale-105"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="notes">Notes (Optional)</Label>
-                  <Textarea
-                    id="notes"
-                    placeholder="Add any additional notes..."
-                    value={formData.notes}
-                    onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                    className="transition-all duration-200 focus:scale-105"
-                  />
-                </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="addedBy">Added By</Label>
+                    <Input
+                      id="addedBy"
+                      value={formData.addedBy}
+                      onChange={(e) => setFormData({...formData, addedBy: e.target.value})}
+                      className="transition-all duration-200 focus:scale-105"
+                      placeholder="User who added this stock"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="notes">Notes (Optional)</Label>
+                    <Textarea
+                      id="notes"
+                      placeholder="Add any additional notes..."
+                      value={formData.notes}
+                      onChange={(e) => setFormData({...formData, notes: e.target.value})}
+                      className="transition-all duration-200 focus:scale-105"
+                    />
+                  </div>
               </CardContent>
             </Card>
 
