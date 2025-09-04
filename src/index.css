@@ -112,8 +112,12 @@ All colors MUST be HSL.
     --orange-accent: 25 95% 53%;
     
     /* Settings Form Background Dark */
-    --settings-form-bg: 217.2 32.6% 17.5%;
-    --settings-card-bg: 217.2 32.6% 17.5%;
+    --settings-form: 217.2 32.6% 17.5%;
+    --settings-card: 217.2 32.6% 17.5%;
+    
+    /* Cancel Button Colors */
+    --cancel: 0 62% 56%;
+    --cancel-foreground: 0 0% 98%;
   }
 }
 

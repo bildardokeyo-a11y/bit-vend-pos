@@ -439,7 +439,7 @@ const Settings = () => {
               <Button 
                 variant="outline" 
                 onClick={handleCancel}
-                className="hover:scale-105 transition-transform duration-200 hover:bg-destructive/10 hover:text-destructive hover:border-destructive"
+                className="border-cancel text-cancel hover:bg-cancel/10 dark:border-cancel dark:text-cancel dark:hover:bg-cancel/10 transition-colors duration-200"
               >
                 <X className="w-4 h-4 mr-2" />
                 Cancel
@@ -516,7 +516,7 @@ const Settings = () => {
               <Button 
                 variant="outline" 
                 onClick={handleCancel}
-                className="hover:scale-105 transition-transform duration-200 hover:bg-destructive/10 hover:text-destructive hover:border-destructive"
+                className="border-cancel text-cancel hover:bg-cancel/10 dark:border-cancel dark:text-cancel dark:hover:bg-cancel/10 transition-colors duration-200"
               >
                 <X className="w-4 h-4 mr-2" />
                 Cancel
@@ -618,7 +618,7 @@ const Settings = () => {
         />
         
         {/* Sidebar */}
-        <div className="w-80 bg-settings-card border-r border-border p-6 min-h-screen overflow-y-auto">
+        <div className="w-80 bg-card dark:bg-settings-form border-r border-border p-6 min-h-screen overflow-y-auto">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-foreground mb-2">Settings</h1>
             <p className="text-muted-foreground">Manage your POS system configuration</p>

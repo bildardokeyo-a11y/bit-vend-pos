@@ -137,7 +137,7 @@ const ProductAdd = () => {
   }, [formData.purchasePrice, formData.sellingPrice]);
 
   return (
-    <div className="p-6 space-y-6 bg-background dark:bg-settings-card min-h-screen">
+    <div className="p-6 space-y-6 bg-background dark:bg-settings-form min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -640,7 +640,7 @@ const ProductAdd = () => {
               type="button"
               variant="outline"
               onClick={handleCancel}
-              className="gap-2 transition-all duration-200 hover:scale-95 active:scale-90 text-red-600 border-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 dark:bg-gray-700"
+              className="gap-2 transition-all duration-200 hover:scale-95 active:scale-90 border-cancel text-cancel hover:bg-cancel/10 dark:border-cancel dark:text-cancel dark:hover:bg-cancel/10"
             >
               <X className="h-4 w-4" />
               Cancel
@@ -649,7 +649,7 @@ const ProductAdd = () => {
             <Button
               type="button"
               onClick={handleSubmit}
-              className="bg-green-500 hover:bg-green-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+              className="bg-success hover:bg-success/90 text-success-foreground gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
             >
               <Save className="h-4 w-4" />
               Save Product

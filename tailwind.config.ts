@@ -70,11 +70,11 @@ export default {
 					DEFAULT: 'hsl(var(--success))',
 					foreground: 'hsl(var(--success-foreground))'
 				},
-				'settings-form': {
-					DEFAULT: 'hsl(var(--settings-form-bg))'
-				},
-				'settings-card': {
-					DEFAULT: 'hsl(var(--settings-card-bg))'
+				'settings-form': 'hsl(var(--settings-form))',
+				'settings-card': 'hsl(var(--settings-card))',
+				cancel: {
+					DEFAULT: 'hsl(var(--cancel))',
+					foreground: 'hsl(var(--cancel-foreground))'
 				}
 			},
 			borderRadius: {
