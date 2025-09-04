@@ -321,6 +321,23 @@ All colors MUST be HSL.
     box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
   }
 
+  /* Enhanced Accessibility Focus Styles */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #0d6efd !important;      /* Blue border */
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important; /* Blue glow */
+    outline: none !important;              /* Remove default outline */
+  }
+
+  /* Dark mode focus styles */
+  .dark input:focus,
+  .dark textarea:focus,
+  .dark select:focus {
+    border-color: #4dabf7 !important;      /* Lighter blue for dark mode */
+    box-shadow: 0 0 0 0.2rem rgba(77, 171, 247, 0.25) !important;
+  }
+
   /* Theme Toggle Button */
   .dark .theme-toggle-sun {
     background: hsl(45, 100%, 60% / 0.1);

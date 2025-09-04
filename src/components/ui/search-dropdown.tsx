@@ -70,7 +70,7 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
       <PopoverTrigger asChild>
         {children}
       </PopoverTrigger>
-      <PopoverContent className="w-96 p-0" align="start">
+      <PopoverContent className="w-96 p-0 z-50 bg-popover border border-border shadow-lg" align="start">
         <Command>
           <CommandList>
             {results.length > 0 && (
