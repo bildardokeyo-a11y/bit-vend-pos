@@ -8,54 +8,12 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Plus, Crown, CreditCard, Smartphone, Banknote, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { PRODUCTS, CATEGORIES } from '@/data/posData';
 
-// Mock product data
-const products = [
-  {
-    id: 1,
-    name: "Premium Espresso Blend",
-    description: "Artisanal dark roast",
-    price: 24.99,
-    category: "Coffee"
-  },
-  {
-    id: 2,
-    name: "Organic Green Tea",
-    description: "Hand-picked leaves",
-    price: 18.50,
-    category: "Tea"
-  },
-  {
-    id: 3,
-    name: "Gourmet Chocolate Cake",
-    description: "Belgian chocolate",
-    price: 45.00,
-    category: "Dessert"
-  },
-  {
-    id: 4,
-    name: "Vintage Wine Selection",
-    description: "Reserve collection",
-    price: 89.99,
-    category: "Beverages"
-  },
-  {
-    id: 5,
-    name: "Artisan Croissant",
-    description: "Buttery perfection",
-    price: 12.99,
-    category: "Pastry"
-  },
-  {
-    id: 6,
-    name: "Truffle Collection",
-    description: "Hand-crafted luxury",
-    price: 65.00,
-    category: "Confectionery"
-  }
-];
+// Use centralized products
+const products = PRODUCTS;
 
-const categories = ["All", "Coffee", "Tea", "Dessert", "Beverages", "Pastry", "Confectionery"];
+const categories = CATEGORIES;
 
 const Checkout = () => {
   const navigate = useNavigate();

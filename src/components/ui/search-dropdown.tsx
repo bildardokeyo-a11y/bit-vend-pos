@@ -19,6 +19,7 @@ interface SearchDropdownProps {
   results: SearchResult[];
   recentSearches: string[];
   isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
   onSelect: (result: SearchResult) => void;
   onRecentSelect: (search: string) => void;
   onClearRecent: () => void;
@@ -60,13 +61,14 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
   results,
   recentSearches,
   isOpen,
+  onOpenChange,
   onSelect,
   onRecentSelect,
   onClearRecent,
   children,
 }) => {
   return (
-    <Popover open={isOpen}>
+    <Popover open={isOpen} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
         {children}
       </PopoverTrigger>

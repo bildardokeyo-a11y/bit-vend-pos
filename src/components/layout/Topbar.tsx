@@ -155,6 +155,7 @@ const Topbar: React.FC<TopbarProps> = ({
           results={results}
           recentSearches={recentSearches}
           isOpen={isOpen}
+          onOpenChange={setIsOpen}
           onSelect={handleResultSelect}
           onRecentSelect={handleRecentSearchSelect}
           onClearRecent={clearRecentSearches}
@@ -172,13 +173,6 @@ const Topbar: React.FC<TopbarProps> = ({
               onFocus={() => {
                 if (query.length > 0 || recentSearches.length > 0) {
                   setIsOpen(true);
-                }
-              }}
-              onBlur={(e) => {
-                // Delay closing to allow for dropdown clicks
-                const relatedTarget = e.relatedTarget as HTMLElement;
-                if (!relatedTarget || !relatedTarget.closest('[data-radix-popper-content-wrapper]')) {
-                  setTimeout(() => setIsOpen(false), 200);
                 }
               }}
               className="pl-10 w-80 pos-input"

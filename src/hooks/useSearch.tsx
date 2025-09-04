@@ -1,49 +1,25 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import { PRODUCTS } from '@/data/posData';
 
 export interface SearchResult {
   id: string;
   title: string;
   subtitle?: string;
-  type: 'product' | 'customer' | 'sale' | 'employee' | 'category' | 'brand';
-  path: string;
+  type: 'product';
+  path?: string;
   data?: any;
 }
 
-// Mock data for search results
-const mockSearchData: SearchResult[] = [
-  // Products
-  { id: '1', title: 'Premium Espresso Blend', subtitle: 'Coffee - $24.99', type: 'product', path: '/products/1' },
-  { id: '2', title: 'Organic Green Tea', subtitle: 'Tea - $18.50', type: 'product', path: '/products/2' },
-  { id: '3', title: 'Gourmet Chocolate Cake', subtitle: 'Dessert - $45.00', type: 'product', path: '/products/3' },
-  { id: '4', title: 'Vintage Wine Selection', subtitle: 'Beverages - $89.99', type: 'product', path: '/products/4' },
-  
-  // Customers
-  { id: '5', title: 'John Smith', subtitle: 'Customer - john@email.com', type: 'customer', path: '/customers/5' },
-  { id: '6', title: 'Sarah Johnson', subtitle: 'Customer - sarah@email.com', type: 'customer', path: '/customers/6' },
-  { id: '7', title: 'Mike Wilson', subtitle: 'Customer - mike@email.com', type: 'customer', path: '/customers/7' },
-  
-  // Sales
-  { id: '8', title: 'Sale #001234', subtitle: 'Today - $156.50', type: 'sale', path: '/sales/001234' },
-  { id: '9', title: 'Sale #001233', subtitle: 'Yesterday - $89.99', type: 'sale', path: '/sales/001233' },
-  { id: '10', title: 'Sale #001232', subtitle: '2 days ago - $234.75', type: 'sale', path: '/sales/001232' },
-  
-  // Employees
-  { id: '11', title: 'Alice Brown', subtitle: 'Manager - Finance', type: 'employee', path: '/employees/11' },
-  { id: '12', title: 'Bob Davis', subtitle: 'Cashier - Sales', type: 'employee', path: '/employees/12' },
-  
-  // Categories
-  { id: '13', title: 'Coffee', subtitle: 'Category - 15 products', type: 'category', path: '/categories/coffee' },
-  { id: '14', title: 'Tea', subtitle: 'Category - 8 products', type: 'category', path: '/categories/tea' },
-  { id: '15', title: 'Desserts', subtitle: 'Category - 12 products', type: 'category', path: '/categories/desserts' },
-  
-  // Brands
-  { id: '16', title: 'Premium Blend Co.', subtitle: 'Brand - 6 products', type: 'brand', path: '/brands/premium-blend' },
-  { id: '17', title: 'Organic Gardens', subtitle: 'Brand - 4 products', type: 'brand', path: '/brands/organic-gardens' },
-];
+// Build search data from actual products
+const productResults: SearchResult[] = PRODUCTS.map(p => ({
+  id: String(p.id),
+  title: p.name,
+  subtitle: `${p.category} - $${p.price.toFixed(2)}`,
+  type: 'product',
+}));
 
 export const useSearch = () => {
-  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>(() => {
@@ -64,7 +40,7 @@ export const useSearch = () => {
       return;
     }
 
-    const filtered = mockSearchData.filter(item =>
+    const filtered = productResults.filter(item =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (item.subtitle && item.subtitle.toLowerCase().includes(searchQuery.toLowerCase()))
     );
@@ -102,10 +78,7 @@ export const useSearch = () => {
       const updated = [result.title, ...prev.filter(s => s !== result.title)].slice(0, 5);
       return updated;
     });
-
-    // Navigate to result
-    navigate(result.path);
-  }, [navigate]);
+  }, []);
 
   // Handle recent search selection
   const handleRecentSearchSelect = useCallback((recentSearch: string) => {
