@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import TopCustomersVendors from '@/components/TopCustomersVendors';
 import {
   DollarSign,
   Package,
@@ -180,6 +181,12 @@ const Dashboard: React.FC = () => {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Top Customers & Vendors */}
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold text-foreground">Business Insights</h2>
+        <TopCustomersVendors />
       </div>
     </div>
   );
