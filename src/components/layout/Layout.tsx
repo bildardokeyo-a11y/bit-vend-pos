@@ -35,7 +35,7 @@ const Layout: React.FC<LayoutProps> = () => {
 
   return (
     <SubscriptionProvider>
-      <div className="h-screen overflow-hidden bg-background text-foreground">
+      <div className="min-h-screen bg-background text-foreground">
         <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
         <Topbar
           collapsed={sidebarCollapsed}

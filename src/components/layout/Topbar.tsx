@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useSearch } from '@/hooks/useSearch';
 import { SearchDropdown } from '@/components/ui/search-dropdown';
 import { useBusiness } from '@/contexts/BusinessContext';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Search,
   Plus,
@@ -384,7 +385,10 @@ const Topbar: React.FC<TopbarProps> = ({
             <DropdownMenuItem onClick={() => navigate('/settings')}>
               System Settings
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log('Logout')}>
+            <DropdownMenuItem onClick={async () => {
+              await supabase.auth.signOut();
+              window.location.href = '/';
+            }}>
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
