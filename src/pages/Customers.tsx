@@ -199,16 +199,21 @@ const Customers = () => {
   const vipCustomers = customers.filter(c => c.customerType === 'vip').length;
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6 animate-fadeInUp">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Customers</h1>
-          <p className="text-muted-foreground">Manage customer information and contact details</p>
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <Users className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Customer Management</h1>
+            <p className="text-muted-foreground">Manage customer information and contact details</p>
+          </div>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="gap-2" onClick={() => resetForm()}>
+            <Button className="gap-2 transition-all duration-200 hover:scale-105" onClick={() => resetForm()}>
               <Plus size={16} />
               Add Customer
             </Button>
