@@ -78,7 +78,7 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
       <PopoverTrigger asChild>
         {children}
       </PopoverTrigger>
-      <PopoverContent className="w-[420px] p-0 z-50 bg-popover border border-border shadow-xl rounded-lg" align="start">
+      <PopoverContent className="w-[420px] p-0 z-50 bg-popover border border-border shadow-xl rounded-lg" align="start" onOpenAutoFocus={(e) => e.preventDefault()} onCloseAutoFocus={(e) => e.preventDefault()}>
         <Command>
           <CommandList>
             {results.length > 0 && (
