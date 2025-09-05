@@ -210,14 +210,12 @@ const ProductEdit = () => {
 
   const handleImageSave = () => {
     if (imagePreview) {
-      const timestamp = Date.now();
-      const imagePath = `/lovable-uploads/product-${productId}-${timestamp}.jpg`;
-      
-      handleInputChange('image', imagePath);
+      // Update the form data with the preview image for immediate display
+      handleInputChange('image', imagePreview);
       
       toast({
-        title: "Image Updated",
-        description: "Product image has been updated successfully.",
+        title: "Image Preview Updated",
+        description: "Product image preview updated. Remember to save your changes.",
       });
     }
     setIsImageDialogOpen(false);
