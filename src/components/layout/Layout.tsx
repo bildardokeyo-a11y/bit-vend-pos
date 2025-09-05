@@ -17,11 +17,16 @@ const Layout: React.FC<LayoutProps> = () => {
     const root = document.documentElement;
     if (darkMode) {
       root.classList.add('dark');
+      root.style.setProperty('--theme-transition', 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)');
       localStorage.setItem('pos-theme', 'dark');
     } else {
       root.classList.remove('dark');
+      root.style.setProperty('--theme-transition', 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)');
       localStorage.setItem('pos-theme', 'light');
     }
+    
+    // Add smooth transition classes to body
+    document.body.style.transition = 'background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
   }, [darkMode]);
 
   const toggleSidebar = () => setSidebarCollapsed((p) => !p);
@@ -36,8 +41,8 @@ const Layout: React.FC<LayoutProps> = () => {
         darkMode={darkMode}
         onToggleDarkMode={toggleDarkMode}
       />
-      <main className={cn('pos-content bg-background dark:bg-black', sidebarCollapsed && 'collapsed')}>
-        <div className="animate-fadeInUp">
+      <main className={cn('pos-content bg-background dark:bg-black transition-all duration-300 ease-in-out', sidebarCollapsed && 'collapsed')}>
+        <div className="animate-fadeInUp transition-all duration-300">
           <Outlet />
         </div>
       </main>

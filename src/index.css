@@ -206,7 +206,23 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Global theme transitions for all elements */
+  *,
+  *::before,
+  *::after {
+    transition-property: background-color, color, border-color, box-shadow, transform;
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Preserve existing transition properties */
+  .transition-all,
+  .transition-colors,
+  .transition-transform {
+    transition-duration: 0.2s !important;
   }
 }
 

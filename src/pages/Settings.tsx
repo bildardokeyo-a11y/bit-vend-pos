@@ -75,6 +75,7 @@ import {
   Trash2
 } from 'lucide-react';
 import { toast } from "sonner";
+import { showUploadToast, showAutoSaveToast } from '@/components/SettingsToast';
 
 type SettingsSection = {
   id: string;
@@ -253,11 +254,8 @@ const Settings = () => {
   
   // Initialize business settings based on URL parameters or current business
   useEffect(() => {
-    console.log('useEffect triggered:', { isAddMode, editBusinessId, currentBusiness: currentBusiness?.id });
-    
     if (isAddMode) {
       // Reset form for new business
-      console.log('Setting form for add mode');
       setBusinessSettings(prev => ({
         ...prev,
         businessName: '',
@@ -270,11 +268,11 @@ const Settings = () => {
         city: '',
         state: '',
         postalCode: '',
-        country: 'US'
+        country: 'US',
+        logoUrl: '' // Clear logo for new business
       }));
     } else if (editBusinessId) {
       // Load business data for editing
-      console.log('Setting form for edit mode:', editBusinessId);
       const businessToEdit = businesses.find(b => b.id === editBusinessId);
       if (businessToEdit) {
         setBusinessSettings(prev => ({
@@ -289,12 +287,12 @@ const Settings = () => {
           city: businessToEdit.city || '',
           state: businessToEdit.state || '',
           postalCode: businessToEdit.postalCode || '',
-          country: businessToEdit.country || 'US'
+          country: businessToEdit.country || 'US',
+          logoUrl: businessToEdit.logoUrl || '' // Ensure logo is loaded
         }));
       }
     } else if (currentBusiness) {
       // Load current business data
-      console.log('Setting form for current business:', currentBusiness.id);
       setBusinessSettings(prev => ({
         ...prev,
         businessName: currentBusiness.businessName,
@@ -307,7 +305,8 @@ const Settings = () => {
         city: currentBusiness.city || '',
         state: currentBusiness.state || '',
         postalCode: currentBusiness.postalCode || '',
-        country: currentBusiness.country || 'US'
+        country: currentBusiness.country || 'US',
+        logoUrl: currentBusiness.logoUrl || '' // Ensure logo is loaded
       }));
     }
   }, [isAddMode, editBusinessId, currentBusiness, businesses]);
@@ -817,27 +816,22 @@ const Settings = () => {
   
   const handleSave = () => {
     const sectionKey = `${activeSection}-${activeSubsection}`;
-    console.log('handleSave called with:', { sectionKey, isAddMode, editBusinessId });
     
     if (sectionKey === 'business-business-info') {
-      console.log('Handling business-business-info save');
       if (isAddMode) {
         // Add new business
-        console.log('Adding new business:', businessSettings);
         const newBusinessId = addBusiness(businessSettings);
         toast.success("Business added successfully!");
         // Clear URL parameters
         navigate('/settings?section=business&subsection=business-info');
       } else if (editBusinessId) {
         // Update existing business
-        console.log('Updating existing business:', editBusinessId, businessSettings);
         updateBusiness(editBusinessId, businessSettings);
         toast.success("Business updated successfully!");
         // Clear URL parameters
         navigate('/settings?section=business&subsection=business-info');
       } else {
         // Update current business
-        console.log('Updating current business:', currentBusiness?.id, businessSettings);
         if (currentBusiness) {
           updateBusiness(currentBusiness.id, businessSettings);
           toast.success("Business settings saved successfully!");
@@ -889,9 +883,9 @@ const Settings = () => {
                   )}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3 flex-1">
-                        <div className="w-10 h-10 rounded-md overflow-hidden bg-muted flex items-center justify-center border">
+                        <div className="w-10 h-10 rounded-md overflow-hidden bg-muted flex items-center justify-center border transition-all duration-300 hover:scale-105 logo-preview">
                           {business.logoUrl ? (
-                            <img src={business.logoUrl} alt={`${business.businessName} logo`} className="w-full h-full object-cover" />
+                            <img src={business.logoUrl} alt={`${business.businessName} logo`} className="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
                           ) : (
                             <Building className="w-5 h-5 text-muted-foreground" />
                           )}
@@ -973,9 +967,9 @@ const Settings = () => {
               <div>
                 <Label htmlFor="businessLogo">Business Logo</Label>
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-lg border-2 border-dashed overflow-hidden bg-muted flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-lg border-2 border-dashed overflow-hidden bg-muted flex items-center justify-center transition-all duration-300 hover:scale-105 logo-preview">
                     {businessSettings.logoUrl ? (
-                      <img src={businessSettings.logoUrl} alt={`${businessSettings.businessName} logo`} className="w-full h-full object-cover" />
+                      <img src={businessSettings.logoUrl} alt={`${businessSettings.businessName} logo`} className="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
                     ) : (
                       <Building className="w-6 h-6 text-muted-foreground" />
                     )}
@@ -1003,7 +997,17 @@ const Settings = () => {
                         reader.onload = () => {
                           const dataUrl = reader.result as string;
                           setBusinessSettings(prev => ({ ...prev, logoUrl: dataUrl }));
-                          toast.success("Logo uploaded successfully!");
+                          
+                          // Auto-save the logo to the current business immediately
+                          if (editBusinessId) {
+                            updateBusiness(editBusinessId, { logoUrl: dataUrl });
+                            showAutoSaveToast();
+                          } else if (currentBusiness) {
+                            updateBusiness(currentBusiness.id, { logoUrl: dataUrl });
+                            showAutoSaveToast();
+                          }
+                          
+                          showUploadToast("Logo uploaded and saved successfully!");
                         };
                         reader.onerror = () => toast.error("Failed to read the image file");
                         reader.readAsDataURL(file);

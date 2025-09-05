@@ -262,7 +262,7 @@ const Topbar: React.FC<TopbarProps> = ({
           POS
         </Button>
 
-        <div className={cn("flex items-center gap-3", darkMode ? "text-white" : "text-black")}>
+        <div className={cn("flex items-center gap-3 transition-colors duration-300", darkMode ? "text-white" : "text-black")}>
           <Tooltip open={internetTooltip.isOpen} onOpenChange={internetTooltip.handleOpenChange}>
             <TooltipTrigger asChild>
               <Button 
@@ -340,15 +340,15 @@ const Topbar: React.FC<TopbarProps> = ({
               variant="ghost"
               size="sm"
               onClick={onToggleDarkMode}
-              className={`p-2 transition-all duration-200 hover:scale-90 active:scale-75 ${darkMode ? 'theme-toggle-sun' : 'theme-toggle-moon'}`}
+              className={`p-2 transition-all duration-300 hover:scale-110 active:scale-95 hover:bg-accent/10 rounded-lg ${darkMode ? 'theme-toggle-sun' : 'theme-toggle-moon'}`}
               aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             >
-              <span className="text-lg">
+              <span className="text-lg transition-transform duration-300 hover:rotate-12">
                 {darkMode ? goldenSun : goldenMoon}
               </span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
+          <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300 bg-background border shadow-lg">
             {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           </TooltipContent>
         </Tooltip>
