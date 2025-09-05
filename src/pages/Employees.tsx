@@ -450,7 +450,7 @@ const Employees = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Salary Budget</CardTitle>
-            <Calendar className="h-4 w-4 text-primary" />
+            <Calendar className="h-4 w-4 text-primary dark:text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${totalSalaryBudget.toLocaleString()}</div>

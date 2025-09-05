@@ -363,7 +363,7 @@ const ProductView = () => {
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-primary" />
+                  <Calendar className="h-4 w-4 text-primary dark:text-white" />
                   <span className="text-sm">Days in Stock</span>
                 </div>
                 <span className="font-semibold">

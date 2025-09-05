@@ -408,14 +408,14 @@ const Users = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-foreground" />
+                  <Calendar className="w-4 h-4 text-foreground dark:text-white" />
                   <div>
                     <p className="text-sm font-medium">{user.lastLogin}</p>
                     <p className="text-xs text-muted-foreground">Last Login</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-foreground" />
+                  <Calendar className="w-4 h-4 text-foreground dark:text-white" />
                   <div>
                     <p className="text-sm font-medium">{user.createdAt}</p>
                     <p className="text-xs text-muted-foreground">Member Since</p>

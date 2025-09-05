@@ -163,7 +163,7 @@ const AccountStatement = () => {
               </Select>
             </div>
             <div className="flex items-center gap-4">
-              <Calendar className="w-5 h-5 text-foreground" />
+              <Calendar className="w-5 h-5 text-foreground dark:text-white" />
               <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
                 <SelectTrigger className="w-[200px]">
                   <SelectValue placeholder="Select Period" />

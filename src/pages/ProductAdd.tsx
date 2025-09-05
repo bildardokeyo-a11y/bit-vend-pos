@@ -286,7 +286,7 @@ const ProductAdd = () => {
                           !createdDate && "text-muted-foreground"
                         )}
                         >
-                          <Calendar className="mr-2 h-4 w-4 text-foreground" />
+                          <Calendar className="mr-2 h-4 w-4 text-foreground dark:text-white" />
                           {createdDate ? format(createdDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
                       </Button>
                     </PopoverTrigger>
@@ -420,7 +420,7 @@ const ProductAdd = () => {
                           !expiryDate && "text-muted-foreground"
                         )}
                         >
-                          <Calendar className="mr-2 h-4 w-4 text-foreground" />
+                          <Calendar className="mr-2 h-4 w-4 text-foreground dark:text-white" />
                           {expiryDate ? format(expiryDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
                       </Button>
                     </PopoverTrigger>

@@ -449,11 +449,11 @@ const ReportView: React.FC = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
             {/* Date Range */}
-            <div className="space-y-2">
+            <div className="space-y-2 lg:col-span-1">
               <Label className="flex items-center">
-                <Calendar className="h-4 w-4 mr-2 text-foreground" />
+                <Calendar className="h-4 w-4 mr-2 text-foreground dark:text-white" />
                 Start Date
               </Label>
               <Input
@@ -463,7 +463,7 @@ const ReportView: React.FC = () => {
               />
             </div>
             
-            <div className="space-y-2">
+            <div className="space-y-2 lg:col-span-1">
               <Label>End Date</Label>
               <Input
                 type="date"
@@ -474,9 +474,9 @@ const ReportView: React.FC = () => {
 
             {/* Dynamic filters based on report type */}
             {currentReport.filters.includes('product') && (
-              <div className="space-y-2">
+              <div className="space-y-2 lg:col-span-1">
                 <Label className="flex items-center">
-                  <Package className="h-4 w-4 mr-2 text-foreground" />
+                  <Package className="h-4 w-4 mr-2 text-foreground dark:text-white" />
                   Product
                 </Label>
                 <Select value={selectedProduct} onValueChange={setSelectedProduct}>
@@ -495,7 +495,7 @@ const ReportView: React.FC = () => {
             )}
 
             {currentReport.filters.includes('category') && (
-              <div className="space-y-2">
+              <div className="space-y-2 lg:col-span-1">
                 <Label>Category</Label>
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                   <SelectTrigger>
@@ -514,9 +514,9 @@ const ReportView: React.FC = () => {
             )}
 
             {(currentReport.filters.includes('employee') || currentReport.filters.includes('cashier')) && (
-              <div className="space-y-2">
+              <div className="space-y-2 lg:col-span-1">
                 <Label className="flex items-center">
-                  <User className="h-4 w-4 mr-2 text-foreground" />
+                  <User className="h-4 w-4 mr-2 text-foreground dark:text-white" />
                   Employee
                 </Label>
                 <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
@@ -535,7 +535,7 @@ const ReportView: React.FC = () => {
             )}
 
             {currentReport.filters.includes('payment') && (
-              <div className="space-y-2">
+              <div className="space-y-2 lg:col-span-1">
                 <Label>Payment Method</Label>
                 <Select value={selectedPaymentMethod} onValueChange={setSelectedPaymentMethod}>
                   <SelectTrigger>
@@ -552,7 +552,7 @@ const ReportView: React.FC = () => {
             )}
 
             {currentReport.filters.includes('status') && (
-              <div className="space-y-2">
+              <div className="space-y-2 lg:col-span-1">
                 <Label>Status</Label>
                 <Select value={selectedStatus} onValueChange={setSelectedStatus}>
                   <SelectTrigger>

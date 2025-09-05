@@ -201,7 +201,7 @@ const Attendance = () => {
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className="w-[200px] justify-start text-left font-normal">
-                  <CalendarIcon className="mr-2 h-4 w-4 text-foreground" />
+                  <CalendarIcon className="mr-2 h-4 w-4 text-foreground dark:text-white" />
                   {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
@@ -290,7 +290,7 @@ const Attendance = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CalendarIcon className="w-4 h-4 text-foreground" />
+                  <CalendarIcon className="w-4 h-4 text-foreground dark:text-white" />
                   <div>
                     <p className="text-sm font-medium">{record.date}</p>
                     <p className="text-xs text-muted-foreground">Date</p>

@@ -266,7 +266,7 @@ const MoneyTransfer = () => {
               {/* Additional Info */}
               <div className="grid md:grid-cols-3 gap-4 mb-4">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-foreground" />
+                  <Calendar className="w-4 h-4 text-foreground dark:text-white" />
                   <div>
                     <p className="text-sm font-medium">{transfer.date}</p>
                     <p className="text-xs text-muted-foreground">Transfer Date</p>

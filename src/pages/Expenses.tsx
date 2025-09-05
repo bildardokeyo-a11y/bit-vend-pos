@@ -668,7 +668,7 @@ const Expenses: React.FC = () => {
             <Card className="animate-slideInLeft" style={{ animationDelay: '0.3s' }}>
               <CardContent className="p-4">
                 <div className="flex items-center space-x-2">
-                  <Calendar className="h-8 w-8 text-primary" />
+                  <Calendar className="h-8 w-8 text-primary dark:text-white" />
                   <div>
                     <p className="text-sm text-muted-foreground">This Month</p>
                     <p className="text-2xl font-bold">${monthlyExpenses.toFixed(2)}</p>
