@@ -18,9 +18,9 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 220 13% 9%;
 
-    --primary: 59 130 246; /* Bright blue */
-    --primary-foreground: 255 255 255;
-    --primary-hover: 37 99 235; /* Darker blue on hover */
+    --primary: 134 61% 41%; /* Green - consistent with dark mode */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 134 62% 56%; /* Lighter green on hover */
 
     --secondary: 220 13% 84%; /* #D1D5DB - Light gray */
     --secondary-foreground: 220 9% 35%; /* #4B5563 - Secondary text */
