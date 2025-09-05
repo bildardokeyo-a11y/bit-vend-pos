@@ -355,7 +355,7 @@ const Products = () => {
   };
 
   return (
-    <div className="p-6 space-y-6 bg-background dark:bg-black min-h-screen">
+    <div className="p-6 space-y-6 bg-background dark:bg-black min-h-screen animate-fadeInUp">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

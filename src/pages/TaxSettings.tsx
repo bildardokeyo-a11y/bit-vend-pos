@@ -11,7 +11,7 @@ const TaxSettings: React.FC = () => {
   useSEO('Tax Settings | Bit Vend POS', 'Define tax rates and behavior.', '/tax-settings');
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <header>
         <h1 className="text-3xl font-bold text-foreground">Tax Settings</h1>
         <p className="text-muted-foreground mt-1">Tax configuration</p>

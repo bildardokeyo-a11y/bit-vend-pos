@@ -121,7 +121,7 @@ const Checkout = () => {
   };
 
   return (
-    <div className="flex h-full bg-background">
+    <div className="flex h-full bg-background animate-fadeInUp">
       {/* Products Section */}
       <div className="flex-1 p-6 bg-gradient-to-br from-white to-gray-50 dark:bg-gradient-to-br dark:from-black dark:to-black">
         <div className="mb-6">

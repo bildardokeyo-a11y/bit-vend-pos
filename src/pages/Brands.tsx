@@ -202,7 +202,7 @@ const Brands = () => {
   const averageAge = Math.round(brands.reduce((sum, b) => sum + (new Date().getFullYear() - b.establishedYear), 0) / brands.length);
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6 animate-fadeInUp">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

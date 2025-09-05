@@ -143,7 +143,7 @@ const Categories = () => {
   const totalProducts = categories.reduce((sum, c) => sum + c.productCount, 0);
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6 animate-fadeInUp">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
