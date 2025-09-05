@@ -21,6 +21,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useBusiness } from '@/contexts/BusinessContext';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
@@ -50,6 +51,8 @@ const Payroll = () => {
   const [selectedPayroll, setSelectedPayroll] = useState<PayrollRecord | null>(null);
   const [showPayslipModal, setShowPayslipModal] = useState(false);
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
+  
+  const { currentBusiness } = useBusiness();
 
   const [payrollRecords] = useState<PayrollRecord[]>([
     {
@@ -204,136 +207,200 @@ const Payroll = () => {
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pageWidth = pdf.internal.pageSize.width;
     const pageHeight = pdf.internal.pageSize.height;
-    const margin = 20;
+    const margin = 15;
     
-    // Company Header
+    // Get company information
+    const companyName = currentBusiness?.businessName || 'Company Name';
+    const companyAddress = currentBusiness?.address ? 
+      `${currentBusiness.address}, ${currentBusiness.city}, ${currentBusiness.state} ${currentBusiness.postalCode}` : 
+      'Company Address';
+    const companyPhone = currentBusiness?.phone || 'Company Phone';
+    const companyEmail = currentBusiness?.email || 'company@email.com';
+    
+    // Company Header Section
+    pdf.setFillColor(240, 240, 240);
+    pdf.rect(0, 0, pageWidth, 60, 'F');
+    
     pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(18);
-    pdf.text('COMPANY PAYSLIP', pageWidth / 2, 30, { align: 'center' });
+    pdf.setFontSize(20);
+    pdf.setTextColor(0, 0, 0);
+    pdf.text('PAYSLIP', pageWidth / 2, 25, { align: 'center' });
     
-    // Company Info
     pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(10);
-    pdf.text('ABC Corporation Ltd.', pageWidth / 2, 40, { align: 'center' });
-    pdf.text('123 Business Street, City, State 12345', pageWidth / 2, 45, { align: 'center' });
-    pdf.text('Phone: (555) 123-4567 | Email: hr@company.com', pageWidth / 2, 50, { align: 'center' });
+    pdf.setFontSize(12);
+    pdf.text(companyName, pageWidth / 2, 35, { align: 'center' });
+    
+    pdf.setFontSize(9);
+    pdf.text(companyAddress, pageWidth / 2, 42, { align: 'center' });
+    pdf.text(`Phone: ${companyPhone} | Email: ${companyEmail}`, pageWidth / 2, 48, { align: 'center' });
     
     // Header border
-    pdf.rect(margin, 15, pageWidth - 2 * margin, 45);
+    pdf.setDrawColor(0, 0, 0);
+    pdf.setLineWidth(0.5);
+    pdf.rect(margin, 10, pageWidth - 2 * margin, 45);
+    
+    let yPosition = 70;
     
     // Employee Information Section
-    let yPosition = 75;
+    pdf.setFillColor(250, 250, 250);
+    pdf.rect(margin, yPosition, pageWidth - 2 * margin, 12, 'F');
     
-    // Employee Info Header
     pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(12);
-    pdf.text('EMPLOYEE INFORMATION', margin, yPosition);
-    pdf.rect(margin, yPosition - 5, pageWidth - 2 * margin, 8);
+    pdf.setFontSize(11);
+    pdf.text('EMPLOYEE INFORMATION', margin + 3, yPosition + 8);
     
-    yPosition += 15;
+    // Border for section header
+    pdf.rect(margin, yPosition, pageWidth - 2 * margin, 12);
     
-    // Employee details in two columns
+    yPosition += 18;
+    
+    // Employee details in organized layout
     pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(10);
+    pdf.setFontSize(9);
     
     const leftColumn = margin + 5;
-    const rightColumn = pageWidth / 2 + 10;
+    const rightColumn = pageWidth / 2 + 5;
+    const lineHeight = 6;
     
+    // Left column
     pdf.text(`Employee ID: ${employee.employeeId}`, leftColumn, yPosition);
+    pdf.text(`Name: ${employee.employeeName}`, leftColumn, yPosition + lineHeight);
+    pdf.text(`Department: ${employee.department}`, leftColumn, yPosition + lineHeight * 2);
+    
+    // Right column
     pdf.text(`Pay Period: ${employee.payPeriod}`, rightColumn, yPosition);
-    yPosition += 8;
+    pdf.text(`Pay Date: ${employee.payDate}`, rightColumn, yPosition + lineHeight);
+    pdf.text(`Position: ${employee.position}`, rightColumn, yPosition + lineHeight * 2);
     
-    pdf.text(`Name: ${employee.employeeName}`, leftColumn, yPosition);
-    pdf.text(`Pay Date: ${employee.payDate}`, rightColumn, yPosition);
-    yPosition += 8;
+    // Employee info section border
+    pdf.rect(margin, yPosition - 5, pageWidth - 2 * margin, 25);
     
-    pdf.text(`Department: ${employee.department}`, leftColumn, yPosition);
-    pdf.text(`Position: ${employee.position}`, rightColumn, yPosition);
-    yPosition += 15;
+    yPosition += 35;
     
-    // Employee info border
-    pdf.rect(margin, 70, pageWidth - 2 * margin, 40);
+    // Payment Details Section Header
+    pdf.setFillColor(250, 250, 250);
+    pdf.rect(margin, yPosition, pageWidth - 2 * margin, 12, 'F');
     
-    // Payment Details Section
     pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(12);
-    pdf.text('PAYMENT BREAKDOWN', margin, yPosition);
-    pdf.rect(margin, yPosition - 5, pageWidth - 2 * margin, 8);
+    pdf.setFontSize(11);
+    pdf.text('PAYMENT BREAKDOWN', margin + 3, yPosition + 8);
     
-    yPosition += 15;
+    // Border for section header
+    pdf.rect(margin, yPosition, pageWidth - 2 * margin, 12);
     
-    // Payment table headers
+    yPosition += 18;
+    
+    // Payment table
+    const tableStartY = yPosition;
+    const colWidth = (pageWidth - 2 * margin) / 4;
+    
+    // Table headers
+    pdf.setFillColor(240, 240, 240);
+    pdf.rect(margin, yPosition, colWidth * 2, 10, 'F');
+    pdf.rect(margin + colWidth * 2, yPosition, colWidth * 2, 10, 'F');
+    
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(10);
-    pdf.text('EARNINGS', margin + 5, yPosition);
-    pdf.text('AMOUNT', pageWidth / 2 - 20, yPosition);
-    pdf.text('DEDUCTIONS', pageWidth / 2 + 20, yPosition);
-    pdf.text('AMOUNT', pageWidth - 40, yPosition);
+    pdf.text('EARNINGS', margin + 5, yPosition + 7);
+    pdf.text('AMOUNT', margin + colWidth - 5, yPosition + 7, { align: 'right' });
+    pdf.text('DEDUCTIONS', margin + colWidth * 2 + 5, yPosition + 7);
+    pdf.text('AMOUNT', margin + colWidth * 4 - 5, yPosition + 7, { align: 'right' });
     
-    // Header line
-    pdf.line(margin, yPosition + 2, pageWidth - margin, yPosition + 2);
-    yPosition += 10;
+    // Table borders
+    pdf.rect(margin, yPosition, colWidth * 4, 10);
+    pdf.line(margin + colWidth, yPosition, margin + colWidth, yPosition + 10);
+    pdf.line(margin + colWidth * 2, yPosition, margin + colWidth * 2, yPosition + 10);
+    pdf.line(margin + colWidth * 3, yPosition, margin + colWidth * 3, yPosition + 10);
     
-    // Earnings column
+    yPosition += 15;
+    
+    // Payment details rows
     pdf.setFont('helvetica', 'normal');
-    pdf.text('Base Salary', margin + 5, yPosition);
-    pdf.text(`$${employee.baseSalary.toLocaleString()}`, pageWidth / 2 - 20, yPosition, { align: 'right' });
+    pdf.setFontSize(9);
     
-    // Deductions column
-    pdf.text('Income Tax', pageWidth / 2 + 20, yPosition);
-    pdf.text(`$${employee.taxes.toLocaleString()}`, pageWidth - 40, yPosition, { align: 'right' });
-    yPosition += 8;
+    const earnings = [
+      { label: 'Base Salary', amount: employee.baseSalary },
+      { label: 'Overtime', amount: employee.overtime },
+      { label: 'Bonuses', amount: employee.bonuses }
+    ];
     
-    pdf.text('Overtime', margin + 5, yPosition);
-    pdf.text(`$${employee.overtime.toLocaleString()}`, pageWidth / 2 - 20, yPosition, { align: 'right' });
+    const deductions = [
+      { label: 'Income Tax', amount: employee.taxes },
+      { label: 'Other Deductions', amount: employee.deductions }
+    ];
     
-    pdf.text('Other Deductions', pageWidth / 2 + 20, yPosition);
-    pdf.text(`$${employee.deductions.toLocaleString()}`, pageWidth - 40, yPosition, { align: 'right' });
-    yPosition += 8;
+    const maxRows = Math.max(earnings.length, deductions.length);
     
-    pdf.text('Bonuses', margin + 5, yPosition);
-    pdf.text(`$${employee.bonuses.toLocaleString()}`, pageWidth / 2 - 20, yPosition, { align: 'right' });
-    yPosition += 15;
+    for (let i = 0; i < maxRows; i++) {
+      const rowY = yPosition + (i * 8);
+      
+      // Earnings column
+      if (earnings[i]) {
+        pdf.text(earnings[i].label, margin + 5, rowY);
+        pdf.text(`$${earnings[i].amount.toLocaleString()}`, margin + colWidth - 5, rowY, { align: 'right' });
+      }
+      
+      // Deductions column
+      if (deductions[i]) {
+        pdf.text(deductions[i].label, margin + colWidth * 2 + 5, rowY);
+        pdf.text(`$${deductions[i].amount.toLocaleString()}`, margin + colWidth * 4 - 5, rowY, { align: 'right' });
+      }
+      
+      // Row borders
+      pdf.rect(margin, rowY - 4, colWidth * 4, 8);
+      pdf.line(margin + colWidth, rowY - 4, margin + colWidth, rowY + 4);
+      pdf.line(margin + colWidth * 2, rowY - 4, margin + colWidth * 2, rowY + 4);
+      pdf.line(margin + colWidth * 3, rowY - 4, margin + colWidth * 3, rowY + 4);
+    }
     
-    // Totals line
-    pdf.line(margin, yPosition, pageWidth - margin, yPosition);
-    yPosition += 8;
+    yPosition += (maxRows * 8) + 10;
     
-    // Gross Pay
+    // Totals section
+    pdf.setFillColor(230, 230, 230);
+    pdf.rect(margin, yPosition, colWidth * 4, 12, 'F');
+    
     pdf.setFont('helvetica', 'bold');
-    pdf.text('GROSS PAY', margin + 5, yPosition);
-    pdf.text(`$${employee.grossPay.toLocaleString()}`, pageWidth / 2 - 20, yPosition, { align: 'right' });
+    pdf.setFontSize(10);
+    pdf.text('GROSS PAY', margin + 5, yPosition + 8);
+    pdf.text(`$${employee.grossPay.toLocaleString()}`, margin + colWidth - 5, yPosition + 8, { align: 'right' });
     
-    pdf.text('TOTAL DEDUCTIONS', pageWidth / 2 + 20, yPosition);
-    pdf.text(`$${(employee.taxes + employee.deductions).toLocaleString()}`, pageWidth - 40, yPosition, { align: 'right' });
-    yPosition += 15;
+    pdf.text('TOTAL DEDUCTIONS', margin + colWidth * 2 + 5, yPosition + 8);
+    pdf.text(`$${(employee.taxes + employee.deductions).toLocaleString()}`, margin + colWidth * 4 - 5, yPosition + 8, { align: 'right' });
     
-    // Payment details border
-    pdf.rect(margin, 115, pageWidth - 2 * margin, 70);
+    // Totals borders
+    pdf.rect(margin, yPosition, colWidth * 4, 12);
+    pdf.line(margin + colWidth, yPosition, margin + colWidth, yPosition + 12);
+    pdf.line(margin + colWidth * 2, yPosition, margin + colWidth * 2, yPosition + 12);
+    pdf.line(margin + colWidth * 3, yPosition, margin + colWidth * 3, yPosition + 12);
     
-    // Vertical separator for earnings/deductions
-    pdf.line(pageWidth / 2, 125, pageWidth / 2, 185);
+    yPosition += 20;
     
     // Net Pay Section
+    pdf.setFillColor(200, 230, 200);
+    pdf.rect(margin, yPosition, pageWidth - 2 * margin, 15, 'F');
+    
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(14);
+    pdf.text('NET PAY', margin + 10, yPosition + 10);
+    pdf.text(`$${employee.netPay.toLocaleString()}`, pageWidth - margin - 10, yPosition + 10, { align: 'right' });
+    
+    // Net pay border
+    pdf.setLineWidth(1);
     pdf.rect(margin, yPosition, pageWidth - 2 * margin, 15);
-    pdf.text('NET PAY', margin + 5, yPosition + 10);
-    pdf.text(`$${employee.netPay.toLocaleString()}`, pageWidth - margin - 5, yPosition + 10, { align: 'right' });
     
-    yPosition += 30;
+    yPosition += 25;
     
-    // Status badge
+    // Status information
     pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(10);
-    pdf.text(`Status: ${employee.status.toUpperCase()}`, margin + 5, yPosition);
+    pdf.setFontSize(9);
+    pdf.text(`Payment Status: ${employee.status.toUpperCase()}`, margin + 5, yPosition);
     
     // Footer
-    yPosition = pageHeight - 30;
+    yPosition = pageHeight - 25;
     pdf.setFont('helvetica', 'italic');
     pdf.setFontSize(8);
     pdf.text('This is a computer-generated payslip. No signature required.', pageWidth / 2, yPosition, { align: 'center' });
-    pdf.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth / 2, yPosition + 8, { align: 'center' });
+    pdf.text(`Generated on: ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}`, pageWidth / 2, yPosition + 6, { align: 'center' });
     
     return pdf;
   };
