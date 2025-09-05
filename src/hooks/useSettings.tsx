@@ -9,6 +9,7 @@ export interface AppSettings {
   currency: string;
   dateFormat: string;
   timeFormat: '12' | '24';
+  receiptTemplate: string;
 }
 
 const defaultSettings: AppSettings = {
@@ -19,7 +20,8 @@ const defaultSettings: AppSettings = {
   language: 'en',
   currency: 'USD',
   dateFormat: 'MM/DD/YYYY',
-  timeFormat: '12'
+  timeFormat: '12',
+  receiptTemplate: 'classic-receipt'
 };
 
 export const useSettings = () => {

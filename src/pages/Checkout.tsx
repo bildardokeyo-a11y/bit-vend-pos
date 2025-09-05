@@ -95,13 +95,27 @@ const Checkout = () => {
       return; // Prevent navigation if payment details are incomplete
     }
     
+    // Get selected receipt template from settings
+    const savedSettings = localStorage.getItem('pos-app-settings');
+    let receiptTemplate = 'classic-receipt';
+    
+    if (savedSettings) {
+      try {
+        const settings = JSON.parse(savedSettings);
+        receiptTemplate = settings.receiptTemplate || 'classic-receipt';
+      } catch (e) {
+        console.error('Error parsing settings:', e);
+      }
+    }
+    
     navigate('/receipt', {
       state: {
         cart,
         total: finalTotal,
         tax,
         subtotal: cartTotal,
-        paymentMethod
+        paymentMethod,
+        receiptTemplate
       }
     });
   };
