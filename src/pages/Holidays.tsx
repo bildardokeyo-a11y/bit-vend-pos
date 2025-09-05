@@ -335,7 +335,7 @@ const Holidays = () => {
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-full">
-                <CalendarDays className="w-6 h-6 text-blue-600" />
+                <CalendarDays className="w-6 h-6 text-blue-600 dark:text-white" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Total Holidays</p>
@@ -348,7 +348,7 @@ const Holidays = () => {
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-full">
-                <Calendar className="w-6 h-6 text-green-600" />
+                <Calendar className="w-6 h-6 text-green-600 dark:text-white" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Upcoming</p>
