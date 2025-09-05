@@ -29,6 +29,7 @@ import Settings from "./pages/Settings";
 import StockIn from "./pages/StockIn";
 import Expenses from "./pages/Expenses";
 import SalesReport from "./pages/SalesReport";
+import ReportView from "./pages/ReportView";
 import Inventory from "./pages/Inventory";
 import Units from "./pages/Units";
 import Variants from "./pages/Variants";
@@ -101,6 +102,7 @@ const App = () => (
               <Route path="stock-in" element={<StockIn />} />
               <Route path="expenses" element={<Expenses />} />
               <Route path="sales-report" element={<SalesReport />} />
+              <Route path="report-view/:reportId" element={<ReportView />} />
               <Route path="stock-report" element={<StockReport />} />
               <Route path="purchase-report" element={<PurchaseReport />} />
               <Route path="expense-report" element={<ExpenseReport />} />

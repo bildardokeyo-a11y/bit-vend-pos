@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -60,12 +61,11 @@ interface ReportType {
 
 const ReportsTable: React.FC = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedType, setSelectedType] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedReport, setSelectedReport] = useState<ReportType | null>(null);
   const itemsPerPage = 10;
 
   const reportTypes: ReportType[] = [
@@ -180,11 +180,7 @@ const ReportsTable: React.FC = () => {
   };
 
   const handleViewReport = (reportId: string) => {
-    const report = reportTypes.find(r => r.id === reportId);
-    if (report) {
-      setSelectedReport(report);
-      setIsModalOpen(true);
-    }
+    navigate(`/report-view/${reportId}`);
   };
 
   const handleGenerateReport = (reportId: string) => {
@@ -196,7 +192,7 @@ const ReportsTable: React.FC = () => {
   };
 
   const handleExportPDF = (reportId: string, reportName?: string) => {
-    const report = reportTypes.find(r => r.id === reportId) || selectedReport;
+    const report = reportTypes.find(r => r.id === reportId);
     if (!report) return;
 
     const sampleData = generateSampleData(report);
@@ -243,7 +239,7 @@ const ReportsTable: React.FC = () => {
   };
 
   const handleExportExcel = (reportId: string, reportName?: string) => {
-    const report = reportTypes.find(r => r.id === reportId) || selectedReport;
+    const report = reportTypes.find(r => r.id === reportId);
     if (!report) return;
 
     const sampleData = generateSampleData(report);
@@ -343,8 +339,7 @@ const ReportsTable: React.FC = () => {
   };
 
   return (
-    <>
-      <Card className="animate-slideInLeft mt-6">
+    <Card className="animate-slideInLeft mt-6">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center">
@@ -534,163 +529,6 @@ const ReportsTable: React.FC = () => {
         )}
       </CardContent>
     </Card>
-
-    {/* Report View Modal - Full Screen */}
-    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogContent className="max-w-[95vw] max-h-[90vh] overflow-auto p-0">
-        <div className="flex flex-col h-full">
-          <DialogHeader className="p-6 pb-4 flex-shrink-0">
-            <DialogTitle className="flex items-center justify-between">
-              <div className="flex items-center">
-                {selectedReport && getTypeIcon(selectedReport.type)}
-                <span className="ml-2">{selectedReport?.name}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="group relative">
-                  <FileDown 
-                    className="h-4 w-4 text-red-500 cursor-pointer hover:text-red-600 transition-colors" 
-                    onClick={() => selectedReport && handleExportPDF(selectedReport.id, selectedReport.name)}
-                  />
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-                    Export PDF
-                  </div>
-                </div>
-                <div className="group relative">
-                  <FileSpreadsheet 
-                    className="h-4 w-4 text-green-500 cursor-pointer hover:text-green-600 transition-colors" 
-                    onClick={() => selectedReport && handleExportExcel(selectedReport.id, selectedReport.name)}
-                  />
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-                    Export Excel
-                  </div>
-                </div>
-              </div>
-          </DialogTitle>
-          <DialogDescription>
-            {selectedReport?.description} • Category: {selectedReport?.category}
-          </DialogDescription>
-        </DialogHeader>
-        
-        <div className="flex-1 p-6 overflow-auto">
-          {selectedReport && (
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              {/* Filters Panel */}
-              <div className="lg:col-span-1 space-y-4">
-                <div className="bg-card rounded-lg border p-4">
-                  <h3 className="font-semibold mb-4 text-foreground">Report Filters</h3>
-                  <div className="space-y-3">
-                    {selectedReport.filters.map((filter) => (
-                      <div key={filter}>
-                        <label className="text-sm font-medium text-muted-foreground capitalize">
-                          {filter.replace('_', ' ')}
-                        </label>
-                        <select className="w-full mt-1 p-2 border rounded-md bg-background text-foreground">
-                          <option value="all">All {filter.replace('_', ' ')}</option>
-                          <option value="sample1">Sample Option 1</option>
-                          <option value="sample2">Sample Option 2</option>
-                        </select>
-                      </div>
-                    ))}
-                    <button className="w-full mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-                      Apply Filters
-                    </button>
-                  </div>
-                </div>
-
-                {/* Report Summary */}
-                <div className="bg-card rounded-lg border p-4">
-                  <h3 className="font-semibold mb-4 text-foreground">Summary</h3>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Total Records:</span>
-                      <span className="font-medium text-foreground">{generateSampleData(selectedReport).data.length}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Total Amount:</span>
-                      <span className="font-medium text-foreground">$12,519.88</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Average:</span>
-                      <span className="font-medium text-foreground">$2,503.98</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Report Table */}
-              <div className="lg:col-span-3">
-                <div className="bg-card rounded-lg border">
-                  <div className="p-4 border-b">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h2 className="text-lg font-semibold text-foreground flex items-center">
-                          {selectedReport && getTypeIcon(selectedReport.type)}
-                          <span className="ml-2">{selectedReport?.name}</span>
-                        </h2>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {selectedReport?.description}
-                        </p>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
-                          <Search className="h-4 w-4" />
-                        </button>
-                        <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
-                          <Filter className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="overflow-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-blue-500 hover:bg-blue-500">
-                          {generateSampleData(selectedReport).columns.map((column) => (
-                            <TableHead key={column} className="text-white font-semibold">{column}</TableHead>
-                          ))}
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {generateSampleData(selectedReport).data.map((row, index) => (
-                          <TableRow key={index} className="hover:bg-muted/50">
-                            {generateSampleData(selectedReport).columns.map((column) => (
-                              <TableCell key={column} className="text-foreground">{row[column]}</TableCell>
-                            ))}
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-
-                  {/* Pagination */}
-                  <div className="p-4 border-t">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-muted-foreground">
-                        Showing 1 to {generateSampleData(selectedReport).data.length} of {generateSampleData(selectedReport).data.length} results
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <button className="px-3 py-1 border rounded text-sm hover:bg-muted transition-colors">
-                          Previous
-                        </button>
-                        <button className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm">
-                          1
-                        </button>
-                        <button className="px-3 py-1 border rounded text-sm hover:bg-muted transition-colors">
-                          Next
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-    </>
   );
 };
 
