@@ -40,6 +40,8 @@ import StockAdjustment from "./pages/StockAdjustment";
 import ExpenseCategory from "./pages/ExpenseCategory";
 import Income from "./pages/Income";
 import IncomeCategory from "./pages/IncomeCategory";
+import BankAccounts from "./pages/BankAccounts";
+import MoneyTransfer from "./pages/MoneyTransfer";
 
 const queryClient = new QueryClient();
 
@@ -86,6 +88,8 @@ const App = () => (
               <Route path="expense-category" element={<ExpenseCategory />} />
               <Route path="income" element={<Income />} />
               <Route path="income-category" element={<IncomeCategory />} />
+              <Route path="bank-accounts" element={<BankAccounts />} />
+              <Route path="money-transfer" element={<MoneyTransfer />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

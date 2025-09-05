@@ -890,20 +890,7 @@ const Settings = () => {
                           <Edit size={14} className="mr-1" />
                           Edit
                         </Button>
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => {
-                            if (confirm('Are you sure you want to delete this business? This action cannot be undone.')) {
-                              deleteBusiness(business.id);
-                              toast.success('Business deleted successfully!');
-                            }
-                          }}
-                        >
-                          <Trash2 size={14} className="mr-1" />
-                          Delete
-                        </Button>
-                        {businesses.length > 1 && business.id !== currentBusiness?.id && (
+                        {businesses.length > 1 && (
                           <Button
                             variant="destructive"
                             size="sm"
@@ -914,7 +901,7 @@ const Settings = () => {
                               }
                             }}
                           >
-                            <Trash2 size={14} className="mr-1 text-white" />
+                            <Trash2 size={14} className="mr-1" />
                             Delete
                           </Button>
                         )}
@@ -952,6 +939,38 @@ const Settings = () => {
                   onChange={(e) => setBusinessSettings(prev => ({ ...prev, businessName: e.target.value }))}
                   placeholder="Your Business Name"
                 />
+              </div>
+              <div>
+                <Label htmlFor="businessLogo">Business Logo</Label>
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center border-2 border-dashed">
+                    <Building className="w-6 h-6 text-muted-foreground" />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <Upload className="w-4 h-4 mr-2" />
+                      Upload Logo
+                    </Button>
+                    <p className="text-xs text-muted-foreground">PNG, JPG up to 2MB</p>
+                  </div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        // Here you would typically upload the file and store the URL
+                        toast.success("Logo uploaded successfully!");
+                      }
+                    }}
+                  />
+                </div>
               </div>
               <div>
                 <Label htmlFor="businessType">Business Type</Label>
@@ -1513,12 +1532,12 @@ const Settings = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
-                  <SelectContent className="z-50 bg-card dark:bg-settings-form">
-                    {countries.map(country => (
-                      <SelectItem key={`${country.code}-${country.name}`} value={country.code}>
-                        {country.name}
-                      </SelectItem>
-                    ))}
+                   <SelectContent className="z-50 bg-card dark:bg-settings-form">
+                     {countries.map(country => (
+                       <SelectItem key={country.code} value={country.code}>
+                         {country.name}
+                       </SelectItem>
+                     ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -1684,12 +1703,12 @@ const Settings = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
-                  <SelectContent className="z-50 bg-card dark:bg-settings-form">
-                    {countries.map(country => (
-                      <SelectItem key={`${country.code}-${country.name}`} value={country.code}>
-                        {country.name}
-                      </SelectItem>
-                    ))}
+                   <SelectContent className="z-50 bg-card dark:bg-settings-form">
+                     {countries.map(country => (
+                       <SelectItem key={country.code} value={country.code}>
+                         {country.name}
+                       </SelectItem>
+                     ))}
                   </SelectContent>
                 </Select>
               </div>
