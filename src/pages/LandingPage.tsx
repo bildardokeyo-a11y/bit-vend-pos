@@ -18,7 +18,13 @@ import {
   TrendingUp,
   Lock,
   Clock,
-  Award
+  Award,
+  Monitor,
+  Tablet,
+  Phone,
+  Building2,
+  Target,
+  Sparkles
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -81,81 +87,175 @@ const LandingPage = () => {
   ];
 
   const stats = [
-    { number: '10,000+', label: 'Businesses Trust Us' },
-    { number: '500M+', label: 'Transactions Processed' },
-    { number: '99.9%', label: 'Uptime Guarantee' },
-    { number: '24/7', label: 'Customer Support' }
+    { number: '25,000+', label: 'Active Businesses', icon: Building2 },
+    { number: '1.2B+', label: 'Transactions Processed', icon: TrendingUp },
+    { number: '99.99%', label: 'Uptime Guarantee', icon: Shield },
+    { number: '24/7', label: 'Customer Support', icon: Clock }
+  ];
+
+  const platforms = [
+    { name: 'Desktop', icon: Monitor },
+    { name: 'Tablet', icon: Tablet },
+    { name: 'Mobile', icon: Phone }
   ];
 
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-20 lg:py-32">
-        <div className="absolute inset-0 bg-grid-white/10 bg-[size:20px_20px] [mask-image:radial-gradient(white,transparent_70%)]" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-orange-500/10 via-background to-blue-600/10 py-16 lg:py-24">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-blue-600/5" />
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <Badge className="mx-auto bg-primary/10 text-primary border-primary/20 px-4 py-2">
-              🚀 Now with M-Pesa Integration
-            </Badge>
-            
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
-              The Modern
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"> POS System </span>
-              for Growing Businesses
-            </h1>
-            
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Streamline your operations with our cloud-based POS system. Accept payments, manage inventory, 
-              track sales, and grow your business with powerful analytics - all in one platform.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button asChild size="lg" className="px-8 py-6 text-lg">
-                <Link to="/auth">
-                  Start Free Trial
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500/10 to-orange-500/20 backdrop-blur-sm border border-orange-500/20 rounded-full px-4 py-2">
+                <Sparkles className="h-4 w-4 text-orange-500" />
+                <span className="text-sm font-medium text-orange-600 dark:text-orange-400">
+                  #1 Rated POS System
+                </span>
+              </div>
               
-              <Button variant="outline" size="lg" className="px-8 py-6 text-lg gap-2">
-                <Play className="h-5 w-5" />
-                Watch Demo
-              </Button>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <span className="text-foreground">POS & Inventory</span>
+                <br />
+                <span className="bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent">
+                  Management System
+                </span>
+              </h1>
+              
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
+                A comprehensive point-of-sale solution designed to organize and track inventory, 
+                process payments, and grow your business with powerful insights and analytics.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button asChild size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-6 text-lg">
+                  <Link to="/auth">
+                    <Play className="mr-2 h-5 w-5" />
+                    View Live Demo
+                  </Link>
+                </Button>
+                
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex -space-x-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="font-medium">4.9 from 2,847 reviews</span>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-start gap-8 pt-4">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <CheckCircle className="h-4 w-4 text-green-500" />
+                  14-day free trial
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <CheckCircle className="h-4 w-4 text-green-500" />
+                  No credit card required
+                </div>
+              </div>
+              
+              {/* Platform Icons */}
+              <div className="pt-6">
+                <p className="text-sm text-muted-foreground mb-4">Available on all platforms</p>
+                <div className="flex items-center gap-4">
+                  {platforms.map((platform, index) => {
+                    const IconComponent = platform.icon;
+                    return (
+                      <div key={index} className="flex items-center gap-2 px-3 py-2 bg-muted/50 rounded-lg">
+                        <IconComponent className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground">{platform.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
             
-            <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground pt-8">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-green-500" />
-                14-day free trial
+            {/* Right Content - Dashboard Preview */}
+            <div className="relative">
+              <div className="relative z-10 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-2xl">
+                <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-lg overflow-hidden">
+                  <div className="flex items-center gap-2 p-4 bg-slate-800 border-b border-slate-700">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <div className="flex-1 text-center">
+                      <span className="text-sm text-gray-300 font-medium">BitVend POS Dashboard</span>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6 space-y-4 bg-slate-900">
+                    {/* Mock sidebar */}
+                    <div className="flex gap-4">
+                      <div className="w-16 space-y-2">
+                        <div className="w-full h-8 bg-slate-700 rounded"></div>
+                        <div className="w-full h-6 bg-slate-800 rounded"></div>
+                        <div className="w-full h-6 bg-slate-800 rounded"></div>
+                        <div className="w-full h-6 bg-slate-800 rounded"></div>
+                      </div>
+                      
+                      {/* Mock main content */}
+                      <div className="flex-1 space-y-3">
+                        <div className="grid grid-cols-3 gap-3">
+                          <div className="h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg"></div>
+                          <div className="h-16 bg-gradient-to-br from-green-600 to-green-700 rounded-lg"></div>
+                          <div className="h-16 bg-gradient-to-br from-orange-600 to-orange-700 rounded-lg"></div>
+                        </div>
+                        <div className="h-24 bg-slate-800 rounded-lg"></div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="h-16 bg-slate-800 rounded-lg"></div>
+                          <div className="h-16 bg-slate-800 rounded-lg"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-green-500" />
-                No credit card required
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-green-500" />
-                Cancel anytime
-              </div>
+              
+              {/* Background decorative elements */}
+              <div className="absolute -top-4 -right-4 w-72 h-72 bg-gradient-to-br from-orange-500/20 to-blue-600/20 rounded-full blur-3xl"></div>
+              <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-full blur-3xl"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-20 bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 border-y border-border/50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  {stat.number}
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+              Trusted by businesses worldwide
+            </h2>
+            <p className="text-muted-foreground">
+              Join thousands of businesses that have transformed their operations
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={index} className="text-center group">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500/10 to-blue-600/10 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <IconComponent className="h-8 w-8 text-orange-500" />
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent mb-2">
+                    {stat.number}
+                  </div>
+                  <div className="text-muted-foreground font-medium">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-muted-foreground">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -164,15 +264,16 @@ const LandingPage = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge className="mb-4 bg-secondary/10 text-secondary border-secondary/20">
-              Features
+            <Badge className="mb-6 bg-gradient-to-r from-orange-500/10 to-blue-600/10 text-orange-600 dark:text-orange-400 border-orange-500/20 px-4 py-2">
+              Powerful Features
             </Badge>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              Everything You Need to Run Your Business
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
+              Everything You Need to 
+              <span className="bg-gradient-to-r from-orange-500 to-blue-600 bg-clip-text text-transparent"> Scale Your Business</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              From inventory management to advanced analytics, our POS system has all the tools 
-              you need to streamline operations and boost profits.
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              From inventory management to advanced analytics, our comprehensive POS system 
+              provides all the tools you need to streamline operations and maximize profits.
             </p>
           </div>
           
@@ -180,15 +281,17 @@ const LandingPage = () => {
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
-                <Card key={index} className="hover:shadow-lg transition-all duration-300 border-border/50 hover:border-primary/20">
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                      <IconComponent className="h-6 w-6 text-primary" />
+                <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-border/50 hover:border-orange-500/30 bg-gradient-to-br from-white/50 to-slate-50/50 dark:from-slate-900/50 dark:to-slate-800/50 backdrop-blur-sm hover:-translate-y-2">
+                  <CardHeader className="pb-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-orange-500/10 to-blue-600/10 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <IconComponent className="h-7 w-7 text-orange-500" />
                     </div>
-                    <CardTitle className="text-xl">{feature.title}</CardTitle>
+                    <CardTitle className="text-xl font-bold text-foreground group-hover:text-orange-600 transition-colors">
+                      {feature.title}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">{feature.description}</p>
+                    <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
                   </CardContent>
                 </Card>
               );
@@ -238,41 +341,56 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary to-secondary">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-              Ready to Transform Your Business?
-            </h2>
-            <p className="text-xl text-white/90 leading-relaxed">
-              Join thousands of businesses already using BitVend POS to streamline operations, 
-              boost sales, and delight customers. Start your free trial today.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" variant="secondary" className="px-8 py-6 text-lg">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-500 via-orange-600 to-blue-700"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,.1)_50%,transparent_75%,transparent_100%)]"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 right-16 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-16 left-1/3 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="max-w-4xl mx-auto space-y-10">
+            <div className="space-y-6">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                Ready to Transform 
+                <br />
+                <span className="text-orange-200">Your Business?</span>
+              </h2>
+              <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl mx-auto">
+                Join 25,000+ businesses using BitVend POS to streamline operations, 
+                boost sales, and deliver exceptional customer experiences.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button asChild size="lg" className="bg-white text-orange-600 hover:bg-orange-50 px-10 py-6 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                 <Link to="/auth">
-                  Start Free Trial
+                  Start Free Trial Today
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="px-8 py-6 text-lg border-white/20 text-white hover:bg-white/10">
+              <Button asChild variant="outline" size="lg" className="border-2 border-white/30 text-white hover:bg-white/10 px-10 py-6 text-lg font-semibold backdrop-blur-sm">
                 <Link to="/contact">
-                  Contact Sales
+                  <Target className="mr-2 h-5 w-5" />
+                  Schedule Demo
                 </Link>
               </Button>
             </div>
-            <div className="flex items-center justify-center gap-8 text-sm text-white/80 pt-4">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                Setup in 5 minutes
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12 pt-8 max-w-2xl mx-auto">
+              <div className="flex flex-col items-center gap-2">
+                <Clock className="h-6 w-6 text-orange-200" />
+                <span className="text-white/90 font-medium">5-min setup</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Award className="h-4 w-4" />
-                Award-winning support
+              <div className="flex flex-col items-center gap-2">
+                <Shield className="h-6 w-6 text-orange-200" />
+                <span className="text-white/90 font-medium">Enterprise security</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Lock className="h-4 w-4" />
-                Bank-level security
+              <div className="flex flex-col items-center gap-2 col-span-2 md:col-span-1">
+                <Award className="h-6 w-6 text-orange-200" />
+                <span className="text-white/90 font-medium">24/7 support</span>
               </div>
             </div>
           </div>
