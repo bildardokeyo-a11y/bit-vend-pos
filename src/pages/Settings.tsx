@@ -822,20 +822,22 @@ const Settings = () => {
         // Add new business
         const newBusinessId = addBusiness(businessSettings);
         toast.success("Business added successfully!");
-        // Clear URL parameters
-        navigate('/settings?section=business&subsection=business-info');
+        // Navigate back to dashboard or close settings
+        navigate('/dashboard');
       } else if (editBusinessId) {
         // Update existing business
         updateBusiness(editBusinessId, businessSettings);
         toast.success("Business updated successfully!");
-        // Clear URL parameters
-        navigate('/settings?section=business&subsection=business-info');
+        // Navigate back to dashboard or close settings
+        navigate('/dashboard');
       } else {
         // Update current business
         if (currentBusiness) {
           updateBusiness(currentBusiness.id, businessSettings);
           toast.success("Business settings saved successfully!");
         }
+        // Navigate back to dashboard or close settings
+        navigate('/dashboard');
       }
     } else {
       // Save company data to localStorage for receipt
@@ -847,11 +849,15 @@ const Settings = () => {
       };
       localStorage.setItem('companySettings', JSON.stringify(companySettings));
       toast.success("Settings saved successfully!");
+      // Navigate back to dashboard or close settings
+      navigate('/dashboard');
     }
   };
   
   const handleCancel = () => {
     toast.info("Changes cancelled");
+    // Navigate back to dashboard or close settings
+    navigate('/dashboard');
   };
 
   const renderContent = () => {

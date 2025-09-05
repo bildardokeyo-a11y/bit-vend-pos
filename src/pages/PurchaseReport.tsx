@@ -103,18 +103,31 @@ const PurchaseReport = () => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Purchase Report</h1>
-          <p className="text-muted-foreground">Analyze purchase orders and supplier performance</p>
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <FileText className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Purchase Reports & Analytics</h1>
+            <p className="text-muted-foreground">Analyze purchase orders and supplier performance</p>
+          </div>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={handleExportAllZIP}>
+          <Button 
+            variant="outline" 
+            onClick={handleExportAllZIP}
+            className="transition-all duration-200 hover:scale-105"
+          >
             <Archive className="w-4 h-4 mr-2" />
             Export All ZIP
           </Button>
-          <Button variant="outline" onClick={handleExportPDF}>
+          <Button 
+            variant="outline" 
+            onClick={handleExportPDF}
+            className="transition-all duration-200 hover:scale-105"
+          >
             <Download className="w-4 h-4 mr-2" />
             Export PDF
           </Button>
@@ -123,7 +136,7 @@ const PurchaseReport = () => {
 
       {/* Summary Cards */}
       <div className="grid md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="animate-slideInLeft" style={{ animationDelay: '0.1s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Package className="w-8 h-8 text-blue-500" />
@@ -134,7 +147,7 @@ const PurchaseReport = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-slideInLeft" style={{ animationDelay: '0.2s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <DollarSign className="w-8 h-8 text-green-500" />
@@ -145,7 +158,7 @@ const PurchaseReport = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-slideInLeft" style={{ animationDelay: '0.3s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Package className="w-8 h-8 text-purple-500" />
@@ -156,7 +169,7 @@ const PurchaseReport = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Truck className="w-8 h-8 text-orange-500" />
@@ -170,7 +183,7 @@ const PurchaseReport = () => {
       </div>
 
       {/* Filters */}
-      <Card>
+      <Card className="animate-slideInLeft">
         <CardContent className="p-4">
           <div className="flex flex-wrap gap-4">
             <div className="flex-1 min-w-[200px]">
@@ -180,7 +193,7 @@ const PurchaseReport = () => {
                   placeholder="Search orders, suppliers, or items..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-9"
+                  className="pl-9 transition-all duration-200 focus:scale-105"
                 />
               </div>
             </div>
@@ -224,7 +237,7 @@ const PurchaseReport = () => {
             </Select>
             <Dialog open={showModal} onOpenChange={setShowModal}>
               <DialogTrigger asChild>
-                <Button variant="outline">
+                <Button variant="outline" className="transition-all duration-200 hover:scale-105">
                   <Eye className="w-4 h-4 mr-2" />
                   View Details
                 </Button>
@@ -258,8 +271,12 @@ const PurchaseReport = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredData.map((item) => (
-                        <TableRow key={item.id}>
+                      {filteredData.map((item, index) => (
+                        <TableRow 
+                          key={item.id}
+                          className="hover:shadow-md transition-all duration-200 animate-fadeInUp"
+                          style={{ animationDelay: `${index * 0.05}s` }}
+                        >
                           <TableCell className="font-medium">{item.id}</TableCell>
                           <TableCell>{item.date}</TableCell>
                           <TableCell>{item.supplier}</TableCell>
@@ -295,7 +312,7 @@ const PurchaseReport = () => {
       </Card>
 
       {/* Purchase Report Table */}
-      <Card>
+      <Card className="animate-slideInLeft">
         <CardHeader>
           <CardTitle>Purchase Orders</CardTitle>
         </CardHeader>
@@ -315,8 +332,12 @@ const PurchaseReport = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredData.map((item) => (
-                  <TableRow key={item.id}>
+                {filteredData.map((item, index) => (
+                  <TableRow 
+                    key={item.id}
+                    className="hover:shadow-md transition-all duration-200 animate-fadeInUp"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
                     <TableCell className="font-medium">{item.id}</TableCell>
                     <TableCell>{item.date}</TableCell>
                     <TableCell>{item.supplier}</TableCell>
@@ -333,7 +354,7 @@ const PurchaseReport = () => {
                       </span>
                     </TableCell>
                     <TableCell>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="transition-all duration-200 hover:scale-105">
                         <Eye className="w-4 h-4 mr-1" />
                         View
                       </Button>
