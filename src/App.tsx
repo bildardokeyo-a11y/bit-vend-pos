@@ -51,6 +51,13 @@ import CashFlow from "./pages/CashFlow";
 import AccountStatement from "./pages/AccountStatement";
 import Holidays from "./pages/Holidays";
 import Payroll from "./pages/Payroll";
+import StockReport from "./pages/StockReport";
+import ExpenseReport from "./pages/ExpenseReport";
+import Roles from "./pages/Roles";
+import GeneralSettings from "./pages/GeneralSettings";
+import InvoiceSettings from "./pages/InvoiceSettings";
+import TaxSettings from "./pages/TaxSettings";
+import Backup from "./pages/Backup";
 
 const queryClient = new QueryClient();
 
@@ -90,6 +97,9 @@ const App = () => (
               <Route path="stock-in" element={<StockIn />} />
               <Route path="expenses" element={<Expenses />} />
               <Route path="sales-report" element={<SalesReport />} />
+              <Route path="stock-report" element={<StockReport />} />
+              <Route path="purchase-report" element={<PurchaseReport />} />
+              <Route path="expense-report" element={<ExpenseReport />} />
               <Route path="stock-out" element={<StockOut />} />
               <Route path="stock-transfer" element={<StockTransfer />} />
               <Route path="stock-return" element={<StockReturn />} />
@@ -100,7 +110,11 @@ const App = () => (
               <Route path="bank-accounts" element={<BankAccounts />} />
               <Route path="money-transfer" element={<MoneyTransfer />} />
               <Route path="balance-sheet" element={<BalanceSheet />} />
-              <Route path="purchase-report" element={<PurchaseReport />} />
+              <Route path="roles" element={<Roles />} />
+              <Route path="general-settings" element={<GeneralSettings />} />
+              <Route path="invoice-settings" element={<InvoiceSettings />} />
+              <Route path="tax-settings" element={<TaxSettings />} />
+              <Route path="backup" element={<Backup />} />
               <Route path="attendance" element={<Attendance />} />
               <Route path="users" element={<Users />} />
               <Route path="trial-balance" element={<TrialBalance />} />
