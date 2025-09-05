@@ -416,7 +416,7 @@ const Employees = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Employees</CardTitle>
@@ -459,7 +459,7 @@ const Employees = () => {
       </div>
 
       {/* Search */}
-      <Card>
+      <Card className="animate-slideInLeft">
         <CardContent className="pt-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -473,85 +473,21 @@ const Employees = () => {
         </CardContent>
       </Card>
 
-      {/* Employees Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Users size={20} />
-            Employees ({filteredEmployees.length})
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-500 hover:bg-blue-500">
-                <TableHead className="text-white font-semibold">Employee</TableHead>
-                <TableHead className="text-white font-semibold">Contact Info</TableHead>
-                <TableHead className="text-white font-semibold">Position</TableHead>
-                <TableHead className="text-white font-semibold">Department</TableHead>
-                <TableHead className="text-white font-semibold">Work Type</TableHead>
-                <TableHead className="text-white font-semibold">Salary</TableHead>
-                <TableHead className="text-white font-semibold">Hire Date</TableHead>
-                <TableHead className="text-white font-semibold">Status</TableHead>
-                <TableHead className="text-white font-semibold">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredEmployees.map((employee) => (
-                <TableRow key={employee.id}>
-                  <TableCell>
-                    <div className="font-medium">
-                      {employee.firstName} {employee.lastName}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      ID: {employee.employeeId}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-1 text-sm">
-                        <Mail size={12} />
-                        {employee.email}
-                      </div>
-                      {employee.phone && (
-                        <div className="flex items-center gap-1 text-sm">
-                          <Phone size={12} />
-                          {employee.phone}
-                        </div>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="font-medium">{employee.position}</div>
-                    {employee.manager !== 'N/A' && (
-                      <div className="text-xs text-muted-foreground">
-                        Reports to: {employee.manager}
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <Building size={12} />
-                      {employee.department}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">
-                      {employee.workType.replace('_', ' ').toUpperCase()}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <span className="font-medium">
-                      ${employee.salary.toLocaleString()}
-                      {employee.workType === 'part_time' && '/hr'}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <div className="text-sm">
-                      {new Date(employee.hireDate).toLocaleDateString()}
-                    </div>
-                  </TableCell>
-                  <TableCell>
+      {/* Employees List */}
+      <div className="grid gap-4">
+        {filteredEmployees.map((employee, index) => (
+          <Card key={employee.id} className="hover:shadow-md transition-shadow animate-fadeInUp" style={{ animationDelay: `${index * 0.1}s` }}>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                    <Users className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">{employee.firstName} {employee.lastName}</h3>
+                    <p className="text-sm text-muted-foreground">{employee.employeeId} • {employee.position}</p>
+                  </div>
+                  <div className="flex gap-2">
                     <Badge 
                       variant={
                         employee.status === 'active' ? 'default' : 
@@ -561,31 +497,75 @@ const Employees = () => {
                     >
                       {employee.status.replace('_', ' ').toUpperCase()}
                     </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleEdit(employee)}
-                      >
-                        <Edit2 size={14} />
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDelete(employee.id)}
-                      >
-                        <Trash2 size={14} />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+                    <Badge variant="outline">
+                      {employee.workType.replace('_', ' ').toUpperCase()}
+                    </Badge>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-lg font-semibold">
+                    ${employee.salary.toLocaleString()}
+                    {employee.workType === 'part_time' && '/hr'}
+                  </p>
+                  <p className="text-sm text-muted-foreground">{employee.department}</p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-4 gap-4 mb-4">
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">{employee.email}</p>
+                    <p className="text-xs text-muted-foreground">Email</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">{employee.phone || 'N/A'}</p>
+                    <p className="text-xs text-muted-foreground">Phone</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-foreground dark:text-white" />
+                  <div>
+                    <p className="text-sm font-medium">{new Date(employee.hireDate).toLocaleDateString()}</p>
+                    <p className="text-xs text-muted-foreground">Hire Date</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">{employee.manager !== 'N/A' ? employee.manager : 'No Manager'}</p>
+                    <p className="text-xs text-muted-foreground">Manager</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-4 border-t mt-4">
+                <Button variant="outline" size="sm" onClick={() => handleEdit(employee)}>
+                  <Edit2 className="w-4 h-4 mr-1" />
+                  Edit
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => handleDelete(employee.id)}>
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  Delete
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {filteredEmployees.length === 0 && (
+        <Card>
+          <CardContent className="text-center py-12">
+            <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2">No Employees Found</h3>
+            <p className="text-muted-foreground">No employees match your current search criteria.</p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

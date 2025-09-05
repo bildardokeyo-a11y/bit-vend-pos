@@ -274,6 +274,76 @@ const SalesReport: React.FC = () => {
     });
   };
 
+  const handleRefresh = () => {
+    // Reset filters and reload data
+    setSelectedPeriod('today');
+    setSelectedPaymentMethod('all');
+    setSelectedStatus('all');
+    const today = new Date().toISOString().split('T')[0];
+    setDateRange({
+      startDate: today,
+      endDate: today
+    });
+    toast({
+      title: "Data Refreshed",
+      description: "Sales data has been refreshed successfully.",
+    });
+  };
+
+  const handleExportData = () => {
+    try {
+      // Create CSV content
+      const headers = ['Invoice', 'Date', 'Time', 'Customer', 'Items', 'Subtotal', 'Tax', 'Discount', 'Total', 'Payment Method', 'Status', 'Cashier'];
+      const csvContent = [
+        headers.join(','),
+        ...filteredSales.map(sale => [
+          sale.invoiceNo,
+          sale.date,
+          sale.time,
+          sale.customerName || 'Walk-in',
+          sale.items.length,
+          sale.subtotal.toFixed(2),
+          sale.tax.toFixed(2),
+          sale.discount.toFixed(2),
+          sale.total.toFixed(2),
+          sale.paymentMethod,
+          sale.status,
+          sale.cashier
+        ].join(','))
+      ].join('\n');
+
+      // Create and download file
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `sales-report-${dateRange.startDate}-to-${dateRange.endDate}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      toast({
+        title: "Export Successful",
+        description: `Sales report exported for ${filteredSales.length} transactions.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Export Failed",
+        description: "There was an error exporting the sales report.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleProductAnalysis = () => {
+    setActiveView('products');
+    toast({
+      title: "Product Analysis",
+      description: "Switched to product performance view.",
+    });
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'completed':
@@ -320,7 +390,7 @@ const SalesReport: React.FC = () => {
           </Button>
           <Button
             variant={activeView === 'products' ? 'default' : 'outline'}
-            onClick={() => setActiveView('products')}
+            onClick={handleProductAnalysis}
             className="transition-all duration-200 hover:scale-105"
           >
             <Package className="h-4 w-4 mr-2" />
@@ -407,11 +477,19 @@ const SalesReport: React.FC = () => {
             </div>
             
             <div className="flex items-end space-x-2">
-              <Button variant="outline" className="flex-1 transition-all duration-200 hover:scale-105">
+              <Button 
+                variant="outline" 
+                className="flex-1 transition-all duration-200 hover:scale-105"
+                onClick={handleRefresh}
+              >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Refresh
               </Button>
-              <Button variant="outline" className="flex-1 transition-all duration-200 hover:scale-105">
+              <Button 
+                variant="outline" 
+                className="flex-1 transition-all duration-200 hover:scale-105"
+                onClick={handleExportData}
+              >
                 <Download className="h-4 w-4 mr-2" />
                 Export
               </Button>
