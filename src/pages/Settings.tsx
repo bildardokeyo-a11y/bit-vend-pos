@@ -2453,7 +2453,7 @@ const Settings = () => {
                     onClick={() => setSelectedTemplate(template.id)}
                   >
                     <CardContent className="p-4">
-                      <div className="aspect-[2/3] bg-muted rounded-lg mb-3 flex items-center justify-center animate-fade-in">
+                      <div className="aspect-[2/3] bg-muted rounded-lg mb-3 flex items-center justify-center">
                         {template.id === 'receipt-1' && (
                           <div className="text-xs text-center space-y-1 p-2">
                             <div className="font-bold">BUSINESS NAME</div>
