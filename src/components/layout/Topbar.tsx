@@ -279,7 +279,7 @@ const Topbar: React.FC<TopbarProps> = ({
                 <Globe size={18} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
+            <TooltipContent>
               Internet
             </TooltipContent>
           </Tooltip>
@@ -298,7 +298,7 @@ const Topbar: React.FC<TopbarProps> = ({
                 </span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
+            <TooltipContent>
               Mail
             </TooltipContent>
           </Tooltip>
@@ -317,7 +317,7 @@ const Topbar: React.FC<TopbarProps> = ({
                 </span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
+            <TooltipContent>  
               Notifications
             </TooltipContent>
           </Tooltip>
@@ -333,7 +333,7 @@ const Topbar: React.FC<TopbarProps> = ({
                 <Settings size={18} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
+            <TooltipContent>
               Settings
             </TooltipContent>
           </Tooltip>
@@ -353,7 +353,7 @@ const Topbar: React.FC<TopbarProps> = ({
               </span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300 bg-background border shadow-lg">
+          <TooltipContent>
             {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           </TooltipContent>
         </Tooltip>
@@ -373,8 +373,8 @@ const Topbar: React.FC<TopbarProps> = ({
                 </Button>
               </DropdownMenuTrigger>
             </TooltipTrigger>
-            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
-              Profile
+            <TooltipContent>
+              Profile  
             </TooltipContent>
           </Tooltip>
           <DropdownMenuContent align="end" className="w-56">
