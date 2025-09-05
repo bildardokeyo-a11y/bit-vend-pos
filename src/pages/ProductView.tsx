@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { ArrowLeft, Package, Tag, DollarSign, Archive, Calendar, User } from 'lucide-react';
+import { ArrowLeft, Package, Tag, DollarSign, Archive, Calendar, User, Camera } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Mock product data (same as Products page)
@@ -23,7 +23,8 @@ const productData = [
     lastUpdated: "2024-02-20",
     weight: "500g",
     dimensions: "12cm x 8cm x 4cm",
-    barcode: "1234567890123"
+    barcode: "1234567890123",
+    image: "/lovable-uploads/coffee-blend.jpg"
   },
   {
     id: 2,
@@ -39,7 +40,8 @@ const productData = [
     lastUpdated: "2024-02-18",
     weight: "250g",
     dimensions: "10cm x 10cm x 5cm",
-    barcode: "1234567890124"
+    barcode: "1234567890124",
+    image: "/lovable-uploads/green-tea.jpg"
   },
   {
     id: 3,
@@ -55,7 +57,8 @@ const productData = [
     lastUpdated: "2024-02-25",
     weight: "1.2kg",
     dimensions: "25cm x 25cm x 8cm",
-    barcode: "1234567890125"
+    barcode: "1234567890125",
+    image: "/lovable-uploads/chocolate-cake.jpg"
   },
   {
     id: 4,
@@ -71,7 +74,8 @@ const productData = [
     lastUpdated: "2024-02-15",
     weight: "750ml",
     dimensions: "8cm x 8cm x 30cm",
-    barcode: "1234567890126"
+    barcode: "1234567890126",
+    image: "/lovable-uploads/vintage-wine.jpg"
   },
   {
     id: 5,
@@ -87,7 +91,8 @@ const productData = [
     lastUpdated: "2024-02-28",
     weight: "85g each",
     dimensions: "12cm x 6cm x 4cm",
-    barcode: "1234567890127"
+    barcode: "1234567890127",
+    image: "/lovable-uploads/croissant.jpg"
   },
   {
     id: 6,
@@ -103,7 +108,8 @@ const productData = [
     lastUpdated: "2024-02-22",
     weight: "300g",
     dimensions: "15cm x 15cm x 3cm",
-    barcode: "1234567890128"
+    barcode: "1234567890128",
+    image: "/lovable-uploads/truffle-collection.jpg"
   }
 ];
 
@@ -165,6 +171,45 @@ const ProductView = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Product Image */}
+        <div className="lg:col-span-3">
+          <Card className="dark:bg-[#1c1c1c]">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Camera className="h-5 w-5" />
+                Product Image
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-6">
+                <div className="w-32 h-32 rounded-lg border-2 border-muted-foreground/25 flex items-center justify-center overflow-hidden bg-muted/50">
+                  {product.image ? (
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  ) : (
+                    <Camera className="h-16 w-16 text-muted-foreground" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-medium text-lg">{product.name}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {product.image ? 'Product image available' : 'No product image'}
+                  </p>
+                  <div className="mt-2 flex gap-2">
+                    <Badge variant="outline" className="rounded-full">
+                      {product.category}
+                    </Badge>
+                    {getStatusBadge(product.status, product.stock)}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Main Product Information */}
         <div className="lg:col-span-2 space-y-6">
           <Card className="dark:bg-[#1c1c1c]">
