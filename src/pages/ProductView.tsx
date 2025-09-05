@@ -13,7 +13,6 @@ const productData = [
     id: 1,
     name: "Premium Espresso Blend",
     description: "Artisanal dark roast coffee beans sourced from the finest Colombian highlands. Perfect for espresso machines and moka pots.",
-    price: 24.99,
     category: "Coffee",
     stock: 150,
     sku: "ESP-001",
@@ -21,6 +20,8 @@ const productData = [
     supplier: "Colombian Coffee Co.",
     dateAdded: "2024-01-15",
     lastUpdated: "2024-02-20",
+    buyingPrice: 17.49,
+    sellingPrice: 24.99,
     weight: "500g",
     dimensions: "12cm x 8cm x 4cm",
     barcode: "1234567890123",
@@ -30,7 +31,6 @@ const productData = [
     id: 2,
     name: "Organic Green Tea",
     description: "Hand-picked organic green tea leaves from certified organic farms in Japan. Rich in antioxidants.",
-    price: 18.50,
     category: "Tea",
     stock: 75,
     sku: "TEA-002",
@@ -38,6 +38,8 @@ const productData = [
     supplier: "Japanese Tea Gardens",
     dateAdded: "2024-01-10",
     lastUpdated: "2024-02-18",
+    buyingPrice: 12.95,
+    sellingPrice: 18.50,
     weight: "250g",
     dimensions: "10cm x 10cm x 5cm",
     barcode: "1234567890124",
@@ -47,7 +49,6 @@ const productData = [
     id: 3,
     name: "Gourmet Chocolate Cake",
     description: "Decadent chocolate cake made with premium Belgian chocolate and fresh cream. Perfect for special occasions.",
-    price: 45.00,
     category: "Dessert",
     stock: 25,
     sku: "CAK-003",
@@ -55,6 +56,8 @@ const productData = [
     supplier: "Sweet Delights Bakery",
     dateAdded: "2024-01-20",
     lastUpdated: "2024-02-25",
+    buyingPrice: 31.50,
+    sellingPrice: 45.00,
     weight: "1.2kg",
     dimensions: "25cm x 25cm x 8cm",
     barcode: "1234567890125",
@@ -64,7 +67,6 @@ const productData = [
     id: 4,
     name: "Vintage Wine Selection",
     description: "Carefully curated selection of vintage wines from renowned vineyards. Aged to perfection.",
-    price: 89.99,
     category: "Beverages",
     stock: 12,
     sku: "WIN-004",
@@ -72,6 +74,8 @@ const productData = [
     supplier: "Premium Wine Collections",
     dateAdded: "2024-01-05",
     lastUpdated: "2024-02-15",
+    buyingPrice: 62.99,
+    sellingPrice: 89.99,
     weight: "750ml",
     dimensions: "8cm x 8cm x 30cm",
     barcode: "1234567890126",
@@ -81,7 +85,6 @@ const productData = [
     id: 5,
     name: "Artisan Croissant",
     description: "Freshly baked croissants with layers of buttery goodness. Made using traditional French techniques.",
-    price: 12.99,
     category: "Pastry",
     stock: 0,
     sku: "CRO-005",
@@ -89,6 +92,8 @@ const productData = [
     supplier: "French Bakery Co.",
     dateAdded: "2024-01-25",
     lastUpdated: "2024-02-28",
+    buyingPrice: 9.09,
+    sellingPrice: 12.99,
     weight: "85g each",
     dimensions: "12cm x 6cm x 4cm",
     barcode: "1234567890127",
@@ -98,7 +103,6 @@ const productData = [
     id: 6,
     name: "Truffle Collection",
     description: "Hand-crafted luxury truffles made with the finest ingredients. A perfect gift for chocolate lovers.",
-    price: 65.00,
     category: "Confectionery",
     stock: 8,
     sku: "TRU-006",
@@ -106,6 +110,8 @@ const productData = [
     supplier: "Artisan Chocolatiers",
     dateAdded: "2024-01-12",
     lastUpdated: "2024-02-22",
+    buyingPrice: 45.50,
+    sellingPrice: 65.00,
     weight: "300g",
     dimensions: "15cm x 15cm x 3cm",
     barcode: "1234567890128",
@@ -246,9 +252,21 @@ const ProductView = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium text-muted-foreground">Price</label>
+                    <label className="text-sm font-medium text-muted-foreground">Buying Price</label>
+                    <p className="text-xl font-bold text-blue-600 dark:text-blue-400 mt-1">
+                      ${product.buyingPrice.toFixed(2)}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Selling Price</label>
                     <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">
-                      ${product.price.toFixed(2)}
+                      ${product.sellingPrice.toFixed(2)}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Profit Margin</label>
+                    <p className="text-lg font-semibold text-purple-600 dark:text-purple-400 mt-1">
+                      ${(product.sellingPrice - product.buyingPrice).toFixed(2)} ({(((product.sellingPrice - product.buyingPrice) / product.buyingPrice) * 100).toFixed(1)}%)
                     </p>
                   </div>
                   <div>
@@ -332,7 +350,7 @@ const ProductView = () => {
                   <DollarSign className="h-4 w-4 text-green-500" />
                   <span className="text-sm">Revenue Potential</span>
                 </div>
-                <span className="font-semibold">${(product.price * product.stock).toFixed(2)}</span>
+                <span className="font-semibold">${(product.sellingPrice * product.stock).toFixed(2)}</span>
               </div>
               
               <div className="flex items-center justify-between">
@@ -340,7 +358,7 @@ const ProductView = () => {
                   <Archive className="h-4 w-4 text-blue-500" />
                   <span className="text-sm">Stock Value</span>
                 </div>
-                <span className="font-semibold">${(product.price * product.stock * 0.7).toFixed(2)}</span>
+                <span className="font-semibold">${(product.buyingPrice * product.stock).toFixed(2)}</span>
               </div>
               
               <div className="flex items-center justify-between">
