@@ -470,7 +470,7 @@ const ReportsTable: React.FC = () => {
                            className="h-4 w-4 text-blue-500 cursor-pointer hover:text-blue-600 transition-colors" 
                            onClick={() => handleViewReport(report.id)}
                          />
-                         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md border">
+                         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md border">
                            View Report
                          </div>
                        </div>
@@ -479,7 +479,7 @@ const ReportsTable: React.FC = () => {
                            className="h-4 w-4 text-red-500 cursor-pointer hover:text-red-600 transition-colors" 
                            onClick={() => handleExportPDF(report.id)}
                          />
-                         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md border">
+                         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md border">
                            Export PDF
                          </div>
                        </div>
@@ -488,7 +488,7 @@ const ReportsTable: React.FC = () => {
                            className="h-4 w-4 text-green-500 cursor-pointer hover:text-green-600 transition-colors" 
                            onClick={() => handleExportExcel(report.id)}
                          />
-                         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md border">
+                         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md border">
                            Export Excel
                          </div>
                        </div>
