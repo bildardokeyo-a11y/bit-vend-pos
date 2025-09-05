@@ -169,26 +169,117 @@ const Products = () => {
 
   // Handle export to Excel
   const handleExportExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(filteredProducts.map(product => ({
-      'Product Name': product.name,
-      'Description': product.description,
-      'SKU': product.sku,
-      'Category': product.category,
-      'Price': product.price,
-      'Stock': product.stock,
-      'Status': product.status
-    })));
-    
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Products');
-    
-    const filename = `products_${new Date().toISOString().split('T')[0]}.xlsx`;
-    XLSX.writeFile(workbook, filename);
-    
-    toast({
-      title: "Excel Export",
-      description: `Products exported to ${filename}`,
-    });
+    if (filteredProducts.length === 0) {
+      // Create template Excel sheet when no products exist
+      const templateData = [
+        // Instructions header
+        {
+          'Product Name': 'INSTRUCTIONS: Use this template to import products',
+          'Description': 'Fill in the rows below with your product data',
+          'SKU': 'Required: Unique product code',
+          'Category': 'Required: Product category',
+          'Price': 'Required: Product price (numbers only)',
+          'Stock': 'Optional: Current stock quantity',
+          'Min Stock': 'Optional: Minimum stock threshold',
+          'Brand': 'Optional: Product brand',
+          'Supplier': 'Optional: Supplier name'
+        },
+        // Empty row for separation
+        {
+          'Product Name': '',
+          'Description': '',
+          'SKU': '',
+          'Category': '',
+          'Price': '',
+          'Stock': '',
+          'Min Stock': '',
+          'Brand': '',
+          'Supplier': ''
+        },
+        // Sample data examples
+        {
+          'Product Name': 'Premium Espresso Blend',
+          'Description': 'Artisanal dark roast coffee beans',
+          'SKU': 'ESP-001',
+          'Category': 'Coffee',
+          'Price': 24.99,
+          'Stock': 150,
+          'Min Stock': 20,
+          'Brand': 'Artisan Coffee Co.',
+          'Supplier': 'Coffee Supplier Ltd'
+        },
+        {
+          'Product Name': 'Organic Green Tea',
+          'Description': 'Hand-picked organic tea leaves',
+          'SKU': 'TEA-002',
+          'Category': 'Tea',
+          'Price': 18.50,
+          'Stock': 75,
+          'Min Stock': 10,
+          'Brand': 'Nature\'s Best',
+          'Supplier': 'Tea Imports Inc'
+        },
+        {
+          'Product Name': 'Gourmet Chocolate Cake',
+          'Description': 'Rich Belgian chocolate cake',
+          'SKU': 'CAK-003',
+          'Category': 'Dessert',
+          'Price': 45.00,
+          'Stock': 25,
+          'Min Stock': 5,
+          'Brand': 'Sweet Delights',
+          'Supplier': 'Bakery Supplies Co'
+        }
+      ];
+
+      const worksheet = XLSX.utils.json_to_sheet(templateData);
+      
+      // Style the header row
+      worksheet['!cols'] = [
+        { wch: 25 }, // Product Name
+        { wch: 30 }, // Description
+        { wch: 15 }, // SKU
+        { wch: 15 }, // Category
+        { wch: 10 }, // Price
+        { wch: 10 }, // Stock
+        { wch: 12 }, // Min Stock
+        { wch: 20 }, // Brand
+        { wch: 20 }  // Supplier
+      ];
+
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Product Import Template');
+      
+      const filename = `product_import_template_${new Date().toISOString().split('T')[0]}.xlsx`;
+      XLSX.writeFile(workbook, filename);
+      
+      toast({
+        title: "Template Downloaded",
+        description: `Product import template saved as ${filename}. Fill in your product data and use the Import button to upload.`,
+      });
+    } else {
+      // Export existing products
+      const worksheet = XLSX.utils.json_to_sheet(filteredProducts.map(product => ({
+        'Product Name': product.name,
+        'Description': product.description,
+        'SKU': product.sku,
+        'Category': product.category,
+        'Price': product.price,
+        'Stock': product.stock,
+        'Status': product.status
+      })));
+      
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Products');
+      
+      const filename = `products_export_${new Date().toISOString().split('T')[0]}.xlsx`;
+      XLSX.writeFile(workbook, filename);
+      
+      toast({
+        title: "Excel Export",
+        description: `${filteredProducts.length} products exported to ${filename}`,
+      });
+    }
   };
 
   // Handle import from Excel
