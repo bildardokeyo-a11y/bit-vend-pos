@@ -119,7 +119,18 @@ const Subscription = () => {
   });
   
   const [mpesaData, setMpesaData] = useState({
-    phoneNumber: '',
+    phoneNumber: ''
+  });
+  
+  const [stkPushModal, setStkPushModal] = useState<{
+    isOpen: boolean;
+    amount: number;
+    phone: string;
+    pin: string;
+  }>({
+    isOpen: false,
+    amount: 0,
+    phone: '',
     pin: ''
   });
 
@@ -129,6 +140,60 @@ const Subscription = () => {
 
   const handlePaymentSelect = (paymentId: string) => {
     setSelectedPayment(paymentId);
+    // Reset forms when switching payment methods
+    if (paymentId === 'card') {
+      setCardData({
+        cardNumber: '',
+        expiryMonth: '',
+        expiryYear: '',
+        cvv: '',
+        cardholderName: ''
+      });
+    } else if (paymentId === 'paypal') {
+      setPaypalData({ email: '' });
+    } else if (paymentId === 'mpesa') {
+      setMpesaData({ phoneNumber: '' });
+    }
+  };
+
+  const handleMpesaSTKPush = () => {
+    const plan = subscriptionPlans.find(p => p.id === selectedPlan);
+    if (!mpesaData.phoneNumber || !plan) {
+      toast.error('Please enter a valid phone number');
+      return;
+    }
+    
+    // Simulate STK push
+    setStkPushModal({
+      isOpen: true,
+      amount: plan.price,
+      phone: mpesaData.phoneNumber,
+      pin: ''
+    });
+  };
+
+  const handleSTKConfirm = () => {
+    const plan = subscriptionPlans.find(p => p.id === selectedPlan);
+    
+    if (stkPushModal.pin.length !== 4) {
+      toast.error('Please enter your 4-digit M-Pesa PIN');
+      return;
+    }
+    
+    // Simulate successful payment
+    toast.success(`Payment of $${stkPushModal.amount} via M-Pesa successful! Subscription to ${plan?.name} is ready for backend processing`);
+    
+    console.log('M-Pesa Payment Data Ready:', {
+      plan: plan?.id,
+      paymentMethod: 'mpesa',
+      paymentData: {
+        phoneNumber: stkPushModal.phone,
+        amount: stkPushModal.amount,
+        transactionType: 'STK_PUSH'
+      }
+    });
+    
+    setStkPushModal({ isOpen: false, amount: 0, phone: '', pin: '' });
   };
 
   const handleSubscribe = () => {
@@ -150,8 +215,13 @@ const Subscription = () => {
         paymentInfo = `PayPal account ${paypalData.email}`;
         break;
       case 'mpesa':
-        isValid = !!(mpesaData.phoneNumber && mpesaData.pin);
+        isValid = !!mpesaData.phoneNumber;
         paymentInfo = `M-Pesa ${mpesaData.phoneNumber}`;
+        // For M-Pesa, we'll use STK push instead of direct subscription
+        if (isValid) {
+          handleMpesaSTKPush();
+          return;
+        }
         break;
     }
     
@@ -488,25 +558,8 @@ const Subscription = () => {
                     value={mpesaData.phoneNumber}
                     onChange={(e) => setMpesaData(prev => ({ ...prev, phoneNumber: e.target.value }))}
                   />
-                </div>
-                
-                <div>
-                  <Label htmlFor="mpesaPin">M-Pesa PIN</Label>
-                  <Input
-                    id="mpesaPin"
-                    type="password"
-                    placeholder="Enter your 4-digit PIN"
-                    value={mpesaData.pin}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '');
-                      if (value.length <= 4) {
-                        setMpesaData(prev => ({ ...prev, pin: value }));
-                      }
-                    }}
-                    maxLength={4}
-                  />
                   <p className="text-xs text-muted-foreground mt-1">
-                    Your PIN is encrypted and secure
+                    You'll receive an STK push prompt on your phone
                   </p>
                 </div>
               </div>
@@ -525,11 +578,78 @@ const Subscription = () => {
                 size="lg"
                 className="min-w-[120px]"
               >
-                Subscribe Now
+                {selectedPayment === 'mpesa' ? 'Send STK Push' : 'Subscribe Now'}
               </Button>
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* STK Push Modal */}
+      {stkPushModal.isOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-md mx-4">
+            <CardHeader className="text-center">
+              <div className="w-16 h-16 bg-green-600 text-white rounded-full mx-auto flex items-center justify-center text-2xl font-bold mb-4">
+                M
+              </div>
+              <CardTitle>M-Pesa STK Push</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Payment request sent to {stkPushModal.phone}
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="text-center space-y-2">
+                <div className="text-lg font-semibold">BitVend POS</div>
+                <div className="text-2xl font-bold text-green-600">
+                  ${stkPushModal.amount}.00
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Subscription payment for {subscriptionPlans.find(p => p.id === selectedPlan)?.name}
+                </p>
+              </div>
+
+              <div className="border-t pt-4">
+                <Label htmlFor="stkPin">Enter your M-Pesa PIN</Label>
+                <Input
+                  id="stkPin"
+                  type="password"
+                  placeholder="••••"
+                  value={stkPushModal.pin}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, '');
+                    if (value.length <= 4) {
+                      setStkPushModal(prev => ({ ...prev, pin: value }));
+                    }
+                  }}
+                  maxLength={4}
+                  className="text-center text-lg tracking-widest"
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setStkPushModal({ isOpen: false, amount: 0, phone: '', pin: '' })}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleSTKConfirm}
+                  disabled={stkPushModal.pin.length !== 4}
+                  className="flex-1 bg-green-600 hover:bg-green-700"
+                >
+                  Confirm Payment
+                </Button>
+              </div>
+
+              <p className="text-xs text-center text-muted-foreground">
+                This is a simulation. In production, this would be sent to your actual M-Pesa phone.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       )}
 
       {/* Features Comparison Note */}
