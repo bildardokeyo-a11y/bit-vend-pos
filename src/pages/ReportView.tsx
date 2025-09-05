@@ -363,22 +363,6 @@ const ReportView: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex space-x-2">
-          <Button
-            onClick={handleExportPDF}
-            className="bg-red-500 hover:bg-red-600 text-white gap-2"
-          >
-            <FileDown className="h-4 w-4" />
-            PDF
-          </Button>
-          <Button
-            onClick={handleExportExcel}
-            className="bg-green-500 hover:bg-green-600 text-white gap-2"
-          >
-            <FileSpreadsheet className="h-4 w-4" />
-            Excel
-          </Button>
-        </div>
       </div>
 
       {/* Summary Cards */}
@@ -429,6 +413,24 @@ const ReportView: React.FC = () => {
         </Card>
       </div>
 
+      {/* Export Buttons */}
+      <div className="flex justify-end space-x-2">
+        <Button
+          onClick={handleExportPDF}
+          className="bg-red-500 hover:bg-red-600 text-white gap-2"
+        >
+          <FileDown className="h-4 w-4" />
+          PDF
+        </Button>
+        <Button
+          onClick={handleExportExcel}
+          className="bg-green-500 hover:bg-green-600 text-white gap-2"
+        >
+          <FileSpreadsheet className="h-4 w-4" />
+          Excel
+        </Button>
+      </div>
+
       {/* Filters */}
       <Card>
         <CardHeader>
@@ -444,7 +446,7 @@ const ReportView: React.FC = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Date Range */}
             <div className="space-y-2">
               <Label className="flex items-center">
