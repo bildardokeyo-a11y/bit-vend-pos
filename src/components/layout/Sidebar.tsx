@@ -199,7 +199,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                           "w-full flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group relative",
                           isActive
                             ? "bg-gray-800 text-white"
-                            : "text-gray-300 hover:text-white hover:bg-gray-800"
+                            : "text-white hover:text-white hover:bg-gray-800"
                         )}
                       >
                         <Icon size={18} className="flex-shrink-0 text-white" />
