@@ -160,7 +160,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
         {!collapsed && (
           <Link to="/" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
             <span className="text-xl font-bold flex items-center">
-              <span style={{ color: '#FFD000' }}>Bit Vend</span>
+              <span className="text-yellow-400">Bit Vend</span>
               <span className="text-white ml-1">POS</span>
               <ShoppingCart size={20} className="ml-2 text-yellow-400" />
             </span>
@@ -175,7 +175,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 bg-gray-900 h-full overflow-hidden">
+      <nav className="flex-1 bg-black h-full overflow-hidden">
         <div className="h-full overflow-y-auto py-4 px-0 bg-black">
           {menuItems.map((section) => (
             <div key={section.title} className="mb-6">
