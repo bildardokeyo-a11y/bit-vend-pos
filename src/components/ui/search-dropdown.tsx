@@ -38,26 +38,25 @@ const getTypeIcon = (type: SearchResult['type']) => {
     brand: Building2,
     setting: Cog,
     page: FileText,
-  };
-  
-  const Icon = iconMap[type] || Package;
-  return <Icon className="h-4 w-4" />;
+  } as const;
+  const Icon = iconMap[type] ?? Package;
+  return <Icon className="h-4 w-4 pointer-events-none" />;
 };
 
 const getTypeBadge = (type: SearchResult['type']) => {
   const colorMap = {
-    product: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-    customer: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-    sale: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
-    employee: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
-    category: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
-    brand: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
-    setting: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200',
-    page: 'bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200',
-  };
+    product: 'bg-primary/10 text-primary',
+    customer: 'bg-secondary/10 text-secondary-foreground',
+    sale: 'bg-accent/10 text-accent-foreground',
+    employee: 'bg-primary/10 text-primary',
+    category: 'bg-muted text-muted-foreground',
+    brand: 'bg-muted text-muted-foreground',
+    setting: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300',
+    page: 'bg-slate-500/10 text-slate-600 dark:text-slate-300',
+  } as const;
 
   return (
-    <Badge variant="secondary" className={`text-xs ${colorMap[type] || colorMap.product}`}>
+    <Badge variant="secondary" className={`text-xs pointer-events-none ${colorMap[type] || colorMap.product}`}>
       {type}
     </Badge>
   );
@@ -74,12 +73,16 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
   children,
 }) => {
   return (
-    <Popover open={isOpen} onOpenChange={onOpenChange}>
+    <Popover open={isOpen} onOpenChange={onOpenChange} modal={false}>
       <PopoverTrigger asChild>
         {children}
       </PopoverTrigger>
-      <PopoverContent className="w-[420px] p-0 z-50 bg-popover border border-border shadow-xl rounded-lg" align="start" onOpenAutoFocus={(e) => e.preventDefault()} onCloseAutoFocus={(e) => e.preventDefault()}>
-        <Command>
+      <PopoverContent className="w-[420px] p-0 z-[60] bg-popover border border-border shadow-xl rounded-lg" align="start" onOpenAutoFocus={(e) => e.preventDefault()} onCloseAutoFocus={(e) => e.preventDefault()} onPointerDownOutside={(e) => {
+        const target = e.target as HTMLElement;
+        // Allow clicks on scrollbar without blurring input
+        if (target.closest('[cmdk-list]')) return;
+      }}>
+        <Command shouldFilter={false}>
           <CommandList>
             {results.length > 0 && (
               <>

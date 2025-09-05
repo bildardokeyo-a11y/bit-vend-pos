@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useSearch } from '@/hooks/useSearch';
@@ -132,10 +132,13 @@ const Topbar: React.FC<TopbarProps> = ({
     }
   }, []);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    handleSearch();
-  };
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus({ preventScroll: true } as any);
+    }
+  }, [isOpen]);
 
   return (
     <header className={cn(
@@ -170,22 +173,18 @@ const Topbar: React.FC<TopbarProps> = ({
               size={16}
             />
             <Input
+              ref={inputRef}
               type="text"
               placeholder="Search products, settings, pages..."
               value={query}
               onChange={(e) => {
-                e.stopPropagation();
                 const value = e.target.value;
                 handleQueryChange(value);
               }}
-              onFocus={(e) => {
-                e.stopPropagation();
+              onFocus={() => {
                 if (query.length > 0 || recentSearches.length > 0) {
                   setIsOpen(true);
                 }
-              }}
-              onKeyDown={(e) => {
-                e.stopPropagation();
               }}
               className="pl-10 w-80 pos-input focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
             />
