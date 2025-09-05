@@ -1,0 +1,357 @@
+import React, { useState, useMemo } from 'react';
+import { Plus, Search, Edit2, Trash2, List, FileDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Switch } from '@/components/ui/switch';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { useToast } from '@/hooks/use-toast';
+
+interface IncomeCategory {
+  id: string;
+  name: string;
+  description?: string;
+  color: string;
+  isActive: boolean;
+  createdAt: string;
+  incomeCount: number;
+  totalAmount: number;
+}
+
+const IncomeCategory = () => {
+  const { toast } = useToast();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<IncomeCategory | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    color: '#10B981',
+    isActive: true
+  });
+
+  const [categories] = useState<IncomeCategory[]>([
+    {
+      id: '1',
+      name: 'Product Sales',
+      description: 'Revenue from product sales and merchandise',
+      color: '#10B981',
+      isActive: true,
+      createdAt: '2024-01-15',
+      incomeCount: 25,
+      totalAmount: 45000
+    },
+    {
+      id: '2',
+      name: 'Service Revenue',
+      description: 'Income from consulting and professional services',
+      color: '#3B82F6',
+      isActive: true,
+      createdAt: '2024-01-14',
+      incomeCount: 18,
+      totalAmount: 32000
+    },
+    {
+      id: '3',
+      name: 'Investment Returns',
+      description: 'Dividends, interest, and capital gains',
+      color: '#F59E0B',
+      isActive: true,
+      createdAt: '2024-01-13',
+      incomeCount: 8,
+      totalAmount: 12500
+    },
+    {
+      id: '4',
+      name: 'Rental Income',
+      description: 'Property and equipment rental income',
+      color: '#8B5CF6',
+      isActive: true,
+      createdAt: '2024-01-12',
+      incomeCount: 12,
+      totalAmount: 18000
+    },
+    {
+      id: '5',
+      name: 'Licensing Fees',
+      description: 'Royalties and licensing revenue',
+      color: '#EC4899',
+      isActive: false,
+      createdAt: '2024-01-11',
+      incomeCount: 3,
+      totalAmount: 5500
+    }
+  ]);
+
+  const filteredCategories = useMemo(() => {
+    return categories.filter(category =>
+      category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      category.description?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [categories, searchTerm]);
+
+  const handleSubmit = () => {
+    if (!formData.name.trim()) {
+      toast({
+        title: "Error",
+        description: "Category name is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: editingCategory ? "Category Updated" : "Category Created",
+      description: `Income category has been ${editingCategory ? 'updated' : 'created'} successfully`,
+    });
+
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      description: '',
+      color: '#10B981',
+      isActive: true
+    });
+    setEditingCategory(null);
+    setIsDialogOpen(false);
+  };
+
+  const handleEdit = (category: IncomeCategory) => {
+    setEditingCategory(category);
+    setFormData({
+      name: category.name,
+      description: category.description || '',
+      color: category.color,
+      isActive: category.isActive
+    });
+    setIsDialogOpen(true);
+  };
+
+  const handleDelete = () => {
+    toast({
+      title: "Category Deleted",
+      description: "Income category has been deleted successfully",
+    });
+  };
+
+  const colorOptions = [
+    '#10B981', '#3B82F6', '#F59E0B', '#8B5CF6', '#EC4899', 
+    '#06B6D4', '#84CC16', '#F97316', '#6366F1', '#EF4444'
+  ];
+
+  return (
+    <div className="p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Income Categories</h1>
+          <p className="text-muted-foreground">Organize your income sources with custom categories</p>
+        </div>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button onClick={() => setEditingCategory(null)}>
+              <Plus className="h-4 w-4 mr-2" />
+              Add Category
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>{editingCategory ? 'Edit' : 'Add'} Income Category</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Category Name *</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  placeholder="Enter category name"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  value={formData.description}
+                  onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  placeholder="Category description..."
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Color</Label>
+                <div className="flex gap-2 flex-wrap">
+                  {colorOptions.map((color) => (
+                    <button
+                      key={color}
+                      type="button"
+                      className={`w-8 h-8 rounded-full border-2 ${
+                        formData.color === color ? 'border-gray-800 dark:border-gray-200' : 'border-gray-300'
+                      }`}
+                      style={{ backgroundColor: color }}
+                      onClick={() => setFormData({...formData, color})}
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="isActive">Active Category</Label>
+                <Switch
+                  id="isActive"
+                  checked={formData.isActive}
+                  onCheckedChange={(checked) => setFormData({...formData, isActive: checked})}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button onClick={handleSubmit} className="flex-1">
+                  {editingCategory ? 'Update' : 'Create'}
+                </Button>
+                <Button variant="outline" onClick={resetForm}>
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      <div className="flex items-center gap-4">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+          <Input
+            placeholder="Search categories..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        <Button variant="outline">
+          <FileDown className="h-4 w-4 mr-2" />
+          Export
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Categories</CardTitle>
+            <List className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{categories.length}</div>
+            <p className="text-xs text-muted-foreground">Categories created</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Active</CardTitle>
+            <List className="h-4 w-4 text-green-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{categories.filter(c => c.isActive).length}</div>
+            <p className="text-xs text-muted-foreground">Active categories</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Income</CardTitle>
+            <List className="h-4 w-4 text-blue-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{categories.reduce((sum, c) => sum + c.incomeCount, 0)}</div>
+            <p className="text-xs text-muted-foreground">Categorized income</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Amount</CardTitle>
+            <List className="h-4 w-4 text-green-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${categories.reduce((sum, c) => sum + c.totalAmount, 0).toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground">Total income amount</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Income Categories</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Category</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Income Count</TableHead>
+                <TableHead>Total Amount</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Created</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredCategories.map((category) => (
+                <TableRow key={category.id}>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <div 
+                        className="w-4 h-4 rounded-full"
+                        style={{ backgroundColor: category.color }}
+                      />
+                      <span className="font-medium">{category.name}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="max-w-xs truncate">{category.description}</TableCell>
+                  <TableCell>{category.incomeCount}</TableCell>
+                  <TableCell className="text-green-600 font-semibold">${category.totalAmount.toLocaleString()}</TableCell>
+                  <TableCell>
+                    <Badge variant={category.isActive ? "default" : "secondary"}>
+                      {category.isActive ? 'Active' : 'Inactive'}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>{category.createdAt}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Button variant="ghost" size="sm" onClick={() => handleEdit(category)}>
+                        <Edit2 className="h-4 w-4" />
+                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="ghost" size="sm">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Category</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete "{category.name}"? This action cannot be undone and will affect {category.incomeCount} income records.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default IncomeCategory;

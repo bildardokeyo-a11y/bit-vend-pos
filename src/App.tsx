@@ -33,6 +33,13 @@ import Variants from "./pages/Variants";
 import Barcode from "./pages/Barcode";
 import Suppliers from "./pages/Suppliers";
 import NotFound from "./pages/NotFound";
+import StockOut from "./pages/StockOut";
+import StockTransfer from "./pages/StockTransfer";
+import StockReturn from "./pages/StockReturn";
+import StockAdjustment from "./pages/StockAdjustment";
+import ExpenseCategory from "./pages/ExpenseCategory";
+import Income from "./pages/Income";
+import IncomeCategory from "./pages/IncomeCategory";
 
 const queryClient = new QueryClient();
 
@@ -72,6 +79,13 @@ const App = () => (
               <Route path="stock-in" element={<StockIn />} />
               <Route path="expenses" element={<Expenses />} />
               <Route path="sales-report" element={<SalesReport />} />
+              <Route path="stock-out" element={<StockOut />} />
+              <Route path="stock-transfer" element={<StockTransfer />} />
+              <Route path="stock-return" element={<StockReturn />} />
+              <Route path="stock-adjustment" element={<StockAdjustment />} />
+              <Route path="expense-category" element={<ExpenseCategory />} />
+              <Route path="income" element={<Income />} />
+              <Route path="income-category" element={<IncomeCategory />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
