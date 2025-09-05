@@ -57,10 +57,10 @@ const pageResults: SearchResult[] = [
   { id: 'units', title: 'Units', subtitle: 'Measurement units', type: 'page', path: '/units' },
   
   // Report Pages
-  { id: 'sales-report', title: 'Sales Report', subtitle: 'Sales analytics and reporting', type: 'page', path: '/reports/sales' },
-  { id: 'purchase-report', title: 'Purchase Report', subtitle: 'Purchase analytics and reporting', type: 'page', path: '/reports/purchase' },
-  { id: 'expense-report', title: 'Expense Report', subtitle: 'Expense tracking and reporting', type: 'page', path: '/reports/expense' },
-  { id: 'stock-report', title: 'Stock Report', subtitle: 'Inventory and stock reporting', type: 'page', path: '/reports/stock' },
+  { id: 'sales-report', title: 'Sales Report', subtitle: 'Sales analytics and reporting', type: 'page', path: '/sales-report' },
+  { id: 'purchase-report', title: 'Purchase Report', subtitle: 'Purchase analytics and reporting', type: 'page', path: '/purchase-report' },
+  { id: 'expense-report', title: 'Expense Report', subtitle: 'Expense tracking and reporting', type: 'page', path: '/expense-report' },
+  { id: 'stock-report', title: 'Stock Report', subtitle: 'Inventory and stock reporting', type: 'page', path: '/stock-report' },
   
   // Financial Pages
   { id: 'balance-sheet', title: 'Balance Sheet', subtitle: 'Financial balance sheet', type: 'page', path: '/financials/balance-sheet' },

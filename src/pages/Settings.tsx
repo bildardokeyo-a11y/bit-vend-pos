@@ -2125,30 +2125,341 @@ const Settings = () => {
 
       // Invoice Templates
       case 'app-invoice-templates':
+        const receiptTemplates = [
+          {
+            id: 'classic-receipt',
+            name: 'Classic Receipt',
+            description: 'Traditional receipt layout with business header',
+            preview: (
+              <div className="bg-white p-4 text-xs border rounded shadow-sm min-h-[300px]">
+                <div className="text-center border-b pb-2 mb-3">
+                  <h2 className="font-bold text-sm">BitVend POS</h2>
+                  <p className="text-xs">123 Business Street</p>
+                  <p className="text-xs">New York, NY 10001</p>
+                  <p className="text-xs">Phone: (555) 123-4567</p>
+                </div>
+                
+                <div className="mb-3">
+                  <div className="flex justify-between">
+                    <span>Receipt #: 00001</span>
+                    <span>Date: 2024-01-15</span>
+                  </div>
+                  <div>Time: 10:30 AM</div>
+                  <div>Cashier: Alice Johnson</div>
+                </div>
+                
+                <div className="border-b pb-2 mb-2">
+                  <div className="flex justify-between font-medium">
+                    <span>Item</span>
+                    <span>Total</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>iPhone 13 x1</span>
+                    <span>$699.00</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>AirPods Pro x1</span>
+                    <span>$249.00</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-1">
+                  <div className="flex justify-between">
+                    <span>Subtotal:</span>
+                    <span>$948.00</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Tax (10%):</span>
+                    <span>$94.80</span>
+                  </div>
+                  <div className="flex justify-between font-bold">
+                    <span>Total:</span>
+                    <span>$1,042.80</span>
+                  </div>
+                </div>
+                
+                <div className="text-center mt-3 pt-2 border-t">
+                  <p className="text-xs">Thank you for your business!</p>
+                  <p className="text-xs">Please come again</p>
+                </div>
+              </div>
+            )
+          },
+          {
+            id: 'modern-receipt',
+            name: 'Modern Receipt',
+            description: 'Clean, modern design with enhanced spacing',
+            preview: (
+              <div className="bg-white p-6 text-sm border rounded shadow-sm min-h-[300px]">
+                <div className="text-center mb-6">
+                  <h2 className="font-bold text-xl text-blue-600">BitVend POS</h2>
+                  <div className="h-px bg-blue-600 w-16 mx-auto mt-2 mb-3"></div>
+                  <p className="text-gray-600">123 Business Street, NY 10001</p>
+                  <p className="text-gray-600">(555) 123-4567</p>
+                </div>
+                
+                <div className="mb-4 bg-gray-50 p-3 rounded">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>Receipt: #00001</div>
+                    <div>Date: 2024-01-15</div>
+                    <div>Time: 10:30 AM</div>
+                    <div>Cashier: Alice</div>
+                  </div>
+                </div>
+                
+                <div className="mb-4">
+                  <div className="flex justify-between font-semibold pb-2 border-b">
+                    <span>Item Description</span>
+                    <span>Amount</span>
+                  </div>
+                  <div className="space-y-2 mt-2">
+                    <div className="flex justify-between">
+                      <span>iPhone 13 × 1</span>
+                      <span>$699.00</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>AirPods Pro × 1</span>
+                      <span>$249.00</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-1 border-t pt-2">
+                  <div className="flex justify-between">
+                    <span>Subtotal:</span>
+                    <span>$948.00</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Tax:</span>
+                    <span>$94.80</span>
+                  </div>
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>Total:</span>
+                    <span>$1,042.80</span>
+                  </div>
+                </div>
+                
+                <div className="text-center mt-6 pt-4 border-t border-blue-600">
+                  <p className="font-medium text-blue-600">Thank you for shopping with us!</p>
+                </div>
+              </div>
+            )
+          },
+          {
+            id: 'minimal-receipt',
+            name: 'Minimal Receipt',
+            description: 'Ultra-clean design with minimal elements',
+            preview: (
+              <div className="bg-white p-4 text-sm border rounded shadow-sm min-h-[300px] font-mono">
+                <div className="text-center mb-4">
+                  <h2 className="font-bold">BITVEND POS</h2>
+                  <p className="text-xs">123 Business Street</p>
+                  <p className="text-xs">New York, NY 10001</p>
+                </div>
+                
+                <div className="text-center mb-4 text-xs">
+                  <p>Receipt: 00001 | 2024-01-15 10:30 AM</p>
+                  <p>Cashier: Alice Johnson</p>
+                </div>
+                
+                <div className="mb-3">
+                  <p>iPhone 13                    $699.00</p>
+                  <p>AirPods Pro                  $249.00</p>
+                </div>
+                
+                <div className="border-t border-dashed pt-2">
+                  <p>Subtotal                     $948.00</p>
+                  <p>Tax                           $94.80</p>
+                  <p className="font-bold">TOTAL                      $1,042.80</p>
+                </div>
+                
+                <div className="text-center mt-4 pt-2 border-t border-dashed text-xs">
+                  <p>THANK YOU</p>
+                </div>
+              </div>
+            )
+          },
+          {
+            id: 'detailed-receipt',
+            name: 'Detailed Receipt',
+            description: 'Comprehensive receipt with all transaction details',
+            preview: (
+              <div className="bg-white p-4 text-xs border rounded shadow-sm min-h-[300px]">
+                <div className="text-center border-b-2 border-black pb-2 mb-3">
+                  <h2 className="font-bold text-lg">BitVend POS System</h2>
+                  <p>123 Business Street, Suite 400</p>
+                  <p>New York, NY 10001</p>
+                  <p>Phone: (555) 123-4567</p>
+                  <p>Email: info@bitvendpos.com</p>
+                </div>
+                
+                <div className="mb-3 bg-gray-100 p-2 rounded">
+                  <div className="flex justify-between">
+                    <span><strong>Receipt #:</strong> 00001</span>
+                    <span><strong>Register:</strong> 01</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span><strong>Date:</strong> 2024-01-15</span>
+                    <span><strong>Time:</strong> 10:30:15 AM</span>
+                  </div>
+                  <div><strong>Cashier:</strong> Alice Johnson (ID: 001)</div>
+                  <div><strong>Customer:</strong> John Doe</div>
+                </div>
+                
+                <div className="mb-3">
+                  <div className="flex justify-between font-bold border-b">
+                    <span>Item</span>
+                    <span>Qty</span>
+                    <span>Price</span>
+                    <span>Total</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>iPhone 13</span>
+                    <span>1</span>
+                    <span>$699.00</span>
+                    <span>$699.00</span>
+                  </div>
+                  <div className="text-xs text-gray-600 ml-2">SKU: IP13-001</div>
+                  <div className="flex justify-between">
+                    <span>AirPods Pro</span>
+                    <span>1</span>
+                    <span>$249.00</span>
+                    <span>$249.00</span>
+                  </div>
+                  <div className="text-xs text-gray-600 ml-2">SKU: AP-PRO-001</div>
+                </div>
+                
+                <div className="space-y-1 border-t pt-2">
+                  <div className="flex justify-between">
+                    <span>Subtotal:</span>
+                    <span>$948.00</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Tax Rate (10%):</span>
+                    <span>$94.80</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Discount:</span>
+                    <span>$0.00</span>
+                  </div>
+                  <div className="flex justify-between font-bold text-base border-t pt-1">
+                    <span>TOTAL:</span>
+                    <span>$1,042.80</span>
+                  </div>
+                </div>
+                
+                <div className="mt-3 text-center border-t pt-2">
+                  <p><strong>Payment Method:</strong> Credit Card</p>
+                  <p><strong>Card:</strong> **** **** **** 1234</p>
+                  <p className="mt-2">Thank you for your business!</p>
+                  <p>Visit us at www.bitvendpos.com</p>
+                </div>
+              </div>
+            )
+          },
+          {
+            id: 'thermal-receipt',
+            name: 'Thermal Printer',
+            description: 'Optimized for thermal receipt printers',
+            preview: (
+              <div className="bg-white p-3 text-xs border rounded shadow-sm min-h-[300px] max-w-[200px] mx-auto font-mono">
+                <div className="text-center mb-2">
+                  <h2 className="font-bold">BITVEND POS</h2>
+                  <p>123 Business St</p>
+                  <p>New York, NY 10001</p>
+                  <p>Tel: (555) 123-4567</p>
+                </div>
+                
+                <div className="text-center mb-2 border-t border-b border-dashed py-1">
+                  <p>Receipt: 00001</p>
+                  <p>2024-01-15 10:30 AM</p>
+                  <p>Cashier: Alice</p>
+                </div>
+                
+                <div className="mb-2">
+                  <p>iPhone 13</p>
+                  <p className="text-right">$699.00</p>
+                  <p>AirPods Pro</p>
+                  <p className="text-right">$249.00</p>
+                </div>
+                
+                <div className="border-t border-dashed pt-1">
+                  <div className="flex justify-between">
+                    <span>Subtotal:</span>
+                    <span>$948.00</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Tax:</span>
+                    <span>$94.80</span>
+                  </div>
+                  <div className="flex justify-between font-bold">
+                    <span>TOTAL:</span>
+                    <span>$1,042.80</span>
+                  </div>
+                </div>
+                
+                <div className="text-center mt-2 pt-1 border-t border-dashed">
+                  <p>* THANK YOU *</p>
+                  <p>* PLEASE COME AGAIN *</p>
+                </div>
+              </div>
+            )
+          }
+        ];
+
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold mb-4">Invoice Templates</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {['general-1', 'general-2', 'general-3', 'receipt-1', 'receipt-2'].map((templateId) => (
+            <h3 className="text-lg font-semibold mb-4">Receipt Templates</h3>
+            <p className="text-muted-foreground mb-6">Choose a receipt template for your point of sale system. Click on any template to preview and select it.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {receiptTemplates.map((template) => (
                 <Card 
-                  key={templateId}
-                  className={`cursor-pointer transition-all ${selectedTemplate === templateId ? 'ring-2 ring-primary' : ''}`}
-                  onClick={() => setSelectedTemplate(templateId)}
+                  key={template.id}
+                  className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
+                    selectedTemplate === template.id 
+                      ? 'ring-2 ring-primary shadow-lg' 
+                      : 'hover:ring-1 hover:ring-primary/50'
+                  }`}
+                  onClick={() => setSelectedTemplate(template.id)}
                 >
                   <CardContent className="p-4">
-                    <div className="aspect-[3/4] bg-muted rounded-lg mb-3 flex items-center justify-center">
-                      <div className="text-muted-foreground text-sm">Preview</div>
+                    <div className="mb-4">
+                      <div className="h-64 overflow-hidden rounded-lg border bg-gray-50 flex items-center justify-center">
+                        <div className="scale-75 origin-top">
+                          {template.preview}
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium">{templateId}</h4>
-                      {selectedTemplate === templateId && <Check className="w-4 h-4 text-primary" />}
+                    
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-semibold text-lg">{template.name}</h4>
+                        {selectedTemplate === template.id && (
+                          <div className="p-1 bg-primary rounded-full">
+                            <Check className="w-4 h-4 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">{template.description}</p>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
-            <div className="flex justify-end pt-4">
-              <Button onClick={handleSave} className="bg-save hover:bg-save-hover text-save-foreground">Save Template</Button>
+            
+            <div className="flex justify-between items-center pt-6 border-t">
+              <div className="text-sm text-muted-foreground">
+                Selected: <span className="font-medium">{receiptTemplates.find(t => t.id === selectedTemplate)?.name || 'None'}</span>
+              </div>
+              <div className="flex space-x-3">
+                <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground">
+                  <X className="w-4 h-4 mr-2" />Cancel
+                </Button>
+                <Button onClick={handleSave} className="bg-save hover:bg-save-hover text-save-foreground">
+                  <Save className="w-4 h-4 mr-2" />Apply Template
+                </Button>
+              </div>
             </div>
           </div>
         );
