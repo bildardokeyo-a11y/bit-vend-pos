@@ -21,6 +21,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { 
   Search,
   Filter,
@@ -31,8 +38,14 @@ import {
   BarChart3,
   CheckCircle2,
   Clock,
-  XCircle
+  XCircle,
+  Archive
 } from 'lucide-react';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 interface ReportType {
   id: string;
@@ -51,6 +64,8 @@ const ReportsTable: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedType, setSelectedType] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedReport, setSelectedReport] = useState<ReportType | null>(null);
   const itemsPerPage = 10;
 
   const reportTypes: ReportType[] = [
@@ -126,6 +141,52 @@ const ReportsTable: React.FC = () => {
     setCurrentPage(page);
   };
 
+  // Generate sample data for the selected report
+  const generateSampleData = (report: ReportType) => {
+    const baseData = [
+      { id: '1', date: '2024-01-15', customer: 'John Doe', amount: '$1,042.80', status: 'Completed', category: 'Electronics', employee: 'Alice Johnson' },
+      { id: '2', date: '2024-01-15', customer: 'Walk-in Customer', amount: '$828.90', status: 'Completed', category: 'Electronics', employee: 'Bob Smith' },
+      { id: '3', date: '2024-01-14', customer: 'Jane Smith', amount: '$2,185.80', status: 'Completed', category: 'Computers', employee: 'Alice Johnson' },
+      { id: '4', date: '2024-01-14', customer: 'Walk-in Customer', amount: '$1,977.80', status: 'Completed', category: 'Tablets', employee: 'Carol Wilson' },
+      { id: '5', date: '2024-01-13', customer: 'Mike Johnson', amount: '$484.88', status: 'Completed', category: 'Accessories', employee: 'Bob Smith' },
+    ];
+
+    // Filter columns based on report filters
+    const columns = ['ID', ...report.filters.map(filter => filter.charAt(0).toUpperCase() + filter.slice(1)), 'Amount'];
+    
+    return {
+      columns,
+      data: baseData.map(row => {
+        const filteredRow: any = { ID: row.id };
+        report.filters.forEach(filter => {
+          switch(filter) {
+            case 'date': filteredRow.Date = row.date; break;
+            case 'customer': filteredRow.Customer = row.customer; break;
+            case 'cashier':
+            case 'employee': filteredRow.Employee = row.employee; break;
+            case 'category': filteredRow.Category = row.category; break;
+            case 'payment': filteredRow.Payment = 'Card'; break;
+            case 'status': filteredRow.Status = row.status; break;
+            case 'product': filteredRow.Product = 'Sample Product'; break;
+            case 'vendor': filteredRow.Vendor = 'Sample Vendor'; break;
+            case 'branch': filteredRow.Branch = 'Main Branch'; break;
+            default: filteredRow[filter.charAt(0).toUpperCase() + filter.slice(1)] = 'Sample Data';
+          }
+        });
+        filteredRow.Amount = row.amount;
+        return filteredRow;
+      })
+    };
+  };
+
+  const handleViewReport = (reportId: string) => {
+    const report = reportTypes.find(r => r.id === reportId);
+    if (report) {
+      setSelectedReport(report);
+      setIsModalOpen(true);
+    }
+  };
+
   const handleGenerateReport = (reportId: string) => {
     const report = reportTypes.find(r => r.id === reportId);
     toast({
@@ -134,19 +195,128 @@ const ReportsTable: React.FC = () => {
     });
   };
 
-  const handleExportPDF = (reportId: string) => {
-    const report = reportTypes.find(r => r.id === reportId);
+  const handleExportPDF = (reportId: string, reportName?: string) => {
+    const report = reportTypes.find(r => r.id === reportId) || selectedReport;
+    if (!report) return;
+
+    const sampleData = generateSampleData(report);
+    const doc = new jsPDF();
+    
+    // Add title
+    doc.setFontSize(20);
+    doc.text(reportName || report.name, 14, 22);
+    
+    // Add date
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 32);
+    doc.text(`Category: ${report.category}`, 14, 40);
+    
+    // Prepare table data
+    const tableData = sampleData.data.map(row => 
+      sampleData.columns.map(col => row[col] || '')
+    );
+    
+    // Add table
+    autoTable(doc, {
+      head: [sampleData.columns],
+      body: tableData,
+      startY: 50,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [41, 128, 185],
+        textColor: 255,
+      },
+    });
+    
+    const filename = `${(reportName || report.name).replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+    doc.save(filename);
+    
     toast({
       title: "PDF Export",
-      description: `${report?.name} exported to PDF`,
+      description: `${reportName || report.name} exported to ${filename}`,
     });
+
+    return { filename, content: doc.output('blob') };
   };
 
-  const handleExportExcel = (reportId: string) => {
-    const report = reportTypes.find(r => r.id === reportId);
+  const handleExportExcel = (reportId: string, reportName?: string) => {
+    const report = reportTypes.find(r => r.id === reportId) || selectedReport;
+    if (!report) return;
+
+    const sampleData = generateSampleData(report);
+    
+    const worksheet = XLSX.utils.json_to_sheet(sampleData.data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Report Data');
+    
+    const filename = `${(reportName || report.name).replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(workbook, filename);
+    
     toast({
       title: "Excel Export",
-      description: `${report?.name} exported to Excel`,
+      description: `${reportName || report.name} exported to ${filename}`,
+    });
+
+    return { filename, content: XLSX.write(workbook, { bookType: 'xlsx', type: 'array' }) };
+  };
+
+  const handleExportAllZIP = async () => {
+    const zip = new JSZip();
+    const availableReports = reportTypes.filter(r => r.status === 'available');
+    
+    toast({
+      title: "Generating ZIP Archive",
+      description: `Preparing ${availableReports.length} reports for download...`,
+    });
+
+    // Generate all reports
+    for (const report of availableReports) {
+      const sampleData = generateSampleData(report);
+      
+      // Add CSV version
+      const csvContent = [
+        sampleData.columns.join(','),
+        ...sampleData.data.map(row => 
+          sampleData.columns.map(col => `"${row[col] || ''}"`).join(',')
+        )
+      ].join('\n');
+      
+      zip.file(`${report.name.replace(/\s+/g, '_')}.csv`, csvContent);
+      
+      // Add PDF version
+      const doc = new jsPDF();
+      doc.setFontSize(20);
+      doc.text(report.name, 14, 22);
+      doc.setFontSize(12);
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 32);
+      doc.text(`Category: ${report.category}`, 14, 40);
+      
+      const tableData = sampleData.data.map(row => 
+        sampleData.columns.map(col => row[col] || '')
+      );
+      
+      autoTable(doc, {
+        head: [sampleData.columns],
+        body: tableData,
+        startY: 50,
+        styles: { fontSize: 8, cellPadding: 2 },
+        headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+      });
+      
+      zip.file(`${report.name.replace(/\s+/g, '_')}.pdf`, doc.output('blob'));
+    }
+
+    // Generate and download ZIP
+    const zipBlob = await zip.generateAsync({ type: 'blob' });
+    const filename = `all_reports_${new Date().toISOString().split('T')[0]}.zip`;
+    saveAs(zipBlob, filename);
+    
+    toast({
+      title: "ZIP Export Complete",
+      description: `All ${availableReports.length} reports downloaded as ${filename}`,
     });
   };
 
@@ -173,16 +343,26 @@ const ReportsTable: React.FC = () => {
   };
 
   return (
-    <Card className="animate-slideInLeft mt-6">
-      <CardHeader>
-        <CardTitle className="flex items-center">
-          <FileBarChart className="h-5 w-5 mr-2" />
-          Comprehensive Reports Center
-        </CardTitle>
-        <CardDescription>
-          Generate, view, and export detailed business reports with advanced filtering
-        </CardDescription>
-      </CardHeader>
+    <>
+      <Card className="animate-slideInLeft mt-6">
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center">
+              <FileBarChart className="h-5 w-5 mr-2" />
+              Comprehensive Reports Center
+            </div>
+            <Button
+              onClick={handleExportAllZIP}
+              className="bg-purple-500 hover:bg-purple-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+            >
+              <Archive className="h-4 w-4" />
+              Export All ZIP
+            </Button>
+          </CardTitle>
+          <CardDescription>
+            Generate, view, and export detailed business reports with advanced filtering
+          </CardDescription>
+        </CardHeader>
       <CardContent>
         {/* Filters and Search */}
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between mb-6">
@@ -283,34 +463,32 @@ const ReportsTable: React.FC = () => {
                   <TableCell>
                     {getStatusBadge(report.status)}
                   </TableCell>
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
-                      <Button
-                        size="sm"
-                        onClick={() => handleGenerateReport(report.id)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white transition-all duration-200 hover:scale-105"
-                      >
-                        <Eye className="h-3 w-3 mr-1" />
-                        Generate
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleExportPDF(report.id)}
-                        className="transition-all duration-200 hover:scale-105"
-                      >
-                        <FileDown className="h-3 w-3" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleExportExcel(report.id)}
-                        className="transition-all duration-200 hover:scale-105"
-                      >
-                        <FileSpreadsheet className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  </TableCell>
+                   <TableCell>
+                     <div className="flex items-center space-x-2">
+                       <Button
+                         size="sm"
+                         onClick={() => handleViewReport(report.id)}
+                         className="bg-blue-500 hover:bg-blue-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+                       >
+                         <Eye className="h-3 w-3" />
+                         View
+                       </Button>
+                       <Button
+                         size="sm"
+                         onClick={() => handleExportPDF(report.id)}
+                         className="bg-red-500 hover:bg-red-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+                       >
+                         <FileDown className="h-3 w-3" />
+                       </Button>
+                       <Button
+                         size="sm"
+                         onClick={() => handleExportExcel(report.id)}
+                         className="bg-green-500 hover:bg-green-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+                       >
+                         <FileSpreadsheet className="h-3 w-3" />
+                       </Button>
+                     </div>
+                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -351,6 +529,67 @@ const ReportsTable: React.FC = () => {
         )}
       </CardContent>
     </Card>
+
+    {/* Report View Modal */}
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden">
+        <DialogHeader>
+          <DialogTitle className="flex items-center justify-between">
+            <div className="flex items-center">
+              {selectedReport && getTypeIcon(selectedReport.type)}
+              <span className="ml-2">{selectedReport?.name}</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button
+                size="sm"
+                onClick={() => selectedReport && handleExportPDF(selectedReport.id, selectedReport.name)}
+                className="bg-red-500 hover:bg-red-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+              >
+                <FileDown className="h-3 w-3" />
+                PDF
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => selectedReport && handleExportExcel(selectedReport.id, selectedReport.name)}
+                className="bg-green-500 hover:bg-green-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+              >
+                <FileSpreadsheet className="h-3 w-3" />
+                Excel
+              </Button>
+            </div>
+          </DialogTitle>
+          <DialogDescription>
+            {selectedReport?.description} • Category: {selectedReport?.category}
+          </DialogDescription>
+        </DialogHeader>
+        
+        <div className="overflow-auto max-h-[70vh]">
+          {selectedReport && (
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {generateSampleData(selectedReport).columns.map((column) => (
+                      <TableHead key={column}>{column}</TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {generateSampleData(selectedReport).data.map((row, index) => (
+                    <TableRow key={index}>
+                      {generateSampleData(selectedReport).columns.map((column) => (
+                        <TableCell key={column}>{row[column]}</TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 };
 

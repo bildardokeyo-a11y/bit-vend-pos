@@ -8,89 +8,96 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Light Theme - Clean & Professional */
-    --background: 0 0% 100%; /* #FFFFFF - Pure white background */
-    --foreground: 220 13% 9%; /* #111827 - Primary text */
+    /* Light Theme - Vibrant & Colorful to match dark theme energy */
+    --background: 240 10% 98%; /* #fafbfd - Soft blue-white background */
+    --foreground: 222 47% 11%; /* #0f172a - Deep slate blue text */
 
-    --card: 0 0% 100%; /* #FFFFFF - Pure white cards */
-    --card-foreground: 220 13% 9%;
+    --card: 0 0% 100%; /* #ffffff - Pure white cards with subtle elevation */
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 9%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 134 61% 41%; /* Green - consistent with dark mode */
+    --primary: 217 91% 60%; /* #3b82f6 - Vibrant blue primary */
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 134 62% 56%; /* Lighter green on hover */
+    --primary-hover: 217 91% 68%; /* Lighter blue on hover */
 
-    --secondary: 0 0% 27%; /* Match dark mode - dark gray */
-    --secondary-foreground: 0 0% 100%; /* White text like dark mode */
-    --secondary-hover: 0 0% 33%; /* Match dark mode hover */
+    --secondary: 147 63% 44%; /* #22c55e - Vibrant green secondary */
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 147 64% 52%; /* Lighter green hover */
 
-    --muted: 220 14% 98%; /* #F9FAFB - Very light gray background */
-    --muted-foreground: 220 9% 35%; /* #4B5563 - Secondary text */
+    --muted: 210 40% 96%; /* #f1f5f9 - Cool gray background */
+    --muted-foreground: 215 16% 47%; /* #64748b - Neutral text */
 
-    --accent: 220 14% 98%; /* #F9FAFB - Light gray accent */
-    --accent-foreground: 220 13% 9%; /* #111827 - Primary text */
+    --accent: 269 100% 92%; /* #f3e8ff - Light purple accent */
+    --accent-foreground: 269 100% 25%; /* #581c87 - Dark purple text */
 
-    --destructive: 354 70% 54%; /* Match dark mode red */
-    --destructive-foreground: 0 0% 100%; /* White text */
-    --destructive-hover: 354 70% 61%; /* Match dark mode hover */
+    --destructive: 0 84% 60%; /* #ef4444 - Vibrant red */
+    --destructive-foreground: 0 0% 100%;
+    --destructive-hover: 0 84% 68%; /* Lighter red hover */
 
-    --border: 220 13% 84%; /* #D1D5DB - Light border */
-    --input: 220 14% 98%; /* #F9FAFB - Input background */
-    --input-border: 220 13% 84%; /* #D1D5DB - Input border */
-    --ring: 59 130 246; /* Focus ring color */
+    --border: 214 32% 91%; /* #e2e8f0 - Subtle borders */
+    --input: 210 40% 98%; /* #f8fafc - Light input background */
+    --input-border: 214 32% 91%; /* #e2e8f0 - Input borders */
+    --ring: 217 91% 60%; /* Blue focus ring */
 
-    --radius: 0.75rem; /* Slightly more rounded */
+    --radius: 0.75rem;
 
-    /* Sidebar colors - Light theme */
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 220 13% 9%; /* Primary text */
-    --sidebar-primary: 59 130 246;
-    --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: 220 14% 98%;
-    --sidebar-accent-foreground: 59 130 246;
-    --sidebar-border: 220 13% 84%;
-    --sidebar-ring: 59 130 246;
+    /* Sidebar colors - Light theme with color */
+    --sidebar-background: 220 14% 97%; /* #f9fafb - Light sidebar */
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 269 100% 92%;
+    --sidebar-accent-foreground: 217 91% 60%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 217 91% 60%;
 
-    /* Enhanced POS Colors - Match dark mode */
-    --success: 134 61% 41%; /* Match dark mode green */
-    --success-foreground: 0 0% 100%; /* White text */
-    --success-hover: 134 62% 56%; /* Match dark mode hover */
+    /* Enhanced POS Colors - Vibrant light theme */
+    --success: 142 71% 45%; /* #10b981 - Vibrant emerald */
+    --success-foreground: 0 0% 100%;
+    --success-hover: 142 71% 53%; /* Lighter emerald */
     
-    --warning: 49 100% 50%; /* Match dark mode yellow */
-    --warning-foreground: 0 0% 0%; /* Black text like dark mode */
-    --warning-hover: 45 100% 45%; /* Darker yellow hover */
+    --warning: 38 92% 50%; /* #f59e0b - Vibrant amber */
+    --warning-foreground: 0 0% 100%;
+    --warning-hover: 38 92% 58%; /* Lighter amber */
     
-    /* Cancel button - red in light mode */
-    --cancel: 354 70% 54%; /* Red like destructive */
-    --cancel-foreground: 0 0% 100%; /* White text */
+    /* Cancel button - vibrant red in light mode */
+    --cancel: 0 84% 60%; /* #ef4444 - Vibrant red */
+    --cancel-foreground: 0 0% 100%;
     
-    --info: 14 165 233; /* Bright sky blue */
-    --info-foreground: 255 255 255;
-    --info-hover: 2 132 199; /* Darker blue */
+    --info: 199 89% 48%; /* #0ea5e9 - Vibrant sky blue */
+    --info-foreground: 0 0% 100%;
+    --info-hover: 199 89% 56%; /* Lighter blue */
     
     /* Enhanced interactive colors */
-    --hover-overlay: 59 130 246 / 0.05; /* Subtle blue overlay */
-    --active-overlay: 59 130 246 / 0.1; /* Stronger blue overlay */
+    --hover-overlay: 217 91% 60% / 0.08; /* Blue overlay */
+    --active-overlay: 217 91% 60% / 0.12; /* Stronger blue overlay */
     
     /* Settings Form Background */
-    --settings-form-bg: 0 0% 100%; /* #FFFFFF */
-    --settings-card-bg: 220 14% 98%; /* #F9FAFB */
+    --settings-form-bg: 0 0% 100%; /* #ffffff */
+    --settings-card-bg: 210 40% 98%; /* #f8fafc */
     
-    /* Table colors - Light theme */
-    --table-header-bg: 220 14% 98%; /* #F9FAFB */
-    --table-header-text: 220 13% 9%; /* #111827 */
-    --table-row-bg: 0 0% 100%; /* #FFFFFF */
-    --table-row-hover: 220 14% 98%; /* #F9FAFB */
-    --table-border: 220 13% 84%; /* #D1D5DB */
+    /* Table colors - Colorful light theme */
+    --table-header-bg: 217 91% 60%; /* Blue header background */
+    --table-header-text: 0 0% 100%; /* White text on blue */
+    --table-row-bg: 0 0% 100%; /* #ffffff */
+    --table-row-hover: 217 91% 95%; /* Light blue hover */
+    --table-border: 214 32% 91%; /* #e2e8f0 */
     
-    /* Enhanced text hierarchy */
-    --text-primary: 220 13% 9%; /* #111827 - Primary text */
-    --text-secondary: 220 9% 35%; /* #4B5563 - Secondary text */
-    --text-tertiary: 220 9% 35%; /* #4B5563 - Tertiary text */
-    --text-placeholder: 220 9% 65%; /* #9CA3AF - Placeholder text */
-    --text-disabled: 220 13% 71%; /* Disabled text */
+    /* Enhanced text hierarchy with color */
+    --text-primary: 222 47% 11%; /* #0f172a - Deep slate */
+    --text-secondary: 215 16% 47%; /* #64748b - Neutral gray */
+    --text-tertiary: 215 20% 65%; /* #94a3b8 - Light gray */
+    --text-placeholder: 215 16% 65%; /* #94a3b8 - Placeholder */
+    --text-disabled: 215 14% 71%; /* Disabled text */
+
+    /* Additional vibrant accent colors for light theme */
+    --accent-orange: 20 91% 56%; /* #f97316 - Vibrant orange */
+    --accent-purple: 269 100% 62%; /* #a855f7 - Vibrant purple */
+    --accent-pink: 330 81% 60%; /* #ec4899 - Vibrant pink */
+    --accent-teal: 172 66% 50%; /* #14b8a6 - Vibrant teal */
+    --accent-indigo: 239 84% 67%; /* #6366f1 - Vibrant indigo */
   }
 
   .dark {
@@ -287,42 +294,51 @@ All colors MUST be HSL.
     margin-left: 5rem; /* 80px */
   }
   
-  /* POS Button Variants */
+  /* Enhanced light theme button styles */
   .btn-pos {
     @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200;
     @apply hover:scale-95 hover:shadow-lg active:scale-90;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
   }
   
   .btn-pos-primary {
-    @apply btn-pos bg-primary text-primary-foreground;
-    @apply hover:bg-primary/90;
+    @apply btn-pos text-white;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.9));
+  }
+  
+  .btn-pos-primary:hover {
+    background: linear-gradient(135deg, hsl(var(--primary-hover)), hsl(var(--primary)));
+    box-shadow: 0 4px 14px 0 hsl(var(--primary) / 0.3);
   }
   
   .btn-pos-accent {
     @apply btn-pos text-white;
-    background: hsl(var(--accent-orange));
+    background: linear-gradient(135deg, hsl(var(--accent-orange)), hsl(var(--accent-orange) / 0.9));
   }
   
   .btn-pos-accent:hover {
-    background: hsl(var(--accent-orange) / 0.9);
-    box-shadow: 0 0 20px hsl(var(--accent-orange) / 0.4);
+    background: linear-gradient(135deg, hsl(var(--accent-orange) / 0.9), hsl(var(--accent-orange)));
+    box-shadow: 0 4px 14px 0 hsl(var(--accent-orange) / 0.3);
   }
   
-  /* Product Cards */
+  /* Product Cards with enhanced light theme styling */
   .product-card {
     @apply bg-card border rounded-xl p-4 transition-all duration-300;
     @apply hover:shadow-xl hover:-translate-y-1;
-    box-shadow: 0 4px 20px hsl(var(--primary-blue) / 0.1);
+    box-shadow: 0 4px 20px hsl(var(--primary) / 0.08);
+    border: 1px solid hsl(var(--border));
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 8px 30px hsl(var(--primary) / 0.15);
+    border-color: hsl(var(--primary) / 0.3);
+    transform: translateY(-2px) scale(1.02);
   }
   
   .dark .product-card {
     background: #1c1c1c;
     @apply border-gray-800;
     box-shadow: 0 4px 20px hsl(0 0% 0% / 0.3);
-  }
-  
-  .product-card:hover {
-    box-shadow: 0 8px 30px hsl(var(--primary-blue) / 0.2);
   }
   
   .dark .product-card:hover {
@@ -453,13 +469,14 @@ All colors MUST be HSL.
     --tw-scrollbar-thumb: hsl(var(--muted-foreground) / 0.3);
   }
 
-  /* Light mode auto-applied styles */
+  /* Light mode auto-applied styles with vibrant colors */
   form,
   .form-container,
   .modal-content,
   .card,
   .settings-section {
     @apply bg-card text-card-foreground border-border;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   }
 
   input,
@@ -467,6 +484,14 @@ All colors MUST be HSL.
   select {
     @apply bg-input text-foreground border-input-border;
     color: hsl(var(--text-primary)) !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: hsl(var(--primary)) !important;
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1) !important;
   }
 
   input::placeholder,
@@ -482,6 +507,7 @@ All colors MUST be HSL.
   table thead,
   table th {
     @apply bg-table-header-bg text-table-header-text border-table-border;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.9));
   }
 
   table tbody tr {
@@ -490,6 +516,8 @@ All colors MUST be HSL.
 
   table tbody tr:hover {
     @apply bg-table-row-hover;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px -2px hsl(var(--primary) / 0.15);
   }
 
   table td {
