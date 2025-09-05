@@ -537,33 +537,34 @@ const ReportsTable: React.FC = () => {
 
     {/* Report View Modal - Full Screen */}
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogContent className="max-w-[100vw] max-h-[100vh] w-full h-full overflow-hidden p-0 gap-0">
-        <DialogHeader className="p-6 pb-4">
-          <DialogTitle className="flex items-center justify-between">
-            <div className="flex items-center">
-              {selectedReport && getTypeIcon(selectedReport.type)}
-              <span className="ml-2">{selectedReport?.name}</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="group relative">
-                <FileDown 
-                  className="h-4 w-4 text-red-500 cursor-pointer hover:text-red-600 transition-colors" 
-                  onClick={() => selectedReport && handleExportPDF(selectedReport.id, selectedReport.name)}
-                />
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-                  Export PDF
+      <DialogContent className="max-w-[95vw] max-h-[90vh] overflow-auto p-0">
+        <div className="flex flex-col h-full">
+          <DialogHeader className="p-6 pb-4 flex-shrink-0">
+            <DialogTitle className="flex items-center justify-between">
+              <div className="flex items-center">
+                {selectedReport && getTypeIcon(selectedReport.type)}
+                <span className="ml-2">{selectedReport?.name}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="group relative">
+                  <FileDown 
+                    className="h-4 w-4 text-red-500 cursor-pointer hover:text-red-600 transition-colors" 
+                    onClick={() => selectedReport && handleExportPDF(selectedReport.id, selectedReport.name)}
+                  />
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+                    Export PDF
+                  </div>
+                </div>
+                <div className="group relative">
+                  <FileSpreadsheet 
+                    className="h-4 w-4 text-green-500 cursor-pointer hover:text-green-600 transition-colors" 
+                    onClick={() => selectedReport && handleExportExcel(selectedReport.id, selectedReport.name)}
+                  />
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+                    Export Excel
+                  </div>
                 </div>
               </div>
-              <div className="group relative">
-                <FileSpreadsheet 
-                  className="h-4 w-4 text-green-500 cursor-pointer hover:text-green-600 transition-colors" 
-                  onClick={() => selectedReport && handleExportExcel(selectedReport.id, selectedReport.name)}
-                />
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-                  Export Excel
-                </div>
-              </div>
-            </div>
           </DialogTitle>
           <DialogDescription>
             {selectedReport?.description} • Category: {selectedReport?.category}
@@ -685,6 +686,7 @@ const ReportsTable: React.FC = () => {
               </div>
             </div>
           )}
+        </div>
         </div>
       </DialogContent>
     </Dialog>

@@ -494,14 +494,14 @@ const Products = () => {
           <div className="rounded-md border dark:bg-[#1c1c1c]">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>Product</TableHead>
-                  <TableHead>SKU</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Stock</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                <TableRow className="bg-blue-500 hover:bg-blue-500">
+                  <TableHead className="text-white font-semibold">Product</TableHead>
+                  <TableHead className="text-white font-semibold">SKU</TableHead>
+                  <TableHead className="text-white font-semibold">Category</TableHead>
+                  <TableHead className="text-white font-semibold">Price</TableHead>
+                  <TableHead className="text-white font-semibold">Stock</TableHead>
+                  <TableHead className="text-white font-semibold">Status</TableHead>
+                  <TableHead className="text-right text-white font-semibold">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
