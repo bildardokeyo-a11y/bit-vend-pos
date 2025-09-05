@@ -12,7 +12,9 @@ import {
   Tag, 
   Building2,
   Clock,
-  X
+  X,
+  Settings as Cog,
+  FileText
 } from 'lucide-react';
 
 interface SearchDropdownProps {
@@ -34,9 +36,11 @@ const getTypeIcon = (type: SearchResult['type']) => {
     employee: UserCheck,
     category: Tag,
     brand: Building2,
+    setting: Cog,
+    page: FileText,
   };
   
-  const Icon = iconMap[type];
+  const Icon = iconMap[type] || Package;
   return <Icon className="h-4 w-4" />;
 };
 
@@ -48,10 +52,12 @@ const getTypeBadge = (type: SearchResult['type']) => {
     employee: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
     category: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
     brand: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
+    setting: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200',
+    page: 'bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200',
   };
 
   return (
-    <Badge variant="secondary" className={`text-xs ${colorMap[type]}`}>
+    <Badge variant="secondary" className={`text-xs ${colorMap[type] || colorMap.product}`}>
       {type}
     </Badge>
   );
@@ -72,34 +78,52 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
       <PopoverTrigger asChild>
         {children}
       </PopoverTrigger>
-      <PopoverContent className="w-96 p-0 z-50 bg-popover border border-border shadow-lg" align="start">
+      <PopoverContent className="w-[420px] p-0 z-50 bg-popover border border-border shadow-xl rounded-lg" align="start">
         <Command>
           <CommandList>
             {results.length > 0 && (
-              <CommandGroup heading="Search Results">
-                {results.map((result) => (
-                  <CommandItem
-                    key={result.id}
-                    onSelect={() => onSelect(result)}
-                    className="flex items-center gap-3 p-3 cursor-pointer hover:bg-muted/50"
-                  >
-                    <div className="flex items-center gap-2 flex-1">
-                      {getTypeIcon(result.type)}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium truncate">{result.title}</span>
-                          {getTypeBadge(result.type)}
-                        </div>
-                        {result.subtitle && (
-                          <span className="text-sm text-muted-foreground truncate">
-                            {result.subtitle}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
+              <>
+                {/* Group results by type */}
+                {['setting', 'page', 'product'].map(type => {
+                  const typeResults = results.filter(r => r.type === type);
+                  if (typeResults.length === 0) return null;
+                  
+                  const typeLabels = {
+                    setting: 'Settings',
+                    page: 'Pages',
+                    product: 'Products'
+                  };
+                  
+                  return (
+                    <CommandGroup key={type} heading={typeLabels[type as keyof typeof typeLabels]}>
+                      {typeResults.map((result) => (
+                        <CommandItem
+                          key={result.id}
+                          onSelect={() => onSelect(result)}
+                          className="flex items-center gap-3 p-3 cursor-pointer hover:bg-muted/50 transition-all duration-200 hover:scale-[1.02] group"
+                        >
+                          <div className="flex items-center gap-2 flex-1">
+                            <div className="transition-colors group-hover:text-primary">
+                              {getTypeIcon(result.type)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium truncate group-hover:text-primary transition-colors">{result.title}</span>
+                                {getTypeBadge(result.type)}
+                              </div>
+                              {result.subtitle && (
+                                <span className="text-sm text-muted-foreground truncate">
+                                  {result.subtitle}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  );
+                })}
+              </>
             )}
             
             {recentSearches.length > 0 && (
@@ -112,7 +136,7 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
                       variant="ghost"
                       size="sm"
                       onClick={onClearRecent}
-                      className="h-6 w-6 p-0"
+                      className="h-6 w-6 p-0 hover:bg-destructive/10 hover:text-destructive transition-colors"
                     >
                       <X className="h-3 w-3" />
                     </Button>
@@ -121,7 +145,7 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
                     <CommandItem
                       key={index}
                       onSelect={() => onRecentSelect(search)}
-                      className="flex items-center gap-2 p-2 cursor-pointer hover:bg-muted/50"
+                      className="flex items-center gap-2 p-2 cursor-pointer hover:bg-muted/50 transition-colors duration-200"
                     >
                       <Clock className="h-4 w-4 text-muted-foreground" />
                       <span className="text-sm">{search}</span>
@@ -132,7 +156,19 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
             )}
             
             {results.length === 0 && recentSearches.length === 0 && (
-              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandEmpty className="py-8 text-center text-muted-foreground">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="text-2xl">🔍</div>
+                  <span className="font-medium">No results found</span>
+                  <span className="text-xs">Try searching for products, settings, or pages</span>
+                  <div className="mt-2 text-xs flex items-center gap-2 text-muted-foreground/60">
+                    <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded">↑↓</kbd>
+                    <span>Navigate</span>
+                    <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded">↵</kbd>
+                    <span>Select</span>
+                  </div>
+                </div>
+              </CommandEmpty>
             )}
           </CommandList>
         </Command>

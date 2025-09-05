@@ -171,11 +171,12 @@ const Topbar: React.FC<TopbarProps> = ({
             />
             <Input
               type="text"
-              placeholder="Search products, sales, customers..."
+              placeholder="Search products, settings, pages..."
               value={query}
               onChange={(e) => {
                 e.stopPropagation();
-                handleQueryChange(e.target.value);
+                const value = e.target.value;
+                handleQueryChange(value);
               }}
               onFocus={(e) => {
                 e.stopPropagation();
@@ -186,7 +187,7 @@ const Topbar: React.FC<TopbarProps> = ({
               onKeyDown={(e) => {
                 e.stopPropagation();
               }}
-              className="pl-10 w-80 pos-input focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="pl-10 w-80 pos-input focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
             />
           </form>
         </SearchDropdown>
