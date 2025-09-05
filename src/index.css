@@ -252,6 +252,11 @@ All colors MUST be HSL.
     stroke-width: 2 !important;
   }
 
+  /* Shopping cart icon should be yellow */
+  .pos-sidebar .text-yellow-400 {
+    color: hsl(45 93% 47%) !important;
+  }
+
   .pos-sidebar a:hover {
     color: hsl(0 0% 100%) !important;
   }
