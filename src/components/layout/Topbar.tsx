@@ -140,6 +140,11 @@ const Topbar: React.FC<TopbarProps> = ({
     }
   }, [isOpen]);
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSearch();
+  };
+
   return (
     <header className={cn(
       'pos-topbar transition-all duration-300',
