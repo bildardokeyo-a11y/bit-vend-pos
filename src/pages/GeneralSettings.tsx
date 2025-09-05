@@ -11,13 +11,13 @@ const GeneralSettings: React.FC = () => {
   useSEO('General Settings | Bit Vend POS', 'Configure general application settings.', '/settings/general');
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <header>
         <h1 className="text-3xl font-bold text-foreground">General Settings</h1>
         <p className="text-muted-foreground mt-1">Brand and localization</p>
       </header>
       <main>
-        <Card>
+        <Card className="animate-slideInLeft">
           <CardHeader>
             <CardTitle>Brand</CardTitle>
           </CardHeader>

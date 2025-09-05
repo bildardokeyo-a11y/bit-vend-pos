@@ -94,6 +94,7 @@ const Roles: React.FC = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   placeholder="Enter role name"
+                  className="border-input bg-background text-foreground"
                 />
               </div>
               <div className="space-y-2">
@@ -103,6 +104,7 @@ const Roles: React.FC = () => {
                   value={formData.permissions}
                   onChange={(e) => setFormData({...formData, permissions: e.target.value})}
                   placeholder="e.g., Sales, Inventory, Reports"
+                  className="border-input bg-background text-foreground"
                 />
               </div>
               <div className="space-y-2">
@@ -112,6 +114,7 @@ const Roles: React.FC = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
                   placeholder="Role description..."
+                  className="border-input bg-background text-foreground"
                 />
               </div>
               <div className="flex gap-2">

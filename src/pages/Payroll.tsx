@@ -17,8 +17,10 @@ import {
   Download,
   FileText,
   Archive,
-  Calculator
+  Calculator,
+  CheckCircle
 } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface PayrollRecord {
   id: number;
@@ -44,6 +46,8 @@ const Payroll = () => {
   const [departmentFilter, setDepartmentFilter] = useState('all');
   const [showModal, setShowModal] = useState(false);
   const [selectedPayroll, setSelectedPayroll] = useState<PayrollRecord | null>(null);
+  const [showPayslipModal, setShowPayslipModal] = useState(false);
+  const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
 
   const [payrollRecords] = useState<PayrollRecord[]>([
     {
@@ -182,14 +186,36 @@ const Payroll = () => {
     console.log('Exporting all payroll records as ZIP...');
   };
 
+  const handleGeneratePayslip = () => {
+    setShowPayslipModal(true);
+  };
+
+  const handleEmployeeSelect = (employeeId: string, checked: boolean) => {
+    setSelectedEmployees(prev => 
+      checked 
+        ? [...prev, employeeId]
+        : prev.filter(id => id !== employeeId)
+    );
+  };
+
+  const handleGenerateSelectedPayslips = () => {
+    console.log('Generating payslips for employees:', selectedEmployees);
+    setShowPayslipModal(false);
+    setSelectedEmployees([]);
+  };
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Payroll Management</h1>
           <p className="text-muted-foreground">Manage employee payroll and compensation</p>
         </div>
         <div className="flex gap-2">
+          <Button variant="outline" onClick={handleGeneratePayslip}>
+            <FileText className="w-4 h-4 mr-2" />
+            Generate Payslip
+          </Button>
           <Button variant="outline" onClick={handleExportAllZIP}>
             <Archive className="w-4 h-4 mr-2" />
             Export All ZIP
@@ -238,7 +264,7 @@ const Payroll = () => {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid md:grid-cols-4 gap-4">
+      <div className="grid md:grid-cols-4 gap-4 animate-slideInLeft" style={{ animationDelay: '0.1s' }}>
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
@@ -294,7 +320,7 @@ const Payroll = () => {
       </div>
 
       {/* Payroll Table */}
-      <Card>
+      <Card className="animate-slideInLeft" style={{ animationDelay: '0.2s' }}>
         <CardHeader>
           <CardTitle>Payroll Records</CardTitle>
         </CardHeader>
@@ -456,6 +482,60 @@ const Payroll = () => {
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Generate Payslip Modal */}
+      <Dialog open={showPayslipModal} onOpenChange={setShowPayslipModal}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Generate Payslip</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-muted-foreground">Select employees to generate payslips for:</p>
+            <div className="space-y-2 max-h-96 overflow-y-auto">
+              {payrollRecords.map((record) => (
+                <div key={record.id} className="flex items-center space-x-3 p-3 border rounded-lg">
+                  <Checkbox
+                    checked={selectedEmployees.includes(record.employeeId)}
+                    onCheckedChange={(checked) => 
+                      handleEmployeeSelect(record.employeeId, checked as boolean)
+                    }
+                  />
+                  <div className="flex-1">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-medium">{record.employeeName}</p>
+                        <p className="text-sm text-muted-foreground">{record.employeeId} - {record.department}</p>
+                        <p className="text-sm text-muted-foreground">{record.position}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-medium">${record.netPay.toLocaleString()}</p>
+                        <p className="text-sm text-muted-foreground">{record.payPeriod}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-between items-center pt-4 border-t">
+              <p className="text-sm text-muted-foreground">
+                {selectedEmployees.length} employee(s) selected
+              </p>
+              <div className="flex gap-2">
+                <Button variant="outline" onClick={() => setShowPayslipModal(false)}>
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleGenerateSelectedPayslips}
+                  disabled={selectedEmployees.length === 0}
+                >
+                  <CheckCircle className="w-4 h-4 mr-2" />
+                  Generate Payslips ({selectedEmployees.length})
+                </Button>
+              </div>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
