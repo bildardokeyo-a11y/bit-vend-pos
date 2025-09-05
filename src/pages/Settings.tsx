@@ -1248,7 +1248,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4 border-t">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
             </div>
           </div>
@@ -1293,7 +1293,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4 border-t">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
             </div>
           </div>
@@ -1398,7 +1398,7 @@ const Settings = () => {
               )}
             </div>
             <div className="flex justify-end space-x-4 pt-4 border-t">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
             </div>
           </div>
@@ -1474,7 +1474,7 @@ const Settings = () => {
               )}
             </div>
             <div className="flex justify-end space-x-4 pt-4 border-t">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
             </div>
           </div>
@@ -1987,7 +1987,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2018,7 +2018,7 @@ const Settings = () => {
               />
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2054,7 +2054,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2095,7 +2095,7 @@ const Settings = () => {
               />
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2160,7 +2160,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Template</Button>
             </div>
           </div>
@@ -2215,7 +2215,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2251,7 +2251,7 @@ const Settings = () => {
               )}
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2336,7 +2336,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2401,7 +2401,7 @@ const Settings = () => {
               ))}
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2475,7 +2475,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2517,7 +2517,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2550,7 +2550,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2593,7 +2593,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2627,7 +2627,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2660,7 +2660,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2704,7 +2704,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2745,7 +2745,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2822,7 +2822,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2890,7 +2890,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2945,7 +2945,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -2986,7 +2986,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3038,7 +3038,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3092,7 +3092,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3136,7 +3136,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3193,7 +3193,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3239,7 +3239,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3280,7 +3280,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3323,7 +3323,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3374,7 +3374,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3430,7 +3430,7 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3494,7 +3494,7 @@ const Settings = () => {
               </Card>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
@@ -3539,7 +3539,7 @@ const Settings = () => {
               </Card>
             </div>
             <div className="flex justify-end space-x-4 pt-4">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
             </div>
           </div>
