@@ -243,6 +243,14 @@ const Settings = () => {
   const [availableCities, setAvailableCities] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
+  const uniqueCountries = React.useMemo(() => {
+    const map = new Map<string, Country>();
+    for (const c of countries) {
+      if (!map.has(c.code)) map.set(c.code, c);
+    }
+    return Array.from(map.values());
+  }, []);
+  
   // Initialize business settings based on URL parameters or current business
   useEffect(() => {
     if (isAddMode) {
@@ -413,6 +421,7 @@ const Settings = () => {
     phone: '+1 555-123-4567',
     email: 'contact@bitvendpos.com',
     website: 'https://www.bitvendpos.com',
+    logoUrl: '',
     
     // Address
     address: '123 Business Street',
@@ -867,19 +876,28 @@ const Settings = () => {
                     currentBusiness?.id === business.id && "ring-2 ring-primary"
                   )}>
                     <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <h4 className="font-semibold">{business.businessName}</h4>
-                          {currentBusiness?.id === business.id && (
-                            <Badge variant="default">Current</Badge>
+                      <div className="flex items-center gap-3 flex-1">
+                        <div className="w-10 h-10 rounded-md overflow-hidden bg-muted flex items-center justify-center border">
+                          {business.logoUrl ? (
+                            <img src={business.logoUrl} alt={`${business.businessName} logo`} className="w-full h-full object-cover" />
+                          ) : (
+                            <Building className="w-5 h-5 text-muted-foreground" />
                           )}
                         </div>
-                        <p className="text-sm text-muted-foreground capitalize">
-                          {business.businessType} • {business.address}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {business.phone} • {business.email}
-                        </p>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-semibold truncate">{business.businessName}</h4>
+                            {currentBusiness?.id === business.id && (
+                              <Badge variant="default">Current</Badge>
+                            )}
+                          </div>
+                          <p className="text-sm text-muted-foreground capitalize truncate">
+                            {business.businessType} • {business.address}
+                          </p>
+                          <p className="text-xs text-muted-foreground truncate">
+                            {business.phone} • {business.email}
+                          </p>
+                        </div>
                       </div>
                       <div className="flex items-center gap-2">
                         <Button
@@ -943,8 +961,12 @@ const Settings = () => {
               <div>
                 <Label htmlFor="businessLogo">Business Logo</Label>
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center border-2 border-dashed">
-                    <Building className="w-6 h-6 text-muted-foreground" />
+                  <div className="w-16 h-16 rounded-lg border-2 border-dashed overflow-hidden bg-muted flex items-center justify-center">
+                    {businessSettings.logoUrl ? (
+                      <img src={businessSettings.logoUrl} alt={`${businessSettings.businessName} logo`} className="w-full h-full object-cover" />
+                    ) : (
+                      <Building className="w-6 h-6 text-muted-foreground" />
+                    )}
                   </div>
                   <div className="flex flex-col gap-2">
                     <Button
@@ -965,8 +987,14 @@ const Settings = () => {
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
-                        // Here you would typically upload the file and store the URL
-                        toast.success("Logo uploaded successfully!");
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                          const dataUrl = reader.result as string;
+                          setBusinessSettings(prev => ({ ...prev, logoUrl: dataUrl }));
+                          toast.success("Logo uploaded successfully!");
+                        };
+                        reader.onerror = () => toast.error("Failed to read the image file");
+                        reader.readAsDataURL(file);
                       }
                     }}
                   />
@@ -1054,8 +1082,8 @@ const Settings = () => {
                 >
                   <SelectTrigger><SelectValue placeholder="Country" /></SelectTrigger>
                   <SelectContent className="z-50 bg-popover border border-border shadow-md max-h-[200px] overflow-y-auto">
-                    {countries.map((country) => (
-                      <SelectItem key={country.code} value={country.code}>
+                    {uniqueCountries.map((country) => (
+                      <SelectItem key={`${country.code}-${country.name}`} value={country.code}>
                         {country.name}
                       </SelectItem>
                     ))}

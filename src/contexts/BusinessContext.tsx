@@ -8,6 +8,7 @@ export interface Business {
   businessLicense: string;
   phone: string;
   email: string;
+  logoUrl?: string;
   address: string;
   city: string;
   state: string;
@@ -52,6 +53,7 @@ const defaultBusiness: Business = {
   businessLicense: '',
   phone: '',
   email: '',
+  logoUrl: '',
   address: '',
   city: '',
   state: '',
