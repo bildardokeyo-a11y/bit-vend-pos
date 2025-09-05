@@ -181,7 +181,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
             <div key={section.title} className="mb-6">
               {!collapsed && (
                 <div className="px-6 mb-3">
-                  <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
                     {section.title}
                   </h3>
                 </div>
