@@ -890,6 +890,19 @@ const Settings = () => {
                           <Edit size={14} className="mr-1" />
                           Edit
                         </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => {
+                            if (confirm('Are you sure you want to delete this business? This action cannot be undone.')) {
+                              deleteBusiness(business.id);
+                              toast.success('Business deleted successfully!');
+                            }
+                          }}
+                        >
+                          <Trash2 size={14} className="mr-1" />
+                          Delete
+                        </Button>
                         {businesses.length > 1 && business.id !== currentBusiness?.id && (
                           <Button
                             variant="destructive"
@@ -1022,9 +1035,11 @@ const Settings = () => {
                 >
                   <SelectTrigger><SelectValue placeholder="Country" /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="US">United States</SelectItem>
-                    <SelectItem value="CA">Canada</SelectItem>
-                    <SelectItem value="GB">United Kingdom</SelectItem>
+                    {countries.map((country) => (
+                      <SelectItem key={country.code} value={country.code}>
+                        {country.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

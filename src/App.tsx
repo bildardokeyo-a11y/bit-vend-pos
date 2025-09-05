@@ -27,6 +27,11 @@ import Settings from "./pages/Settings";
 import StockIn from "./pages/StockIn";
 import Expenses from "./pages/Expenses";
 import SalesReport from "./pages/SalesReport";
+import Inventory from "./pages/Inventory";
+import Units from "./pages/Units";
+import Variants from "./pages/Variants";
+import Barcode from "./pages/Barcode";
+import Suppliers from "./pages/Suppliers";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +61,11 @@ const App = () => (
               <Route path="products/edit/:id" element={<ProductEdit />} />
               <Route path="categories" element={<Categories />} />
               <Route path="brands" element={<Brands />} />
+              <Route path="inventory" element={<Inventory />} />
+              <Route path="units" element={<Units />} />
+              <Route path="variants" element={<Variants />} />
+              <Route path="barcode" element={<Barcode />} />
+              <Route path="suppliers" element={<Suppliers />} />
               <Route path="customers" element={<Customers />} />
               <Route path="employees" element={<Employees />} />
               <Route path="settings" element={<Settings />} />
