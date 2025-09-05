@@ -8,49 +8,49 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Enhanced Light Theme - Vibrant & Modern */
-    --background: 255 255 255; /* Pure white background */
-    --foreground: 15 23 42; /* Rich dark slate */
+    /* Light Theme - Clean & Professional */
+    --background: 0 0% 100%; /* #FFFFFF - Pure white background */
+    --foreground: 220 13% 9%; /* #111827 - Primary text */
 
-    --card: 255 255 255; /* Pure white cards */
-    --card-foreground: 15 23 42;
+    --card: 0 0% 100%; /* #FFFFFF - Pure white cards */
+    --card-foreground: 220 13% 9%;
 
-    --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 9%;
 
     --primary: 59 130 246; /* Bright blue */
     --primary-foreground: 255 255 255;
     --primary-hover: 37 99 235; /* Darker blue on hover */
 
-    --secondary: 226 232 240; /* Light gray */
-    --secondary-foreground: 30 41 59; /* Dark slate gray */
-    --secondary-hover: 203 213 225; /* Darker gray on hover */
+    --secondary: 220 13% 84%; /* #D1D5DB - Light gray */
+    --secondary-foreground: 220 9% 35%; /* #4B5563 - Secondary text */
+    --secondary-hover: 220 13% 80%; /* Darker gray on hover */
 
-    --muted: 248 250 252; /* Very light gray background */
-    --muted-foreground: 71 85 105; /* Medium dark gray text */
+    --muted: 220 14% 98%; /* #F9FAFB - Very light gray background */
+    --muted-foreground: 220 9% 35%; /* #4B5563 - Secondary text */
 
-    --accent: 241 245 249; /* Light gray accent */
-    --accent-foreground: 30 41 59; /* Dark text */
+    --accent: 220 14% 98%; /* #F9FAFB - Light gray accent */
+    --accent-foreground: 220 13% 9%; /* #111827 - Primary text */
 
     --destructive: 239 68 68; /* Bright red */
     --destructive-foreground: 255 255 255;
     --destructive-hover: 220 38 38; /* Darker red on hover */
 
-    --border: 226 232 240; /* Light border */
-    --input: 255 255 255; /* White input background */
-    --input-border: 203 213 225; /* Input border */
+    --border: 220 13% 84%; /* #D1D5DB - Light border */
+    --input: 220 14% 98%; /* #F9FAFB - Input background */
+    --input-border: 220 13% 84%; /* #D1D5DB - Input border */
     --ring: 59 130 246; /* Focus ring color */
 
     --radius: 0.75rem; /* Slightly more rounded */
 
     /* Sidebar colors - Light theme */
-    --sidebar-background: 255 255 255;
-    --sidebar-foreground: 51 65 85; /* Darker text for better contrast */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 13% 9%; /* Primary text */
     --sidebar-primary: 59 130 246;
     --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: 248 250 252;
+    --sidebar-accent: 220 14% 98%;
     --sidebar-accent-foreground: 59 130 246;
-    --sidebar-border: 226 232 240;
+    --sidebar-border: 220 13% 84%;
     --sidebar-ring: 59 130 246;
 
     /* Enhanced POS Colors - Light theme */
@@ -71,22 +71,22 @@ All colors MUST be HSL.
     --active-overlay: 59 130 246 / 0.1; /* Stronger blue overlay */
     
     /* Settings Form Background */
-    --settings-form-bg: 255 255 255;
-    --settings-card-bg: 248 250 252;
+    --settings-form-bg: 0 0% 100%; /* #FFFFFF */
+    --settings-card-bg: 220 14% 98%; /* #F9FAFB */
     
     /* Table colors - Light theme */
-    --table-header-bg: 248 250 252;
-    --table-header-text: 15 23 42;
-    --table-row-bg: 255 255 255;
-    --table-row-hover: 248 250 252;
-    --table-border: 226 232 240;
+    --table-header-bg: 220 14% 98%; /* #F9FAFB */
+    --table-header-text: 220 13% 9%; /* #111827 */
+    --table-row-bg: 0 0% 100%; /* #FFFFFF */
+    --table-row-hover: 220 14% 98%; /* #F9FAFB */
+    --table-border: 220 13% 84%; /* #D1D5DB */
     
     /* Enhanced text hierarchy */
-    --text-primary: 15 23 42; /* Primary text - very dark */
-    --text-secondary: 51 65 85; /* Secondary text - dark gray */
-    --text-tertiary: 71 85 105; /* Tertiary text - medium gray */
-    --text-placeholder: 100 116 139; /* Placeholder text */
-    --text-disabled: 148 163 184; /* Disabled text */
+    --text-primary: 220 13% 9%; /* #111827 - Primary text */
+    --text-secondary: 220 9% 35%; /* #4B5563 - Secondary text */
+    --text-tertiary: 220 9% 35%; /* #4B5563 - Tertiary text */
+    --text-placeholder: 220 9% 65%; /* #9CA3AF - Placeholder text */
+    --text-disabled: 220 13% 71%; /* Disabled text */
   }
 
   .dark {
@@ -428,6 +428,74 @@ All colors MUST be HSL.
 
   .scrollbar-thumb-muted {
     --tw-scrollbar-thumb: hsl(var(--muted-foreground) / 0.3);
+  }
+
+  /* Light mode auto-applied styles */
+  form,
+  .form-container,
+  .modal-content,
+  .card,
+  .settings-section {
+    @apply bg-card text-card-foreground border-border;
+  }
+
+  input,
+  textarea,
+  select {
+    @apply bg-input text-foreground border-input-border;
+    color: hsl(var(--text-primary)) !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-muted-foreground;
+    color: hsl(var(--text-placeholder)) !important;
+  }
+
+  table {
+    @apply border-table-border;
+  }
+
+  table thead,
+  table th {
+    @apply bg-table-header-bg text-table-header-text border-table-border;
+  }
+
+  table tbody tr {
+    @apply bg-table-row-bg border-table-border;
+  }
+
+  table tbody tr:hover {
+    @apply bg-table-row-hover;
+  }
+
+  table td {
+    @apply text-foreground border-table-border;
+  }
+
+  label,
+  .form-label {
+    @apply text-foreground;
+    color: hsl(var(--text-primary)) !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground;
+    color: hsl(var(--text-primary)) !important;
+  }
+
+  p, span, div {
+    @apply text-foreground;
+    color: hsl(var(--text-primary)) !important;
+  }
+
+  .text-muted-foreground,
+  .text-secondary {
+    color: hsl(var(--text-secondary)) !important;
+  }
+
+  .text-disabled {
+    @apply text-text-disabled;
   }
 
   /* POS Dark Mode Auto-Applied Styles */
