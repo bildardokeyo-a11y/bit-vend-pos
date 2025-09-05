@@ -702,4 +702,16 @@ All colors MUST be HSL.
   tbody .text-foreground {
     color: inherit !important;
   }
+  /* Dark mode: ensure native date/time picker icons are visible */
+  .dark input[type="date"],
+  .dark input[type="datetime-local"],
+  .dark input[type="time"] {
+    color-scheme: dark;
+  }
+  .dark input[type="date"]::-webkit-calendar-picker-indicator,
+  .dark input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+  .dark input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(1.4);
+    opacity: 1;
+  }
 }
