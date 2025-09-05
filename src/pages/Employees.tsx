@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { FeatureGate } from '@/components/FeatureGate';
 import { 
   Users, 
   Plus, 
@@ -39,6 +40,14 @@ interface Employee {
 }
 
 const Employees = () => {
+  return (
+    <FeatureGate feature="multi_user_accounts">
+      <EmployeesContent />
+    </FeatureGate>
+  );
+};
+
+const EmployeesContent = () => {
   useSEO('Employee Management - Manage Employee Records', 'Manage employee records, information, and track employee details and performance.');
 
   const [searchTerm, setSearchTerm] = useState('');
