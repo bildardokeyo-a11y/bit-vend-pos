@@ -1110,7 +1110,7 @@ const Settings = () => {
               )}
               
               <div className="flex space-x-4 ml-auto">
-                <Button variant="outline" onClick={() => navigate('/settings?section=business&subsection=business-info')}>
+                <Button variant="outline" onClick={() => navigate('/settings?section=business&subsection=business-info')} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground">
                   <X className="w-4 h-4 mr-2" />Cancel
                 </Button>
                 <Button onClick={handleSave} className="bg-save hover:bg-save-hover text-save-foreground">
