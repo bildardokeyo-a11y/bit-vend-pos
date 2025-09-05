@@ -417,13 +417,13 @@ const ReportsTable: React.FC = () => {
         <div className="rounded-md border">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Report Name</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Report Name</TableHead>
+                <TableHead className="text-white font-semibold">Category</TableHead>
+                <TableHead className="text-white font-semibold">Type</TableHead>
+                <TableHead className="text-white font-semibold">Description</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -468,24 +468,23 @@ const ReportsTable: React.FC = () => {
                        <Button
                          size="sm"
                          onClick={() => handleViewReport(report.id)}
-                         className="bg-blue-500 hover:bg-blue-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+                         className="bg-blue-500 hover:bg-blue-600 text-white p-2 transition-all duration-200 hover:scale-95 active:scale-90"
                        >
-                         <Eye className="h-3 w-3" />
-                         View
+                         <Eye className="h-4 w-4" />
                        </Button>
                        <Button
                          size="sm"
                          onClick={() => handleExportPDF(report.id)}
-                         className="bg-red-500 hover:bg-red-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+                         className="bg-red-500 hover:bg-red-600 text-white p-2 transition-all duration-200 hover:scale-95 active:scale-90"
                        >
-                         <FileDown className="h-3 w-3" />
+                         <FileDown className="h-4 w-4" />
                        </Button>
                        <Button
                          size="sm"
                          onClick={() => handleExportExcel(report.id)}
-                         className="bg-green-500 hover:bg-green-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+                         className="bg-green-500 hover:bg-green-600 text-white p-2 transition-all duration-200 hover:scale-95 active:scale-90"
                        >
-                         <FileSpreadsheet className="h-3 w-3" />
+                         <FileSpreadsheet className="h-4 w-4" />
                        </Button>
                      </div>
                    </TableCell>
@@ -530,10 +529,10 @@ const ReportsTable: React.FC = () => {
       </CardContent>
     </Card>
 
-    {/* Report View Modal */}
+    {/* Report View Modal - Full Screen */}
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden">
-        <DialogHeader>
+      <DialogContent className="max-w-[100vw] max-h-[100vh] w-full h-full overflow-hidden p-0 gap-0">
+        <DialogHeader className="p-6 pb-4">
           <DialogTitle className="flex items-center justify-between">
             <div className="flex items-center">
               {selectedReport && getTypeIcon(selectedReport.type)}
@@ -543,18 +542,16 @@ const ReportsTable: React.FC = () => {
               <Button
                 size="sm"
                 onClick={() => selectedReport && handleExportPDF(selectedReport.id, selectedReport.name)}
-                className="bg-red-500 hover:bg-red-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+                className="bg-red-500 hover:bg-red-600 text-white p-2 transition-all duration-200 hover:scale-95 active:scale-90"
               >
-                <FileDown className="h-3 w-3" />
-                PDF
+                <FileDown className="h-4 w-4" />
               </Button>
               <Button
                 size="sm"
                 onClick={() => selectedReport && handleExportExcel(selectedReport.id, selectedReport.name)}
-                className="bg-green-500 hover:bg-green-600 text-white gap-2 transition-all duration-200 hover:scale-95 active:scale-90"
+                className="bg-green-500 hover:bg-green-600 text-white p-2 transition-all duration-200 hover:scale-95 active:scale-90"
               >
-                <FileSpreadsheet className="h-3 w-3" />
-                Excel
+                <FileSpreadsheet className="h-4 w-4" />
               </Button>
             </div>
           </DialogTitle>
@@ -563,14 +560,14 @@ const ReportsTable: React.FC = () => {
           </DialogDescription>
         </DialogHeader>
         
-        <div className="overflow-auto max-h-[70vh]">
+        <div className="overflow-auto flex-1 px-6 pb-6">
           {selectedReport && (
             <div className="rounded-md border">
               <Table>
                 <TableHeader>
-                  <TableRow>
+                  <TableRow className="bg-blue-500 hover:bg-blue-500">
                     {generateSampleData(selectedReport).columns.map((column) => (
-                      <TableHead key={column}>{column}</TableHead>
+                      <TableHead key={column} className="text-white font-semibold">{column}</TableHead>
                     ))}
                   </TableRow>
                 </TableHeader>
@@ -578,7 +575,7 @@ const ReportsTable: React.FC = () => {
                   {generateSampleData(selectedReport).data.map((row, index) => (
                     <TableRow key={index}>
                       {generateSampleData(selectedReport).columns.map((column) => (
-                        <TableCell key={column}>{row[column]}</TableCell>
+                        <TableCell key={column} className="text-foreground">{row[column]}</TableCell>
                       ))}
                     </TableRow>
                   ))}

@@ -640,4 +640,36 @@ All colors MUST be HSL.
   .dark .toggle-off {
     @apply bg-toggle-off;
   }
+
+  /* Table styling improvements for reports */
+  .dark tbody tr:hover {
+    background-color: hsl(var(--muted)) !important;
+  }
+
+  .light tbody tr:hover {
+    background-color: hsl(var(--muted)) !important;
+  }
+
+  /* Table header styling for reports - Force blue background */
+  .dark [data-table-header] {
+    color: white !important;
+  }
+
+  .light [data-table-header] {
+    color: white !important;
+  }
+
+  /* Table body text styling - Proper theme colors */
+  .dark tbody td {
+    color: white !important;
+  }
+
+  .light tbody td {
+    color: black !important;
+  }
+
+  /* Override any table cell color inheritance */
+  tbody .text-foreground {
+    color: inherit !important;
+  }
 }
