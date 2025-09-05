@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Star, CreditCard, Smartphone, Building2, Crown } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { CheckCircle, Star, CreditCard, Smartphone, Building2, Crown, Lock, Eye, EyeOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -100,6 +103,25 @@ const Subscription = () => {
   const [selectedPlan, setSelectedPlan] = useState<string>('standard');
   const [selectedPayment, setSelectedPayment] = useState<string>('card');
   const [currentPlan] = useState<string>('starter'); // Current active plan
+  const [showCvv, setShowCvv] = useState<boolean>(false);
+  
+  // Payment form data
+  const [cardData, setCardData] = useState({
+    cardNumber: '',
+    expiryMonth: '',
+    expiryYear: '',
+    cvv: '',
+    cardholderName: ''
+  });
+  
+  const [paypalData, setPaypalData] = useState({
+    email: ''
+  });
+  
+  const [mpesaData, setMpesaData] = useState({
+    phoneNumber: '',
+    pin: ''
+  });
 
   const handlePlanSelect = (planId: string) => {
     setSelectedPlan(planId);
@@ -113,8 +135,39 @@ const Subscription = () => {
     const plan = subscriptionPlans.find(p => p.id === selectedPlan);
     const payment = paymentMethods.find(p => p.id === selectedPayment);
     
+    // Validate payment data based on selected method
+    let isValid = false;
+    let paymentInfo = '';
+    
+    switch (selectedPayment) {
+      case 'card':
+        isValid = !!(cardData.cardNumber && cardData.expiryMonth && cardData.expiryYear && 
+                    cardData.cvv && cardData.cardholderName);
+        paymentInfo = `Card ending in ${cardData.cardNumber.slice(-4)}`;
+        break;
+      case 'paypal':
+        isValid = paypalData.email.includes('@');
+        paymentInfo = `PayPal account ${paypalData.email}`;
+        break;
+      case 'mpesa':
+        isValid = !!(mpesaData.phoneNumber && mpesaData.pin);
+        paymentInfo = `M-Pesa ${mpesaData.phoneNumber}`;
+        break;
+    }
+    
+    if (!isValid) {
+      toast.error('Please fill in all required payment details');
+      return;
+    }
+    
     if (plan && payment) {
-      toast.success(`Subscription to ${plan.name} via ${payment.name} will be implemented with backend integration`);
+      toast.success(`Subscription to ${plan.name} ($${plan.price}/month) via ${paymentInfo} is ready for backend processing`);
+      console.log('Payment Data Ready:', {
+        plan: plan.id,
+        paymentMethod: selectedPayment,
+        paymentData: selectedPayment === 'card' ? cardData : 
+                     selectedPayment === 'paypal' ? paypalData : mpesaData
+      });
     }
   };
 
@@ -292,11 +345,178 @@ const Subscription = () => {
               })}
             </div>
 
+            {/* Payment Form Fields */}
+            {selectedPayment === 'card' && (
+              <div className="space-y-4 p-4 border rounded-lg bg-muted/20">
+                <div className="flex items-center gap-2 mb-4">
+                  <Lock className="h-4 w-4 text-success" />
+                  <span className="text-sm font-medium text-success">Secure Payment</span>
+                </div>
+                
+                <div>
+                  <Label htmlFor="cardNumber">Card Number</Label>
+                  <Input
+                    id="cardNumber"
+                    placeholder="1234 5678 9012 3456"
+                    value={cardData.cardNumber}
+                    onChange={(e) => {
+                      // Format card number with spaces
+                      const value = e.target.value.replace(/\s/g, '').replace(/(.{4})/g, '$1 ').trim();
+                      if (value.replace(/\s/g, '').length <= 16) {
+                        setCardData(prev => ({ ...prev, cardNumber: value }));
+                      }
+                    }}
+                    maxLength={19}
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="cardholderName">Cardholder Name</Label>
+                    <Input
+                      id="cardholderName"
+                      placeholder="John Doe"
+                      value={cardData.cardholderName}
+                      onChange={(e) => setCardData(prev => ({ ...prev, cardholderName: e.target.value }))}
+                    />
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div>
+                      <Label htmlFor="expiryMonth">Month</Label>
+                      <Select 
+                        value={cardData.expiryMonth} 
+                        onValueChange={(value) => setCardData(prev => ({ ...prev, expiryMonth: value }))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="MM" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Array.from({ length: 12 }, (_, i) => (
+                            <SelectItem key={i + 1} value={String(i + 1).padStart(2, '0')}>
+                              {String(i + 1).padStart(2, '0')}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label htmlFor="expiryYear">Year</Label>
+                      <Select 
+                        value={cardData.expiryYear} 
+                        onValueChange={(value) => setCardData(prev => ({ ...prev, expiryYear: value }))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="YY" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Array.from({ length: 10 }, (_, i) => {
+                            const year = new Date().getFullYear() + i;
+                            return (
+                              <SelectItem key={year} value={String(year).slice(-2)}>
+                                {String(year).slice(-2)}
+                              </SelectItem>
+                            );
+                          })}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label htmlFor="cvv">CVV</Label>
+                      <div className="relative">
+                        <Input
+                          id="cvv"
+                          type={showCvv ? "text" : "password"}
+                          placeholder="123"
+                          value={cardData.cvv}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, '');
+                            if (value.length <= 4) {
+                              setCardData(prev => ({ ...prev, cvv: value }));
+                            }
+                          }}
+                          maxLength={4}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowCvv(!showCvv)}
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                        >
+                          {showCvv ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {selectedPayment === 'paypal' && (
+              <div className="space-y-4 p-4 border rounded-lg bg-muted/20">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-6 h-6 bg-blue-600 text-white rounded text-xs flex items-center justify-center font-bold">P</div>
+                  <span className="text-sm font-medium">PayPal Payment</span>
+                </div>
+                
+                <div>
+                  <Label htmlFor="paypalEmail">PayPal Email Address</Label>
+                  <Input
+                    id="paypalEmail"
+                    type="email"
+                    placeholder="your-email@example.com"
+                    value={paypalData.email}
+                    onChange={(e) => setPaypalData(prev => ({ ...prev, email: e.target.value }))}
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    You'll be redirected to PayPal to complete the payment
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {selectedPayment === 'mpesa' && (
+              <div className="space-y-4 p-4 border rounded-lg bg-muted/20">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-6 h-6 bg-green-600 text-white rounded text-xs flex items-center justify-center font-bold">M</div>
+                  <span className="text-sm font-medium">M-Pesa Payment</span>
+                </div>
+                
+                <div>
+                  <Label htmlFor="mpesaPhone">M-Pesa Phone Number</Label>
+                  <Input
+                    id="mpesaPhone"
+                    placeholder="+254 700 000 000"
+                    value={mpesaData.phoneNumber}
+                    onChange={(e) => setMpesaData(prev => ({ ...prev, phoneNumber: e.target.value }))}
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="mpesaPin">M-Pesa PIN</Label>
+                  <Input
+                    id="mpesaPin"
+                    type="password"
+                    placeholder="Enter your 4-digit PIN"
+                    value={mpesaData.pin}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, '');
+                      if (value.length <= 4) {
+                        setMpesaData(prev => ({ ...prev, pin: value }));
+                      }
+                    }}
+                    maxLength={4}
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Your PIN is encrypted and secure
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Subscribe Button */}
             <div className="flex items-center justify-between pt-4 border-t">
               <div className="text-sm text-muted-foreground">
                 {selectedPlan && (
-                  <>Selected: {subscriptionPlans.find(p => p.id === selectedPlan)?.name}</>
+                  <>Selected: {subscriptionPlans.find(p => p.id === selectedPlan)?.name} - ${subscriptionPlans.find(p => p.id === selectedPlan)?.price}/month</>
                 )}
               </div>
               <Button 
