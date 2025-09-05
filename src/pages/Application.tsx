@@ -141,7 +141,7 @@ const Application = () => {
             <RefreshCw className="w-4 h-4 mr-2" />
             Restart App
           </Button>
-          <Button onClick={handleSaveSettings}>
+          <Button onClick={handleSaveSettings} className="bg-save hover:bg-save-hover text-save-foreground">
             <Save className="w-4 h-4 mr-2" />
             Save Settings
           </Button>

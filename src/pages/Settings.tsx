@@ -1113,7 +1113,7 @@ const Settings = () => {
                 <Button variant="outline" onClick={() => navigate('/settings?section=business&subsection=business-info')}>
                   <X className="w-4 h-4 mr-2" />Cancel
                 </Button>
-                <Button onClick={handleSave} className="bg-success hover:bg-success/90">
+                <Button onClick={handleSave} className="bg-save hover:bg-save-hover text-save-foreground">
                   <Save className="w-4 h-4 mr-2" />
                   {isAddMode ? 'Add Business' : 'Save Changes'}
                 </Button>
@@ -1181,7 +1181,7 @@ const Settings = () => {
               ))}
             </div>
             <div className="flex justify-end space-x-4 pt-4 border-t">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
             </div>
           </div>

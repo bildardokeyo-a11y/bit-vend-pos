@@ -732,7 +732,7 @@ const ProductAdd = () => {
             <Button
               type="button"
               onClick={handleSubmit}
-              className="bg-success hover:bg-success/90 text-success-foreground gap-2 transition-all duration-200"
+              className="bg-save hover:bg-save-hover text-save-foreground gap-2 transition-all duration-200"
             >
               <Save className="h-4 w-4" />
               Save Product

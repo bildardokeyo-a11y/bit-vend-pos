@@ -330,10 +330,10 @@ const Brands = () => {
               </div>
 
               <div className="flex justify-end space-x-2">
-                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
+                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground">
                   Cancel
                 </Button>
-                <Button type="submit">
+                <Button type="submit" className="bg-save hover:bg-save-hover text-save-foreground">
                   {editingBrand ? 'Update' : 'Create'} Brand
                 </Button>
               </div>

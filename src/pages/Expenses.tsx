@@ -396,7 +396,7 @@ const Expenses: React.FC = () => {
                 <div className="flex space-x-2 pt-4">
                   <Button 
                     onClick={handleSaveExpense}
-                    className="flex-1 transition-all duration-200 hover:scale-105 active:scale-95"
+                    className="flex-1 transition-all duration-200 hover:scale-105 active:scale-95 bg-save hover:bg-save-hover text-save-foreground"
                   >
                     <Save className="h-4 w-4 mr-2" />
                     Save Expense

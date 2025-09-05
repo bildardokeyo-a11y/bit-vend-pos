@@ -31,7 +31,7 @@ const GeneralSettings: React.FC = () => {
               <Input id="currency" placeholder="e.g., USD" />
             </div>
             <div className="md:col-span-2">
-              <Button onClick={() => toast({ title: 'Saved', description: 'Settings updated.' })}>
+              <Button onClick={() => toast({ title: 'Saved', description: 'Settings updated.' })} className="bg-save hover:bg-save-hover text-save-foreground">
                 Save Changes
               </Button>
             </div>

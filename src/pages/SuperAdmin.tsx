@@ -246,10 +246,10 @@ const SuperAdmin = () => {
                 </div>
               </div>
               <div className="flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={resetForm}>
+                <Button type="button" variant="outline" onClick={resetForm} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground">
                   Cancel
                 </Button>
-                <Button type="submit">
+                <Button type="submit" className="bg-save hover:bg-save-hover text-save-foreground">
                   {editingUser ? 'Update User' : 'Create User'}
                 </Button>
               </div>

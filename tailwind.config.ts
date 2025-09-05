@@ -74,6 +74,11 @@ export default {
 					DEFAULT: 'hsl(var(--success))',
 					foreground: 'hsl(var(--success-foreground))'
 				},
+				save: {
+					DEFAULT: 'hsl(var(--save))',
+					foreground: 'hsl(var(--save-foreground))',
+					hover: 'hsl(var(--save-hover))'
+				},
 				// Table-specific colors
 				table: {
 					'header-bg': 'hsl(var(--table-header-bg))',
@@ -103,7 +108,8 @@ export default {
 				'settings-card': 'hsl(var(--settings-card))',
 				cancel: {
 					DEFAULT: 'hsl(var(--cancel))',
-					foreground: 'hsl(var(--cancel-foreground))'
+					foreground: 'hsl(var(--cancel-foreground))',
+					hover: 'hsl(var(--cancel-hover))'
 				}
 			},
 			borderRadius: {

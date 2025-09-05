@@ -62,9 +62,15 @@ All colors MUST be HSL.
     --warning-foreground: 0 0% 100%;
     --warning-hover: 38 92% 58%; /* Lighter amber */
     
-    /* Cancel button - vibrant red in light mode */
-    --cancel: 0 84% 60%; /* #ef4444 - Vibrant red */
+    /* Universal Save Button - Green for positive actions */
+    --save: 142 71% 45%; /* #10b981 - Vibrant emerald */
+    --save-foreground: 0 0% 100%;
+    --save-hover: 142 71% 53%; /* Lighter emerald */
+    
+    /* Universal Cancel Button - Neutral gray */
+    --cancel: 215 16% 47%; /* #6b7280 - Neutral slate */
     --cancel-foreground: 0 0% 100%;
+    --cancel-hover: 215 13% 56%; /* Lighter slate */
     
     --info: 199 89% 48%; /* #0ea5e9 - Vibrant sky blue */
     --info-foreground: 0 0% 100%;
@@ -176,9 +182,15 @@ All colors MUST be HSL.
     --settings-form: 0 0% 11%;
     --settings-card: 0 0% 16.5%;
     
-    /* Cancel Button Colors */
-    --cancel: 0 0% 27%;
-    --cancel-foreground: 0 0% 100%;
+    /* Universal Save Button - Brighter green for dark theme */
+    --save: 142 76% 56%; /* #22c55e - Brighter emerald for dark */
+    --save-foreground: 0 0% 100%;
+    --save-hover: 142 76% 64%; /* Even brighter on hover */
+    
+    /* Universal Cancel Button - Lighter gray for dark theme */
+    --cancel: 215 20% 65%; /* #9ca3af - Lighter slate for visibility */
+    --cancel-foreground: 0 0% 11%; /* Dark text on light gray */
+    --cancel-hover: 215 20% 72%; /* Even lighter on hover */
   }
 }
 

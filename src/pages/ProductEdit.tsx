@@ -257,7 +257,7 @@ const ProductEdit = () => {
           </Button>
           <Button 
             onClick={handleSave}
-            className="bg-green-500 hover:bg-green-600 text-white gap-2"
+            className="bg-save hover:bg-save-hover text-save-foreground gap-2"
             disabled={!isModified}
           >
             <Save className="h-4 w-4" />
@@ -336,7 +336,8 @@ const ProductEdit = () => {
                         </div>
                         <div className="flex gap-2 justify-end">
                           <Button 
-                            variant="outline" 
+                            variant="outline"
+                            className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"
                             onClick={() => {
                               setIsImageDialogOpen(false);
                               setImagePreview(null);
@@ -347,6 +348,7 @@ const ProductEdit = () => {
                           <Button 
                             onClick={handleImageSave}
                             disabled={!imagePreview}
+                            className="bg-save hover:bg-save-hover text-save-foreground"
                           >
                             Save Image
                           </Button>
@@ -565,7 +567,7 @@ const ProductEdit = () => {
             <CardContent className="space-y-3">
               <Button 
                 onClick={handleSave}
-                className="w-full bg-green-500 hover:bg-green-600 text-white gap-2"
+                className="w-full bg-save hover:bg-save-hover text-save-foreground gap-2"
                 disabled={!isModified}
               >
                 <Save className="h-4 w-4" />
@@ -574,7 +576,7 @@ const ProductEdit = () => {
               
               <Button 
                 variant="outline" 
-                className="w-full gap-2"
+                className="w-full gap-2 bg-cancel hover:bg-cancel-hover text-cancel-foreground"
                 onClick={handleCancel}
               >
                 <X className="h-4 w-4" />
