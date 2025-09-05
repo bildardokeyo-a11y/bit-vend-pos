@@ -101,6 +101,47 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Header Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4">
+          <div className="flex h-16 items-center justify-between">
+            <div className="flex items-center space-x-8">
+              <Link to="/" className="flex items-center space-x-2">
+                <div className="h-8 w-8 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">BV</span>
+                </div>
+                <span className="font-bold text-xl">BitVend</span>
+              </Link>
+              
+              <nav className="hidden md:flex items-center space-x-6">
+                <Link to="#features" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Features
+                </Link>
+                <Link to="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Pricing
+                </Link>
+                <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Contact
+                </Link>
+              </nav>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground">
+                <Link to="/auth?mode=signin">
+                  Sign In
+                </Link>
+              </Button>
+              <Button asChild size="sm" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white">
+                <Link to="/auth?mode=signup">
+                  Sign Up
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-orange-500/10 via-background to-blue-600/10 py-16 lg:py-24">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
