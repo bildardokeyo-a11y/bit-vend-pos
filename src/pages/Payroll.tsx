@@ -21,6 +21,8 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 interface PayrollRecord {
   id: number;
@@ -198,8 +200,157 @@ const Payroll = () => {
     );
   };
 
+  const generatePayslipPDF = (employee: PayrollRecord) => {
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = pdf.internal.pageSize.width;
+    const pageHeight = pdf.internal.pageSize.height;
+    const margin = 20;
+    
+    // Company Header
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(18);
+    pdf.text('COMPANY PAYSLIP', pageWidth / 2, 30, { align: 'center' });
+    
+    // Company Info
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(10);
+    pdf.text('ABC Corporation Ltd.', pageWidth / 2, 40, { align: 'center' });
+    pdf.text('123 Business Street, City, State 12345', pageWidth / 2, 45, { align: 'center' });
+    pdf.text('Phone: (555) 123-4567 | Email: hr@company.com', pageWidth / 2, 50, { align: 'center' });
+    
+    // Header border
+    pdf.rect(margin, 15, pageWidth - 2 * margin, 45);
+    
+    // Employee Information Section
+    let yPosition = 75;
+    
+    // Employee Info Header
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(12);
+    pdf.text('EMPLOYEE INFORMATION', margin, yPosition);
+    pdf.rect(margin, yPosition - 5, pageWidth - 2 * margin, 8);
+    
+    yPosition += 15;
+    
+    // Employee details in two columns
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(10);
+    
+    const leftColumn = margin + 5;
+    const rightColumn = pageWidth / 2 + 10;
+    
+    pdf.text(`Employee ID: ${employee.employeeId}`, leftColumn, yPosition);
+    pdf.text(`Pay Period: ${employee.payPeriod}`, rightColumn, yPosition);
+    yPosition += 8;
+    
+    pdf.text(`Name: ${employee.employeeName}`, leftColumn, yPosition);
+    pdf.text(`Pay Date: ${employee.payDate}`, rightColumn, yPosition);
+    yPosition += 8;
+    
+    pdf.text(`Department: ${employee.department}`, leftColumn, yPosition);
+    pdf.text(`Position: ${employee.position}`, rightColumn, yPosition);
+    yPosition += 15;
+    
+    // Employee info border
+    pdf.rect(margin, 70, pageWidth - 2 * margin, 40);
+    
+    // Payment Details Section
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(12);
+    pdf.text('PAYMENT BREAKDOWN', margin, yPosition);
+    pdf.rect(margin, yPosition - 5, pageWidth - 2 * margin, 8);
+    
+    yPosition += 15;
+    
+    // Payment table headers
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(10);
+    pdf.text('EARNINGS', margin + 5, yPosition);
+    pdf.text('AMOUNT', pageWidth / 2 - 20, yPosition);
+    pdf.text('DEDUCTIONS', pageWidth / 2 + 20, yPosition);
+    pdf.text('AMOUNT', pageWidth - 40, yPosition);
+    
+    // Header line
+    pdf.line(margin, yPosition + 2, pageWidth - margin, yPosition + 2);
+    yPosition += 10;
+    
+    // Earnings column
+    pdf.setFont('helvetica', 'normal');
+    pdf.text('Base Salary', margin + 5, yPosition);
+    pdf.text(`$${employee.baseSalary.toLocaleString()}`, pageWidth / 2 - 20, yPosition, { align: 'right' });
+    
+    // Deductions column
+    pdf.text('Income Tax', pageWidth / 2 + 20, yPosition);
+    pdf.text(`$${employee.taxes.toLocaleString()}`, pageWidth - 40, yPosition, { align: 'right' });
+    yPosition += 8;
+    
+    pdf.text('Overtime', margin + 5, yPosition);
+    pdf.text(`$${employee.overtime.toLocaleString()}`, pageWidth / 2 - 20, yPosition, { align: 'right' });
+    
+    pdf.text('Other Deductions', pageWidth / 2 + 20, yPosition);
+    pdf.text(`$${employee.deductions.toLocaleString()}`, pageWidth - 40, yPosition, { align: 'right' });
+    yPosition += 8;
+    
+    pdf.text('Bonuses', margin + 5, yPosition);
+    pdf.text(`$${employee.bonuses.toLocaleString()}`, pageWidth / 2 - 20, yPosition, { align: 'right' });
+    yPosition += 15;
+    
+    // Totals line
+    pdf.line(margin, yPosition, pageWidth - margin, yPosition);
+    yPosition += 8;
+    
+    // Gross Pay
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('GROSS PAY', margin + 5, yPosition);
+    pdf.text(`$${employee.grossPay.toLocaleString()}`, pageWidth / 2 - 20, yPosition, { align: 'right' });
+    
+    pdf.text('TOTAL DEDUCTIONS', pageWidth / 2 + 20, yPosition);
+    pdf.text(`$${(employee.taxes + employee.deductions).toLocaleString()}`, pageWidth - 40, yPosition, { align: 'right' });
+    yPosition += 15;
+    
+    // Payment details border
+    pdf.rect(margin, 115, pageWidth - 2 * margin, 70);
+    
+    // Vertical separator for earnings/deductions
+    pdf.line(pageWidth / 2, 125, pageWidth / 2, 185);
+    
+    // Net Pay Section
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(14);
+    pdf.rect(margin, yPosition, pageWidth - 2 * margin, 15);
+    pdf.text('NET PAY', margin + 5, yPosition + 10);
+    pdf.text(`$${employee.netPay.toLocaleString()}`, pageWidth - margin - 5, yPosition + 10, { align: 'right' });
+    
+    yPosition += 30;
+    
+    // Status badge
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(10);
+    pdf.text(`Status: ${employee.status.toUpperCase()}`, margin + 5, yPosition);
+    
+    // Footer
+    yPosition = pageHeight - 30;
+    pdf.setFont('helvetica', 'italic');
+    pdf.setFontSize(8);
+    pdf.text('This is a computer-generated payslip. No signature required.', pageWidth / 2, yPosition, { align: 'center' });
+    pdf.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth / 2, yPosition + 8, { align: 'center' });
+    
+    return pdf;
+  };
+
   const handleGenerateSelectedPayslips = () => {
-    console.log('Generating payslips for employees:', selectedEmployees);
+    if (selectedEmployees.length === 0) return;
+    
+    const selectedRecords = payrollRecords.filter(record => 
+      selectedEmployees.includes(record.employeeId)
+    );
+    
+    // Generate and download PDF for each selected employee
+    selectedRecords.forEach((record) => {
+      const pdf = generatePayslipPDF(record);
+      pdf.save(`payslip-${record.employeeId}-${record.payPeriod.replace(' ', '-')}.pdf`);
+    });
+    
     setShowPayslipModal(false);
     setSelectedEmployees([]);
   };
