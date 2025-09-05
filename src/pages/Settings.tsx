@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useBusiness } from '@/contexts/BusinessContext';
+import Subscription from './Subscription';
 import { cn } from '@/lib/utils';
 import {
   Settings as SettingsIcon, 
@@ -96,7 +97,8 @@ const settingsSections: SettingsSection[] = [
     subsections: [
       { id: 'business-info', title: 'Business Information', icon: Building },
       { id: 'operating-hours', title: 'Operating Hours', icon: Clock },
-      { id: 'locations', title: 'Locations & Branches', icon: MapPin }
+      { id: 'locations', title: 'Locations & Branches', icon: MapPin },
+      { id: 'subscription', title: 'Subscription Plans', icon: Crown }
     ]
   },
   {
@@ -2824,6 +2826,9 @@ const Settings = () => {
             </div>
           </div>
         );
+
+      case 'business-subscription':
+        return <Subscription />;
 
       case 'pos-terminal-terminal-behavior':
         return (
