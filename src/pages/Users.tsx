@@ -41,7 +41,7 @@ const Users = () => {
     isActive: true
   });
 
-  const usersData = [
+  const [usersData, setUsersData] = useState([
     {
       id: '1',
       firstName: 'John',
@@ -107,7 +107,7 @@ const Users = () => {
       createdAt: '2023-09-12',
       avatar: null
     }
-  ];
+  ]);
 
   const getRoleBadge = (role: string) => {
     switch (role) {
@@ -140,7 +140,15 @@ const Users = () => {
   });
 
   const handleAddUser = () => {
-    console.log('Adding user:', newUser);
+    const newUserWithId = {
+      ...newUser,
+      id: (usersData.length + 1).toString(),
+      lastLogin: 'Never',
+      createdAt: new Date().toISOString().split('T')[0],
+      avatar: null
+    };
+    
+    setUsersData(prev => [...prev, newUserWithId]);
     setShowAddModal(false);
     setNewUser({
       firstName: '',
@@ -154,18 +162,36 @@ const Users = () => {
   };
 
   const handleEditUser = (user: any) => {
-    setSelectedUser(user);
+    setSelectedUser({ ...user });
     setShowEditModal(true);
+  };
+
+  const handleUpdateUser = () => {
+    if (selectedUser) {
+      setUsersData(prev => 
+        prev.map(user => 
+          user.id === selectedUser.id ? selectedUser : user
+        )
+      );
+      setShowEditModal(false);
+      setSelectedUser(null);
+    }
   };
 
   const handleDeleteUser = (userId: string) => {
     if (confirm('Are you sure you want to delete this user?')) {
-      console.log('Deleting user:', userId);
+      setUsersData(prev => prev.filter(user => user.id !== userId));
     }
   };
 
   const toggleUserStatus = (userId: string) => {
-    console.log('Toggling user status:', userId);
+    setUsersData(prev => 
+      prev.map(user => 
+        user.id === userId 
+          ? { ...user, isActive: !user.isActive }
+          : user
+      )
+    );
   };
 
   return (
@@ -442,7 +468,7 @@ const Users = () => {
         ))}
       </div>
 
-      {filteredUsers.length === 0 && (
+        {filteredUsers.length === 0 && (
         <Card>
           <CardContent className="text-center py-12">
             <UsersIcon className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
@@ -451,6 +477,104 @@ const Users = () => {
           </CardContent>
         </Card>
       )}
+
+      {/* Edit User Modal */}
+      <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Edit User</DialogTitle>
+          </DialogHeader>
+          {selectedUser && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="editFirstName">First Name</Label>
+                  <Input
+                    id="editFirstName"
+                    value={selectedUser.firstName}
+                    onChange={(e) => setSelectedUser({...selectedUser, firstName: e.target.value})}
+                    placeholder="John"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="editLastName">Last Name</Label>
+                  <Input
+                    id="editLastName"
+                    value={selectedUser.lastName}
+                    onChange={(e) => setSelectedUser({...selectedUser, lastName: e.target.value})}
+                    placeholder="Smith"
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="editEmail">Email</Label>
+                <Input
+                  id="editEmail"
+                  type="email"
+                  value={selectedUser.email}
+                  onChange={(e) => setSelectedUser({...selectedUser, email: e.target.value})}
+                  placeholder="john.smith@company.com"
+                />
+              </div>
+              <div>
+                <Label htmlFor="editPhone">Phone</Label>
+                <Input
+                  id="editPhone"
+                  value={selectedUser.phone}
+                  onChange={(e) => setSelectedUser({...selectedUser, phone: e.target.value})}
+                  placeholder="+1 555-0101"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="editRole">Role</Label>
+                  <Select value={selectedUser.role} onValueChange={(value) => setSelectedUser({...selectedUser, role: value})}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem value="manager">Manager</SelectItem>
+                      <SelectItem value="employee">Employee</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="editDepartment">Department</Label>
+                  <Select value={selectedUser.department} onValueChange={(value) => setSelectedUser({...selectedUser, department: value})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select department" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="IT">IT</SelectItem>
+                      <SelectItem value="Sales">Sales</SelectItem>
+                      <SelectItem value="Marketing">Marketing</SelectItem>
+                      <SelectItem value="HR">HR</SelectItem>
+                      <SelectItem value="Finance">Finance</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="editIsActive"
+                  checked={selectedUser.isActive}
+                  onCheckedChange={(checked) => setSelectedUser({...selectedUser, isActive: checked})}
+                />
+                <Label htmlFor="editIsActive">Active User</Label>
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowEditModal(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleUpdateUser}>
+              Update User
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
