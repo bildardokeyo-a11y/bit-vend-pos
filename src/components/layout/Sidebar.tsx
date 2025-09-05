@@ -156,32 +156,32 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
   return (
     <div className={cn("pos-sidebar", collapsed && "collapsed")}>
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-border bg-sidebar">
+      <div className="flex items-center justify-between p-6 border-b border-gray-800 bg-gray-900">
         {!collapsed && (
-          <Link to="/" className="flex items-center space-x-2 text-sidebar-foreground hover:text-sidebar-foreground/90 transition-colors">
+          <Link to="/" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
             <span className="text-xl font-bold flex items-center">
               <span style={{ color: '#FFD000' }}>Bit Vend</span>
-              <span className="text-sidebar-foreground ml-1">POS</span>
+              <span className="text-white ml-1">POS</span>
               <ShoppingCart size={20} className="ml-2 text-yellow-400" />
             </span>
           </Link>
         )}
         <button
           onClick={onToggle}
-          className="p-2 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground"
+          className="p-2 rounded-lg hover:bg-white/10 transition-colors text-white"
         >
           {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 bg-sidebar h-full overflow-hidden">
-        <div className="h-full overflow-y-auto py-4 px-0 bg-sidebar">
+      <nav className="flex-1 bg-gray-900 h-full overflow-hidden">
+        <div className="h-full overflow-y-auto py-4 px-0 bg-gray-900">
           {menuItems.map((section) => (
             <div key={section.title} className="mb-6">
               {!collapsed && (
                 <div className="px-6 mb-3">
-                  <h3 className="text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
                     {section.title}
                   </h3>
                 </div>
@@ -189,32 +189,28 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
               <ul className="space-y-1 px-3">
                 {section.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = false; // Removed default highlighting
+                  const isActive = location.pathname === item.href;
                   
                   return (
                     <li key={item.href}>
                       <Link
                         to={item.href}
                         className={cn(
-                          "w-full flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group relative overflow-hidden",
-                          "before:absolute before:inset-0 before:bg-sidebar-accent before:opacity-0 before:transition-opacity before:duration-300",
-                          "hover:before:opacity-100 hover:shadow-lg hover:scale-[1.02] hover:translate-x-1",
+                          "w-full flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group relative",
                           isActive
-                            ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-lg border-l-2 border-sidebar-primary"
-                            : "text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50"
+                            ? "bg-gray-800 text-white"
+                            : "text-gray-300 hover:text-white hover:bg-gray-800"
                         )}
                       >
-                        <Icon size={18} className="flex-shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110 text-sidebar-foreground" />
+                        <Icon size={18} className="flex-shrink-0 text-white" />
                         {!collapsed && (
-                          <span className="ml-3 relative z-10 transition-all duration-300 group-hover:font-semibold text-sidebar-foreground">{item.label}</span>
+                          <span className="ml-3 text-white">{item.label}</span>
                         )}
                         {collapsed && (
-                          <div className="absolute left-full ml-2 px-3 py-2 bg-popover backdrop-blur-sm border border-border text-popover-foreground text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-50 shadow-lg">
+                          <div className="absolute left-full ml-2 px-3 py-2 bg-gray-800 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-50 shadow-lg">
                             {item.label}
                           </div>
                         )}
-                        {/* Hover glow effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-sidebar-foreground/5 to-transparent transform -skew-x-12 -translate-x-full transition-transform duration-700 group-hover:translate-x-full" />
                       </Link>
                     </li>
                   );
