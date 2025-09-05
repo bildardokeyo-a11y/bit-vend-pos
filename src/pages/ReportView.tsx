@@ -414,7 +414,9 @@ const ReportView: React.FC = () => {
       </div>
 
       {/* Export Buttons */}
-      <div className="flex justify-end space-x-2">
+      <div className="flex items-center justify-end space-x-4">
+        <span className="text-foreground font-medium">Export report</span>
+        <div className="flex space-x-2">
         <Button
           onClick={handleExportPDF}
           className="bg-red-500 hover:bg-red-600 text-white gap-2"
@@ -429,6 +431,7 @@ const ReportView: React.FC = () => {
           <FileSpreadsheet className="h-4 w-4" />
           Excel
         </Button>
+        </div>
       </div>
 
       {/* Filters */}
