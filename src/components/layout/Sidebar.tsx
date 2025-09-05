@@ -156,32 +156,32 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
   return (
     <div className={cn("pos-sidebar", collapsed && "collapsed")}>
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-white/10 dark:border-black/10 bg-black dark:bg-black">
+      <div className="flex items-center justify-between p-6 border-b border-border bg-sidebar">
         {!collapsed && (
-          <Link to="/" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
+          <Link to="/" className="flex items-center space-x-2 text-sidebar-foreground hover:text-sidebar-foreground/90 transition-colors">
             <span className="text-xl font-bold flex items-center">
               <span style={{ color: '#FFD000' }}>Bit Vend</span>
-              <span className="text-white ml-1">POS</span>
+              <span className="text-sidebar-foreground ml-1">POS</span>
               <ShoppingCart size={20} className="ml-2 text-yellow-400" />
             </span>
           </Link>
         )}
         <button
           onClick={onToggle}
-          className="p-2 rounded-lg hover:bg-white/10 dark:hover:bg-black/10 transition-colors text-white"
+          className="p-2 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground"
         >
           {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 bg-gray-500 dark:bg-black h-full overflow-hidden">
-        <div className="h-full overflow-y-auto py-4 px-0 bg-black">
+      <nav className="flex-1 bg-sidebar h-full overflow-hidden">
+        <div className="h-full overflow-y-auto py-4 px-0 bg-sidebar">
           {menuItems.map((section) => (
             <div key={section.title} className="mb-6">
               {!collapsed && (
                 <div className="px-6 mb-3">
-                  <h3 className="text-xs font-semibold text-gray-400 dark:text-white uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider">
                     {section.title}
                   </h3>
                 </div>
@@ -197,24 +197,24 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
                         to={item.href}
                         className={cn(
                           "w-full flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 group relative overflow-hidden",
-                          "before:absolute before:inset-0 before:bg-gradient-to-r before:from-gray-800/80 before:to-gray-700/60 before:opacity-0 before:transition-opacity before:duration-300",
-                          "hover:before:opacity-100 hover:shadow-lg hover:shadow-gray-900/30 hover:scale-[1.02] hover:translate-x-1",
+                          "before:absolute before:inset-0 before:bg-sidebar-accent before:opacity-0 before:transition-opacity before:duration-300",
+                          "hover:before:opacity-100 hover:shadow-lg hover:scale-[1.02] hover:translate-x-1",
                           isActive
-                            ? "bg-gradient-to-r from-gray-800/60 to-gray-700/40 text-gray-200 shadow-lg shadow-gray-900/40 border-l-2 border-gray-600"
-                            : "text-gray-300 hover:text-gray-200 hover:bg-gray-800/40"
+                            ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-lg border-l-2 border-sidebar-primary"
+                            : "text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50"
                         )}
                       >
-                        <Icon size={18} className="flex-shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110" />
+                        <Icon size={18} className="flex-shrink-0 relative z-10 transition-transform duration-300 group-hover:scale-110 text-sidebar-foreground" />
                         {!collapsed && (
-                          <span className="ml-3 relative z-10 transition-all duration-300 group-hover:font-semibold">{item.label}</span>
+                          <span className="ml-3 relative z-10 transition-all duration-300 group-hover:font-semibold text-sidebar-foreground">{item.label}</span>
                         )}
                         {collapsed && (
-                          <div className="absolute left-full ml-2 px-3 py-2 bg-gray-900/95 backdrop-blur-sm border border-white/20 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-50 shadow-lg shadow-white/20">
+                          <div className="absolute left-full ml-2 px-3 py-2 bg-popover backdrop-blur-sm border border-border text-popover-foreground text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap z-50 shadow-lg">
                             {item.label}
                           </div>
                         )}
                         {/* Hover glow effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 -translate-x-full transition-transform duration-700 group-hover:translate-x-full" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-sidebar-foreground/5 to-transparent transform -skew-x-12 -translate-x-full transition-transform duration-700 group-hover:translate-x-full" />
                       </Link>
                     </li>
                   );
