@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,7 +9,17 @@ import { useSEO } from '@/lib/seo';
 
 const InvoiceSettings: React.FC = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   useSEO('Invoice Settings | Bit Vend POS', 'Customize invoice numbering and formats.', '/settings/invoice');
+
+  const handleSave = () => {
+    toast({ title: 'Saved', description: 'Invoice settings updated.' });
+    navigate('/settings');
+  };
+
+  const handleCancel = () => {
+    navigate('/settings');
+  };
 
   return (
     <div className="p-6 space-y-6 animate-fadeInUp">
@@ -30,9 +41,12 @@ const InvoiceSettings: React.FC = () => {
               <Label htmlFor="next">Next Number</Label>
               <Input id="next" type="number" placeholder="1001" />
             </div>
-            <div className="md:col-span-2">
-              <Button onClick={() => toast({ title: 'Saved', description: 'Invoice settings updated.' })} className="bg-save hover:bg-save-hover text-save-foreground">
+            <div className="md:col-span-2 flex gap-2">
+              <Button onClick={handleSave} className="bg-save hover:bg-save-hover text-save-foreground">
                 Save Changes
+              </Button>
+              <Button variant="outline" onClick={handleCancel}>
+                Cancel
               </Button>
             </div>
           </CardContent>

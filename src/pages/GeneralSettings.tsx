@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,7 +9,17 @@ import { useSEO } from '@/lib/seo';
 
 const GeneralSettings: React.FC = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   useSEO('General Settings | Bit Vend POS', 'Configure general application settings.', '/settings/general');
+
+  const handleSave = () => {
+    toast({ title: 'Saved', description: 'Settings updated.' });
+    navigate('/settings');
+  };
+
+  const handleCancel = () => {
+    navigate('/settings');
+  };
 
   return (
     <div className="p-6 space-y-6 animate-fadeInUp">
@@ -30,9 +41,12 @@ const GeneralSettings: React.FC = () => {
               <Label htmlFor="currency">Currency</Label>
               <Input id="currency" placeholder="e.g., USD" />
             </div>
-            <div className="md:col-span-2">
-              <Button onClick={() => toast({ title: 'Saved', description: 'Settings updated.' })} className="bg-save hover:bg-save-hover text-save-foreground">
+            <div className="md:col-span-2 flex gap-2">
+              <Button onClick={handleSave} className="bg-save hover:bg-save-hover text-save-foreground">
                 Save Changes
+              </Button>
+              <Button variant="outline" onClick={handleCancel}>
+                Cancel
               </Button>
             </div>
           </CardContent>
