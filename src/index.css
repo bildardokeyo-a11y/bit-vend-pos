@@ -400,6 +400,36 @@ All colors MUST be HSL.
     background: hsl(var(--muted) / 0.5);
   }
 
+  /* Scrollbar for Settings Menu */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  .scrollbar-track-transparent {
+    scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+  }
+
+  .scrollbar-thumb-muted {
+    --tw-scrollbar-thumb: hsl(var(--muted-foreground) / 0.3);
+  }
+
   /* POS Dark Mode Auto-Applied Styles */
   .dark form,
   .dark .form-container,

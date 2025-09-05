@@ -1053,7 +1053,7 @@ const Settings = () => {
                   onValueChange={(value) => setBusinessSettings(prev => ({ ...prev, country: value }))}
                 >
                   <SelectTrigger><SelectValue placeholder="Country" /></SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-50 bg-popover border border-border shadow-md max-h-[200px] overflow-y-auto">
                     {countries.map((country) => (
                       <SelectItem key={country.code} value={country.code}>
                         {country.name}
@@ -1063,14 +1063,33 @@ const Settings = () => {
                 </Select>
               </div>
             </div>
-            <div className="flex justify-end space-x-4 pt-4 border-t">
-              <Button variant="outline" onClick={() => navigate('/settings?section=business&subsection=business-info')}>
-                <X className="w-4 h-4 mr-2" />Cancel
-              </Button>
-              <Button onClick={handleSave} className="bg-success hover:bg-success/90">
-                <Save className="w-4 h-4 mr-2" />
-                {isAddMode ? 'Add Business' : 'Save Changes'}
-              </Button>
+            <div className="flex justify-between space-x-4 pt-4 border-t">
+              {/* Delete button - only show in edit mode, not add mode */}
+              {editBusinessId && !isAddMode && (
+                <Button 
+                  variant="destructive" 
+                  onClick={() => {
+                    if (window.confirm('Are you sure you want to delete this business? This action cannot be undone.')) {
+                      deleteBusiness(editBusinessId);
+                      toast.success('Business deleted successfully!');
+                      navigate('/settings?section=business&subsection=business-info');
+                    }
+                  }}
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Delete Business
+                </Button>
+              )}
+              
+              <div className="flex space-x-4 ml-auto">
+                <Button variant="outline" onClick={() => navigate('/settings?section=business&subsection=business-info')}>
+                  <X className="w-4 h-4 mr-2" />Cancel
+                </Button>
+                <Button onClick={handleSave} className="bg-success hover:bg-success/90">
+                  <Save className="w-4 h-4 mr-2" />
+                  {isAddMode ? 'Add Business' : 'Save Changes'}
+                </Button>
+              </div>
             </div>
           </div>
         );
@@ -3618,14 +3637,13 @@ const Settings = () => {
         />
         
         {/* Sidebar */}
-        <div className="w-80 bg-card dark:bg-settings-form border-r border-border p-6 min-h-screen overflow-y-auto">
+        <div className="w-80 bg-card dark:bg-settings-form border-r border-border p-6 min-h-screen overflow-y-auto max-h-screen">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-foreground mb-2">Settings</h1>
             <p className="text-muted-foreground">Manage your POS system configuration</p>
           </div>
           
-          <div className="space-y-2">
-            {settingsSections.map((section) => (
+          <div className="space-y-2 overflow-y-auto max-h-[calc(100vh-200px)] pr-2 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">{settingsSections.map((section) => (
               <div key={section.id} className="transition-transform duration-200">
                 <Button
                   variant="ghost"
