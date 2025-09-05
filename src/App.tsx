@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BusinessProvider } from "@/contexts/BusinessContext";
 import Layout from "./components/layout/Layout";
 import Index from "./pages/Index";
 import SuperAdmin from "./pages/SuperAdmin";
@@ -32,39 +33,41 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<Index />} />
-            <Route path="superadmin" element={<SuperAdmin />} />
-            <Route path="application" element={<Application />} />
-            <Route path="layout" element={<LayoutPage />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="receipt" element={<Receipt />} />
-            <Route path="sales" element={<Sales />} />
-            <Route path="sales-return" element={<SalesReturn />} />
-            <Route path="quotation" element={<Quotation />} />
-            <Route path="purchases" element={<Purchases />} />
-            <Route path="products" element={<Products />} />
-            <Route path="products/add" element={<ProductAdd />} />
-            <Route path="products/view/:id" element={<ProductView />} />
-            <Route path="products/edit/:id" element={<ProductEdit />} />
-            <Route path="categories" element={<Categories />} />
-            <Route path="brands" element={<Brands />} />
-            <Route path="customers" element={<Customers />} />
-            <Route path="employees" element={<Employees />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="stock-in" element={<StockIn />} />
-            <Route path="expenses" element={<Expenses />} />
-            <Route path="sales-report" element={<SalesReport />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <BusinessProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<Index />} />
+              <Route path="superadmin" element={<SuperAdmin />} />
+              <Route path="application" element={<Application />} />
+              <Route path="layout" element={<LayoutPage />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="receipt" element={<Receipt />} />
+              <Route path="sales" element={<Sales />} />
+              <Route path="sales-return" element={<SalesReturn />} />
+              <Route path="quotation" element={<Quotation />} />
+              <Route path="purchases" element={<Purchases />} />
+              <Route path="products" element={<Products />} />
+              <Route path="products/add" element={<ProductAdd />} />
+              <Route path="products/view/:id" element={<ProductView />} />
+              <Route path="products/edit/:id" element={<ProductEdit />} />
+              <Route path="categories" element={<Categories />} />
+              <Route path="brands" element={<Brands />} />
+              <Route path="customers" element={<Customers />} />
+              <Route path="employees" element={<Employees />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="stock-in" element={<StockIn />} />
+              <Route path="expenses" element={<Expenses />} />
+              <Route path="sales-report" element={<SalesReport />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </BusinessProvider>
   </QueryClientProvider>
 );
 

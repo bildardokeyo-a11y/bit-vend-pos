@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useSearch } from '@/hooks/useSearch';
 import { SearchDropdown } from '@/components/ui/search-dropdown';
+import { useBusiness } from '@/contexts/BusinessContext';
 import {
   Search,
   Plus,
@@ -12,7 +13,9 @@ import {
   Bell,
   Settings,
   User,
-  Menu
+  Menu,
+  ChevronDown,
+  Edit
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -87,6 +90,7 @@ const Topbar: React.FC<TopbarProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
+  const { businesses, currentBusiness, setCurrentBusiness } = useBusiness();
   
   const {
     query,
@@ -189,11 +193,56 @@ const Topbar: React.FC<TopbarProps> = ({
       </div>
 
       <div className="flex items-center gap-3">
-        <select className="px-3 py-1 rounded-md border bg-background text-foreground text-sm">
-          <option>Freshmart</option>
-          <option>Branch 1</option>
-          <option>Branch 2</option>
-        </select>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="gap-2 max-w-48">
+              <span className="truncate">{currentBusiness?.businessName || 'Select Business'}</span>
+              <ChevronDown size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-64">
+            {businesses.map((business) => (
+              <div key={business.id} className="flex items-center justify-between">
+                <DropdownMenuItem 
+                  onClick={() => setCurrentBusiness(business.id)}
+                  className={cn(
+                    "flex-1 cursor-pointer",
+                    currentBusiness?.id === business.id && "bg-accent"
+                  )}
+                >
+                  <div className="flex flex-col">
+                    <span className="font-medium">{business.businessName}</span>
+                    <span className="text-xs text-muted-foreground capitalize">{business.businessType}</span>
+                  </div>
+                </DropdownMenuItem>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate('/settings?section=business&subsection=business-info&edit=' + business.id);
+                  }}
+                  className="h-8 w-8 p-0"
+                >
+                  <Edit size={14} />
+                </Button>
+              </div>
+            ))}
+            <DropdownMenuItem 
+              onClick={() => navigate('/settings?section=business&subsection=business-info&mode=add')}
+              className="border-t mt-1 pt-2"
+            >
+              <Plus size={16} className="mr-2" />
+              Add New Business
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => navigate('/settings?section=business&subsection=business-info')}
+            >
+              <Settings size={16} className="mr-2" />
+              Business Settings
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <Button
           onClick={() => navigate('/products/add')}

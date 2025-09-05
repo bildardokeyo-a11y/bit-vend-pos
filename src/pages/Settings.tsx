@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { countries, Country, State } from '@/data/countries';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,7 +10,9 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { 
+import { useBusiness } from '@/contexts/BusinessContext';
+import { cn } from '@/lib/utils';
+import {
   Settings as SettingsIcon, 
   User, 
   Lock, 
@@ -67,7 +70,9 @@ import {
   Cog,
   Cloud,
   Wrench,
-  DollarSign
+  DollarSign,
+  Plus,
+  Trash2
 } from 'lucide-react';
 import { toast } from "sonner";
 
@@ -217,14 +222,82 @@ const subscriptionPlans = [
 ];
 
 const Settings = () => {
-  const [activeSection, setActiveSection] = useState('');
-  const [activeSubsection, setActiveSubsection] = useState('');
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { businesses, currentBusiness, addBusiness, updateBusiness, deleteBusiness } = useBusiness();
+  
+  // Get URL parameters
+  const urlSection = searchParams.get('section');
+  const urlSubsection = searchParams.get('subsection');
+  const editBusinessId = searchParams.get('edit');
+  const isAddMode = searchParams.get('mode') === 'add';
+  
+  const [activeSection, setActiveSection] = useState(urlSection || 'business');
+  const [activeSubsection, setActiveSubsection] = useState(urlSubsection || 'business-info');
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    [urlSection || 'business']: true
+  });
   const [selectedCountry, setSelectedCountry] = useState<string>('');
   const [selectedState, setSelectedState] = useState<string>('');
   const [availableStates, setAvailableStates] = useState<State[]>([]);
   const [availableCities, setAvailableCities] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Initialize business settings based on URL parameters or current business
+  useEffect(() => {
+    if (isAddMode) {
+      // Reset form for new business
+      setBusinessSettings(prev => ({
+        ...prev,
+        businessName: '',
+        businessType: 'retail',
+        taxId: '',
+        businessLicense: '',
+        phone: '',
+        email: '',
+        address: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        country: 'US'
+      }));
+    } else if (editBusinessId) {
+      // Load business data for editing
+      const businessToEdit = businesses.find(b => b.id === editBusinessId);
+      if (businessToEdit) {
+        setBusinessSettings(prev => ({
+          ...prev,
+          businessName: businessToEdit.businessName,
+          businessType: businessToEdit.businessType,
+          taxId: businessToEdit.taxId || '',
+          businessLicense: businessToEdit.businessLicense || '',
+          phone: businessToEdit.phone || '',
+          email: businessToEdit.email || '',
+          address: businessToEdit.address || '',
+          city: businessToEdit.city || '',
+          state: businessToEdit.state || '',
+          postalCode: businessToEdit.postalCode || '',
+          country: businessToEdit.country || 'US'
+        }));
+      }
+    } else if (currentBusiness) {
+      // Load current business data
+      setBusinessSettings(prev => ({
+        ...prev,
+        businessName: currentBusiness.businessName,
+        businessType: currentBusiness.businessType,
+        taxId: currentBusiness.taxId || '',
+        businessLicense: currentBusiness.businessLicense || '',
+        phone: currentBusiness.phone || '',
+        email: currentBusiness.email || '',
+        address: currentBusiness.address || '',
+        city: currentBusiness.city || '',
+        state: currentBusiness.state || '',
+        postalCode: currentBusiness.postalCode || '',
+        country: currentBusiness.country || 'US'
+      }));
+    }
+  }, [isAddMode, editBusinessId, currentBusiness, businesses]);
   
   // Legacy state variables for compatibility
   const [profileData, setProfileData] = useState({
@@ -727,15 +800,39 @@ const Settings = () => {
   };
   
   const handleSave = () => {
-    // Save company data to localStorage for receipt
-    const companySettings = {
-      companyName: companyData.name,
-      companyAddress: companyData.address,
-      companyPhone: companyData.phone,
-      companyEmail: companyData.email
-    };
-    localStorage.setItem('companySettings', JSON.stringify(companySettings));
-    toast.success("Settings saved successfully!");
+    const sectionKey = `${activeSection}-${activeSubsection}`;
+    
+    if (sectionKey === 'business-business-info') {
+      if (isAddMode) {
+        // Add new business
+        const newBusinessId = addBusiness(businessSettings);
+        toast.success("Business added successfully!");
+        // Clear URL parameters
+        navigate('/settings?section=business&subsection=business-info');
+      } else if (editBusinessId) {
+        // Update existing business
+        updateBusiness(editBusinessId, businessSettings);
+        toast.success("Business updated successfully!");
+        // Clear URL parameters
+        navigate('/settings?section=business&subsection=business-info');
+      } else {
+        // Update current business
+        if (currentBusiness) {
+          updateBusiness(currentBusiness.id, businessSettings);
+          toast.success("Business settings saved successfully!");
+        }
+      }
+    } else {
+      // Save company data to localStorage for receipt
+      const companySettings = {
+        companyName: companyData.name,
+        companyAddress: companyData.address,
+        companyPhone: companyData.phone,
+        companyEmail: companyData.email
+      };
+      localStorage.setItem('companySettings', JSON.stringify(companySettings));
+      toast.success("Settings saved successfully!");
+    }
   };
   
   const handleCancel = () => {
@@ -748,9 +845,91 @@ const Settings = () => {
     switch (sectionKey) {
       // Business Settings
       case 'business-business-info':
+        // Show business listing if not in add/edit mode
+        if (!isAddMode && !editBusinessId) {
+          return (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">Business Management</h3>
+                <Button 
+                  onClick={() => navigate('/settings?section=business&subsection=business-info&mode=add')}
+                  className="gap-2"
+                >
+                  <Plus size={16} />
+                  Add Business
+                </Button>
+              </div>
+              
+              <div className="grid gap-4">
+                {businesses.map((business) => (
+                  <Card key={business.id} className={cn(
+                    "p-4",
+                    currentBusiness?.id === business.id && "ring-2 ring-primary"
+                  )}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-semibold">{business.businessName}</h4>
+                          {currentBusiness?.id === business.id && (
+                            <Badge variant="default">Current</Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground capitalize">
+                          {business.businessType} • {business.address}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {business.phone} • {business.email}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => navigate(`/settings?section=business&subsection=business-info&edit=${business.id}`)}
+                        >
+                          <Edit size={14} className="mr-1" />
+                          Edit
+                        </Button>
+                        {businesses.length > 1 && business.id !== currentBusiness?.id && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              if (confirm('Are you sure you want to delete this business?')) {
+                                deleteBusiness(business.id);
+                                toast.success('Business deleted successfully!');
+                              }
+                            }}
+                          >
+                            <Trash2 size={14} className="mr-1" />
+                            Delete
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          );
+        }
+        
+        // Show business form for add/edit mode
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold mb-4">Business Information</h3>
+            <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                onClick={() => navigate('/settings?section=business&subsection=business-info')}
+              >
+                <X size={16} className="mr-2" />
+                Back to Business List
+              </Button>
+              <h3 className="text-lg font-semibold">
+                {isAddMode ? 'Add New Business' : 'Edit Business Information'}
+              </h3>
+            </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="businessName">Business Name *</Label>
@@ -851,8 +1030,13 @@ const Settings = () => {
               </div>
             </div>
             <div className="flex justify-end space-x-4 pt-4 border-t">
-              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
-              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save Changes</Button>
+              <Button variant="outline" onClick={() => navigate('/settings?section=business&subsection=business-info')}>
+                <X className="w-4 h-4 mr-2" />Cancel
+              </Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90">
+                <Save className="w-4 h-4 mr-2" />
+                {isAddMode ? 'Add Business' : 'Save Changes'}
+              </Button>
             </div>
           </div>
         );
