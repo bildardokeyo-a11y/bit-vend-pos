@@ -892,16 +892,16 @@ const Settings = () => {
                         </Button>
                         {businesses.length > 1 && business.id !== currentBusiness?.id && (
                           <Button
-                            variant="outline"
+                            variant="destructive"
                             size="sm"
                             onClick={() => {
-                              if (confirm('Are you sure you want to delete this business?')) {
+                              if (confirm('Are you sure you want to delete this business? This action cannot be undone.')) {
                                 deleteBusiness(business.id);
                                 toast.success('Business deleted successfully!');
                               }
                             }}
                           >
-                            <Trash2 size={14} className="mr-1" />
+                            <Trash2 size={14} className="mr-1 text-white" />
                             Delete
                           </Button>
                         )}
@@ -2257,6 +2257,1302 @@ const Settings = () => {
             <div className="flex justify-end space-x-4 pt-4">
               <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
               <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      // Business Settings - Operating Hours
+      case 'business-operating-hours':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Operating Hours</h3>
+            <div className="space-y-4">
+              {Object.entries(businessSettings.operatingHours).map(([day, hours]) => (
+                <div key={day} className="flex items-center gap-4 p-4 border rounded-lg">
+                  <div className="w-24 font-medium capitalize">{day}</div>
+                  <Checkbox
+                    checked={!hours.closed}
+                    onCheckedChange={(checked) => {
+                      setBusinessSettings(prev => ({
+                        ...prev,
+                        operatingHours: {
+                          ...prev.operatingHours,
+                          [day]: { ...hours, closed: !checked }
+                        }
+                      }));
+                    }}
+                  />
+                  {!hours.closed && (
+                    <>
+                      <Input
+                        type="time"
+                        value={hours.open}
+                        onChange={(e) => {
+                          setBusinessSettings(prev => ({
+                            ...prev,
+                            operatingHours: {
+                              ...prev.operatingHours,
+                              [day]: { ...hours, open: e.target.value }
+                            }
+                          }));
+                        }}
+                        className="w-32"
+                      />
+                      <span>to</span>
+                      <Input
+                        type="time"
+                        value={hours.close}
+                        onChange={(e) => {
+                          setBusinessSettings(prev => ({
+                            ...prev,
+                            operatingHours: {
+                              ...prev.operatingHours,
+                              [day]: { ...hours, close: e.target.value }
+                            }
+                          }));
+                        }}
+                        className="w-32"
+                      />
+                    </>
+                  )}
+                  {hours.closed && <span className="text-muted-foreground">Closed</span>}
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      // Business Settings - Locations
+      case 'business-locations':
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold">Locations & Branches</h3>
+              <Button><Plus className="w-4 h-4 mr-2" />Add Location</Button>
+            </div>
+            <div className="grid gap-4">
+              <Card className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold">Main Location</h4>
+                    <p className="text-sm text-muted-foreground">{businessSettings.address}, {businessSettings.city}</p>
+                  </div>
+                  <Badge variant="default">Primary</Badge>
+                </div>
+              </Card>
+            </div>
+          </div>
+        );
+
+      // POS Terminal Settings
+      case 'pos-terminal-receipt-settings':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Receipt Settings</h3>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="receiptHeader">Receipt Header</Label>
+                <Input
+                  id="receiptHeader"
+                  value={posTerminalSettings.receiptHeader}
+                  onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptHeader: e.target.value }))}
+                  placeholder="Thank you for your business!"
+                />
+              </div>
+              <div>
+                <Label htmlFor="receiptFooter">Receipt Footer</Label>
+                <Input
+                  id="receiptFooter"
+                  value={posTerminalSettings.receiptFooter}
+                  onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptFooter: e.target.value }))}
+                  placeholder="Please come again"
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Show Barcode on Receipt</Label>
+                  <p className="text-sm text-muted-foreground">Display barcode for transaction tracking</p>
+                </div>
+                <Switch
+                  checked={posTerminalSettings.showBarcode}
+                  onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, showBarcode: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Auto-Print Receipt</Label>
+                  <p className="text-sm text-muted-foreground">Automatically print receipt after transaction</p>
+                </div>
+                <Switch
+                  checked={posTerminalSettings.autoPrintReceipt}
+                  onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, autoPrintReceipt: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'pos-terminal-terminal-behavior':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Terminal Behavior</h3>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="autoLockTime">Auto-lock Time (minutes)</Label>
+                <Input
+                  id="autoLockTime"
+                  type="number"
+                  value={posTerminalSettings.autoLockTime}
+                  onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, autoLockTime: parseInt(e.target.value) }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Require PIN for Voids</Label>
+                  <p className="text-sm text-muted-foreground">Require manager PIN to void transactions</p>
+                </div>
+                <Switch
+                  checked={posTerminalSettings.requirePINForVoids}
+                  onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, requirePINForVoids: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Allow Offline Mode</Label>
+                  <p className="text-sm text-muted-foreground">Continue processing when internet is unavailable</p>
+                </div>
+                <Switch
+                  checked={posTerminalSettings.allowOfflineMode}
+                  onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, allowOfflineMode: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'pos-terminal-cash-drawer':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Cash Drawer Settings</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Open Drawer for Cash Payments</Label>
+                  <p className="text-sm text-muted-foreground">Automatically open cash drawer for cash transactions</p>
+                </div>
+                <Switch
+                  checked={posTerminalSettings.openDrawerForCash}
+                  onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, openDrawerForCash: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Require Count at Close</Label>
+                  <p className="text-sm text-muted-foreground">Require cash count when closing register</p>
+                </div>
+                <Switch
+                  checked={posTerminalSettings.requireCountAtClose}
+                  onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, requireCountAtClose: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      // Inventory Settings
+      case 'inventory-stock-management':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Stock Management</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable Low Stock Alerts</Label>
+                  <p className="text-sm text-muted-foreground">Get notified when items are running low</p>
+                </div>
+                <Switch
+                  checked={inventorySettings.enableLowStockAlerts}
+                  onCheckedChange={(checked) => setInventorySettings(prev => ({ ...prev, enableLowStockAlerts: checked }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="lowStockThreshold">Low Stock Threshold</Label>
+                <Input
+                  id="lowStockThreshold"
+                  type="number"
+                  value={inventorySettings.lowStockThreshold}
+                  onChange={(e) => setInventorySettings(prev => ({ ...prev, lowStockThreshold: parseInt(e.target.value) }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Allow Negative Inventory</Label>
+                  <p className="text-sm text-muted-foreground">Allow selling when stock is zero or negative</p>
+                </div>
+                <Switch
+                  checked={inventorySettings.enableNegativeInventory}
+                  onCheckedChange={(checked) => setInventorySettings(prev => ({ ...prev, enableNegativeInventory: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'inventory-barcode-settings':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Barcode Settings</h3>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="barcodeType">Default Barcode Type</Label>
+                <Select value={inventorySettings.defaultBarcodeType} onValueChange={(value) => setInventorySettings(prev => ({ ...prev, defaultBarcodeType: value }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="UPC-A">UPC-A</SelectItem>
+                    <SelectItem value="EAN-13">EAN-13</SelectItem>
+                    <SelectItem value="Code 128">Code 128</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Auto-generate Barcodes</Label>
+                  <p className="text-sm text-muted-foreground">Automatically generate barcodes for new products</p>
+                </div>
+                <Switch
+                  checked={inventorySettings.autogenerateBarcodes}
+                  onCheckedChange={(checked) => setInventorySettings(prev => ({ ...prev, autogenerateBarcodes: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'inventory-pricing-rules':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Pricing Rules</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Allow Zero Pricing</Label>
+                  <p className="text-sm text-muted-foreground">Allow products to have zero price</p>
+                </div>
+                <Switch
+                  checked={inventorySettings.allowZeroPricing}
+                  onCheckedChange={(checked) => setInventorySettings(prev => ({ ...prev, allowZeroPricing: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Round Prices</Label>
+                  <p className="text-sm text-muted-foreground">Automatically round prices to nearest cent</p>
+                </div>
+                <Switch
+                  checked={inventorySettings.roundPrices}
+                  onCheckedChange={(checked) => setInventorySettings(prev => ({ ...prev, roundPrices: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      // Tax & Finance Settings
+      case 'tax-finance-tax-configuration':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Tax Configuration</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable Tax</Label>
+                  <p className="text-sm text-muted-foreground">Apply taxes to transactions</p>
+                </div>
+                <Switch
+                  checked={taxSettings.enableTax}
+                  onCheckedChange={(checked) => setTaxSettings(prev => ({ ...prev, enableTax: checked }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="defaultTaxRate">Default Tax Rate (%)</Label>
+                <Input
+                  id="defaultTaxRate"
+                  type="number"
+                  step="0.01"
+                  value={taxSettings.defaultTaxRate}
+                  onChange={(e) => setTaxSettings(prev => ({ ...prev, defaultTaxRate: parseFloat(e.target.value) }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Tax Inclusive Pricing</Label>
+                  <p className="text-sm text-muted-foreground">Prices include tax</p>
+                </div>
+                <Switch
+                  checked={taxSettings.taxInclusivePricing}
+                  onCheckedChange={(checked) => setTaxSettings(prev => ({ ...prev, taxInclusivePricing: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'tax-finance-payment-methods':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Payment Methods</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <h4 className="font-medium">Accepted Payment Types</h4>
+                <div className="space-y-2">
+                  {Object.entries(paymentSettings).filter(([key]) => key.startsWith('accept')).map(([key, value]) => (
+                    <div key={key} className="flex items-center justify-between">
+                      <Label className="capitalize">{key.replace('accept', '').replace(/([A-Z])/g, ' $1')}</Label>
+                      <Switch
+                        checked={Boolean(value)}
+                        onCheckedChange={(checked) => setPaymentSettings(prev => ({ ...prev, [key]: checked }))}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-4">
+                <h4 className="font-medium">Payment Processing</h4>
+                <div>
+                  <Label htmlFor="processor">Credit Card Processor</Label>
+                  <Select value={paymentSettings.creditCardProcessor} onValueChange={(value) => setPaymentSettings(prev => ({ ...prev, creditCardProcessor: value }))}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="stripe">Stripe</SelectItem>
+                      <SelectItem value="square">Square</SelectItem>
+                      <SelectItem value="paypal">PayPal</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'tax-finance-accounting':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Accounting Integration</h3>
+            <div className="space-y-4">
+              <div className="grid gap-4">
+                <Card className="p-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <FileSpreadsheet className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold">QuickBooks Integration</h4>
+                      <p className="text-sm text-muted-foreground">Sync transactions with QuickBooks</p>
+                    </div>
+                    <Button variant="outline">Connect</Button>
+                  </div>
+                </Card>
+                <Card className="p-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <University className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold">Xero Integration</h4>
+                      <p className="text-sm text-muted-foreground">Sync transactions with Xero</p>
+                    </div>
+                    <Button variant="outline">Connect</Button>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
+
+      // Employee Management
+      case 'employees-employee-access':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Access Control</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Require Employee Login</Label>
+                  <p className="text-sm text-muted-foreground">Employees must log in to use the system</p>
+                </div>
+                <Switch
+                  checked={employeeSettings.requireEmployeeLogin}
+                  onCheckedChange={(checked) => setEmployeeSettings(prev => ({ ...prev, requireEmployeeLogin: checked }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="sessionTimeout">Session Timeout (minutes)</Label>
+                <Input
+                  id="sessionTimeout"
+                  type="number"
+                  value={employeeSettings.sessionTimeout}
+                  onChange={(e) => setEmployeeSettings(prev => ({ ...prev, sessionTimeout: parseInt(e.target.value) }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="pinLength">Required PIN Length</Label>
+                <Input
+                  id="pinLength"
+                  type="number"
+                  value={employeeSettings.requirePINLength}
+                  onChange={(e) => setEmployeeSettings(prev => ({ ...prev, requirePINLength: parseInt(e.target.value) }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'employees-roles-permissions':
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold">Roles & Permissions</h3>
+              <Button><Plus className="w-4 h-4 mr-2" />Add Role</Button>
+            </div>
+            <div className="space-y-4">
+              {employeeSettings.roles.map((role) => (
+                <Card key={role.id} className="p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold">{role.name}</h4>
+                    <Button variant="outline" size="sm"><Edit className="w-4 h-4 mr-1" />Edit</Button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>Sales: {role.permissions.sales.create ? 'Full Access' : 'Read Only'}</div>
+                    <div>Inventory: {role.permissions.inventory.create ? 'Full Access' : 'Limited'}</div>
+                    <div>Reports: {role.permissions.reports.read ? 'Yes' : 'No'}</div>
+                    <div>Settings: {role.permissions.settings.update ? 'Yes' : 'No'}</div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'employees-time-tracking':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Time Tracking</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Require Clock In</Label>
+                  <p className="text-sm text-muted-foreground">Employees must clock in before using the system</p>
+                </div>
+                <Switch
+                  checked={employeeSettings.requireClockIn}
+                  onCheckedChange={(checked) => setEmployeeSettings(prev => ({ ...prev, requireClockIn: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable Break Tracking</Label>
+                  <p className="text-sm text-muted-foreground">Track employee breaks and lunch periods</p>
+                </div>
+                <Switch
+                  checked={employeeSettings.enableBreakTracking}
+                  onCheckedChange={(checked) => setEmployeeSettings(prev => ({ ...prev, enableBreakTracking: checked }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="overtime">Overtime Threshold (hours per week)</Label>
+                <Input
+                  id="overtime"
+                  type="number"
+                  value={employeeSettings.overtimeThreshold}
+                  onChange={(e) => setEmployeeSettings(prev => ({ ...prev, overtimeThreshold: parseInt(e.target.value) }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      // Customer Management
+      case 'customers-customer-data':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Customer Data Management</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Require Customer Info</Label>
+                  <p className="text-sm text-muted-foreground">Make customer information mandatory for all sales</p>
+                </div>
+                <Switch
+                  checked={customerSettings.requireCustomerInfo}
+                  onCheckedChange={(checked) => setCustomerSettings(prev => ({ ...prev, requireCustomerInfo: checked }))}
+                />
+              </div>
+              <h4 className="font-medium">Collect Customer Data</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center justify-between">
+                  <Label>Email Address</Label>
+                  <Switch
+                    checked={customerSettings.collectEmail}
+                    onCheckedChange={(checked) => setCustomerSettings(prev => ({ ...prev, collectEmail: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Phone Number</Label>
+                  <Switch
+                    checked={customerSettings.collectPhone}
+                    onCheckedChange={(checked) => setCustomerSettings(prev => ({ ...prev, collectPhone: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Address</Label>
+                  <Switch
+                    checked={customerSettings.collectAddress}
+                    onCheckedChange={(checked) => setCustomerSettings(prev => ({ ...prev, collectAddress: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Birth Date</Label>
+                  <Switch
+                    checked={customerSettings.collectBirthdate}
+                    onCheckedChange={(checked) => setCustomerSettings(prev => ({ ...prev, collectBirthdate: checked }))}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'customers-loyalty-program':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Loyalty Program</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable Loyalty Program</Label>
+                  <p className="text-sm text-muted-foreground">Allow customers to earn and redeem loyalty points</p>
+                </div>
+                <Switch
+                  checked={customerSettings.enableLoyaltyProgram}
+                  onCheckedChange={(checked) => setCustomerSettings(prev => ({ ...prev, enableLoyaltyProgram: checked }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="pointsRate">Points per Dollar Spent</Label>
+                <Input
+                  id="pointsRate"
+                  type="number"
+                  value={customerSettings.loyaltyPointsRate}
+                  onChange={(e) => setCustomerSettings(prev => ({ ...prev, loyaltyPointsRate: parseInt(e.target.value) }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="redemptionRate">Points per Dollar Off</Label>
+                <Input
+                  id="redemptionRate"
+                  type="number"
+                  value={customerSettings.loyaltyRedemptionRate}
+                  onChange={(e) => setCustomerSettings(prev => ({ ...prev, loyaltyRedemptionRate: parseInt(e.target.value) }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'customers-marketing':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Marketing & Promotions</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable Email Marketing</Label>
+                  <p className="text-sm text-muted-foreground">Send promotional emails to customers</p>
+                </div>
+                <Switch
+                  checked={customerSettings.enableEmailMarketing}
+                  onCheckedChange={(checked) => setCustomerSettings(prev => ({ ...prev, enableEmailMarketing: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable SMS Marketing</Label>
+                  <p className="text-sm text-muted-foreground">Send promotional SMS to customers</p>
+                </div>
+                <Switch
+                  checked={customerSettings.enableSMSMarketing}
+                  onCheckedChange={(checked) => setCustomerSettings(prev => ({ ...prev, enableSMSMarketing: checked }))}
+                />
+              </div>
+              <h4 className="font-medium">Customer Discounts</h4>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label>Senior Discount</Label>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      value={customerSettings.seniorDiscountRate}
+                      onChange={(e) => setCustomerSettings(prev => ({ ...prev, seniorDiscountRate: parseInt(e.target.value) }))}
+                      className="w-20"
+                    />
+                    <span>%</span>
+                    <Switch
+                      checked={customerSettings.enableSeniorDiscount}
+                      onCheckedChange={(checked) => setCustomerSettings(prev => ({ ...prev, enableSeniorDiscount: checked }))}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      // Hardware Integration
+      case 'hardware-receipt-printer':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Receipt Printer Configuration</h3>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="printerType">Printer Type</Label>
+                <Select value={hardwareSettings.printerType} onValueChange={(value) => setHardwareSettings(prev => ({ ...prev, printerType: value }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="thermal">Thermal Printer</SelectItem>
+                    <SelectItem value="impact">Impact Printer</SelectItem>
+                    <SelectItem value="inkjet">Inkjet Printer</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="printerModel">Printer Model</Label>
+                <Input
+                  id="printerModel"
+                  value={hardwareSettings.printerModel}
+                  onChange={(e) => setHardwareSettings(prev => ({ ...prev, printerModel: e.target.value }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="connection">Connection Type</Label>
+                <Select value={hardwareSettings.printerConnection} onValueChange={(value) => setHardwareSettings(prev => ({ ...prev, printerConnection: value }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="USB">USB</SelectItem>
+                    <SelectItem value="Ethernet">Ethernet</SelectItem>
+                    <SelectItem value="Bluetooth">Bluetooth</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Auto-Cut Enabled</Label>
+                  <p className="text-sm text-muted-foreground">Automatically cut receipt paper after printing</p>
+                </div>
+                <Switch
+                  checked={hardwareSettings.autoCutEnabled}
+                  onCheckedChange={(checked) => setHardwareSettings(prev => ({ ...prev, autoCutEnabled: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'hardware-barcode-scanner':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Barcode Scanner Configuration</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable Scanner</Label>
+                  <p className="text-sm text-muted-foreground">Enable barcode scanning functionality</p>
+                </div>
+                <Switch
+                  checked={hardwareSettings.scannerEnabled}
+                  onCheckedChange={(checked) => setHardwareSettings(prev => ({ ...prev, scannerEnabled: checked }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="scannerType">Scanner Type</Label>
+                <Select value={hardwareSettings.scannerType} onValueChange={(value) => setHardwareSettings(prev => ({ ...prev, scannerType: value }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="laser">Laser Scanner</SelectItem>
+                    <SelectItem value="2d_imager">2D Imager</SelectItem>
+                    <SelectItem value="ccd">CCD Scanner</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable Scan Beep</Label>
+                  <p className="text-sm text-muted-foreground">Play sound when barcode is scanned</p>
+                </div>
+                <Switch
+                  checked={hardwareSettings.enableScanBeep}
+                  onCheckedChange={(checked) => setHardwareSettings(prev => ({ ...prev, enableScanBeep: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'hardware-payment-terminal':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Payment Terminal Configuration</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable Card Reader</Label>
+                  <p className="text-sm text-muted-foreground">Enable card payment processing</p>
+                </div>
+                <Switch
+                  checked={hardwareSettings.cardReaderEnabled}
+                  onCheckedChange={(checked) => setHardwareSettings(prev => ({ ...prev, cardReaderEnabled: checked }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="cardReaderType">Card Reader Type</Label>
+                <Select value={hardwareSettings.cardReaderType} onValueChange={(value) => setHardwareSettings(prev => ({ ...prev, cardReaderType: value }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="EMV">EMV Chip Reader</SelectItem>
+                    <SelectItem value="MSR">Magnetic Stripe Reader</SelectItem>
+                    <SelectItem value="Contactless">Contactless/NFC</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="flex items-center justify-between">
+                  <Label>Enable Chip</Label>
+                  <Switch
+                    checked={hardwareSettings.enableChip}
+                    onCheckedChange={(checked) => setHardwareSettings(prev => ({ ...prev, enableChip: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Enable Swipe</Label>
+                  <Switch
+                    checked={hardwareSettings.enableSwipe}
+                    onCheckedChange={(checked) => setHardwareSettings(prev => ({ ...prev, enableSwipe: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Enable Contactless</Label>
+                  <Switch
+                    checked={hardwareSettings.enableContactless}
+                    onCheckedChange={(checked) => setHardwareSettings(prev => ({ ...prev, enableContactless: checked }))}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      // Reports & Analytics
+      case 'reports-report-settings':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Report Settings</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Auto-Generate Reports</Label>
+                  <p className="text-sm text-muted-foreground">Automatically generate daily reports</p>
+                </div>
+                <Switch
+                  checked={reportSettings.autoGenerateReports}
+                  onCheckedChange={(checked) => setReportSettings(prev => ({ ...prev, autoGenerateReports: checked }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="reportFrequency">Report Frequency</Label>
+                <Select value={reportSettings.reportFrequency} onValueChange={(value) => setReportSettings(prev => ({ ...prev, reportFrequency: value }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="daily">Daily</SelectItem>
+                    <SelectItem value="weekly">Weekly</SelectItem>
+                    <SelectItem value="monthly">Monthly</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="exportFormat">Default Export Format</Label>
+                <Select value={reportSettings.defaultExportFormat} onValueChange={(value) => setReportSettings(prev => ({ ...prev, defaultExportFormat: value }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="PDF">PDF</SelectItem>
+                    <SelectItem value="Excel">Excel</SelectItem>
+                    <SelectItem value="CSV">CSV</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'reports-data-retention':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Data Retention Policy</h3>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="salesRetention">Sales Data Retention (days)</Label>
+                <Input
+                  id="salesRetention"
+                  type="number"
+                  value={reportSettings.salesDataRetention}
+                  onChange={(e) => setReportSettings(prev => ({ ...prev, salesDataRetention: parseInt(e.target.value) }))}
+                />
+                <p className="text-sm text-muted-foreground">Keep sales data for this many days</p>
+              </div>
+              <div>
+                <Label htmlFor="inventoryRetention">Inventory Data Retention (days)</Label>
+                <Input
+                  id="inventoryRetention"
+                  type="number"
+                  value={reportSettings.inventoryDataRetention}
+                  onChange={(e) => setReportSettings(prev => ({ ...prev, inventoryDataRetention: parseInt(e.target.value) }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="employeeRetention">Employee Data Retention (days)</Label>
+                <Input
+                  id="employeeRetention"
+                  type="number"
+                  value={reportSettings.employeeDataRetention}
+                  onChange={(e) => setReportSettings(prev => ({ ...prev, employeeDataRetention: parseInt(e.target.value) }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'reports-export-options':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Export Options</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Include Graphs in Exports</Label>
+                  <p className="text-sm text-muted-foreground">Include charts and graphs in exported reports</p>
+                </div>
+                <Switch
+                  checked={reportSettings.includeGraphs}
+                  onCheckedChange={(checked) => setReportSettings(prev => ({ ...prev, includeGraphs: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Company Logo on Reports</Label>
+                  <p className="text-sm text-muted-foreground">Include company logo in exported reports</p>
+                </div>
+                <Switch
+                  checked={reportSettings.companyLogoOnReports}
+                  onCheckedChange={(checked) => setReportSettings(prev => ({ ...prev, companyLogoOnReports: checked }))}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Email Reports</Label>
+                  <p className="text-sm text-muted-foreground">Automatically email reports to recipients</p>
+                </div>
+                <Switch
+                  checked={reportSettings.emailReportsEnabled}
+                  onCheckedChange={(checked) => setReportSettings(prev => ({ ...prev, emailReportsEnabled: checked }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      // Security & Compliance
+      case 'security-access-security':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Access Security</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Require Strong Passwords</Label>
+                  <p className="text-sm text-muted-foreground">Enforce strong password requirements</p>
+                </div>
+                <Switch
+                  checked={securitySettings.requireStrongPasswords}
+                  onCheckedChange={(checked) => setSecuritySettings(prev => ({ ...prev, requireStrongPasswords: checked }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="passwordLength">Minimum Password Length</Label>
+                <Input
+                  id="passwordLength"
+                  type="number"
+                  value={securitySettings.passwordMinLength}
+                  onChange={(e) => setSecuritySettings(prev => ({ ...prev, passwordMinLength: parseInt(e.target.value) }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="sessionTime">Max Session Time (hours)</Label>
+                <Input
+                  id="sessionTime"
+                  type="number"
+                  value={securitySettings.maxSessionTime}
+                  onChange={(e) => setSecuritySettings(prev => ({ ...prev, maxSessionTime: parseInt(e.target.value) }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="idleTimeout">Idle Timeout (minutes)</Label>
+                <Input
+                  id="idleTimeout"
+                  type="number"
+                  value={securitySettings.idleTimeout}
+                  onChange={(e) => setSecuritySettings(prev => ({ ...prev, idleTimeout: parseInt(e.target.value) }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'security-audit-logging':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Audit & Logging</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Enable Audit Log</Label>
+                  <p className="text-sm text-muted-foreground">Log all system activities for security auditing</p>
+                </div>
+                <Switch
+                  checked={securitySettings.enableAuditLog}
+                  onCheckedChange={(checked) => setSecuritySettings(prev => ({ ...prev, enableAuditLog: checked }))}
+                />
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-medium">Log Types</h4>
+                <div className="flex items-center justify-between">
+                  <Label>Log All Transactions</Label>
+                  <Switch
+                    checked={securitySettings.logAllTransactions}
+                    onCheckedChange={(checked) => setSecuritySettings(prev => ({ ...prev, logAllTransactions: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Log Employee Actions</Label>
+                  <Switch
+                    checked={securitySettings.logEmployeeActions}
+                    onCheckedChange={(checked) => setSecuritySettings(prev => ({ ...prev, logEmployeeActions: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Log System Changes</Label>
+                  <Switch
+                    checked={securitySettings.logSystemChanges}
+                    onCheckedChange={(checked) => setSecuritySettings(prev => ({ ...prev, logSystemChanges: checked }))}
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="auditRetention">Audit Log Retention (days)</Label>
+                <Input
+                  id="auditRetention"
+                  type="number"
+                  value={securitySettings.auditLogRetention}
+                  onChange={(e) => setSecuritySettings(prev => ({ ...prev, auditLogRetention: parseInt(e.target.value) }))}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'security-compliance':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Compliance Standards</h3>
+            <div className="space-y-4">
+              <Card className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold">PCI DSS Compliance</h4>
+                    <p className="text-sm text-muted-foreground">Payment Card Industry Data Security Standard</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant={securitySettings.pciComplianceEnabled ? "default" : "secondary"}>
+                      {securitySettings.pciComplianceEnabled ? "Enabled" : "Disabled"}
+                    </Badge>
+                    <Switch
+                      checked={securitySettings.pciComplianceEnabled}
+                      onCheckedChange={(checked) => setSecuritySettings(prev => ({ ...prev, pciComplianceEnabled: checked }))}
+                    />
+                  </div>
+                </div>
+              </Card>
+              <Card className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold">HIPAA Compliance</h4>
+                    <p className="text-sm text-muted-foreground">Health Insurance Portability and Accountability Act</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant={securitySettings.hipaaComplianceEnabled ? "default" : "secondary"}>
+                      {securitySettings.hipaaComplianceEnabled ? "Enabled" : "Disabled"}
+                    </Badge>
+                    <Switch
+                      checked={securitySettings.hipaaComplianceEnabled}
+                      onCheckedChange={(checked) => setSecuritySettings(prev => ({ ...prev, hipaaComplianceEnabled: checked }))}
+                    />
+                  </div>
+                </div>
+              </Card>
+              <Card className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold">SOX Compliance</h4>
+                    <p className="text-sm text-muted-foreground">Sarbanes-Oxley Act</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant={securitySettings.soxComplianceEnabled ? "default" : "secondary"}>
+                      {securitySettings.soxComplianceEnabled ? "Enabled" : "Disabled"}
+                    </Badge>
+                    <Switch
+                      checked={securitySettings.soxComplianceEnabled}
+                      onCheckedChange={(checked) => setSecuritySettings(prev => ({ ...prev, soxComplianceEnabled: checked }))}
+                    />
+                  </div>
+                </div>
+              </Card>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      // System Configuration
+      case 'system-backup-sync':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Backup & Sync Settings</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Auto Backup</Label>
+                  <p className="text-sm text-muted-foreground">Automatically backup system data</p>
+                </div>
+                <Switch
+                  checked={systemSettings.autoBackup}
+                  onCheckedChange={(checked) => setSystemSettings(prev => ({ ...prev, autoBackup: checked }))}
+                />
+              </div>
+              <Card className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold">Cloud Backup</h4>
+                    <p className="text-sm text-muted-foreground">Secure cloud backup service</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="secondary">Connected</Badge>
+                    <Button variant="outline" size="sm">Configure</Button>
+                  </div>
+                </div>
+              </Card>
+              <Card className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold">Local Backup</h4>
+                    <p className="text-sm text-muted-foreground">Backup to local storage</p>
+                  </div>
+                  <Button variant="outline" size="sm">Setup</Button>
+                </div>
+              </Card>
+            </div>
+            <div className="flex justify-end space-x-4 pt-4">
+              <Button variant="outline" onClick={handleCancel}><X className="w-4 h-4 mr-2" />Cancel</Button>
+              <Button onClick={handleSave} className="bg-success hover:bg-success/90"><Save className="w-4 h-4 mr-2" />Save</Button>
+            </div>
+          </div>
+        );
+
+      case 'system-integrations':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">Third-party Integrations</h3>
+            <div className="grid gap-4">
+              <Card className="p-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Plug className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold">Shopify Integration</h4>
+                    <p className="text-sm text-muted-foreground">Sync inventory with Shopify store</p>
+                  </div>
+                  <Button variant="outline">Connect</Button>
+                </div>
+              </Card>
+              <Card className="p-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Mail className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold">Mailchimp Integration</h4>
+                    <p className="text-sm text-muted-foreground">Sync customer data with Mailchimp</p>
+                  </div>
+                  <Button variant="outline">Connect</Button>
+                </div>
+              </Card>
+              <Card className="p-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <BarChart className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold">Google Analytics</h4>
+                    <p className="text-sm text-muted-foreground">Track website and app analytics</p>
+                  </div>
+                  <Button variant="outline">Connect</Button>
+                </div>
+              </Card>
+            </div>
+          </div>
+        );
+
+      case 'system-maintenance':
+        return (
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold">System Maintenance</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label>Maintenance Mode</Label>
+                  <p className="text-sm text-muted-foreground">Enable maintenance mode for system updates</p>
+                </div>
+                <Switch
+                  checked={systemSettings.maintenanceMode}
+                  onCheckedChange={(checked) => setSystemSettings(prev => ({ ...prev, maintenanceMode: checked }))}
+                />
+              </div>
+              <div className="grid gap-4">
+                <Card className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-semibold">System Health Check</h4>
+                      <p className="text-sm text-muted-foreground">Run comprehensive system diagnostics</p>
+                    </div>
+                    <Button>Run Check</Button>
+                  </div>
+                </Card>
+                <Card className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-semibold">Clear Cache</h4>
+                      <p className="text-sm text-muted-foreground">Clear system cache and temporary files</p>
+                    </div>
+                    <Button variant="outline">Clear Cache</Button>
+                  </div>
+                </Card>
+                <Card className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-semibold">Database Optimization</h4>
+                      <p className="text-sm text-muted-foreground">Optimize database performance</p>
+                    </div>
+                    <Button variant="outline">Optimize</Button>
+                  </div>
+                </Card>
+              </div>
             </div>
           </div>
         );
