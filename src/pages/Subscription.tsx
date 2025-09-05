@@ -349,7 +349,8 @@ const Subscription = () => {
                       className="w-full" 
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleCancelSubscription();
+                        // Navigate to subscription management
+                        window.location.href = '/subscription/manage';
                       }}
                     >
                       Manage Plan

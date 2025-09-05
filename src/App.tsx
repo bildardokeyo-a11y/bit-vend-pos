@@ -61,6 +61,8 @@ import GeneralSettings from "./pages/GeneralSettings";
 import InvoiceSettings from "./pages/InvoiceSettings";
 import TaxSettings from "./pages/TaxSettings";
 import Backup from "./pages/Backup";
+import Subscription from "./pages/Subscription";
+import SubscriptionManage from "./pages/SubscriptionManage";
 
 const queryClient = new QueryClient();
 
@@ -128,6 +130,8 @@ const App = () => (
               <Route path="account-statement" element={<AccountStatement />} />
               <Route path="holidays" element={<Holidays />} />
               <Route path="payroll" element={<Payroll />} />
+              <Route path="subscription" element={<Subscription />} />
+              <Route path="subscription/manage" element={<SubscriptionManage />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
