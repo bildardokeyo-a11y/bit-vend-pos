@@ -358,9 +358,9 @@ const Topbar: React.FC<TopbarProps> = ({
           </TooltipContent>
         </Tooltip>
 
-        <Tooltip open={profileTooltip.isOpen} onOpenChange={profileTooltip.handleOpenChange}>
-          <TooltipTrigger asChild>
-            <DropdownMenu>
+        <DropdownMenu>
+          <Tooltip open={profileTooltip.isOpen} onOpenChange={profileTooltip.handleOpenChange}>
+            <TooltipTrigger asChild>
               <DropdownMenuTrigger asChild>
                 <Button 
                   variant="ghost" 
@@ -372,23 +372,23 @@ const Topbar: React.FC<TopbarProps> = ({
                   </div>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem onClick={() => navigate('/profile')}>
-                  Profile Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate('/settings')}>
-                  System Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => console.log('Logout')}>
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TooltipTrigger>
-          <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
-            Profile
-          </TooltipContent>
-        </Tooltip>
+            </TooltipTrigger>
+            <TooltipContent className="animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 transition-all duration-300">
+              Profile
+            </TooltipContent>
+          </Tooltip>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuItem onClick={() => navigate('/profile')}>
+              Profile Settings
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate('/settings')}>
+              System Settings
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => console.log('Logout')}>
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );

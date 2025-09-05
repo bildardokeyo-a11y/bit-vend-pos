@@ -16,6 +16,7 @@ export interface Product {
   status?: 'active' | 'inactive' | 'draft';
   createdAt?: string;
   updatedAt?: string;
+  image?: string;
 }
 
 interface ProductContextType {

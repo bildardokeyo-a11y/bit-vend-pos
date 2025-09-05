@@ -30,135 +30,7 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-// Mock product data (from checkout page)
-const initialProducts = [
-  {
-    id: 1,
-    name: "Premium Espresso Blend",
-    description: "Artisanal dark roast",
-    price: 24.99,
-    category: "Coffee",
-    stock: 150,
-    sku: "ESP-001",
-    status: "Active",
-    image: "/lovable-uploads/coffee-blend.jpg"
-  },
-  {
-    id: 2,
-    name: "Organic Green Tea",
-    description: "Hand-picked leaves",
-    price: 18.50,
-    category: "Tea",
-    stock: 75,
-    sku: "TEA-002",
-    status: "Active",
-    image: "/lovable-uploads/green-tea.jpg"
-  },
-  {
-    id: 3,
-    name: "Gourmet Chocolate Cake",
-    description: "Belgian chocolate",
-    price: 45.00,
-    category: "Dessert",
-    stock: 25,
-    sku: "CAK-003",
-    status: "Active",
-    image: "/lovable-uploads/chocolate-cake.jpg"
-  },
-  {
-    id: 4,
-    name: "Vintage Wine Selection",
-    description: "Reserve collection",
-    price: 89.99,
-    category: "Beverages",
-    stock: 12,
-    sku: "WIN-004",
-    status: "Active",
-    image: "/lovable-uploads/vintage-wine.jpg"
-  },
-  {
-    id: 5,
-    name: "Artisan Croissant",
-    description: "Buttery perfection",
-    price: 12.99,
-    category: "Pastry",
-    stock: 0,
-    sku: "CRO-005",
-    status: "Out of Stock",
-    image: "/lovable-uploads/croissant.jpg"
-  },
-  {
-    id: 6,
-    name: "Truffle Collection",
-    description: "Hand-crafted luxury",
-    price: 65.00,
-    category: "Confectionery",
-    stock: 8,
-    sku: "TRU-006",
-    status: "Low Stock",
-    image: "/lovable-uploads/truffle-collection.jpg"
-  },
-  {
-    id: 7,
-    name: "French Roast Coffee",
-    description: "Bold and smooth",
-    price: 22.99,
-    category: "Coffee",
-    stock: 200,
-    sku: "COF-007",
-    status: "Active"
-  },
-  {
-    id: 8,
-    name: "Earl Grey Tea",
-    description: "Classic bergamot blend",
-    price: 16.99,
-    category: "Tea",
-    stock: 120,
-    sku: "TEA-008",
-    status: "Active"
-  },
-  {
-    id: 9,
-    name: "Cheesecake Slice",
-    description: "New York style",
-    price: 35.00,
-    category: "Dessert",
-    stock: 15,
-    sku: "CHE-009",
-    status: "Active"
-  },
-  {
-    id: 10,
-    name: "Sparkling Water",
-    description: "Premium mineral water",
-    price: 8.99,
-    category: "Beverages",
-    stock: 300,
-    sku: "WAT-010",
-    status: "Active"
-  },
-  {
-    id: 11,
-    name: "Danish Pastry",
-    description: "Traditional recipe",
-    price: 14.50,
-    category: "Pastry",
-    stock: 45,
-    sku: "DAN-011",
-    status: "Active"
-  },
-  {
-    id: 12,
-    name: "Dark Chocolate Bar",
-    description: "70% cocoa content",
-    price: 28.00,
-    category: "Confectionery",
-    stock: 60,
-    sku: "CHO-012",
-    status: "Active"
-  }
-];
+// Mock product data will be handled by ProductContext
 
 const categories = ["All", "Coffee", "Tea", "Dessert", "Beverages", "Pastry", "Confectionery"];
 
@@ -177,7 +49,7 @@ const getStatusBadge = (status: string, stock: number) => {
 const Products = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [products, setProducts] = useState(initialProducts);
+  const { products, addProduct, updateProduct, deleteProduct } = useProducts();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
@@ -222,7 +94,7 @@ const Products = () => {
   // Handle delete product
   const handleDeleteProduct = (productId: number, productName: string) => {
     if (window.confirm(`Are you sure you want to delete "${productName}"? This action cannot be undone.`)) {
-      setProducts(prev => prev.filter(product => product.id !== productId));
+      deleteProduct(productId);
       toast({
         title: "Product Deleted",
         description: `${productName} has been removed from inventory.`,
@@ -334,19 +206,88 @@ const Products = () => {
             const workbook = XLSX.read(data, { type: 'array' });
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            const jsonData = XLSX.utils.sheet_to_json(worksheet) as any[];
             
-            console.log('Imported data:', jsonData);
-            toast({
-              title: "Excel Import",
-              description: `Successfully imported ${jsonData.length} rows from ${file.name}`,
+            // Validate required fields
+            const requiredFields = ['name', 'price', 'category'];
+            const validProducts = [];
+            const errors = [];
+            
+            for (let i = 0; i < jsonData.length; i++) {
+              const row = jsonData[i];
+              const missing = requiredFields.filter(field => !row[field] || row[field] === '');
+              
+              if (missing.length > 0) {
+                errors.push(`Row ${i + 2}: Missing required fields - ${missing.join(', ')}`);
+                continue;
+              }
+              
+              // Validate price is a number
+              const price = parseFloat(row.price);
+              if (isNaN(price) || price <= 0) {
+                errors.push(`Row ${i + 2}: Price must be a valid positive number`);
+                continue;
+              }
+              
+              // Format and validate the product data
+              const product = {
+                name: String(row.name).trim(),
+                description: String(row.description || '').trim(),
+                price: price,
+                category: String(row.category).trim(),
+                sku: String(row.sku || '').trim(),
+                stock: parseInt(row.stock) || 0,
+                minStock: parseInt(row.minStock) || 5,
+                brand: String(row.brand || '').trim(),
+                supplier: String(row.supplier || '').trim(),
+                status: 'active' as const
+              };
+              
+              validProducts.push(product);
+            }
+            
+            if (errors.length > 0) {
+              toast({
+                title: "Import Validation Errors",
+                description: `Found ${errors.length} errors. Please fix the format and try again.`,
+                variant: "destructive",
+              });
+              console.log('Import errors:', errors);
+              return;
+            }
+            
+            if (validProducts.length === 0) {
+              toast({
+                title: "Import Error",
+                description: "No valid products found in the file.",
+                variant: "destructive",
+              });
+              return;
+            }
+            
+            // Add products to the context
+            let successCount = 0;
+            validProducts.forEach(product => {
+              try {
+                addProduct(product);
+                successCount++;
+              } catch (error) {
+                console.error('Error adding product:', product.name, error);
+              }
             });
+            
+            toast({
+              title: "Import Success",
+              description: `Successfully imported ${successCount} products from ${file.name}`,
+            });
+            
           } catch (error) {
             toast({
               title: "Import Error",
-              description: "Failed to import Excel file. Please check the format.",
+              description: "Failed to import Excel file. Please ensure it's a valid Excel format with required columns: name, price, category.",
               variant: "destructive",
             });
+            console.error('Import error:', error);
           }
         };
         reader.readAsArrayBuffer(file);

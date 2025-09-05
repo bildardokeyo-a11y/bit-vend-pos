@@ -75,7 +75,7 @@ const Index: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-fadeInUp">
       {/* Welcome Header */}
       <div className="flex items-center justify-between">
         <div>
