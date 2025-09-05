@@ -634,9 +634,10 @@ const ProductAdd = () => {
                   <h3 className="font-medium">Advanced Inventory Settings</h3>
                   <p className="text-sm text-muted-foreground">Track serial numbers? lot/expiry? batch-level stock?</p>
                 </div>
-                <Button variant="outline" className="dark:bg-settings-form dark:text-white">
-                  Toggle
-                </Button>
+                <Switch
+                  checked={formData.advancedInventory}
+                  onCheckedChange={(checked) => handleInputChange('advancedInventory', checked)}
+                />
               </div>
             </TabsContent>
 
