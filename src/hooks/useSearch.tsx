@@ -63,6 +63,7 @@ const productResults: SearchResult[] = PRODUCTS.map(p => ({
   title: p.name,
   subtitle: `${p.category} - $${p.price.toFixed(2)}`,
   type: 'product',
+  path: `/products/view/${p.id}`,
 }));
 
 // Debounce utility
