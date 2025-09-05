@@ -46,6 +46,11 @@ import BalanceSheet from "./pages/BalanceSheet";
 import PurchaseReport from "./pages/PurchaseReport";
 import Attendance from "./pages/Attendance";
 import Users from "./pages/Users";
+import TrialBalance from "./pages/TrialBalance";
+import CashFlow from "./pages/CashFlow";
+import AccountStatement from "./pages/AccountStatement";
+import Holidays from "./pages/Holidays";
+import Payroll from "./pages/Payroll";
 
 const queryClient = new QueryClient();
 
@@ -98,6 +103,11 @@ const App = () => (
               <Route path="purchase-report" element={<PurchaseReport />} />
               <Route path="attendance" element={<Attendance />} />
               <Route path="users" element={<Users />} />
+              <Route path="trial-balance" element={<TrialBalance />} />
+              <Route path="cash-flow" element={<CashFlow />} />
+              <Route path="account-statement" element={<AccountStatement />} />
+              <Route path="holidays" element={<Holidays />} />
+              <Route path="payroll" element={<Payroll />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

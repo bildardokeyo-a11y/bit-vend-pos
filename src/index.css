@@ -9,7 +9,7 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Enhanced Light Theme - Vibrant & Modern */
-    --background: 248 250 252; /* Cool white with slight blue tint */
+    --background: 255 255 255; /* Pure white background */
     --foreground: 15 23 42; /* Rich dark slate */
 
     --card: 255 255 255; /* Pure white cards */
