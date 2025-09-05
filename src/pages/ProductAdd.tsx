@@ -26,7 +26,7 @@ const statusOptions = ["Active", "Inactive", "Draft"];
 const ProductAdd = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('general');
-  const [createdDate, setCreatedDate] = useState<Date>();
+  const [createdDate, setCreatedDate] = useState<Date>(new Date());
   const [expiryDate, setExpiryDate] = useState<Date>();
   
   const [formData, setFormData] = useState({
@@ -139,7 +139,7 @@ const ProductAdd = () => {
       status: 'Active', tags: '',
     });
     setImagePreview(null);
-    setCreatedDate(undefined);
+    setCreatedDate(new Date());
     setExpiryDate(undefined);
     setActiveTab('general');
   };
@@ -427,65 +427,6 @@ const ProductAdd = () => {
                 </div>
               </div>
 
-              {/* Product Image Upload */}
-              <div className="space-y-4">
-                <Label>Product Image</Label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => document.getElementById('image-upload')?.click()}
-                        className="dark:bg-settings-form dark:text-white gap-2"
-                      >
-                        <Upload className="h-4 w-4" />
-                        Upload Image
-                      </Button>
-                      {formData.image && (
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={removeImage}
-                          className="text-red-600 hover:text-red-700 gap-2"
-                        >
-                          <X className="h-4 w-4" />
-                          Remove
-                        </Button>
-                      )}
-                    </div>
-                    <input
-                      id="image-upload"
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={handleImageUpload}
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Supported formats: JPG, PNG, GIF. Max size: 5MB
-                    </p>
-                  </div>
-                  
-                  {/* Image Preview */}
-                  <div className="space-y-2">
-                    <Label>Preview</Label>
-                    <div className="w-full h-32 border-2 border-dashed rounded-lg flex items-center justify-center bg-muted dark:bg-settings-form">
-                      {imagePreview ? (
-                        <img
-                          src={imagePreview}
-                          alt="Product preview"
-                          className="max-w-full max-h-full object-contain rounded"
-                        />
-                      ) : (
-                        <div className="text-center">
-                          <Package className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                          <p className="text-sm text-muted-foreground">No image uploaded</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
             </TabsContent>
 
             {/* Pricing Tab */}
@@ -647,11 +588,64 @@ const ProductAdd = () => {
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label>Product Image</Label>
-                    <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
-                      <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                      <p className="text-sm text-muted-foreground mb-2">Upload image</p>
-                      <p className="text-xs text-muted-foreground">PNG/JPG, recommended 800×800</p>
+                    <div 
+                      className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
+                      onClick={() => document.getElementById('extras-image-upload')?.click()}
+                    >
+                      {imagePreview ? (
+                        <div className="space-y-2">
+                          <img
+                            src={imagePreview}
+                            alt="Product preview"
+                            className="mx-auto max-h-32 rounded object-contain"
+                          />
+                          <div className="flex items-center justify-center gap-2">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                document.getElementById('extras-image-upload')?.click();
+                              }}
+                              className="gap-2"
+                            >
+                              <Upload className="h-4 w-4" />
+                              Change Image
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeImage();
+                              }}
+                              className="text-red-600 hover:text-red-700 gap-2"
+                            >
+                              <X className="h-4 w-4" />
+                              Remove
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                          <p className="text-sm text-muted-foreground mb-2">Upload image</p>
+                          <p className="text-xs text-muted-foreground">PNG/JPG, recommended 800×800</p>
+                        </>
+                      )}
                     </div>
+                    <input
+                      id="extras-image-upload"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                    <p className="text-xs text-muted-foreground text-center">
+                      Supported formats: JPG, PNG, GIF. Max size: 5MB
+                    </p>
                   </div>
 
                   <div className="flex items-center space-x-2">
