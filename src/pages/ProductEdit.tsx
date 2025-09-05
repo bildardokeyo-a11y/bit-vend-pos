@@ -134,7 +134,8 @@ const ProductEdit = () => {
   const [formData, setFormData] = useState({
     name: originalProduct.name,
     description: originalProduct.description,
-    price: originalProduct.price.toString(),
+    buyingPrice: (originalProduct.price * 0.7).toFixed(2), // Assume 30% markup
+    sellingPrice: originalProduct.price.toString(),
     category: originalProduct.category,
     stock: originalProduct.stock.toString(),
     sku: originalProduct.sku,
@@ -297,13 +298,26 @@ const ProductEdit = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="price">Price *</Label>
+                    <Label htmlFor="buyingPrice">Buying Price *</Label>
                     <Input
-                      id="price"
+                      id="buyingPrice"
                       type="number"
                       step="0.01"
-                      value={formData.price}
-                      onChange={(e) => handleInputChange('price', e.target.value)}
+                      value={formData.buyingPrice}
+                      onChange={(e) => handleInputChange('buyingPrice', e.target.value)}
+                      placeholder="0.00"
+                      className="mt-1"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="sellingPrice">Selling Price *</Label>
+                    <Input
+                      id="sellingPrice"
+                      type="number"
+                      step="0.01"
+                      value={formData.sellingPrice}
+                      onChange={(e) => handleInputChange('sellingPrice', e.target.value)}
                       placeholder="0.00"
                       className="mt-1"
                     />
@@ -390,9 +404,16 @@ const ProductEdit = () => {
             <CardContent className="space-y-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-                  ${parseFloat(formData.price || '0').toFixed(2)}
+                  ${parseFloat(formData.sellingPrice || '0').toFixed(2)}
                 </div>
-                <div className="text-sm text-muted-foreground">Current Price</div>
+                <div className="text-sm text-muted-foreground">Selling Price</div>
+              </div>
+              
+              <div className="text-center">
+                <div className="text-lg font-semibold text-blue-600 dark:text-blue-400">
+                  ${parseFloat(formData.buyingPrice || '0').toFixed(2)}
+                </div>
+                <div className="text-sm text-muted-foreground">Buying Price</div>
               </div>
               
               <div className="text-center">
@@ -404,9 +425,9 @@ const ProductEdit = () => {
               
               <div className="text-center">
                 <div className="text-lg font-semibold">
-                  ${(parseFloat(formData.price || '0') * parseInt(formData.stock || '0')).toFixed(2)}
+                  ${((parseFloat(formData.sellingPrice || '0') - parseFloat(formData.buyingPrice || '0')) * parseInt(formData.stock || '0')).toFixed(2)}
                 </div>
-                <div className="text-sm text-muted-foreground">Total Value</div>
+                <div className="text-sm text-muted-foreground">Profit Potential</div>
               </div>
             </CardContent>
           </Card>

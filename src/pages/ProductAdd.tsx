@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, X, Upload, RotateCcw, Calendar } from 'lucide-react';
+import { ArrowLeft, Save, X, Upload, RotateCcw, Calendar, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -42,6 +42,7 @@ const ProductAdd = () => {
     supplier: '',
     batchLotNo: '',
     multipleBarcodes: '',
+    image: null as File | null,
     
     // Pricing
     purchasePrice: '',
@@ -66,6 +67,8 @@ const ProductAdd = () => {
     tags: '',
   });
 
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
   const tabs = [
     { id: 'general', label: 'General', step: 1 },
     { id: 'pricing', label: 'Pricing', step: 2 },
@@ -76,8 +79,27 @@ const ProductAdd = () => {
   const currentStep = tabs.find(tab => tab.id === activeTab)?.step || 1;
   const progress = (currentStep / 4) * 100;
 
-  const handleInputChange = (field: string, value: string | boolean) => {
+  const handleInputChange = (field: string, value: string | boolean | File | null) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, image: file }));
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setFormData(prev => ({ ...prev, image: null }));
+    setImagePreview(null);
   };
 
   const generateSKU = () => {
@@ -111,11 +133,12 @@ const ProductAdd = () => {
     setFormData({
       name: '', category: '', addedBy: 'Admin', warranty: '', productType: 'Standard',
       sku: '', barcode: '', brand: '', supplier: '', batchLotNo: '', multipleBarcodes: '',
-      purchasePrice: '', sellingPrice: '', discount: '', discountType: '%', tax: '',
+      image: null, purchasePrice: '', sellingPrice: '', discount: '', discountType: '%', tax: '',
       profitMargin: '', taxable: true, unit: 'Piece', stockQuantity: '', minStockAlert: '',
       reorderPoint: '', advancedInventory: false, description: '', featuredProduct: false,
       status: 'Active', tags: '',
     });
+    setImagePreview(null);
     setCreatedDate(undefined);
     setExpiryDate(undefined);
     setActiveTab('general');
@@ -401,6 +424,66 @@ const ProductAdd = () => {
                     onChange={(e) => handleInputChange('multipleBarcodes', e.target.value)}
                     className="dark:bg-settings-form dark:text-white"
                   />
+                </div>
+              </div>
+
+              {/* Product Image Upload */}
+              <div className="space-y-4">
+                <Label>Product Image</Label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => document.getElementById('image-upload')?.click()}
+                        className="dark:bg-settings-form dark:text-white gap-2"
+                      >
+                        <Upload className="h-4 w-4" />
+                        Upload Image
+                      </Button>
+                      {formData.image && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={removeImage}
+                          className="text-red-600 hover:text-red-700 gap-2"
+                        >
+                          <X className="h-4 w-4" />
+                          Remove
+                        </Button>
+                      )}
+                    </div>
+                    <input
+                      id="image-upload"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Supported formats: JPG, PNG, GIF. Max size: 5MB
+                    </p>
+                  </div>
+                  
+                  {/* Image Preview */}
+                  <div className="space-y-2">
+                    <Label>Preview</Label>
+                    <div className="w-full h-32 border-2 border-dashed rounded-lg flex items-center justify-center bg-muted dark:bg-settings-form">
+                      {imagePreview ? (
+                        <img
+                          src={imagePreview}
+                          alt="Product preview"
+                          className="max-w-full max-h-full object-contain rounded"
+                        />
+                      ) : (
+                        <div className="text-center">
+                          <Package className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                          <p className="text-sm text-muted-foreground">No image uploaded</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </TabsContent>

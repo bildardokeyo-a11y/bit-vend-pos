@@ -39,7 +39,8 @@ const initialProducts = [
     category: "Coffee",
     stock: 150,
     sku: "ESP-001",
-    status: "Active"
+    status: "Active",
+    image: "/lovable-uploads/coffee-blend.jpg"
   },
   {
     id: 2,
@@ -49,7 +50,8 @@ const initialProducts = [
     category: "Tea",
     stock: 75,
     sku: "TEA-002",
-    status: "Active"
+    status: "Active",
+    image: "/lovable-uploads/green-tea.jpg"
   },
   {
     id: 3,
@@ -59,7 +61,8 @@ const initialProducts = [
     category: "Dessert",
     stock: 25,
     sku: "CAK-003",
-    status: "Active"
+    status: "Active",
+    image: "/lovable-uploads/chocolate-cake.jpg"
   },
   {
     id: 4,
@@ -69,7 +72,8 @@ const initialProducts = [
     category: "Beverages",
     stock: 12,
     sku: "WIN-004",
-    status: "Active"
+    status: "Active",
+    image: "/lovable-uploads/vintage-wine.jpg"
   },
   {
     id: 5,
@@ -79,7 +83,8 @@ const initialProducts = [
     category: "Pastry",
     stock: 0,
     sku: "CRO-005",
-    status: "Out of Stock"
+    status: "Out of Stock",
+    image: "/lovable-uploads/croissant.jpg"
   },
   {
     id: 6,
@@ -89,7 +94,8 @@ const initialProducts = [
     category: "Confectionery",
     stock: 8,
     sku: "TRU-006",
-    status: "Low Stock"
+    status: "Low Stock",
+    image: "/lovable-uploads/truffle-collection.jpg"
   },
   {
     id: 7,
@@ -518,17 +524,29 @@ const Products = () => {
                  ) : (
                     paginatedProducts.map((product) => (
                      <TableRow key={product.id} className="hover:bg-muted/50 hover:shadow-lg transition-all duration-300 cursor-pointer group hover:scale-[1.02] hover:z-10 relative">
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center">
-                            <Package className="h-5 w-5 text-muted-foreground" />
-                          </div>
-                          <div>
-                            <p className="font-medium">{product.name}</p>
-                            <p className="text-sm text-muted-foreground">{product.description}</p>
-                          </div>
-                        </div>
-                      </TableCell>
+                       <TableCell>
+                         <div className="flex items-center gap-3">
+                           <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center overflow-hidden">
+                             {product.image ? (
+                               <img 
+                                 src={product.image} 
+                                 alt={product.name}
+                                 className="w-full h-full object-cover"
+                                 onError={(e) => {
+                                   const target = e.target as HTMLImageElement;
+                                   target.style.display = 'none';
+                                   target.nextElementSibling?.classList.remove('hidden');
+                                 }}
+                               />
+                             ) : null}
+                             <Package className={`h-5 w-5 text-muted-foreground ${product.image ? 'hidden' : ''}`} />
+                           </div>
+                           <div>
+                             <p className="font-medium">{product.name}</p>
+                             <p className="text-sm text-muted-foreground">{product.description}</p>
+                           </div>
+                         </div>
+                       </TableCell>
                       <TableCell className="font-mono text-sm">{product.sku}</TableCell>
                       <TableCell>
                         <Badge variant="outline" className="rounded-full">
