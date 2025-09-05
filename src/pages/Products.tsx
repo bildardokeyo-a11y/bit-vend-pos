@@ -220,12 +220,14 @@ const Products = () => {
 
   // Handle delete product
   const handleDeleteProduct = (productId: number, productName: string) => {
-    setProducts(prev => prev.filter(product => product.id !== productId));
-    toast({
-      title: "Product Deleted",
-      description: `${productName} has been removed from inventory.`,
-      variant: "destructive",
-    });
+    if (window.confirm(`Are you sure you want to delete "${productName}"? This action cannot be undone.`)) {
+      setProducts(prev => prev.filter(product => product.id !== productId));
+      toast({
+        title: "Product Deleted",
+        description: `${productName} has been removed from inventory.`,
+        variant: "destructive",
+      });
+    }
   };
 
   // Handle navigation
