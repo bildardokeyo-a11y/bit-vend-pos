@@ -285,9 +285,9 @@ const ProductAdd = () => {
                           "w-full justify-start text-left font-normal dark:bg-settings-form dark:text-white",
                           !createdDate && "text-muted-foreground"
                         )}
-                      >
-                        <Calendar className="mr-2 h-4 w-4" />
-                        {createdDate ? format(createdDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
+                        >
+                          <Calendar className="mr-2 h-4 w-4 text-foreground" />
+                          {createdDate ? format(createdDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0 dark:bg-settings-form" align="start">
@@ -419,9 +419,9 @@ const ProductAdd = () => {
                           "w-full justify-start text-left font-normal dark:bg-settings-form dark:text-white",
                           !expiryDate && "text-muted-foreground"
                         )}
-                      >
-                        <Calendar className="mr-2 h-4 w-4" />
-                        {expiryDate ? format(expiryDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
+                        >
+                          <Calendar className="mr-2 h-4 w-4 text-foreground" />
+                          {expiryDate ? format(expiryDate, "dd/MM/yyyy") : "dd/mm/yyyy"}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0 dark:bg-settings-form" align="start">

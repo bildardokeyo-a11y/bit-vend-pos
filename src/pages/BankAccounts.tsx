@@ -287,7 +287,7 @@ const BankAccounts = () => {
 
               <div className="flex justify-end gap-2 pt-4 border-t mt-4">
                 <Button variant="outline" size="sm">
-                  <Calendar className="w-4 h-4 mr-1" />
+                  <Calendar className="w-4 h-4 mr-1 text-foreground" />
                   Reconcile
                 </Button>
                 <Button variant="outline" size="sm">

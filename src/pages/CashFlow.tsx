@@ -86,7 +86,7 @@ const CashFlow = () => {
       <Card>
         <CardContent className="p-4">
           <div className="flex items-center gap-4">
-            <Calendar className="w-5 h-5 text-muted-foreground" />
+            <Calendar className="w-5 h-5 text-foreground" />
             <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
               <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder="Select Period" />

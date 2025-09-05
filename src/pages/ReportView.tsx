@@ -453,7 +453,7 @@ const ReportView: React.FC = () => {
             {/* Date Range */}
             <div className="space-y-2">
               <Label className="flex items-center">
-                <Calendar className="h-4 w-4 mr-2" />
+                <Calendar className="h-4 w-4 mr-2 text-foreground" />
                 Start Date
               </Label>
               <Input
@@ -476,7 +476,7 @@ const ReportView: React.FC = () => {
             {currentReport.filters.includes('product') && (
               <div className="space-y-2">
                 <Label className="flex items-center">
-                  <Package className="h-4 w-4 mr-2" />
+                  <Package className="h-4 w-4 mr-2 text-foreground" />
                   Product
                 </Label>
                 <Select value={selectedProduct} onValueChange={setSelectedProduct}>
@@ -516,7 +516,7 @@ const ReportView: React.FC = () => {
             {(currentReport.filters.includes('employee') || currentReport.filters.includes('cashier')) && (
               <div className="space-y-2">
                 <Label className="flex items-center">
-                  <User className="h-4 w-4 mr-2" />
+                  <User className="h-4 w-4 mr-2 text-foreground" />
                   Employee
                 </Label>
                 <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
