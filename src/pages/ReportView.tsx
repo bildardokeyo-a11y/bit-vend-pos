@@ -470,6 +470,7 @@ const ReportView: React.FC = () => {
               </Label>
               <Input
                 type="date"
+                className="min-w-[220px]"
                 value={dateRange.endDate}
                 onChange={(e) => setDateRange({...dateRange, endDate: e.target.value})}
               />
@@ -483,7 +484,7 @@ const ReportView: React.FC = () => {
                   Product
                 </Label>
                 <Select value={selectedProduct} onValueChange={setSelectedProduct}>
-                  <SelectTrigger>
+                  <SelectTrigger className="min-w-[220px]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -501,9 +502,9 @@ const ReportView: React.FC = () => {
               <div className="space-y-2 lg:col-span-1">
                 <Label>Category</Label>
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
+                    <SelectTrigger className="min-w-[220px]">
+                      <SelectValue />
+                    </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Categories</SelectItem>
                     <SelectItem value="Electronics">Electronics</SelectItem>
