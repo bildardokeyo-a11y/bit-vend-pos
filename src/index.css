@@ -19,25 +19,25 @@ All colors MUST be HSL.
     --popover-foreground: 15 23 42;
 
     --primary: 59 130 246; /* Bright blue */
-    --primary-foreground: 248 250 252;
+    --primary-foreground: 255 255 255;
     --primary-hover: 37 99 235; /* Darker blue on hover */
 
-    --secondary: 148 163 184; /* Cool gray */
-    --secondary-foreground: 15 23 42;
-    --secondary-hover: 100 116 139; /* Darker gray on hover */
+    --secondary: 226 232 240; /* Light gray */
+    --secondary-foreground: 30 41 59; /* Dark slate gray */
+    --secondary-hover: 203 213 225; /* Darker gray on hover */
 
-    --muted: 241 245 249; /* Light gray background */
-    --muted-foreground: 100 116 139; /* Medium gray text */
+    --muted: 248 250 252; /* Very light gray background */
+    --muted-foreground: 71 85 105; /* Medium dark gray text */
 
-    --accent: 236 254 255; /* Light cyan accent */
-    --accent-foreground: 8 145 178; /* Cyan text */
+    --accent: 241 245 249; /* Light gray accent */
+    --accent-foreground: 30 41 59; /* Dark text */
 
     --destructive: 239 68 68; /* Bright red */
     --destructive-foreground: 255 255 255;
     --destructive-hover: 220 38 38; /* Darker red on hover */
 
     --border: 226 232 240; /* Light border */
-    --input: 248 250 252; /* Input background */
+    --input: 255 255 255; /* White input background */
     --input-border: 203 213 225; /* Input border */
     --ring: 59 130 246; /* Focus ring color */
 
@@ -45,10 +45,10 @@ All colors MUST be HSL.
 
     /* Sidebar colors - Light theme */
     --sidebar-background: 255 255 255;
-    --sidebar-foreground: 71 85 105;
+    --sidebar-foreground: 51 65 85; /* Darker text for better contrast */
     --sidebar-primary: 59 130 246;
     --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: 241 245 249;
+    --sidebar-accent: 248 250 252;
     --sidebar-accent-foreground: 59 130 246;
     --sidebar-border: 226 232 240;
     --sidebar-ring: 59 130 246;
@@ -78,15 +78,15 @@ All colors MUST be HSL.
     --table-header-bg: 248 250 252;
     --table-header-text: 15 23 42;
     --table-row-bg: 255 255 255;
-    --table-row-hover: 241 245 249;
+    --table-row-hover: 248 250 252;
     --table-border: 226 232 240;
     
     /* Enhanced text hierarchy */
-    --text-primary: 15 23 42; /* Primary text */
-    --text-secondary: 71 85 105; /* Secondary text */
-    --text-tertiary: 100 116 139; /* Tertiary text */
-    --text-placeholder: 148 163 184; /* Placeholder text */
-    --text-disabled: 203 213 225; /* Disabled text */
+    --text-primary: 15 23 42; /* Primary text - very dark */
+    --text-secondary: 51 65 85; /* Secondary text - dark gray */
+    --text-tertiary: 71 85 105; /* Tertiary text - medium gray */
+    --text-placeholder: 100 116 139; /* Placeholder text */
+    --text-disabled: 148 163 184; /* Disabled text */
   }
 
   .dark {
