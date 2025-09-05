@@ -3665,7 +3665,7 @@ const Settings = () => {
         />
         
         {/* Sidebar */}
-        <div className="w-80 bg-card dark:bg-settings-form border-r border-border p-6 min-h-screen overflow-y-auto max-h-screen">
+        <div className="settings-sidebar w-80 bg-card dark:bg-settings-form border-r border-border p-6 min-h-screen overflow-y-auto max-h-screen">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-foreground mb-2">Settings</h1>
             <p className="text-muted-foreground">Manage your POS system configuration</p>
@@ -3675,17 +3675,18 @@ const Settings = () => {
               <div key={section.id} className="transition-transform duration-200">
                 <Button
                   variant="ghost"
-                  className="w-full justify-between p-3 h-auto"
+                  data-variant="ghost"
+                  className="w-full justify-between p-3 h-auto text-foreground"
                   onClick={() => toggleSection(section.id)}
                 >
                   <div className="flex items-center">
-                    <section.icon className="w-4 h-4 mr-3" />
-                    <span className="font-medium">{section.title}</span>
+                    <section.icon className="w-4 h-4 mr-3 text-foreground" />
+                    <span className="font-medium text-foreground">{section.title}</span>
                   </div>
                   {expandedSections[section.id] ? (
-                    <ChevronDown className="w-4 h-4" />
+                    <ChevronDown className="w-4 h-4 text-foreground" />
                   ) : (
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-4 h-4 text-foreground" />
                   )}
                 </Button>
                 
@@ -3699,11 +3700,16 @@ const Settings = () => {
                             ? "secondary"
                             : "ghost"
                         }
-                        className="w-full justify-start p-2 h-auto text-sm transition-transform duration-200"
+                        data-variant={
+                          activeSection === section.id && activeSubsection === subsection.id
+                            ? "secondary"
+                            : "ghost"
+                        }
+                        className="w-full justify-start p-2 h-auto text-sm text-foreground transition-transform duration-200"
                         onClick={() => handleSubsectionClick(section.id, subsection.id)}
                       >
-                        <subsection.icon className="w-3 h-3 mr-2" />
-                        {subsection.title}
+                        <subsection.icon className="w-3 h-3 mr-2 text-foreground" />
+                        <span className="text-foreground">{subsection.title}</span>
                       </Button>
                     ))}
                   </div>

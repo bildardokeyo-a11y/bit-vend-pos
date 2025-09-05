@@ -502,6 +502,23 @@ All colors MUST be HSL.
     @apply text-text-disabled;
   }
 
+  /* Force visibility for sidebar menu items in light mode */
+  .settings-sidebar button,
+  .settings-sidebar button span,
+  .settings-sidebar button svg {
+    color: hsl(var(--text-primary)) !important;
+  }
+
+  .settings-sidebar button[data-variant="ghost"]:hover {
+    background-color: hsl(var(--accent)) !important;
+    color: hsl(var(--text-primary)) !important;
+  }
+
+  .settings-sidebar button[data-variant="secondary"] {
+    background-color: hsl(var(--secondary)) !important;
+    color: hsl(var(--secondary-foreground)) !important;
+  }
+
   /* POS Dark Mode Auto-Applied Styles */
   .dark form,
   .dark .form-container,
