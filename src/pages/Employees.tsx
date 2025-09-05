@@ -479,16 +479,16 @@ const Employees = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Employee</TableHead>
-                <TableHead>Contact Info</TableHead>
-                <TableHead>Position</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Work Type</TableHead>
-                <TableHead>Salary</TableHead>
-                <TableHead>Hire Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Employee</TableHead>
+                <TableHead className="text-white font-semibold">Contact Info</TableHead>
+                <TableHead className="text-white font-semibold">Position</TableHead>
+                <TableHead className="text-white font-semibold">Department</TableHead>
+                <TableHead className="text-white font-semibold">Work Type</TableHead>
+                <TableHead className="text-white font-semibold">Salary</TableHead>
+                <TableHead className="text-white font-semibold">Hire Date</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -201,16 +201,16 @@ const Sales = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Invoice</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Items</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Payment</TableHead>
-                <TableHead>Sales Person</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Invoice</TableHead>
+                <TableHead className="text-white font-semibold">Customer</TableHead>
+                <TableHead className="text-white font-semibold">Items</TableHead>
+                <TableHead className="text-white font-semibold">Amount</TableHead>
+                <TableHead className="text-white font-semibold">Payment</TableHead>
+                <TableHead className="text-white font-semibold">Sales Person</TableHead>
+                <TableHead className="text-white font-semibold">Date</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

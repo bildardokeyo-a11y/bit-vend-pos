@@ -411,15 +411,15 @@ const Brands = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Brand</TableHead>
-                <TableHead>Manufacturer</TableHead>
-                <TableHead>Country</TableHead>
-                <TableHead>Products</TableHead>
-                <TableHead>Established</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Brand</TableHead>
+                <TableHead className="text-white font-semibold">Manufacturer</TableHead>
+                <TableHead className="text-white font-semibold">Country</TableHead>
+                <TableHead className="text-white font-semibold">Products</TableHead>
+                <TableHead className="text-white font-semibold">Established</TableHead>
+                <TableHead className="text-white font-semibold">Contact</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

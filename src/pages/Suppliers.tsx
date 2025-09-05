@@ -385,16 +385,16 @@ const Suppliers = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Company</TableHead>
-                <TableHead>Contact Person</TableHead>
-                <TableHead>Contact Info</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Payment Terms</TableHead>
-                <TableHead>Orders</TableHead>
-                <TableHead>Total Amount</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Company</TableHead>
+                <TableHead className="text-white font-semibold">Contact Person</TableHead>
+                <TableHead className="text-white font-semibold">Contact Info</TableHead>
+                <TableHead className="text-white font-semibold">Location</TableHead>
+                <TableHead className="text-white font-semibold">Payment Terms</TableHead>
+                <TableHead className="text-white font-semibold">Orders</TableHead>
+                <TableHead className="text-white font-semibold">Total Amount</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
