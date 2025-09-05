@@ -9,7 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Save, Package, X } from 'lucide-react';
+import { ArrowLeft, Save, Package, X, Camera, Upload } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 // Mock product data (same as ProductView)
 const productData = [
@@ -27,7 +28,8 @@ const productData = [
     lastUpdated: "2024-02-20",
     weight: "500g",
     dimensions: "12cm x 8cm x 4cm",
-    barcode: "1234567890123"
+    barcode: "1234567890123",
+    image: "/lovable-uploads/coffee-blend.jpg"
   },
   {
     id: 2,
@@ -43,7 +45,8 @@ const productData = [
     lastUpdated: "2024-02-18",
     weight: "250g",
     dimensions: "10cm x 10cm x 5cm",
-    barcode: "1234567890124"
+    barcode: "1234567890124",
+    image: "/lovable-uploads/green-tea.jpg"
   },
   {
     id: 3,
@@ -59,7 +62,8 @@ const productData = [
     lastUpdated: "2024-02-25",
     weight: "1.2kg",
     dimensions: "25cm x 25cm x 8cm",
-    barcode: "1234567890125"
+    barcode: "1234567890125",
+    image: "/lovable-uploads/chocolate-cake.jpg"
   },
   {
     id: 4,
@@ -75,7 +79,8 @@ const productData = [
     lastUpdated: "2024-02-15",
     weight: "750ml",
     dimensions: "8cm x 8cm x 30cm",
-    barcode: "1234567890126"
+    barcode: "1234567890126",
+    image: "/lovable-uploads/vintage-wine.jpg"
   },
   {
     id: 5,
@@ -91,7 +96,8 @@ const productData = [
     lastUpdated: "2024-02-28",
     weight: "85g each",
     dimensions: "12cm x 6cm x 4cm",
-    barcode: "1234567890127"
+    barcode: "1234567890127",
+    image: "/lovable-uploads/croissant.jpg"
   },
   {
     id: 6,
@@ -107,7 +113,8 @@ const productData = [
     lastUpdated: "2024-02-22",
     weight: "300g",
     dimensions: "15cm x 15cm x 3cm",
-    barcode: "1234567890128"
+    barcode: "1234567890128",
+    image: "/lovable-uploads/truffle-collection.jpg"
   }
 ];
 
@@ -142,10 +149,13 @@ const ProductEdit = () => {
     supplier: originalProduct.supplier,
     weight: originalProduct.weight,
     dimensions: originalProduct.dimensions,
-    barcode: originalProduct.barcode
+    barcode: originalProduct.barcode,
+    image: originalProduct.image || ''
   });
 
   const [isModified, setIsModified] = useState(false);
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -184,6 +194,34 @@ const ProductEdit = () => {
       if (!confirmed) return;
     }
     navigate(`/products/view/${productId}`);
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setImagePreview(result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageSave = () => {
+    if (imagePreview) {
+      const timestamp = Date.now();
+      const imagePath = `/lovable-uploads/product-${productId}-${timestamp}.jpg`;
+      
+      handleInputChange('image', imagePath);
+      
+      toast({
+        title: "Image Updated",
+        description: "Product image has been updated successfully.",
+      });
+    }
+    setIsImageDialogOpen(false);
+    setImagePreview(null);
   };
 
   return (
@@ -233,6 +271,95 @@ const ProductEdit = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Edit Form */}
         <div className="lg:col-span-2 space-y-6">
+          {/* Product Image */}
+          <Card className="dark:bg-[#1c1c1c]">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Camera className="h-5 w-5" />
+                Product Image
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-4">
+                <div className="w-24 h-24 rounded-lg border-2 border-dashed border-muted-foreground/25 flex items-center justify-center overflow-hidden">
+                  {formData.image ? (
+                    <img 
+                      src={formData.image} 
+                      alt={formData.name}
+                      className="w-full h-full object-cover rounded"
+                    />
+                  ) : (
+                    <Camera className="h-8 w-8 text-muted-foreground" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-medium">{formData.image ? 'Current Image' : 'No Image'}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {formData.image ? 'Click "Edit Image" to change' : 'Upload a product image to improve visibility'}
+                  </p>
+                  <Dialog open={isImageDialogOpen} onOpenChange={setIsImageDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm" className="mt-2 gap-2">
+                        <Upload className="h-4 w-4" />
+                        Edit Image
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Update Product Image</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="flex flex-col items-center gap-4">
+                          <div className="w-32 h-32 rounded-lg border-2 border-dashed border-muted-foreground/25 flex items-center justify-center overflow-hidden">
+                            {imagePreview ? (
+                              <img 
+                                src={imagePreview} 
+                                alt="Preview"
+                                className="w-full h-full object-cover rounded"
+                              />
+                            ) : formData.image ? (
+                              <img 
+                                src={formData.image} 
+                                alt="Current"
+                                className="w-full h-full object-cover rounded"
+                              />
+                            ) : (
+                              <Camera className="h-12 w-12 text-muted-foreground" />
+                            )}
+                          </div>
+                          <div className="w-full">
+                            <Input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleImageUpload}
+                              className="w-full"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex gap-2 justify-end">
+                          <Button 
+                            variant="outline" 
+                            onClick={() => {
+                              setIsImageDialogOpen(false);
+                              setImagePreview(null);
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                          <Button 
+                            onClick={handleImageSave}
+                            disabled={!imagePreview}
+                          >
+                            Save Image
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
           <Card className="dark:bg-[#1c1c1c]">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
