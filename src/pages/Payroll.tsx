@@ -51,6 +51,7 @@ const Payroll = () => {
   const [selectedPayroll, setSelectedPayroll] = useState<PayrollRecord | null>(null);
   const [showPayslipModal, setShowPayslipModal] = useState(false);
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
+  const [employeeSearchTerm, setEmployeeSearchTerm] = useState('');
   
   const { currentBusiness } = useBusiness();
 
@@ -153,6 +154,15 @@ const Payroll = () => {
     });
   }, [payrollRecords, searchTerm, statusFilter, departmentFilter]);
 
+  // Filter employees for payslip modal
+  const filteredEmployeesForPayslip = useMemo(() => {
+    return payrollRecords.filter(record =>
+      record.employeeName.toLowerCase().includes(employeeSearchTerm.toLowerCase()) ||
+      record.employeeId.toLowerCase().includes(employeeSearchTerm.toLowerCase()) ||
+      record.department.toLowerCase().includes(employeeSearchTerm.toLowerCase())
+    );
+  }, [payrollRecords, employeeSearchTerm]);
+
   const totalGrossPay = filteredPayroll.reduce((sum, record) => sum + record.grossPay, 0);
   const totalNetPay = filteredPayroll.reduce((sum, record) => sum + record.netPay, 0);
   const totalTaxes = filteredPayroll.reduce((sum, record) => sum + record.taxes, 0);
@@ -193,6 +203,8 @@ const Payroll = () => {
 
   const handleGeneratePayslip = () => {
     setShowPayslipModal(true);
+    setEmployeeSearchTerm(''); // Reset search when opening modal
+    setSelectedEmployees([]); // Reset selections
   };
 
   const handleEmployeeSelect = (employeeId: string, checked: boolean) => {
@@ -202,6 +214,19 @@ const Payroll = () => {
         : prev.filter(id => id !== employeeId)
     );
   };
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedEmployees(filteredEmployeesForPayslip.map(record => record.employeeId));
+    } else {
+      setSelectedEmployees([]);
+    }
+  };
+
+  const isAllSelected = filteredEmployeesForPayslip.length > 0 && 
+    filteredEmployeesForPayslip.every(record => selectedEmployees.includes(record.employeeId));
+  
+  const isSomeSelected = selectedEmployees.length > 0 && !isAllSelected;
 
   const generatePayslipPDF = (employee: PayrollRecord) => {
     const pdf = new jsPDF('p', 'mm', 'a4');
@@ -711,31 +736,73 @@ const Payroll = () => {
           </DialogHeader>
           <div className="space-y-4">
             <p className="text-muted-foreground">Select employees to generate payslips for:</p>
+            
+            {/* Search Box */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <Input
+                type="text"
+                placeholder="Search employees..."
+                value={employeeSearchTerm}
+                onChange={(e) => setEmployeeSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+
+            {/* Select All Checkbox */}
+            <div className="flex items-center space-x-3 p-3 border rounded-lg bg-muted/20">
+              <Checkbox
+                checked={isAllSelected}
+                onCheckedChange={handleSelectAll}
+              />
+              <div className="flex-1">
+                <p className="font-medium">
+                  {isAllSelected ? 'Deselect All' : 'Select All'} 
+                  {filteredEmployeesForPayslip.length > 0 && ` (${filteredEmployeesForPayslip.length} employees)`}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {selectedEmployees.length > 0 
+                    ? `${selectedEmployees.length} employee(s) selected`
+                    : 'No employees selected'
+                  }
+                </p>
+              </div>
+            </div>
+
+            {/* Employee List */}
             <div className="space-y-2 max-h-96 overflow-y-auto">
-              {payrollRecords.map((record) => (
-                <div key={record.id} className="flex items-center space-x-3 p-3 border rounded-lg">
-                  <Checkbox
-                    checked={selectedEmployees.includes(record.employeeId)}
-                    onCheckedChange={(checked) => 
-                      handleEmployeeSelect(record.employeeId, checked as boolean)
-                    }
-                  />
-                  <div className="flex-1">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="font-medium">{record.employeeName}</p>
-                        <p className="text-sm text-muted-foreground">{record.employeeId} - {record.department}</p>
-                        <p className="text-sm text-muted-foreground">{record.position}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-medium">${record.netPay.toLocaleString()}</p>
-                        <p className="text-sm text-muted-foreground">{record.payPeriod}</p>
+              {filteredEmployeesForPayslip.length > 0 ? (
+                filteredEmployeesForPayslip.map((record) => (
+                  <div key={record.id} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-muted/30 transition-colors">
+                    <Checkbox
+                      checked={selectedEmployees.includes(record.employeeId)}
+                      onCheckedChange={(checked) => 
+                        handleEmployeeSelect(record.employeeId, checked as boolean)
+                      }
+                    />
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="font-medium">{record.employeeName}</p>
+                          <p className="text-sm text-muted-foreground">{record.employeeId} - {record.department}</p>
+                          <p className="text-sm text-muted-foreground">{record.position}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-medium">${record.netPay.toLocaleString()}</p>
+                          <p className="text-sm text-muted-foreground">{record.payPeriod}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  <Users className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                  <p>No employees found matching your search.</p>
                 </div>
-              ))}
+              )}
             </div>
+            
             <div className="flex justify-between items-center pt-4 border-t">
               <p className="text-sm text-muted-foreground">
                 {selectedEmployees.length} employee(s) selected
