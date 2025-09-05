@@ -8,62 +8,85 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 3%;
+    /* Enhanced Light Theme - Vibrant & Modern */
+    --background: 248 250 252; /* Cool white with slight blue tint */
+    --foreground: 15 23 42; /* Rich dark slate */
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3%;
+    --card: 255 255 255; /* Pure white cards */
+    --card-foreground: 15 23 42;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 59 130 246; /* Bright blue */
+    --primary-foreground: 248 250 252;
+    --primary-hover: 37 99 235; /* Darker blue on hover */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 148 163 184; /* Cool gray */
+    --secondary-foreground: 15 23 42;
+    --secondary-hover: 100 116 139; /* Darker gray on hover */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 241 245 249; /* Light gray background */
+    --muted-foreground: 100 116 139; /* Medium gray text */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 236 254 255; /* Light cyan accent */
+    --accent-foreground: 8 145 178; /* Cyan text */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 239 68 68; /* Bright red */
+    --destructive-foreground: 255 255 255;
+    --destructive-hover: 220 38 38; /* Darker red on hover */
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 226 232 240; /* Light border */
+    --input: 248 250 252; /* Input background */
+    --input-border: 203 213 225; /* Input border */
+    --ring: 59 130 246; /* Focus ring color */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Slightly more rounded */
 
-    --sidebar-background: 0 0% 98%;
+    /* Sidebar colors - Light theme */
+    --sidebar-background: 255 255 255;
+    --sidebar-foreground: 71 85 105;
+    --sidebar-primary: 59 130 246;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 241 245 249;
+    --sidebar-accent-foreground: 59 130 246;
+    --sidebar-border: 226 232 240;
+    --sidebar-ring: 59 130 246;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
-    /* POS Colors */
-    --success: 142 76% 36%;
-    --success-foreground: 355.7 100% 97.3%;
-    --warning: 49 100% 50%;
-    --warning-foreground: 0 0% 0%;
-    --orange-accent: 25 95% 53%;
+    /* Enhanced POS Colors - Light theme */
+    --success: 34 197 94; /* Bright green */
+    --success-foreground: 255 255 255;
+    --success-hover: 22 163 74; /* Darker green */
+    
+    --warning: 245 158 11; /* Bright orange */
+    --warning-foreground: 255 255 255;
+    --warning-hover: 217 119 6; /* Darker orange */
+    
+    --info: 14 165 233; /* Bright sky blue */
+    --info-foreground: 255 255 255;
+    --info-hover: 2 132 199; /* Darker blue */
+    
+    /* Enhanced interactive colors */
+    --hover-overlay: 59 130 246 / 0.05; /* Subtle blue overlay */
+    --active-overlay: 59 130 246 / 0.1; /* Stronger blue overlay */
     
     /* Settings Form Background */
-    --settings-form-bg: 0 0% 100%;
-    --settings-card-bg: 0 0% 98%;
+    --settings-form-bg: 255 255 255;
+    --settings-card-bg: 248 250 252;
+    
+    /* Table colors - Light theme */
+    --table-header-bg: 248 250 252;
+    --table-header-text: 15 23 42;
+    --table-row-bg: 255 255 255;
+    --table-row-hover: 241 245 249;
+    --table-border: 226 232 240;
+    
+    /* Enhanced text hierarchy */
+    --text-primary: 15 23 42; /* Primary text */
+    --text-secondary: 71 85 105; /* Secondary text */
+    --text-tertiary: 100 116 139; /* Tertiary text */
+    --text-placeholder: 148 163 184; /* Placeholder text */
+    --text-disabled: 203 213 225; /* Disabled text */
   }
 
   .dark {

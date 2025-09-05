@@ -42,6 +42,10 @@ import Income from "./pages/Income";
 import IncomeCategory from "./pages/IncomeCategory";
 import BankAccounts from "./pages/BankAccounts";
 import MoneyTransfer from "./pages/MoneyTransfer";
+import BalanceSheet from "./pages/BalanceSheet";
+import PurchaseReport from "./pages/PurchaseReport";
+import Attendance from "./pages/Attendance";
+import Users from "./pages/Users";
 
 const queryClient = new QueryClient();
 
@@ -90,6 +94,10 @@ const App = () => (
               <Route path="income-category" element={<IncomeCategory />} />
               <Route path="bank-accounts" element={<BankAccounts />} />
               <Route path="money-transfer" element={<MoneyTransfer />} />
+              <Route path="balance-sheet" element={<BalanceSheet />} />
+              <Route path="purchase-report" element={<PurchaseReport />} />
+              <Route path="attendance" element={<Attendance />} />
+              <Route path="users" element={<Users />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
