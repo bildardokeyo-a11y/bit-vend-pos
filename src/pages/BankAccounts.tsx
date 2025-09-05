@@ -117,7 +117,7 @@ const BankAccounts = () => {
   const totalBalance = bankAccounts.reduce((sum, account) => sum + account.balance, 0);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Bank Accounts</h1>
@@ -137,7 +137,7 @@ const BankAccounts = () => {
 
       {/* Summary Cards */}
       <div className="grid md:grid-cols-3 gap-4">
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-full">
@@ -150,7 +150,7 @@ const BankAccounts = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-full">
@@ -163,7 +163,7 @@ const BankAccounts = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-full">
@@ -179,7 +179,7 @@ const BankAccounts = () => {
       </div>
 
       {/* Filters */}
-      <Card>
+      <Card className="animate-slideInLeft">
         <CardContent className="p-4">
           <div className="flex flex-wrap gap-4">
             <div className="flex-1 min-w-[200px]">
@@ -210,8 +210,8 @@ const BankAccounts = () => {
 
       {/* Accounts List */}
       <div className="grid gap-4">
-        {filteredAccounts.map((account) => (
-          <Card key={account.id} className={`hover:shadow-md transition-shadow ${account.isDefault ? 'ring-2 ring-primary' : ''}`}>
+        {filteredAccounts.map((account, index) => (
+          <Card key={account.id} className={`hover:shadow-md transition-shadow animate-fadeInUp ${account.isDefault ? 'ring-2 ring-primary' : ''}`} style={{ animationDelay: `${index * 0.1}s` }}>
             <CardContent className="p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-4">

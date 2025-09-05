@@ -169,7 +169,7 @@ const Users = () => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">User Management</h1>
@@ -279,7 +279,7 @@ const Users = () => {
 
       {/* Summary Cards */}
       <div className="grid md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <UsersIcon className="w-8 h-8 text-blue-500" />
@@ -290,7 +290,7 @@ const Users = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <UserCheck className="w-8 h-8 text-success" />
@@ -301,7 +301,7 @@ const Users = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Crown className="w-8 h-8 text-red-500" />
@@ -312,7 +312,7 @@ const Users = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-blue-500" />
@@ -326,7 +326,7 @@ const Users = () => {
       </div>
 
       {/* Filters */}
-      <Card>
+      <Card className="animate-slideInLeft">
         <CardContent className="p-4">
           <div className="flex flex-wrap gap-4">
             <div className="flex-1 min-w-[200px]">
@@ -367,8 +367,8 @@ const Users = () => {
 
       {/* Users List */}
       <div className="grid gap-4">
-        {filteredUsers.map((user) => (
-          <Card key={user.id} className="hover:shadow-md transition-shadow">
+        {filteredUsers.map((user, index) => (
+          <Card key={user.id} className="hover:shadow-md transition-shadow animate-fadeInUp" style={{ animationDelay: `${index * 0.1}s` }}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">

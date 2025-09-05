@@ -203,7 +203,7 @@ const Holidays = () => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Holidays</h1>
@@ -300,34 +300,38 @@ const Holidays = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex items-center gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-          <Input
-            type="text"
-            placeholder="Search holidays..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Select value={typeFilter} onValueChange={setTypeFilter}>
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Filter by type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
-            <SelectItem value="public">Public</SelectItem>
-            <SelectItem value="company">Company</SelectItem>
-            <SelectItem value="religious">Religious</SelectItem>
-            <SelectItem value="national">National</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <Card className="animate-slideInLeft">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-4">
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <Input
+                type="text"
+                placeholder="Search holidays..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Filter by type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                <SelectItem value="public">Public</SelectItem>
+                <SelectItem value="company">Company</SelectItem>
+                <SelectItem value="religious">Religious</SelectItem>
+                <SelectItem value="national">National</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Summary Cards */}
       <div className="grid md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-full">
@@ -340,7 +344,7 @@ const Holidays = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-full">
@@ -353,7 +357,7 @@ const Holidays = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-full">
@@ -366,7 +370,7 @@ const Holidays = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-orange-100 dark:bg-orange-900/20 rounded-full">
@@ -382,7 +386,7 @@ const Holidays = () => {
       </div>
 
       {/* Holidays Table */}
-      <Card>
+      <Card className="animate-slideInLeft" style={{ animationDelay: '0.5s' }}>
         <CardHeader>
           <CardTitle>All Holidays</CardTitle>
         </CardHeader>
@@ -400,8 +404,8 @@ const Holidays = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredHolidays.map((holiday) => (
-                <TableRow key={holiday.id}>
+              {filteredHolidays.map((holiday, index) => (
+                <TableRow key={holiday.id} className="animate-fadeInUp" style={{ animationDelay: `${index * 0.05}s` }}>
                   <TableCell className="font-medium">{holiday.name}</TableCell>
                   <TableCell>
                     <Badge variant={getTypeBadge(holiday.type)}>

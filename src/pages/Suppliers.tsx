@@ -173,7 +173,7 @@ const Suppliers = () => {
   const totalAmount = suppliers.reduce((sum, s) => sum + s.totalAmount, 0);
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6 animate-fadeInUp">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -316,7 +316,7 @@ const Suppliers = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Suppliers</CardTitle>
             <Briefcase className="h-4 w-4 text-muted-foreground" />
@@ -326,7 +326,7 @@ const Suppliers = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Suppliers</CardTitle>
             <Users className="h-4 w-4 text-green-600" />
@@ -336,7 +336,7 @@ const Suppliers = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Purchase Amount</CardTitle>
             <Briefcase className="h-4 w-4 text-blue-600" />
@@ -346,7 +346,7 @@ const Suppliers = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Average Order Value</CardTitle>
             <Briefcase className="h-4 w-4 text-purple-600" />
@@ -360,7 +360,7 @@ const Suppliers = () => {
       </div>
 
       {/* Search */}
-      <Card>
+      <Card className="animate-slideInLeft">
         <CardContent className="pt-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -375,7 +375,7 @@ const Suppliers = () => {
       </Card>
 
       {/* Suppliers Table */}
-      <Card>
+      <Card className="animate-slideInLeft" style={{ animationDelay: '0.5s' }}>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Briefcase size={20} />
@@ -398,8 +398,8 @@ const Suppliers = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredSuppliers.map((supplier) => (
-                <TableRow key={supplier.id}>
+              {filteredSuppliers.map((supplier, index) => (
+                <TableRow key={supplier.id} className="animate-fadeInUp" style={{ animationDelay: `${index * 0.05}s` }}>
                   <TableCell>
                     <div className="font-medium">{supplier.companyName}</div>
                     <div className="text-xs text-muted-foreground">

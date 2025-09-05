@@ -138,7 +138,7 @@ const ExpenseCategory = () => {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Expense Categories</h1>
@@ -211,24 +211,28 @@ const ExpenseCategory = () => {
         </Dialog>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input
-            placeholder="Search categories..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Button variant="outline" className="bg-secondary hover:bg-secondary-hover text-secondary-foreground">
-          <FileDown className="h-4 w-4 mr-2" />
-          Export
-        </Button>
-      </div>
+      <Card className="animate-slideInLeft">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-4">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                placeholder="Search categories..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Button variant="outline" className="bg-secondary hover:bg-secondary-hover text-secondary-foreground">
+              <FileDown className="h-4 w-4 mr-2" />
+              Export
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Categories</CardTitle>
             <List className="h-4 w-4 text-muted-foreground" />
@@ -238,7 +242,7 @@ const ExpenseCategory = () => {
             <p className="text-xs text-muted-foreground">Categories created</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active</CardTitle>
             <List className="h-4 w-4 text-green-600" />
@@ -248,7 +252,7 @@ const ExpenseCategory = () => {
             <p className="text-xs text-muted-foreground">Active categories</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
             <List className="h-4 w-4 text-blue-600" />
@@ -258,7 +262,7 @@ const ExpenseCategory = () => {
             <p className="text-xs text-muted-foreground">Categorized expenses</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Amount</CardTitle>
             <List className="h-4 w-4 text-orange-600" />
@@ -270,7 +274,7 @@ const ExpenseCategory = () => {
         </Card>
       </div>
 
-      <Card>
+      <Card className="animate-slideInLeft" style={{ animationDelay: '0.5s' }}>
         <CardHeader>
           <CardTitle>Expense Categories</CardTitle>
         </CardHeader>
@@ -288,8 +292,8 @@ const ExpenseCategory = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredCategories.map((category) => (
-                <TableRow key={category.id}>
+              {filteredCategories.map((category, index) => (
+                <TableRow key={category.id} className="animate-fadeInUp" style={{ animationDelay: `${index * 0.05}s` }}>
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <div 

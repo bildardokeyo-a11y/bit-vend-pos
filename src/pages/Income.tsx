@@ -158,7 +158,7 @@ const Income = () => {
   const pendingIncome = incomes.filter(i => i.status === 'pending').reduce((sum, income) => sum + income.amount, 0);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Income Management</h1>
@@ -266,24 +266,28 @@ const Income = () => {
         </Dialog>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input
-            placeholder="Search income records..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Button variant="outline">
-          <FileDown className="h-4 w-4 mr-2" />
-          Export
-        </Button>
-      </div>
+      <Card className="animate-slideInLeft">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-4">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                placeholder="Search income records..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Button variant="outline">
+              <FileDown className="h-4 w-4 mr-2" />
+              Export
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Income</CardTitle>
             <HandCoins className="h-4 w-4 text-muted-foreground" />
@@ -293,7 +297,7 @@ const Income = () => {
             <p className="text-xs text-muted-foreground">All income sources</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Received</CardTitle>
             <HandCoins className="h-4 w-4 text-green-600" />
@@ -303,7 +307,7 @@ const Income = () => {
             <p className="text-xs text-muted-foreground">Confirmed income</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Pending</CardTitle>
             <HandCoins className="h-4 w-4 text-yellow-600" />
@@ -313,7 +317,7 @@ const Income = () => {
             <p className="text-xs text-muted-foreground">Awaiting confirmation</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">This Month</CardTitle>
             <Calendar className="h-4 w-4 text-blue-600" />
@@ -325,7 +329,7 @@ const Income = () => {
         </Card>
       </div>
 
-      <Card>
+      <Card className="animate-slideInLeft" style={{ animationDelay: '0.5s' }}>
         <CardHeader>
           <CardTitle>Income Records</CardTitle>
         </CardHeader>
@@ -344,8 +348,8 @@ const Income = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredIncomes.map((income) => (
-                <TableRow key={income.id}>
+              {filteredIncomes.map((income, index) => (
+                <TableRow key={income.id} className="animate-fadeInUp" style={{ animationDelay: `${index * 0.05}s` }}>
                   <TableCell className="font-medium">{income.title}</TableCell>
                   <TableCell className="text-green-600 font-semibold">${income.amount.toLocaleString()}</TableCell>
                   <TableCell>{income.category}</TableCell>

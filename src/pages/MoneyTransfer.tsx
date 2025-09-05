@@ -108,7 +108,7 @@ const MoneyTransfer = () => {
     .reduce((sum, transfer) => sum + transfer.amount, 0);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Money Transfers</h1>
@@ -128,7 +128,7 @@ const MoneyTransfer = () => {
 
       {/* Summary Cards */}
       <div className="grid md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <ArrowRightLeft className="w-8 h-8 text-blue-500" />
@@ -139,7 +139,7 @@ const MoneyTransfer = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-8 h-8 text-success" />
@@ -150,7 +150,7 @@ const MoneyTransfer = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Clock className="w-8 h-8 text-orange-500" />
@@ -161,7 +161,7 @@ const MoneyTransfer = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <DollarSign className="w-8 h-8 text-green-500" />
@@ -175,7 +175,7 @@ const MoneyTransfer = () => {
       </div>
 
       {/* Filters */}
-      <Card>
+      <Card className="animate-slideInLeft">
         <CardContent className="p-4">
           <div className="flex flex-wrap gap-4">
             <div className="flex-1 min-w-[200px]">
@@ -218,8 +218,8 @@ const MoneyTransfer = () => {
 
       {/* Transfers List */}
       <div className="grid gap-4">
-        {filteredTransfers.map((transfer) => (
-          <Card key={transfer.id} className="hover:shadow-md transition-shadow">
+        {filteredTransfers.map((transfer, index) => (
+          <Card key={transfer.id} className="hover:shadow-md transition-shadow animate-fadeInUp" style={{ animationDelay: `${index * 0.1}s` }}>
             <CardContent className="p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-4">

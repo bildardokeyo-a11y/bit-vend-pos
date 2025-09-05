@@ -117,7 +117,7 @@ const Attendance = () => {
   const lateCount = attendanceData.filter(r => r.status === 'late').length;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-fadeInUp">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Attendance Management</h1>
@@ -137,7 +137,7 @@ const Attendance = () => {
 
       {/* Summary Cards */}
       <div className="grid md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Users className="w-8 h-8 text-blue-500" />
@@ -148,7 +148,7 @@ const Attendance = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-8 h-8 text-success" />
@@ -159,7 +159,7 @@ const Attendance = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <XCircle className="w-8 h-8 text-destructive" />
@@ -170,7 +170,7 @@ const Attendance = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <AlertCircle className="w-8 h-8 text-orange-500" />
@@ -184,7 +184,7 @@ const Attendance = () => {
       </div>
 
       {/* Filters */}
-      <Card>
+      <Card className="animate-slideInLeft">
         <CardContent className="p-4">
           <div className="flex flex-wrap gap-4">
             <div className="flex-1 min-w-[200px]">
@@ -245,8 +245,8 @@ const Attendance = () => {
 
       {/* Attendance List */}
       <div className="grid gap-4">
-        {filteredData.map((record) => (
-          <Card key={record.id} className="hover:shadow-md transition-shadow">
+        {filteredData.map((record, index) => (
+          <Card key={record.id} className="hover:shadow-md transition-shadow animate-fadeInUp" style={{ animationDelay: `${index * 0.1}s` }}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">

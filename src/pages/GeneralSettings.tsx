@@ -8,7 +8,7 @@ import { useSEO } from '@/lib/seo';
 
 const GeneralSettings: React.FC = () => {
   const { toast } = useToast();
-  useSEO('General Settings | Bit Vend POS', 'Configure general application settings.', '/general-settings');
+  useSEO('General Settings | Bit Vend POS', 'Configure general application settings.', '/settings/general');
 
   return (
     <div className="p-6 space-y-6">
