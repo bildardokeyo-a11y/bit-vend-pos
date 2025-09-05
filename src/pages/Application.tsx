@@ -137,7 +137,7 @@ const Application = () => {
           <p className="text-muted-foreground">Configure application settings and monitor system health</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={handleRestartApp}>
+          <Button variant="outline" onClick={handleRestartApp} className="bg-secondary hover:bg-secondary-hover text-secondary-foreground">
             <RefreshCw className="w-4 h-4 mr-2" />
             Restart App
           </Button>

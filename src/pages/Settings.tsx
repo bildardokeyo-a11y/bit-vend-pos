@@ -456,6 +456,8 @@ const Settings = () => {
     showQRCode: false,
     autoPrintReceipt: true,
     receiptCopies: 1,
+    showCustomerInfo: false,
+    showTaxBreakdown: true,
     
     // Terminal Behavior
     autoLockTime: 15, // minutes
@@ -2413,7 +2415,7 @@ const Settings = () => {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">Locations & Branches</h3>
-              <Button><Plus className="w-4 h-4 mr-2" />Add Location</Button>
+              <Button className="bg-primary hover:bg-primary-hover text-primary-foreground"><Plus className="w-4 h-4 mr-2" />Add Location</Button>
             </div>
             <div className="grid gap-4">
               <Card className="p-4">
@@ -2434,49 +2436,179 @@ const Settings = () => {
         return (
           <div className="space-y-6">
             <h3 className="text-lg font-semibold">Receipt Settings</h3>
+            
+            {/* Receipt Template Selection */}
             <div className="space-y-4">
-              <div>
-                <Label htmlFor="receiptHeader">Receipt Header</Label>
-                <Input
-                  id="receiptHeader"
-                  value={posTerminalSettings.receiptHeader}
-                  onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptHeader: e.target.value }))}
-                  placeholder="Thank you for your business!"
-                />
-              </div>
-              <div>
-                <Label htmlFor="receiptFooter">Receipt Footer</Label>
-                <Input
-                  id="receiptFooter"
-                  value={posTerminalSettings.receiptFooter}
-                  onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptFooter: e.target.value }))}
-                  placeholder="Please come again"
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label>Show Barcode on Receipt</Label>
-                  <p className="text-sm text-muted-foreground">Display barcode for transaction tracking</p>
-                </div>
-                <Switch
-                  checked={posTerminalSettings.showBarcode}
-                  onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, showBarcode: checked }))}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label>Auto-Print Receipt</Label>
-                  <p className="text-sm text-muted-foreground">Automatically print receipt after transaction</p>
-                </div>
-                <Switch
-                  checked={posTerminalSettings.autoPrintReceipt}
-                  onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, autoPrintReceipt: checked }))}
-                />
+              <h4 className="font-medium">Choose Receipt Template</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { id: 'receipt-1', name: 'Classic', description: 'Traditional receipt layout with business header' },
+                  { id: 'receipt-2', name: 'Modern', description: 'Clean minimal design with emphasis on items' },
+                  { id: 'receipt-3', name: 'Detailed', description: 'Comprehensive layout with customer info and tax breakdown' },
+                  { id: 'receipt-4', name: 'Compact', description: 'Space-efficient design for thermal printers' }
+                ].map((template) => (
+                  <Card 
+                    key={template.id}
+                    className={`cursor-pointer transition-all hover:shadow-md ${selectedTemplate === template.id ? 'ring-2 ring-primary bg-primary/5' : ''}`}
+                    onClick={() => setSelectedTemplate(template.id)}
+                  >
+                    <CardContent className="p-4">
+                      <div className="aspect-[2/3] bg-muted rounded-lg mb-3 flex items-center justify-center animate-fade-in">
+                        {template.id === 'receipt-1' && (
+                          <div className="text-xs text-center space-y-1 p-2">
+                            <div className="font-bold">BUSINESS NAME</div>
+                            <div className="text-[8px]">Address • Phone</div>
+                            <div className="border-t border-dashed pt-1 mt-1">
+                              <div>Item 1 ........... $10.00</div>
+                              <div>Item 2 ........... $15.00</div>
+                            </div>
+                            <div className="border-t border-dashed pt-1 mt-1 font-bold">
+                              <div>Total: $25.00</div>
+                            </div>
+                          </div>
+                        )}
+                        {template.id === 'receipt-2' && (
+                          <div className="text-xs text-center space-y-1 p-2">
+                            <div className="font-bold text-sm">Store</div>
+                            <div className="space-y-0.5 mt-2">
+                              <div className="flex justify-between text-[8px]"><span>Product A</span><span>$10</span></div>
+                              <div className="flex justify-between text-[8px]"><span>Product B</span><span>$15</span></div>
+                            </div>
+                            <div className="border-t pt-1 mt-2 font-bold flex justify-between">
+                              <span>TOTAL</span><span>$25</span>
+                            </div>
+                          </div>
+                        )}
+                        {template.id === 'receipt-3' && (
+                          <div className="text-xs text-center space-y-1 p-2">
+                            <div className="font-bold">COMPANY LTD</div>
+                            <div className="text-[7px]">123 Street, City</div>
+                            <div className="text-[7px]">Customer: John Doe</div>
+                            <div className="border-t border-dashed pt-1 space-y-0.5">
+                              <div className="flex justify-between text-[7px]"><span>Item</span><span>Qty</span><span>Price</span></div>
+                              <div className="flex justify-between text-[7px]"><span>Product</span><span>2</span><span>$20.00</span></div>
+                            </div>
+                            <div className="text-[7px] space-y-0.5 border-t pt-1">
+                              <div className="flex justify-between"><span>Subtotal:</span><span>$20.00</span></div>
+                              <div className="flex justify-between"><span>Tax:</span><span>$2.00</span></div>
+                              <div className="flex justify-between font-bold"><span>Total:</span><span>$22.00</span></div>
+                            </div>
+                          </div>
+                        )}
+                        {template.id === 'receipt-4' && (
+                          <div className="text-xs text-center space-y-0.5 p-2">
+                            <div className="font-bold text-[10px]">SHOP</div>
+                            <div className="text-[6px]">Item A - $10</div>
+                            <div className="text-[6px]">Item B - $15</div>
+                            <div className="border-t border-dashed pt-0.5 mt-1">
+                              <div className="font-bold text-[8px]">Total: $25</div>
+                            </div>
+                            <div className="text-[6px] mt-1">Thank you!</div>
+                          </div>
+                        )}
+                      </div>
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <h5 className="font-medium text-sm">{template.name}</h5>
+                          {selectedTemplate === template.id && <Check className="w-4 h-4 text-primary" />}
+                        </div>
+                        <p className="text-xs text-muted-foreground">{template.description}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             </div>
+
+            {/* Receipt Content Settings */}
+            <div className="space-y-4">
+              <h4 className="font-medium">Receipt Content</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="receiptHeader">Receipt Header</Label>
+                  <Input
+                    id="receiptHeader"
+                    value={posTerminalSettings.receiptHeader}
+                    onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptHeader: e.target.value }))}
+                    placeholder="Thank you for your business!"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="receiptFooter">Receipt Footer</Label>
+                  <Input
+                    id="receiptFooter"
+                    value={posTerminalSettings.receiptFooter}
+                    onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptFooter: e.target.value }))}
+                    placeholder="Please come again"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Receipt Options */}
+            <div className="space-y-4">
+              <h4 className="font-medium">Receipt Options</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Show Barcode on Receipt</Label>
+                    <p className="text-sm text-muted-foreground">Display barcode for transaction tracking</p>
+                  </div>
+                  <Switch
+                    checked={posTerminalSettings.showBarcode}
+                    onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, showBarcode: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Auto-Print Receipt</Label>
+                    <p className="text-sm text-muted-foreground">Automatically print receipt after transaction</p>
+                  </div>
+                  <Switch
+                    checked={posTerminalSettings.autoPrintReceipt}
+                    onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, autoPrintReceipt: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Show Customer Info</Label>
+                    <p className="text-sm text-muted-foreground">Include customer details on receipt</p>
+                  </div>
+                  <Switch
+                    checked={posTerminalSettings.showCustomerInfo || false}
+                    onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, showCustomerInfo: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Show Tax Breakdown</Label>
+                    <p className="text-sm text-muted-foreground">Display detailed tax information</p>
+                  </div>
+                  <Switch
+                    checked={posTerminalSettings.showTaxBreakdown || false}
+                    onCheckedChange={(checked) => setPosTerminalSettings(prev => ({ ...prev, showTaxBreakdown: checked }))}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Receipt Copies */}
+            <div>
+              <Label htmlFor="receiptCopies">Number of Receipt Copies</Label>
+              <Input
+                id="receiptCopies"
+                type="number"
+                min="1"
+                max="5"
+                value={posTerminalSettings.receiptCopies}
+                onChange={(e) => setPosTerminalSettings(prev => ({ ...prev, receiptCopies: parseInt(e.target.value) || 1 }))}
+                className="max-w-[100px]"
+              />
+            </div>
+
             <div className="flex justify-end space-x-4 pt-4">
               <Button variant="outline" onClick={handleCancel} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground"><X className="w-4 h-4 mr-2" />Cancel</Button>
-              <Button onClick={handleSave} className="bg-save hover:bg-save-hover text-save-foreground"><Save className="w-4 h-4 mr-2" />Save</Button>
+              <Button onClick={handleSave} className="bg-save hover:bg-save-hover text-save-foreground"><Save className="w-4 h-4 mr-2" />Save Receipt Settings</Button>
             </div>
           </div>
         );

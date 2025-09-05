@@ -375,7 +375,7 @@ const Expenses: React.FC = () => {
                     />
                   </div>
                   <div className="flex items-end">
-                    <Button variant="outline" className="w-full transition-all duration-200 hover:scale-105">
+                    <Button variant="outline" className="w-full transition-all duration-200 hover:scale-105 bg-secondary hover:bg-secondary-hover text-secondary-foreground">
                       <Upload className="h-4 w-4 mr-2" />
                       Upload Receipt
                     </Button>
@@ -414,7 +414,7 @@ const Expenses: React.FC = () => {
                       receiptNo: '',
                       notes: ''
                     })}
-                    className="transition-all duration-200 hover:scale-105"
+                    className="transition-all duration-200 hover:scale-105 bg-cancel hover:bg-cancel-hover text-cancel-foreground"
                   >
                     Clear Form
                   </Button>
@@ -544,7 +544,7 @@ const Expenses: React.FC = () => {
                   </Select>
                 </div>
                 <div className="flex items-end">
-                  <Button variant="outline" className="w-full transition-all duration-200 hover:scale-105">
+                  <Button variant="outline" className="w-full transition-all duration-200 hover:scale-105 bg-secondary hover:bg-secondary-hover text-secondary-foreground">
                     <Download className="h-4 w-4 mr-2" />
                     Export
                   </Button>

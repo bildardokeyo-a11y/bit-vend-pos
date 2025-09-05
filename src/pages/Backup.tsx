@@ -24,7 +24,7 @@ const Backup: React.FC = () => {
           </CardHeader>
           <CardContent className="flex gap-3">
             <Button onClick={handleBackup}>Create Backup</Button>
-            <Button variant="outline" onClick={handleRestore}>Restore</Button>
+            <Button variant="outline" onClick={handleRestore} className="bg-secondary hover:bg-secondary-hover text-secondary-foreground">Restore</Button>
           </CardContent>
         </Card>
       </main>

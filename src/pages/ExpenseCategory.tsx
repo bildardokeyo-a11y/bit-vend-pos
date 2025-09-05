@@ -202,7 +202,7 @@ const ExpenseCategory = () => {
                 <Button onClick={handleSubmit} className="flex-1">
                   {editingCategory ? 'Update' : 'Create'}
                 </Button>
-                <Button variant="outline" onClick={resetForm}>
+                <Button variant="outline" onClick={resetForm} className="bg-cancel hover:bg-cancel-hover text-cancel-foreground">
                   Cancel
                 </Button>
               </div>
@@ -221,7 +221,7 @@ const ExpenseCategory = () => {
             className="pl-10"
           />
         </div>
-        <Button variant="outline">
+        <Button variant="outline" className="bg-secondary hover:bg-secondary-hover text-secondary-foreground">
           <FileDown className="h-4 w-4 mr-2" />
           Export
         </Button>

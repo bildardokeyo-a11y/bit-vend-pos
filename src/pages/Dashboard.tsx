@@ -154,7 +154,7 @@ const Dashboard: React.FC = () => {
               <p>No recent sales to display</p>
               <Button
                 variant="outline"
-                className="mt-4"
+                className="mt-4 bg-secondary hover:bg-secondary-hover text-secondary-foreground"
                 onClick={() => navigate('/checkout')}
               >
                 Start Your First Sale
@@ -173,7 +173,7 @@ const Dashboard: React.FC = () => {
               <p>No low stock alerts</p>
               <Button
                 variant="outline"
-                className="mt-4"
+                className="mt-4 bg-secondary hover:bg-secondary-hover text-secondary-foreground"
                 onClick={() => navigate('/products')}
               >
                 Manage Products
