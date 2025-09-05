@@ -253,8 +253,11 @@ const Settings = () => {
   
   // Initialize business settings based on URL parameters or current business
   useEffect(() => {
+    console.log('useEffect triggered:', { isAddMode, editBusinessId, currentBusiness: currentBusiness?.id });
+    
     if (isAddMode) {
       // Reset form for new business
+      console.log('Setting form for add mode');
       setBusinessSettings(prev => ({
         ...prev,
         businessName: '',
@@ -271,6 +274,7 @@ const Settings = () => {
       }));
     } else if (editBusinessId) {
       // Load business data for editing
+      console.log('Setting form for edit mode:', editBusinessId);
       const businessToEdit = businesses.find(b => b.id === editBusinessId);
       if (businessToEdit) {
         setBusinessSettings(prev => ({
@@ -290,6 +294,7 @@ const Settings = () => {
       }
     } else if (currentBusiness) {
       // Load current business data
+      console.log('Setting form for current business:', currentBusiness.id);
       setBusinessSettings(prev => ({
         ...prev,
         businessName: currentBusiness.businessName,
@@ -812,22 +817,27 @@ const Settings = () => {
   
   const handleSave = () => {
     const sectionKey = `${activeSection}-${activeSubsection}`;
+    console.log('handleSave called with:', { sectionKey, isAddMode, editBusinessId });
     
     if (sectionKey === 'business-business-info') {
+      console.log('Handling business-business-info save');
       if (isAddMode) {
         // Add new business
+        console.log('Adding new business:', businessSettings);
         const newBusinessId = addBusiness(businessSettings);
         toast.success("Business added successfully!");
         // Clear URL parameters
         navigate('/settings?section=business&subsection=business-info');
       } else if (editBusinessId) {
         // Update existing business
+        console.log('Updating existing business:', editBusinessId, businessSettings);
         updateBusiness(editBusinessId, businessSettings);
         toast.success("Business updated successfully!");
         // Clear URL parameters
         navigate('/settings?section=business&subsection=business-info');
       } else {
         // Update current business
+        console.log('Updating current business:', currentBusiness?.id, businessSettings);
         if (currentBusiness) {
           updateBusiness(currentBusiness.id, businessSettings);
           toast.success("Business settings saved successfully!");
