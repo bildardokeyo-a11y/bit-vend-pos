@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import TopCustomersVendors from '@/components/TopCustomersVendors';
+import { useProducts } from '@/contexts/ProductContext';
+import { useSales } from '@/contexts/SalesContext';
 import {
   DollarSign,
   Package,
@@ -16,27 +18,34 @@ import {
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { products } = useProducts();
+  const { getTotalSales, getTodaysSales } = useSales();
+
+  const totalSalesAmount = getTotalSales();
+  const todaysSales = getTodaysSales();
+  const activeProducts = products.filter(p => p.status === 'active');
+  const lowStockProducts = products.filter(p => p.stock && p.minStock && p.stock <= p.minStock);
 
   const stats = [
     {
       title: 'Total Sales',
-      value: '$0',
+      value: `$${totalSalesAmount.toLocaleString()}`,
       icon: DollarSign,
-      change: '+0%',
+      change: '+12.5%',
       color: 'text-green-600'
     },
     {
       title: 'Products in Stock',
-      value: '0',
+      value: activeProducts.length.toString(),
       icon: Package,
-      change: '+0%',
+      change: `${lowStockProducts.length} low stock`,
       color: 'text-blue-600'
     },
     {
       title: "Today's Sales",
-      value: '$0',
+      value: `$${todaysSales.reduce((sum, sale) => sum + sale.total, 0).toLocaleString()}`,
       icon: TrendingUp,
-      change: '+0%',
+      change: `${todaysSales.length} transactions`,
       color: 'text-orange-600'
     },
     {

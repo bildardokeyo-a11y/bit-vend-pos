@@ -91,7 +91,9 @@ All colors MUST be HSL.
     --table-row-hover: 217 91% 95%; /* Light blue hover */
     --table-border: 214 32% 91%; /* #e2e8f0 */
     
-    /* Enhanced text hierarchy with color */
+    /* Light theme - Add missing toggle colors */
+    --toggle-on: 142 71% 45%; /* Same as success - vibrant emerald */
+    --toggle-off: 215 16% 65%; /* Light gray for off state */
     --text-primary: 222 47% 11%; /* #0f172a - Deep slate */
     --text-secondary: 215 16% 47%; /* #64748b - Neutral gray */
     --text-tertiary: 215 20% 65%; /* #94a3b8 - Light gray */

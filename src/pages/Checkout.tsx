@@ -8,15 +8,16 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Plus, Crown, CreditCard, Smartphone, Banknote, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { PRODUCTS, CATEGORIES } from '@/data/posData';
-
-// Use centralized products
-const products = PRODUCTS;
-
-const categories = CATEGORIES;
+import { CATEGORIES } from '@/data/posData';
+import { useProducts } from '@/contexts/ProductContext';
+import { useSales } from '@/contexts/SalesContext';
+import { useSettings } from '@/hooks/useSettings';
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const { products } = useProducts();
+  const { addSale } = useSales();
+  const { settings } = useSettings();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [cart, setCart] = useState<Array<{product: any, quantity: number}>>(() => {
     const saved = localStorage.getItem('pos-cart');
@@ -35,9 +36,10 @@ const Checkout = () => {
     localStorage.setItem('pos-cart', JSON.stringify(cart));
   }, [cart]);
 
+  const categories = CATEGORIES;
   const filteredProducts = selectedCategory === "All" 
-    ? products 
-    : products.filter(p => p.category === selectedCategory);
+    ? products.filter(p => p.status === 'active') 
+    : products.filter(p => p.category === selectedCategory && p.status === 'active');
 
   const addToCart = (product: any) => {
     // Animate the + button
@@ -95,29 +97,57 @@ const Checkout = () => {
       return; // Prevent navigation if payment details are incomplete
     }
     
-    // Get selected receipt template from settings
-    const savedSettings = localStorage.getItem('pos-app-settings');
-    let receiptTemplate = 'classic-receipt';
-    
-    if (savedSettings) {
-      try {
-        const settings = JSON.parse(savedSettings);
-        receiptTemplate = settings.receiptTemplate || 'classic-receipt';
-      } catch (e) {
-        console.error('Error parsing settings:', e);
-      }
-    }
-    
-    navigate('/receipt', {
-      state: {
-        cart,
-        total: finalTotal,
-        tax,
+    // Create sale record using SalesContext
+    try {
+      const saleItems = cart.map(item => ({
+        productId: item.product.id,
+        productName: item.product.name,
+        quantity: item.quantity,
+        unitPrice: item.product.price,
+        total: item.product.price * item.quantity
+      }));
+
+      const saleId = addSale({
+        date: new Date().toISOString().split('T')[0],
+        time: new Date().toLocaleTimeString(),
+        items: saleItems,
         subtotal: cartTotal,
-        paymentMethod,
-        receiptTemplate
-      }
-    });
+        tax,
+        discount: 0,
+        total: finalTotal,
+        paymentMethod: paymentMethod.toLowerCase() as 'cash' | 'card' | 'mobile',
+        status: 'completed',
+        receiptTemplate: settings.receiptTemplate || 'classic-receipt'
+      });
+
+      // Clear cart after successful payment
+      setCart([]);
+      
+      navigate('/receipt', {
+        state: {
+          saleId,
+          cart,
+          total: finalTotal,
+          tax,
+          subtotal: cartTotal,
+          paymentMethod,
+          receiptTemplate: settings.receiptTemplate || 'classic-receipt'
+        }
+      });
+    } catch (error) {
+      console.error('Error processing sale:', error);
+      // Still navigate to show receipt, but log the error
+      navigate('/receipt', {
+        state: {
+          cart,
+          total: finalTotal,
+          tax,
+          subtotal: cartTotal,
+          paymentMethod,
+          receiptTemplate: settings.receiptTemplate || 'classic-receipt'
+        }
+      });
+    }
   };
 
   return (

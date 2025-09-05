@@ -15,6 +15,7 @@ import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { toast } from "sonner";
+import { useProducts } from '@/contexts/ProductContext';
 
 const categories = ["Electronics", "Beverages", "Food", "Clothing", "Books", "Health"];
 const brands = ["Apple", "Samsung", "Nike", "Adidas", "Generic"];
@@ -25,6 +26,7 @@ const statusOptions = ["Active", "Inactive", "Draft"];
 
 const ProductAdd = () => {
   const navigate = useNavigate();
+  const { addProduct } = useProducts();
   const [activeTab, setActiveTab] = useState('general');
   const [createdDate, setCreatedDate] = useState<Date>(new Date());
   const [expiryDate, setExpiryDate] = useState<Date>();
@@ -119,10 +121,28 @@ const ProductAdd = () => {
       return;
     }
 
-    // Simulate saving the product
-    console.log('Product data:', formData);
-    toast.success("Product added successfully!");
-    navigate('/products');
+    // Create product using context
+    try {
+      const productId = addProduct({
+        name: formData.name,
+        description: formData.description,
+        price: parseFloat(formData.sellingPrice) || 0,
+        category: formData.category,
+        sku: formData.sku,
+        barcode: formData.barcode,
+        stock: parseInt(formData.stockQuantity) || 0,
+        minStock: parseInt(formData.minStockAlert) || 0,
+        brand: formData.brand,
+        supplier: formData.supplier,
+        status: formData.status as 'active' | 'inactive' | 'draft'
+      });
+      
+      toast.success("Product added successfully!");
+      navigate('/products');
+    } catch (error) {
+      toast.error("Error adding product. Please try again.");
+      console.error('Error adding product:', error);
+    }
   };
 
   const handleCancel = () => {
