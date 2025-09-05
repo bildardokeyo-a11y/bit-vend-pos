@@ -55,6 +55,41 @@ const pageResults: SearchResult[] = [
   { id: 'suppliers', title: 'Suppliers', subtitle: 'Supplier management', type: 'page', path: '/suppliers' },
   { id: 'variants', title: 'Variants', subtitle: 'Product variants', type: 'page', path: '/variants' },
   { id: 'units', title: 'Units', subtitle: 'Measurement units', type: 'page', path: '/units' },
+  
+  // Report Pages
+  { id: 'sales-report', title: 'Sales Report', subtitle: 'Sales analytics and reporting', type: 'page', path: '/reports/sales' },
+  { id: 'purchase-report', title: 'Purchase Report', subtitle: 'Purchase analytics and reporting', type: 'page', path: '/reports/purchase' },
+  { id: 'expense-report', title: 'Expense Report', subtitle: 'Expense tracking and reporting', type: 'page', path: '/reports/expense' },
+  { id: 'stock-report', title: 'Stock Report', subtitle: 'Inventory and stock reporting', type: 'page', path: '/reports/stock' },
+  
+  // Financial Pages
+  { id: 'balance-sheet', title: 'Balance Sheet', subtitle: 'Financial balance sheet', type: 'page', path: '/financials/balance-sheet' },
+  { id: 'cash-flow', title: 'Cash Flow', subtitle: 'Cash flow statement', type: 'page', path: '/financials/cash-flow' },
+  { id: 'trial-balance', title: 'Trial Balance', subtitle: 'Trial balance report', type: 'page', path: '/financials/trial-balance' },
+  { id: 'income', title: 'Income', subtitle: 'Income management', type: 'page', path: '/financials/income' },
+  { id: 'expenses', title: 'Expenses', subtitle: 'Expense management', type: 'page', path: '/financials/expenses' },
+  
+  // Stock Management
+  { id: 'stock-in', title: 'Stock In', subtitle: 'Stock receiving management', type: 'page', path: '/stock/in' },
+  { id: 'stock-out', title: 'Stock Out', subtitle: 'Stock dispatch management', type: 'page', path: '/stock/out' },
+  { id: 'stock-transfer', title: 'Stock Transfer', subtitle: 'Inter-branch stock transfer', type: 'page', path: '/stock/transfer' },
+  { id: 'stock-adjustment', title: 'Stock Adjustment', subtitle: 'Stock level adjustments', type: 'page', path: '/stock/adjustment' },
+  { id: 'stock-return', title: 'Stock Return', subtitle: 'Stock return management', type: 'page', path: '/stock/return' },
+  
+  // HR & Payroll
+  { id: 'payroll', title: 'Payroll', subtitle: 'Employee payroll management', type: 'page', path: '/hr/payroll' },
+  { id: 'attendance', title: 'Attendance', subtitle: 'Employee attendance tracking', type: 'page', path: '/hr/attendance' },
+  { id: 'holidays', title: 'Holidays', subtitle: 'Holiday management', type: 'page', path: '/hr/holidays' },
+  
+  // Other Pages
+  { id: 'purchases', title: 'Purchases', subtitle: 'Purchase order management', type: 'page', path: '/purchases' },
+  { id: 'quotation', title: 'Quotation', subtitle: 'Price quotation management', type: 'page', path: '/quotation' },
+  { id: 'sales-return', title: 'Sales Return', subtitle: 'Sales return processing', type: 'page', path: '/sales-return' },
+  { id: 'account-statement', title: 'Account Statement', subtitle: 'Account statement reports', type: 'page', path: '/account-statement' },
+  { id: 'money-transfer', title: 'Money Transfer', subtitle: 'Fund transfer management', type: 'page', path: '/money-transfer' },
+  { id: 'receipt', title: 'Receipt', subtitle: 'Receipt management', type: 'page', path: '/receipt' },
+  { id: 'barcode', title: 'Barcode', subtitle: 'Barcode generation and printing', type: 'page', path: '/barcode' },
+  { id: 'backup', title: 'Backup', subtitle: 'Data backup management', type: 'page', path: '/backup' },
 ];
 
 // Build search data from actual products
@@ -108,27 +143,74 @@ export const useSearch = () => {
     localStorage.setItem('pos-recent-searches', JSON.stringify(recentSearches));
   }, [recentSearches]);
 
-  // Search function
+  // Smart search function with scoring
   const performSearch = useCallback((searchQuery: string) => {
     if (!searchQuery.trim()) {
       setResults([]);
       return;
     }
 
-    const filtered = allSearchData.filter(item =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (item.subtitle && item.subtitle.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
+    const query = searchQuery.toLowerCase();
+    
+    const scoredResults = allSearchData.map(item => {
+      const title = item.title.toLowerCase();
+      const subtitle = (item.subtitle || '').toLowerCase();
+      let score = 0;
 
-    // Sort results by type priority: settings > pages > products
-    const sortedResults = filtered.sort((a, b) => {
+      // Exact match in title gets highest score
+      if (title === query) score += 100;
+      
+      // Title starts with query gets high score
+      if (title.startsWith(query)) score += 80;
+      
+      // Title contains query as whole word gets good score
+      if (title.includes(` ${query} `) || title.includes(`-${query}-`) || title.includes(`_${query}_`)) score += 60;
+      
+      // Title contains query anywhere gets medium score
+      if (title.includes(query)) score += 40;
+      
+      // Subtitle starts with query gets medium score
+      if (subtitle.startsWith(query)) score += 30;
+      
+      // Subtitle contains query as whole word gets lower score
+      if (subtitle.includes(` ${query} `) || subtitle.includes(`-${query}-`) || subtitle.includes(`_${query}_`)) score += 20;
+      
+      // Subtitle contains query anywhere gets lowest score
+      if (subtitle.includes(query)) score += 10;
+
+      // Word boundary matching for partial words (e.g., "report" matches "Sales Report")
+      const words = query.split(' ');
+      words.forEach(word => {
+        if (word.length >= 2) {
+          const titleWords = title.split(/[\s\-_]+/);
+          const subtitleWords = subtitle.split(/[\s\-_]+/);
+          
+          titleWords.forEach(titleWord => {
+            if (titleWord.startsWith(word)) score += 15;
+            if (titleWord.includes(word)) score += 5;
+          });
+          
+          subtitleWords.forEach(subtitleWord => {
+            if (subtitleWord.startsWith(word)) score += 8;
+            if (subtitleWord.includes(word)) score += 3;
+          });
+        }
+      });
+
+      return { ...item, score };
+    }).filter(item => item.score > 0);
+
+    // Sort by score first, then by type priority
+    const sortedResults = scoredResults.sort((a, b) => {
+      if (a.score !== b.score) return b.score - a.score;
+      
       const typePriority = { 'setting': 0, 'page': 1, 'product': 2 };
       const aPriority = typePriority[a.type] ?? 3;
       const bPriority = typePriority[b.type] ?? 3;
       return aPriority - bPriority;
     });
 
-    setResults(sortedResults.slice(0, 12)); // Show more results with settings
+    setResults(sortedResults.slice(0, 15)); // Show more results with smart search
   }, [allSearchData]);
 
   // Perform search when debounced query changes
