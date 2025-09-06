@@ -107,7 +107,7 @@ const ContactPage = () => {
 
   return (
     <MarketingLayout>
-      <div className="py-20">
+      <div className="py-20 overflow-x-hidden">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="text-center mb-16">

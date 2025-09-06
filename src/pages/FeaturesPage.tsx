@@ -22,10 +22,14 @@ import {
   Database,
   Cloud,
   PieChart,
-  DollarSign
+  DollarSign,
+  Sun,
+  Moon
 } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 const FeaturesPage = () => {
+  const { theme, setTheme } = useTheme();
   const coreFeatures = [
     {
       icon: BarChart3,
@@ -106,9 +110,9 @@ const FeaturesPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
@@ -117,12 +121,24 @@ const FeaturesPage = () => {
               </div>
               <span className="font-bold text-xl">BitVend</span>
             </Link>
-            <Button asChild variant="ghost">
-              <Link to="/">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Home
-              </Link>
-            </Button>
+            <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                className="w-9 px-0"
+              >
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+              <Button asChild variant="ghost">
+                <Link to="/">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to Home
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </header>

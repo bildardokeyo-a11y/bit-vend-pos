@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
 import { BusinessProvider } from "@/contexts/BusinessContext";
 import { ProductProvider } from "@/contexts/ProductContext";
 import { SalesProvider } from "@/contexts/SalesContext";
@@ -73,13 +74,14 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <BusinessProvider>
-      <ProductProvider>
-        <SalesProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <BusinessProvider>
+        <ProductProvider>
+          <SalesProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
               <Routes>
                 {/* Marketing Website Routes */}
                 <Route path="/" element={<LandingPage />} />
@@ -154,6 +156,7 @@ const App = () => (
         </SalesProvider>
       </ProductProvider>
     </BusinessProvider>
+  </ThemeProvider>
   </QueryClientProvider>
 );
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -6,46 +6,18 @@ import {
   Menu,
   X,
   Sun,
-  Moon,
-  ShoppingCart,
-  ChevronDown
+  Moon
 } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { useTheme } from 'next-themes';
 
 interface MarketingLayoutProps {
   children: React.ReactNode;
 }
 
 const MarketingLayout: React.FC<MarketingLayoutProps> = ({ children }) => {
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') === 'dark' || 
-             (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
-    return false;
-  });
+  const { theme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDark]);
-
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-  };
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -63,21 +35,17 @@ const MarketingLayout: React.FC<MarketingLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <div className="flex items-center space-x-2">
-                <ShoppingCart className="h-8 w-8 text-primary" />
-                <span className="text-xl font-bold">
-                  <span className="text-primary">Bit</span>
-                  <span className="text-foreground">Vend</span>
-                  <span className="text-muted-foreground ml-1">POS</span>
-                </span>
+              <div className="h-8 w-8 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">BV</span>
               </div>
+              <span className="font-bold text-xl">BitVend</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -101,14 +69,11 @@ const MarketingLayout: React.FC<MarketingLayoutProps> = ({ children }) => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={toggleTheme}
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
                 className="w-9 px-0"
               >
-                {isDark ? (
-                  <Sun className="h-4 w-4" />
-                ) : (
-                  <Moon className="h-4 w-4" />
-                )}
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
               
@@ -128,14 +93,12 @@ const MarketingLayout: React.FC<MarketingLayoutProps> = ({ children }) => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={toggleTheme}
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
                 className="w-9 px-0"
               >
-                {isDark ? (
-                  <Sun className="h-4 w-4" />
-                ) : (
-                  <Moon className="h-4 w-4" />
-                )}
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
               </Button>
               
               <Button
@@ -198,12 +161,10 @@ const MarketingLayout: React.FC<MarketingLayoutProps> = ({ children }) => {
             {/* Company Info */}
             <div className="space-y-4">
               <Link to="/" className="flex items-center space-x-2">
-                <ShoppingCart className="h-6 w-6 text-primary" />
-                <span className="text-lg font-bold">
-                  <span className="text-primary">Bit</span>
-                  <span className="text-foreground">Vend</span>
-                  <span className="text-muted-foreground ml-1">POS</span>
-                </span>
+                <div className="h-6 w-6 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">BV</span>
+                </div>
+                <span className="text-lg font-bold">BitVend</span>
               </Link>
               <p className="text-sm text-muted-foreground">
                 The modern POS system for growing businesses. Streamline operations, 
