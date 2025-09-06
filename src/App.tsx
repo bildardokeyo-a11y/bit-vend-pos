@@ -66,6 +66,7 @@ import SubscriptionManage from "./pages/SubscriptionManage";
 import LandingPage from "./pages/LandingPage";
 import AuthPage from "./pages/AuthPage";
 import PricingPage from "./pages/PricingPage";
+import FeaturesPage from "./pages/FeaturesPage";
 import ContactPage from "./pages/ContactPage";
 
 const queryClient = new QueryClient();
@@ -82,6 +83,7 @@ const App = () => (
               <Routes>
                 {/* Marketing Website Routes */}
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/features" element={<FeaturesPage />} />
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/auth" element={<AuthPage />} />

@@ -24,11 +24,16 @@ import {
   Phone,
   Building2,
   Target,
-  Sparkles
+  Sparkles,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTheme } from 'next-themes';
 
 const LandingPage = () => {
+  const { theme, setTheme } = useTheme();
+  
   const features = [
     {
       icon: BarChart3,
@@ -114,10 +119,10 @@ const LandingPage = () => {
               </Link>
               
               <nav className="hidden md:flex items-center space-x-6">
-                <Link to="#features" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/features" className="text-muted-foreground hover:text-foreground transition-colors">
                   Features
                 </Link>
-                <Link to="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
                 </Link>
                 <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -127,6 +132,16 @@ const LandingPage = () => {
             </div>
             
             <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                className="w-9 px-0"
+              >
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
               <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground">
                 <Link to="/auth?mode=signin">
                   Sign In
