@@ -58,98 +58,98 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
     {
       title: 'Main',
       items: [
-        { href: '/', icon: BarChart3, label: 'Dashboard' },
-        { href: '/superadmin', icon: Shield, label: 'Super Admin' },
-        { href: '/application', icon: Layers, label: 'Application' },
-        { href: '/layout', icon: LayoutGrid, label: 'Layout' },
+        { href: '/dashboard', icon: BarChart3, label: 'Dashboard' },
+        { href: '/dashboard/superadmin', icon: Shield, label: 'Super Admin' },
+        { href: '/dashboard/application', icon: Layers, label: 'Application' },
+        { href: '/dashboard/layout', icon: LayoutGrid, label: 'Layout' },
       ]
     },
     {
       title: 'Sales',
       items: [
-        { href: '/checkout', icon: Calculator, label: 'POS (Checkout)' },
-        { href: '/sales', icon: Receipt, label: 'Sales List' },
-        { href: '/sales-return', icon: RotateCcw, label: 'Sales Return' },
-        { href: '/quotation', icon: FileText, label: 'Quotation' },
-        { href: '/purchases', icon: TrendingUp, label: 'Purchases' },
+        { href: '/dashboard/checkout', icon: Calculator, label: 'POS (Checkout)' },
+        { href: '/dashboard/sales', icon: Receipt, label: 'Sales List' },
+        { href: '/dashboard/sales-return', icon: RotateCcw, label: 'Sales Return' },
+        { href: '/dashboard/quotation', icon: FileText, label: 'Quotation' },
+        { href: '/dashboard/purchases', icon: TrendingUp, label: 'Purchases' },
       ]
     },
     {
       title: 'Inventory',
       items: [
-        { href: '/products', icon: Package, label: 'Products' },
-        { href: '/categories', icon: Tags, label: 'Categories' },
-        { href: '/brands', icon: Factory, label: 'Brands' },
-        { href: '/units', icon: Archive, label: 'Units' },
-        { href: '/variants', icon: ClipboardList, label: 'Variants' },
-        { href: '/barcode', icon: QrCode, label: 'Print Barcode' },
+        { href: '/dashboard/products', icon: Package, label: 'Products' },
+        { href: '/dashboard/categories', icon: Tags, label: 'Categories' },
+        { href: '/dashboard/brands', icon: Factory, label: 'Brands' },
+        { href: '/dashboard/units', icon: Archive, label: 'Units' },
+        { href: '/dashboard/variants', icon: ClipboardList, label: 'Variants' },
+        { href: '/dashboard/barcode', icon: QrCode, label: 'Print Barcode' },
       ]
     },
     {
       title: 'Stock',
       items: [
-        { href: '/stock-in', icon: TruckIcon, label: 'Stock In' },
-        { href: '/stock-out', icon: Warehouse, label: 'Stock Out' },
-        { href: '/stock-transfer', icon: ArrowLeftRight, label: 'Stock Transfer' },
-        { href: '/stock-return', icon: ClipboardCheck, label: 'Stock Return' },
-        { href: '/stock-adjustment', icon: Layers, label: 'Stock Adjustment' },
+        { href: '/dashboard/stock-in', icon: TruckIcon, label: 'Stock In' },
+        { href: '/dashboard/stock-out', icon: Warehouse, label: 'Stock Out' },
+        { href: '/dashboard/stock-transfer', icon: ArrowLeftRight, label: 'Stock Transfer' },
+        { href: '/dashboard/stock-return', icon: ClipboardCheck, label: 'Stock Return' },
+        { href: '/dashboard/stock-adjustment', icon: Layers, label: 'Stock Adjustment' },
       ]
     },
     {
       title: 'Finance & Accounts',
       items: [
-        { href: '/expenses', icon: DollarSign, label: 'Expenses' },
-        { href: '/expense-category', icon: List, label: 'Expense Category' },
-        { href: '/income', icon: HandCoins, label: 'Income' },
-        { href: '/income-category', icon: List, label: 'Income Category' },
-        { href: '/bank-accounts', icon: Building2, label: 'Bank Accounts' },
-        { href: '/money-transfer', icon: ArrowRightLeft, label: 'Money Transfer' },
-        { href: '/balance-sheet', icon: BarChart3, label: 'Balance Sheet' },
-        { href: '/trial-balance', icon: Scale, label: 'Trial Balance' },
-        { href: '/cash-flow', icon: Waves, label: 'Cash Flow' },
-        { href: '/account-statement', icon: FileBarChart, label: 'Account Statement' },
+        { href: '/dashboard/expenses', icon: DollarSign, label: 'Expenses' },
+        { href: '/dashboard/expense-category', icon: List, label: 'Expense Category' },
+        { href: '/dashboard/income', icon: HandCoins, label: 'Income' },
+        { href: '/dashboard/income-category', icon: List, label: 'Income Category' },
+        { href: '/dashboard/bank-accounts', icon: Building2, label: 'Bank Accounts' },
+        { href: '/dashboard/money-transfer', icon: ArrowRightLeft, label: 'Money Transfer' },
+        { href: '/dashboard/balance-sheet', icon: BarChart3, label: 'Balance Sheet' },
+        { href: '/dashboard/trial-balance', icon: Scale, label: 'Trial Balance' },
+        { href: '/dashboard/cash-flow', icon: Waves, label: 'Cash Flow' },
+        { href: '/dashboard/account-statement', icon: FileBarChart, label: 'Account Statement' },
       ]
     },
     {
       title: 'People',
       items: [
-        { href: '/customers', icon: Users, label: 'Customers' },
-        { href: '/suppliers', icon: Briefcase, label: 'Suppliers' },
+        { href: '/dashboard/customers', icon: Users, label: 'Customers' },
+        { href: '/dashboard/suppliers', icon: Briefcase, label: 'Suppliers' },
       ]
     },
     {
       title: 'HRM',
       items: [
-        { href: '/employees', icon: IdCard, label: 'Employees' },
-        { href: '/attendance', icon: Clock, label: 'Attendance' },
-        { href: '/holidays', icon: Calendar, label: 'Holidays' },
-        { href: '/payroll', icon: CreditCard, label: 'Payroll' },
+        { href: '/dashboard/employees', icon: IdCard, label: 'Employees' },
+        { href: '/dashboard/attendance', icon: Clock, label: 'Attendance' },
+        { href: '/dashboard/holidays', icon: Calendar, label: 'Holidays' },
+        { href: '/dashboard/payroll', icon: CreditCard, label: 'Payroll' },
       ]
     },
     {
       title: 'Reports',
       items: [
-        { href: '/sales-report', icon: PieChart, label: 'Sales Report' },
-        { href: '/stock-report', icon: Archive, label: 'Stock Report' },
-        { href: '/purchase-report', icon: FileText, label: 'Purchase Report' },
-        { href: '/expense-report', icon: DollarSign, label: 'Expense Report' },
+        { href: '/dashboard/sales-report', icon: PieChart, label: 'Sales Report' },
+        { href: '/dashboard/stock-report', icon: Archive, label: 'Stock Report' },
+        { href: '/dashboard/purchase-report', icon: FileText, label: 'Purchase Report' },
+        { href: '/dashboard/expense-report', icon: DollarSign, label: 'Expense Report' },
       ]
     },
     {
       title: 'User Management',
       items: [
-        { href: '/users', icon: UserCog, label: 'Users' },
-        { href: '/roles', icon: UserCheck, label: 'Roles & Permissions' },
+        { href: '/dashboard/users', icon: UserCog, label: 'Users' },
+        { href: '/dashboard/roles', icon: UserCheck, label: 'Roles & Permissions' },
       ]
     },
     {
       title: 'Settings',
       items: [
-        { href: '/general-settings', icon: Settings, label: 'General Settings' },
-        { href: '/invoice-settings', icon: FileText, label: 'Invoice Settings' },
-        { href: '/tax-settings', icon: Calculator, label: 'Tax Settings' },
-        { href: '/subscription', icon: CreditCard, label: 'Subscription' },
-        { href: '/backup', icon: Database, label: 'Backup & Restore' },
+        { href: '/dashboard/general-settings', icon: Settings, label: 'General Settings' },
+        { href: '/dashboard/invoice-settings', icon: FileText, label: 'Invoice Settings' },
+        { href: '/dashboard/tax-settings', icon: Calculator, label: 'Tax Settings' },
+        { href: '/dashboard/subscription', icon: CreditCard, label: 'Subscription' },
+        { href: '/dashboard/backup', icon: Database, label: 'Backup & Restore' },
       ]
     },
   ];

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,12 +17,16 @@ import {
   CheckCircle,
   Headphones,
   Users,
-  Building2
+  Building2,
+  ArrowLeft,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { toast } from 'sonner';
-import MarketingLayout from '@/components/marketing/MarketingLayout';
+import { useTheme } from 'next-themes';
 
 const ContactPage = () => {
+  const { theme, setTheme } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -106,22 +111,59 @@ const ContactPage = () => {
   ];
 
   return (
-    <MarketingLayout>
-      <div className="py-20 overflow-x-hidden">
+    <div className="min-h-screen bg-background overflow-x-hidden">
+      {/* Header */}
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4">
-          {/* Header */}
+          <div className="flex h-16 items-center justify-between">
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="h-8 w-8 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">BV</span>
+              </div>
+              <span className="font-bold text-xl">BitVend</span>
+            </Link>
+            <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                className="w-9 px-0"
+              >
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+              <Button asChild variant="ghost">
+                <Link to="/">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to Home
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="py-20 bg-gradient-to-br from-orange-500/10 via-background to-blue-600/10">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
+            <Badge className="mb-6 bg-gradient-to-r from-orange-500/10 to-blue-600/10 text-orange-600 dark:text-orange-400 border-orange-500/20">
               Contact Us
             </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Get in Touch
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              <span className="text-foreground">Get in Touch</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Have questions about BitVend POS? Need help getting started? Our team is here to help you 
               find the perfect solution for your business.
             </p>
           </div>
+        </div>
+      </section>
+
+      <div className="py-20">
+        <div className="container mx-auto px-4">
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
             {/* Contact Form */}
@@ -331,7 +373,7 @@ const ContactPage = () => {
           </div>
 
           {/* FAQ Section */}
-          <div className="text-center bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-12">
+          <div className="text-center bg-gradient-to-br from-orange-500/10 to-blue-600/10 rounded-2xl p-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Need Immediate Help?
             </h2>
@@ -339,17 +381,17 @@ const ContactPage = () => {
               Check out our comprehensive help center or start a live chat for instant support.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="px-8">
+              <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8">
                 Visit Help Center
               </Button>
-              <Button variant="outline" size="lg" className="px-8">
+              <Button variant="outline" size="lg" className="px-8 border-orange-500/20 text-orange-600 hover:bg-orange-500/10">
                 Start Live Chat
               </Button>
             </div>
           </div>
         </div>
       </div>
-    </MarketingLayout>
+    </div>
   );
 };
 
