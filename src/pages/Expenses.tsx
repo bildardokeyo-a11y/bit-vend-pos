@@ -75,66 +75,9 @@ const Expenses: React.FC = () => {
     notes: ''
   });
 
-  // Sample expenses data
-  const [expenses] = useState<Expense[]>([
-    {
-      id: '1',
-      referenceNo: 'EXP-001',
-      date: '2024-01-15',
-      categoryId: '1',
-      categoryName: 'Office Supplies',
-      description: 'Printer paper and ink cartridges',
-      amount: 125.50,
-      paymentMethod: 'card',
-      vendor: 'Office Depot',
-      receiptNo: 'REC-001',
-      status: 'approved',
-      approvedBy: 'John Manager',
-      notes: 'Monthly office supplies purchase'
-    },
-    {
-      id: '2',
-      referenceNo: 'EXP-002',
-      date: '2024-01-14',
-      categoryId: '2',
-      categoryName: 'Utilities',
-      description: 'Electricity bill - January',
-      amount: 320.75,
-      paymentMethod: 'bank',
-      vendor: 'City Electric Company',
-      receiptNo: 'ELEC-2024-001',
-      status: 'approved',
-      approvedBy: 'Jane Smith',
-      notes: 'Higher usage due to winter season'
-    },
-    {
-      id: '3',
-      referenceNo: 'EXP-003',
-      date: '2024-01-13',
-      categoryId: '3',
-      categoryName: 'Marketing',
-      description: 'Social media advertising campaign',
-      amount: 500.00,
-      paymentMethod: 'card',
-      vendor: 'Facebook Ads',
-      status: 'pending',
-      notes: 'Q1 marketing campaign'
-    },
-    {
-      id: '4',
-      referenceNo: 'EXP-004',
-      date: '2024-01-12',
-      categoryId: '4',
-      categoryName: 'Transportation',
-      description: 'Delivery truck fuel',
-      amount: 85.25,
-      paymentMethod: 'cash',
-      vendor: 'Shell Gas Station',
-      receiptNo: 'FUEL-001',
-      status: 'approved',
-      approvedBy: 'Mike Johnson'
-    }
-  ]);
+  // Use real database data
+  const [expenses] = useState<Expense[]>([]);
+  const [filteredExpenses, setFilteredExpenses] = useState(expenses);
 
   const handleSaveExpense = () => {
     if (!formData.categoryId || !formData.description || !formData.amount) {

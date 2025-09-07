@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,19 +9,23 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import {
-  ShoppingCart,
   Mail,
   Lock,
   User,
   AlertCircle,
   CheckCircle,
   Gift,
-  Users
+  Users,
+  ArrowLeft,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { useTheme } from 'next-themes';
 
 const AuthPage = () => {
+  const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const mode = searchParams.get('mode') || 'signin';
@@ -37,7 +41,6 @@ const AuthPage = () => {
   const [referralCodeInput, setReferralCodeInput] = useState(referralCode);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [currentMode, setCurrentMode] = useState<'signin' | 'signup' | 'forgot'>(mode as any);
-  const [user, setUser] = useState(null);
 
   // Check if user is already authenticated
   useEffect(() => {
@@ -172,301 +175,337 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
-      <div className="w-full max-w-lg">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <ShoppingCart className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold">
-              <span className="text-primary">Bit</span>
-              <span className="text-foreground">Vend</span>
-              <span className="text-muted-foreground ml-1">POS</span>
-            </span>
+    <div className="min-h-screen bg-background overflow-x-hidden">
+      {/* Header */}
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4">
+          <div className="flex h-16 items-center justify-between">
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="h-8 w-8 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">BV</span>
+              </div>
+              <span className="font-bold text-xl">BitVend</span>
+            </Link>
+            <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                className="w-9 px-0"
+              >
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+              <Button asChild variant="ghost">
+                <Link to="/">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to Home
+                </Link>
+              </Button>
+            </div>
           </div>
-          <h1 className="text-2xl font-bold text-foreground">
-            {currentMode === 'signin' && 'Welcome Back'}
-            {currentMode === 'signup' && 'Start Your Free Trial'}
-            {currentMode === 'forgot' && 'Reset Your Password'}
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            {currentMode === 'signin' && 'Sign in to access your POS dashboard'}
-            {currentMode === 'signup' && '14 days free, no credit card required'}
-            {currentMode === 'forgot' && 'Enter your email to reset your password'}
-          </p>
         </div>
+      </header>
 
-        <Card className="border-border/50 shadow-lg">
-          <CardContent className="p-6">
-            <Tabs value={currentMode} onValueChange={(value) => setCurrentMode(value as any)}>
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
-              </TabsList>
+      {/* Hero Section */}
+      <section className="py-20 bg-gradient-to-br from-orange-500/10 via-background to-blue-600/10">
+        <div className="container mx-auto px-4 flex items-center justify-center min-h-[70vh]">
+          <div className="w-full max-w-lg">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <Badge className="mb-6 bg-gradient-to-r from-orange-500/10 to-blue-600/10 text-orange-600 dark:text-orange-400 border-orange-500/20">
+                {currentMode === 'signin' && 'Welcome Back'}
+                {currentMode === 'signup' && 'Start Your Free Trial'}
+                {currentMode === 'forgot' && 'Reset Your Password'}
+              </Badge>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                <span className="text-foreground">
+                  {currentMode === 'signin' && 'Sign In'}
+                  {currentMode === 'signup' && 'Join BitVend'}
+                  {currentMode === 'forgot' && 'Reset Password'}
+                </span>
+              </h1>
+              <p className="text-xl text-muted-foreground">
+                {currentMode === 'signin' && 'Sign in to access your POS dashboard'}
+                {currentMode === 'signup' && '14 days free, no credit card required'}
+                {currentMode === 'forgot' && 'Enter your email to reset your password'}
+              </p>
+            </div>
 
-              {/* Sign In Form */}
-              <TabsContent value="signin">
-                <form onSubmit={handleSignIn} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="signin-email">Email</Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        id="signin-email"
-                        type="email"
-                        placeholder="you@company.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
+            <Card className="border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardContent className="p-6">
+                <Tabs value={currentMode} onValueChange={(value) => setCurrentMode(value as any)}>
+                  <TabsList className="grid w-full grid-cols-2 mb-6">
+                    <TabsTrigger value="signin">Sign In</TabsTrigger>
+                    <TabsTrigger value="signup">Sign Up</TabsTrigger>
+                  </TabsList>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="signin-password">Password</Label>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        id="signin-password"
-                        type="password"
-                        placeholder="Enter your password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? 'Signing In...' : 'Sign In'}
-                  </Button>
-
-                  <div className="text-center">
-                    <Button
-                      type="button"
-                      variant="link"
-                      className="text-sm"
-                      onClick={() => setCurrentMode('forgot')}
-                    >
-                      Forgot your password?
-                    </Button>
-                  </div>
-                </form>
-              </TabsContent>
-
-              {/* Sign Up Form */}
-              <TabsContent value="signup">
-                {referralCodeInput && (
-                  <Alert className="mb-4 border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950">
-                    <Gift className="h-4 w-4 text-green-600" />
-                    <AlertDescription className="text-green-800 dark:text-green-200">
-                      🎉 Referral code applied! You'll get an extra 30 days free trial.
-                    </AlertDescription>
-                  </Alert>
-                )}
-
-                <form onSubmit={handleSignUp} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="fullName">Full Name</Label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="fullName"
-                          placeholder="John Doe"
-                          value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
-                          className="pl-10"
-                          required
-                        />
+                  {/* Sign In Form */}
+                  <TabsContent value="signin">
+                    <form onSubmit={handleSignIn} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="signin-email">Email</Label>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            id="signin-email"
+                            type="email"
+                            placeholder="you@company.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="pl-10"
+                            required
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="+254712345678"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="companyName">Company Name</Label>
-                    <Input
-                      id="companyName"
-                      placeholder="Your Business Name"
-                      value={companyName}
-                      onChange={(e) => setCompanyName(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        id="signup-email"
-                        type="email"
-                        placeholder="you@company.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="password">Password</Label>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="password"
-                          type="password"
-                          placeholder="Create password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          className="pl-10"
-                          required
-                        />
+                      <div className="space-y-2">
+                        <Label htmlFor="signin-password">Password</Label>
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            id="signin-password"
+                            type="password"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="pl-10"
+                            required
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="confirmPassword">Confirm Password</Label>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="confirmPassword"
-                          type="password"
-                          placeholder="Confirm password"
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          className="pl-10"
-                          required
-                        />
+                      <Button type="submit" className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white" disabled={isLoading}>
+                        {isLoading ? 'Signing In...' : 'Sign In'}
+                      </Button>
+
+                      <div className="text-center">
+                        <Button
+                          type="button"
+                          variant="link"
+                          className="text-sm"
+                          onClick={() => setCurrentMode('forgot')}
+                        >
+                          Forgot your password?
+                        </Button>
                       </div>
-                    </div>
-                  </div>
+                    </form>
+                  </TabsContent>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="referralCode">Referral Code (Optional)</Label>
-                    <div className="relative">
-                      <Users className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        id="referralCode"
-                        placeholder="Enter referral code"
-                        value={referralCodeInput}
-                        onChange={(e) => setReferralCodeInput(e.target.value)}
-                        className="pl-10"
-                      />
-                    </div>
+                  {/* Sign Up Form */}
+                  <TabsContent value="signup">
                     {referralCodeInput && (
-                      <p className="text-sm text-green-600">
-                        ✨ You'll get an extra 30 days free with this referral!
-                      </p>
+                      <Alert className="mb-4 border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950">
+                        <Gift className="h-4 w-4 text-green-600" />
+                        <AlertDescription className="text-green-800 dark:text-green-200">
+                          🎉 Referral code applied! You'll get an extra 30 days free trial.
+                        </AlertDescription>
+                      </Alert>
                     )}
-                  </div>
 
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="terms"
-                      checked={acceptTerms}
-                      onCheckedChange={(checked) => setAcceptTerms(checked === true)}
-                    />
-                    <Label htmlFor="terms" className="text-sm">
-                      I agree to the{' '}
-                      <a href="/terms" className="text-primary hover:underline">
-                        Terms of Service
-                      </a>{' '}
-                      and{' '}
-                      <a href="/privacy" className="text-primary hover:underline">
-                        Privacy Policy
-                      </a>
-                    </Label>
-                  </div>
+                    <form onSubmit={handleSignUp} className="space-y-4">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="fullName">Full Name</Label>
+                          <div className="relative">
+                            <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                            <Input
+                              id="fullName"
+                              placeholder="John Doe"
+                              value={fullName}
+                              onChange={(e) => setFullName(e.target.value)}
+                              className="pl-10"
+                              required
+                            />
+                          </div>
+                        </div>
 
-                  <Button type="submit" className="w-full" disabled={isLoading || !acceptTerms}>
-                    {isLoading ? 'Creating Account...' : 'Start Free Trial'}
-                  </Button>
-
-                  <div className="text-center space-y-2">
-                    <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <CheckCircle className="h-3 w-3 text-green-500" />
-                        14-day free trial
+                        <div className="space-y-2">
+                          <Label htmlFor="phone">Phone</Label>
+                          <Input
+                            id="phone"
+                            type="tel"
+                            placeholder="+254712345678"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                          />
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <CheckCircle className="h-3 w-3 text-green-500" />
-                        No credit card required
+
+                      <div className="space-y-2">
+                        <Label htmlFor="companyName">Company Name</Label>
+                        <Input
+                          id="companyName"
+                          placeholder="Your Business Name"
+                          value={companyName}
+                          onChange={(e) => setCompanyName(e.target.value)}
+                          required
+                        />
                       </div>
-                    </div>
-                  </div>
-                </form>
-              </TabsContent>
 
-              {/* Forgot Password Form */}
-              <TabsContent value="forgot">
-                <form onSubmit={handleForgotPassword} className="space-y-4">
-                  <Alert>
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>
-                      Enter your email address and we'll send you a link to reset your password.
-                    </AlertDescription>
-                  </Alert>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-email">Email</Label>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            id="signup-email"
+                            type="email"
+                            placeholder="you@company.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="pl-10"
+                            required
+                          />
+                        </div>
+                      </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="reset-email">Email</Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        id="reset-email"
-                        type="email"
-                        placeholder="you@company.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="password">Password</Label>
+                          <div className="relative">
+                            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                            <Input
+                              id="password"
+                              type="password"
+                              placeholder="Create password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              className="pl-10"
+                              required
+                            />
+                          </div>
+                        </div>
 
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? 'Sending Reset Link...' : 'Send Reset Link'}
-                  </Button>
+                        <div className="space-y-2">
+                          <Label htmlFor="confirmPassword">Confirm Password</Label>
+                          <div className="relative">
+                            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                            <Input
+                              id="confirmPassword"
+                              type="password"
+                              placeholder="Confirm password"
+                              value={confirmPassword}
+                              onChange={(e) => setConfirmPassword(e.target.value)}
+                              className="pl-10"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
 
-                  <div className="text-center">
-                    <Button
-                      type="button"
-                      variant="link"
-                      className="text-sm"
-                      onClick={() => setCurrentMode('signin')}
-                    >
-                      Back to Sign In
-                    </Button>
-                  </div>
-                </form>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
+                      <div className="space-y-2">
+                        <Label htmlFor="referralCode">Referral Code (Optional)</Label>
+                        <div className="relative">
+                          <Users className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            id="referralCode"
+                            placeholder="Enter referral code"
+                            value={referralCodeInput}
+                            onChange={(e) => setReferralCodeInput(e.target.value)}
+                            className="pl-10"
+                          />
+                        </div>
+                        {referralCodeInput && (
+                          <p className="text-sm text-green-600">
+                            ✨ You'll get an extra 30 days free with this referral!
+                          </p>
+                        )}
+                      </div>
 
-        {/* Footer */}
-        <div className="text-center mt-8 text-sm text-muted-foreground">
-          Need help?{' '}
-          <a href="/contact" className="text-primary hover:underline">
-            Contact Support
-          </a>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="terms"
+                          checked={acceptTerms}
+                          onCheckedChange={(checked) => setAcceptTerms(checked === true)}
+                        />
+                        <Label htmlFor="terms" className="text-sm">
+                          I agree to the{' '}
+                          <a href="/terms" className="text-orange-600 hover:underline">
+                            Terms of Service
+                          </a>{' '}
+                          and{' '}
+                          <a href="/privacy" className="text-orange-600 hover:underline">
+                            Privacy Policy
+                          </a>
+                        </Label>
+                      </div>
+
+                      <Button type="submit" className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white" disabled={isLoading || !acceptTerms}>
+                        {isLoading ? 'Creating Account...' : 'Start Free Trial'}
+                      </Button>
+
+                      <div className="text-center space-y-2">
+                        <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="h-3 w-3 text-green-500" />
+                            14-day free trial
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <CheckCircle className="h-3 w-3 text-green-500" />
+                            No credit card required
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </TabsContent>
+
+                  {/* Forgot Password Form */}
+                  <TabsContent value="forgot">
+                    <form onSubmit={handleForgotPassword} className="space-y-4">
+                      <Alert>
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                          Enter your email address and we'll send you a link to reset your password.
+                        </AlertDescription>
+                      </Alert>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="reset-email">Email</Label>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            id="reset-email"
+                            type="email"
+                            placeholder="you@company.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="pl-10"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <Button type="submit" className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white" disabled={isLoading}>
+                        {isLoading ? 'Sending Reset Link...' : 'Send Reset Link'}
+                      </Button>
+
+                      <div className="text-center">
+                        <Button
+                          type="button"
+                          variant="link"
+                          className="text-sm"
+                          onClick={() => setCurrentMode('signin')}
+                        >
+                          Back to Sign In
+                        </Button>
+                      </div>
+                    </form>
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+
+            {/* Footer */}
+            <div className="text-center mt-8 text-sm text-muted-foreground">
+              Need help?{' '}
+              <Link to="/contact" className="text-orange-600 hover:underline">
+                Contact Support
+              </Link>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

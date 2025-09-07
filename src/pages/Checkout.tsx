@@ -31,56 +31,16 @@ const Checkout = () => {
   const [animatingButtons, setAnimatingButtons] = useState<Set<number>>(new Set());
   const [animatingCartItems, setAnimatingCartItems] = useState<Set<number>>(new Set());
 
-  // Sample products for demo/testing (will be removed when database is connected)
-  const sampleProducts = [
-    { id: 1001, name: 'Apple iPhone 15 Pro', category: 'Electronics', price: 999.99, description: '128GB, Titanium Blue', status: 'active' },
-    { id: 1002, name: 'Samsung Galaxy S24', category: 'Electronics', price: 849.99, description: '256GB, Phantom Black', status: 'active' },
-    { id: 1003, name: 'MacBook Air M3', category: 'Electronics', price: 1199.99, description: '13-inch, 8GB RAM, 256GB SSD', status: 'active' },
-    { id: 1004, name: 'iPad Pro 12.9"', category: 'Electronics', price: 1099.99, description: 'M2 Chip, 128GB, Space Gray', status: 'active' },
-    { id: 1005, name: 'AirPods Pro 2', category: 'Electronics', price: 249.99, description: 'Active Noise Cancellation', status: 'active' },
-    { id: 1006, name: 'Apple Watch Series 9', category: 'Electronics', price: 399.99, description: '45mm, GPS + Cellular', status: 'active' },
-    { id: 1007, name: 'Sony WH-1000XM5', category: 'Electronics', price: 349.99, description: 'Wireless Noise Canceling Headphones', status: 'active' },
-    { id: 1008, name: 'Nintendo Switch OLED', category: 'Electronics', price: 349.99, description: 'White Console with Joy-Con', status: 'active' },
-    { id: 1009, name: 'Dell XPS 13', category: 'Electronics', price: 899.99, description: '13.4" Touch, i7, 16GB RAM', status: 'active' },
-    { id: 1010, name: 'Canon EOS R6 Mark II', category: 'Electronics', price: 2499.99, description: 'Mirrorless Camera Body', status: 'active' },
-    
-    // Clothing & Fashion
-    { id: 1011, name: 'Nike Air Jordan 1', category: 'Fashion', price: 170.00, description: 'High Top, Size 10, Black/Red', status: 'active' },
-    { id: 1012, name: 'Adidas Ultraboost 22', category: 'Fashion', price: 180.00, description: 'Running Shoes, White/Blue', status: 'active' },
-    { id: 1013, name: 'Levi\'s 501 Jeans', category: 'Fashion', price: 89.99, description: 'Original Fit, Medium Wash', status: 'active' },
-    { id: 1014, name: 'Champion Hoodie', category: 'Fashion', price: 49.99, description: 'Pullover, Gray, Size M', status: 'active' },
-    { id: 1015, name: 'Ray-Ban Aviators', category: 'Fashion', price: 154.99, description: 'Classic Gold Frame, Green Lens', status: 'active' },
-    
-    // Home & Living
-    { id: 1016, name: 'Dyson V15 Detect', category: 'Home & Living', price: 749.99, description: 'Cordless Vacuum Cleaner', status: 'active' },
-    { id: 1017, name: 'KitchenAid Stand Mixer', category: 'Home & Living', price: 379.99, description: 'Artisan 5-Qt, Empire Red', status: 'active' },
-    { id: 1018, name: 'Nespresso Vertuo Plus', category: 'Home & Living', price: 189.99, description: 'Coffee & Espresso Machine', status: 'active' },
-    { id: 1019, name: 'Instant Pot Duo 7-in-1', category: 'Home & Living', price: 99.99, description: '8 Qt Pressure Cooker', status: 'active' },
-    { id: 1020, name: 'Philips Hue Smart Bulbs', category: 'Home & Living', price: 199.99, description: '4-Pack, Color Changing', status: 'active' },
-    
-    // Books & Media
-    { id: 1021, name: 'The Psychology of Money', category: 'Books', price: 18.99, description: 'by Morgan Housel, Hardcover', status: 'active' },
-    { id: 1022, name: 'Atomic Habits', category: 'Books', price: 16.99, description: 'by James Clear, Paperback', status: 'active' },
-    { id: 1023, name: 'Dune: Complete Series', category: 'Books', price: 89.99, description: 'Frank Herbert Box Set', status: 'active' },
-    
-    // Sports & Recreation
-    { id: 1024, name: 'Yeti Rambler 30oz', category: 'Sports', price: 39.99, description: 'Stainless Steel Tumbler', status: 'active' },
-    { id: 1025, name: 'Peloton Bike+', category: 'Sports', price: 2495.00, description: 'Indoor Exercise Bike', status: 'active' },
-  ];
-
-  // Populate cart with sample products on first load (for demo purposes)
+  // Load products from database via ProductContext
   useEffect(() => {
     const saved = localStorage.getItem('pos-cart');
-    if (!saved || JSON.parse(saved).length === 0) {
-      // Add some sample items to cart for demo
-      const sampleCartItems = [
-        { product: sampleProducts.find(p => p.id === 1001)!, quantity: 1 }, // iPhone 15 Pro
-        { product: sampleProducts.find(p => p.id === 1005)!, quantity: 2 }, // AirPods Pro 2
-        { product: sampleProducts.find(p => p.id === 1013)!, quantity: 1 }, // Levi's Jeans
-        { product: sampleProducts.find(p => p.id === 1018)!, quantity: 1 }, // Nespresso Machine
-      ];
-      setCart(sampleCartItems);
-      localStorage.setItem('pos-cart', JSON.stringify(sampleCartItems));
+    if (saved) {
+      try {
+        setCart(JSON.parse(saved));
+      } catch (error) {
+        console.error('Error loading cart from localStorage:', error);
+        setCart([]);
+      }
     }
   }, []);
 
@@ -91,11 +51,10 @@ const Checkout = () => {
 
   const categories = CATEGORIES;
   
-  // Combine existing products with sample products for demo
-  const allProducts = [...products, ...sampleProducts];
+  // Use only database products
   const filteredProducts = selectedCategory === "All" 
-    ? allProducts.filter(p => p.status === 'active') 
-    : allProducts.filter(p => p.category === selectedCategory && p.status === 'active');
+    ? products.filter(p => p.is_active) 
+    : products.filter(p => p.categories?.name === selectedCategory && p.is_active);
 
   const addToCart = (product: any) => {
     // Animate the + button

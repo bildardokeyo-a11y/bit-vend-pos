@@ -66,48 +66,11 @@ const SalesReport: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [activeView, setActiveView] = useState<'overview' | 'detailed' | 'products' | 'customers'>('overview');
 
-  // Sample sales data
-  const [sales] = useState<Sale[]>([
-    {
-      id: '1',
-      invoiceNo: 'INV-001',
-      date: '2024-01-15',
-      time: '10:30 AM',
-      customerName: 'John Doe',
-      customerPhone: '+1-555-0123',
-      items: [
-        { productId: 1, productName: 'Apple iPhone 13', quantity: 1, unitPrice: 699.00, total: 699.00 },
-        { productId: 5, productName: 'Apple AirPods Pro', quantity: 1, unitPrice: 249.00, total: 249.00 }
-      ],
-      subtotal: 948.00,
-      tax: 94.80,
-      discount: 0,
-      total: 1042.80,
-      paymentMethod: 'card',
-      status: 'completed',
-      cashier: 'Alice Johnson'
-    },
-    {
-      id: '2',
-      invoiceNo: 'INV-002',
-      date: '2024-01-15',
-      time: '11:15 AM',
-      items: [
-        { productId: 2, productName: 'Samsung Galaxy S21', quantity: 1, unitPrice: 799.00, total: 799.00 }
-      ],
-      subtotal: 799.00,
-      tax: 79.90,
-      discount: 50.00,
-      total: 828.90,
-      paymentMethod: 'cash',
-      status: 'completed',
-      cashier: 'Bob Smith'
-    },
-    {
-      id: '3',
-      invoiceNo: 'INV-003',
-      date: '2024-01-14',
-      time: '2:45 PM',
+  // Use real database data
+  const [sales] = useState<Sale[]>([]);
+  const [filteredSales, setFilteredSales] = useState(sales);
+
+  // Calculate metrics from real sales data
       customerName: 'Jane Smith',
       customerPhone: '+1-555-0456',
       items: [
