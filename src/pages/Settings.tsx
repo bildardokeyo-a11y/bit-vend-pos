@@ -86,15 +86,7 @@ const Settings = () => {
         state: business.state,
         postalCode: business.postalCode,
         country: business.country,
-        operatingHours: business.operatingHours || {
-          monday: { open: '09:00', close: '17:00', closed: false },
-          tuesday: { open: '09:00', close: '17:00', closed: false },
-          wednesday: { open: '09:00', close: '17:00', closed: false },
-          thursday: { open: '09:00', close: '17:00', closed: false },
-          friday: { open: '09:00', close: '17:00', closed: false },
-          saturday: { open: '09:00', close: '17:00', closed: false },
-          sunday: { open: '09:00', close: '17:00', closed: true }
-        }
+        operatingHours: business.operatingHours || getDefaultBusinessForm().operatingHours
       } : getDefaultBusinessForm();
     }
     return currentBusiness ? {
@@ -110,15 +102,7 @@ const Settings = () => {
       state: currentBusiness.state,
       postalCode: currentBusiness.postalCode,
       country: currentBusiness.country,
-      operatingHours: currentBusiness.operatingHours || {
-        monday: { open: '09:00', close: '17:00', closed: false },
-        tuesday: { open: '09:00', close: '17:00', closed: false },
-        wednesday: { open: '09:00', close: '17:00', closed: false },
-        thursday: { open: '09:00', close: '17:00', closed: false },
-        friday: { open: '09:00', close: '17:00', closed: false },
-        saturday: { open: '09:00', close: '17:00', closed: false },
-        sunday: { open: '09:00', close: '17:00', closed: true }
-      }
+      operatingHours: currentBusiness.operatingHours || getDefaultBusinessForm().operatingHours
     } : getDefaultBusinessForm();
   });
 
@@ -714,7 +698,7 @@ const Settings = () => {
                       {mode === 'add' ? 'Create Business' : 'Save Changes'}
                     </Button>
                   </div>
-                    {isActiveSection && section.subsections && (
+                </CardContent>
               </Card>
             )}
           </div>
@@ -736,7 +720,7 @@ const Settings = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {Object.entries(businessForm.operatingHours || {}).map(([day, hours], index) => (
+                {Object.entries(businessForm.operatingHours).map(([day, hours], index) => (
                   <div key={day} className="flex items-center gap-4 animate-fadeInUp" style={{ animationDelay: `${index * 0.1}s` }}>
                     <div className="w-24">
                       <Label className="capitalize">{day}</Label>
@@ -747,7 +731,7 @@ const Settings = () => {
                         setBusinessForm({
                           ...businessForm,
                           operatingHours: {
-                            ...(businessForm.operatingHours || {}),
+                            ...businessForm.operatingHours,
                             [day]: { ...hours, closed: !checked }
                           }
                         })
@@ -762,7 +746,7 @@ const Settings = () => {
                             setBusinessForm({
                               ...businessForm,
                               operatingHours: {
-                                ...(businessForm.operatingHours || {}),
+                                ...businessForm.operatingHours,
                                 [day]: { ...hours, open: e.target.value }
                               }
                             })
@@ -777,7 +761,7 @@ const Settings = () => {
                             setBusinessForm({
                               ...businessForm,
                               operatingHours: {
-                                ...(businessForm.operatingHours || {}),
+                                ...businessForm.operatingHours,
                                 [day]: { ...hours, close: e.target.value }
                               }
                             })
