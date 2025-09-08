@@ -8,13 +8,14 @@ const SubscriptionManage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6 animate-fadeInUp">
       {/* Header */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 animate-slideInLeft">
         <Button 
           variant="ghost" 
           size="sm"
           onClick={() => navigate('/subscription')}
+          onClick={() => navigate('/dashboard/subscription')}
           className="gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -27,7 +28,9 @@ const SubscriptionManage = () => {
       </div>
 
       {/* Subscription Manager Component */}
-      <SubscriptionManager />
+      <div className="animate-slideInLeft" style={{ animationDelay: '0.1s' }}>
+        <SubscriptionManager />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -100,6 +101,7 @@ const paymentMethods = [
 ];
 
 const Subscription = () => {
+  const navigate = useNavigate();
   const [selectedPlan, setSelectedPlan] = useState<string>('standard');
   const [selectedPayment, setSelectedPayment] = useState<string>('card');
   const [currentPlan] = useState<string>('starter'); // Current active plan
@@ -246,15 +248,15 @@ const Subscription = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6 animate-fadeInUp">
       {/* Header */}
-      <div className="space-y-2">
+      <div className="space-y-2 animate-slideInLeft">
         <h1 className="text-3xl font-bold text-foreground">Subscription Plans</h1>
         <p className="text-muted-foreground">Choose the perfect plan for your business needs</p>
       </div>
 
       {/* Current Plan Status */}
-      <Card className="border-2 border-primary">
+      <Card className="border-2 border-primary animate-slideInLeft" style={{ animationDelay: '0.1s' }}>
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -274,7 +276,7 @@ const Subscription = () => {
       </Card>
 
       {/* Subscription Plans */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
         {subscriptionPlans.map((plan) => {
           const IconComponent = plan.icon;
           const isCurrentPlan = plan.id === currentPlan;
@@ -284,12 +286,13 @@ const Subscription = () => {
             <Card 
               key={plan.id}
               className={cn(
-                "relative cursor-pointer transition-all duration-300 hover:shadow-lg",
+                "relative cursor-pointer transition-all duration-300 hover:shadow-lg animate-fadeInUp",
                 isCurrentPlan && "border-success bg-success/5",
                 isSelected && !isCurrentPlan && "border-primary bg-primary/5",
                 plan.popular && "ring-2 ring-primary shadow-xl scale-105"
               )}
               onClick={() => !isCurrentPlan && handlePlanSelect(plan.id)}
+              style={{ animationDelay: `${index * 0.1 + 0.3}s` }}
             >
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -347,11 +350,7 @@ const Subscription = () => {
                     <Button 
                       variant="outline" 
                       className="w-full" 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        // Navigate to subscription management
-                        window.location.href = '/subscription/manage';
-                      }}
+                      onClick={() => navigate('/dashboard/subscription/manage')}
                     >
                       Manage Plan
                     </Button>
@@ -376,7 +375,7 @@ const Subscription = () => {
 
       {/* Payment Methods */}
       {selectedPlan !== currentPlan && (
-        <Card>
+        <Card className="animate-slideInLeft" style={{ animationDelay: '0.7s' }}>
           <CardHeader>
             <CardTitle>Choose Payment Method</CardTitle>
             <p className="text-sm text-muted-foreground">
@@ -654,7 +653,7 @@ const Subscription = () => {
       )}
 
       {/* Features Comparison Note */}
-      <Card className="bg-muted/30">
+      <Card className="bg-muted/30 animate-fadeInUp" style={{ animationDelay: '0.8s' }}>
         <CardContent className="pt-6">
           <div className="text-center space-y-2">
             <h3 className="font-semibold text-foreground">Need Help Choosing?</h3>

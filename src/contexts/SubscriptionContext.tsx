@@ -77,7 +77,14 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
     try {
       setIsLoading(true);
       
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError) {
+        console.error('Error fetching user:', userError);
+        setSubscription(null);
+        setFeatures(DEFAULT_FEATURES);
+        return;
+      }
+      
       if (!user) {
         setSubscription(null);
         setFeatures(DEFAULT_FEATURES);
@@ -94,6 +101,9 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
       if (subError && subError.code !== 'PGRST116') {
         console.error('Error fetching subscription:', subError);
+        // Continue with default features instead of failing
+        setSubscription(null);
+        setFeatures(DEFAULT_FEATURES);
         return;
       }
 

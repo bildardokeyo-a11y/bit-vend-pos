@@ -148,6 +148,7 @@ const App = () => (
                   <Route path="payroll" element={<Payroll />} />
                   <Route path="subscription" element={<Subscription />} />
                   <Route path="subscription/manage" element={<SubscriptionManage />} />
+                  <Route path="settings" element={<Settings />} />
                 </Route>
                 
                 <Route path="*" element={<NotFound />} />

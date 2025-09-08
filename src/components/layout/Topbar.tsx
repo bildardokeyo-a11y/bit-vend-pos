@@ -329,7 +329,7 @@ const Topbar: React.FC<TopbarProps> = ({
                 variant="ghost"
                 size="sm"
                 className="p-2 transition-all duration-200 hover:scale-90 active:scale-75"
-                onClick={() => navigate('/settings')}
+                onClick={() => navigate('/dashboard/settings')}
               >
                 <Settings size={18} />
               </Button>
