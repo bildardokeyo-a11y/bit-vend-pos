@@ -206,6 +206,11 @@ All colors MUST be HSL.
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
+  /* Override overflow for landing page */
+  body:has([data-page="landing"]) {
+    @apply overflow-auto;
+  }
+
   body {
     @apply bg-background text-foreground;
     transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -225,6 +230,30 @@ All colors MUST be HSL.
   .transition-colors,
   .transition-transform {
     transition-duration: 0.2s !important;
+  }
+
+  /* Ensure proper scrolling for marketing pages */
+  .marketing-page {
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100vh;
+  }
+
+  /* Fix for horizontal scroll issues */
+  .container {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Prevent horizontal overflow on mobile */
+  @media (max-width: 768px) {
+    .grid {
+      overflow-x: hidden;
+    }
+    
+    .flex {
+      flex-wrap: wrap;
+    }
   }
 }
 
