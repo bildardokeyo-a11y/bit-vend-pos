@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
@@ -32,6 +33,29 @@ const Layout: React.FC<LayoutProps> = () => {
 
   const toggleSidebar = () => setSidebarCollapsed((p) => !p);
   const toggleDarkMode = () => setDarkMode((p) => !p);
+
+  // Check authentication but don't redirect if already authenticated
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) {
+        // Only redirect to auth if user is not authenticated
+        window.location.href = '/auth';
+      }
+    };
+    
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT') {
+        window.location.href = '/auth';
+      }
+      // Don't redirect on SIGNED_IN to preserve current page
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <SubscriptionProvider>

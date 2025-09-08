@@ -47,7 +47,8 @@ const AuthPage = () => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
-        navigate('/dashboard');
+        // If user is already authenticated, redirect to dashboard instead of staying on auth page
+        navigate('/dashboard', { replace: true });
       }
     };
     checkAuth();
@@ -55,7 +56,7 @@ const AuthPage = () => {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session?.user) {
-        navigate('/dashboard');
+        navigate('/dashboard', { replace: true });
       }
     });
 
