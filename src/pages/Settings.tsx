@@ -125,7 +125,7 @@ const Settings = () => {
         thursday: { open: '09:00', close: '17:00', closed: false },
         friday: { open: '09:00', close: '17:00', closed: false },
         saturday: { open: '09:00', close: '17:00', closed: false },
-        sunday: { open: '09:00', close: '17:00', closed: true },
+        sunday: { open: '09:00', close: '17:00', closed: true }
       }
     };
   }
@@ -460,197 +460,198 @@ const Settings = () => {
 
             {/* Business Form (when adding/editing) */}
             {(mode === 'add' || editId) && (
-            <Card className="animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Building2 className="h-5 w-5" />
-                  {mode === 'add' ? 'New Business Details' : 'Edit Business Details'}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="businessName">Business Name *</Label>
-                      <Input
-                        id="businessName"
-                        value={businessForm.businessName}
-                        onChange={(e) => setBusinessForm({...businessForm, businessName: e.target.value})}
-                        placeholder="Your Business Name"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="businessType">Business Type *</Label>
-                      <Select value={businessForm.businessType} onValueChange={(value) => setBusinessForm({...businessForm, businessType: value})}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {businessTypes.map((type) => (
-                            <SelectItem key={type.value} value={type.value}>
-                              {type.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="taxId">Tax ID</Label>
-                      <Input
-                        id="taxId"
-                        value={businessForm.taxId}
-                        onChange={(e) => setBusinessForm({...businessForm, taxId: e.target.value})}
-                        placeholder="Tax identification number"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="businessLicense">Business License</Label>
-                      <Input
-                        id="businessLicense"
-                        value={businessForm.businessLicense}
-                        onChange={(e) => setBusinessForm({...businessForm, businessLicense: e.target.value})}
-                        placeholder="Business license number"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="phone">Phone</Label>
-                      <Input
-                        id="phone"
-                        value={businessForm.phone}
-                        onChange={(e) => setBusinessForm({...businessForm, phone: e.target.value})}
-                        placeholder="+1 (555) 123-4567"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={businessForm.email}
-                        onChange={(e) => setBusinessForm({...businessForm, email: e.target.value})}
-                        placeholder="business@example.com"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="logoUrl">Logo URL</Label>
-                      <div className="flex gap-2">
+              <Card className="animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Building2 className="h-5 w-5" />
+                    {mode === 'add' ? 'New Business Details' : 'Edit Business Details'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <div>
+                        <Label htmlFor="businessName">Business Name *</Label>
                         <Input
-                          id="logoUrl"
-                          value={businessForm.logoUrl}
-                          onChange={(e) => setBusinessForm({...businessForm, logoUrl: e.target.value})}
-                          placeholder="https://example.com/logo.png"
+                          id="businessName"
+                          value={businessForm.businessName}
+                          onChange={(e) => setBusinessForm({...businessForm, businessName: e.target.value})}
+                          placeholder="Your Business Name"
                         />
-                        <Button variant="outline" size="sm">
-                          <Upload className="h-4 w-4" />
-                        </Button>
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="businessType">Business Type *</Label>
+                        <Select value={businessForm.businessType} onValueChange={(value) => setBusinessForm({...businessForm, businessType: value})}>
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {businessTypes.map((type) => (
+                              <SelectItem key={type.value} value={type.value}>
+                                {type.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="taxId">Tax ID</Label>
+                        <Input
+                          id="taxId"
+                          value={businessForm.taxId}
+                          onChange={(e) => setBusinessForm({...businessForm, taxId: e.target.value})}
+                          placeholder="Tax identification number"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="businessLicense">Business License</Label>
+                        <Input
+                          id="businessLicense"
+                          value={businessForm.businessLicense}
+                          onChange={(e) => setBusinessForm({...businessForm, businessLicense: e.target.value})}
+                          placeholder="Business license number"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <Label htmlFor="phone">Phone</Label>
+                        <Input
+                          id="phone"
+                          value={businessForm.phone}
+                          onChange={(e) => setBusinessForm({...businessForm, phone: e.target.value})}
+                          placeholder="+1 (555) 123-4567"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={businessForm.email}
+                          onChange={(e) => setBusinessForm({...businessForm, email: e.target.value})}
+                          placeholder="business@example.com"
+                        />
+                      </div>
+
+                      <div>
+                        <Label htmlFor="logoUrl">Logo URL</Label>
+                        <div className="flex gap-2">
+                          <Input
+                            id="logoUrl"
+                            value={businessForm.logoUrl}
+                            onChange={(e) => setBusinessForm({...businessForm, logoUrl: e.target.value})}
+                            placeholder="https://example.com/logo.png"
+                          />
+                          <Button variant="outline" size="sm">
+                            <Upload className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <Separator />
+                  <Separator />
 
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Address Information</h3>
-                  
-                  <div>
-                    <Label htmlFor="address">Street Address</Label>
-                    <Input
-                      id="address"
-                      value={businessForm.address}
-                      onChange={(e) => setBusinessForm({...businessForm, address: e.target.value})}
-                      placeholder="123 Business Street"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Address Information</h3>
+                    
                     <div>
-                      <Label htmlFor="country">Country</Label>
-                      <Select 
-                        value={businessForm.country} 
-                        onValueChange={(value) => setBusinessForm({...businessForm, country: value, state: '', city: ''})}
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {countries.map((country) => (
-                            <SelectItem key={country.code} value={country.code}>
-                              {country.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <Label htmlFor="address">Street Address</Label>
+                      <Input
+                        id="address"
+                        value={businessForm.address}
+                        onChange={(e) => setBusinessForm({...businessForm, address: e.target.value})}
+                        placeholder="123 Business Street"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <Label htmlFor="country">Country</Label>
+                        <Select 
+                          value={businessForm.country} 
+                          onValueChange={(value) => setBusinessForm({...businessForm, country: value, state: '', city: ''})}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {countries.map((country) => (
+                              <SelectItem key={country.code} value={country.code}>
+                                {country.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="state">State/Province</Label>
+                        <Select 
+                          value={businessForm.state} 
+                          onValueChange={(value) => setBusinessForm({...businessForm, state: value, city: ''})}
+                          disabled={!selectedCountry}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder={selectedCountry ? "Select state" : "Select country first"} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {availableStates.map((state) => (
+                              <SelectItem key={state.code} value={state.code}>
+                                {state.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="city">City</Label>
+                        <Select 
+                          value={businessForm.city} 
+                          onValueChange={(value) => setBusinessForm({...businessForm, city: value})}
+                          disabled={!selectedState}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder={selectedState ? "Select city" : "Select state first"} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {availableCities.map((city) => (
+                              <SelectItem key={city} value={city}>
+                                {city}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
 
                     <div>
-                      <Label htmlFor="state">State/Province</Label>
-                      <Select 
-                        value={businessForm.state} 
-                        onValueChange={(value) => setBusinessForm({...businessForm, state: value, city: ''})}
-                        disabled={!selectedCountry}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder={selectedCountry ? "Select state" : "Select country first"} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {availableStates.map((state) => (
-                            <SelectItem key={state.code} value={state.code}>
-                              {state.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="city">City</Label>
-                      <Select 
-                        value={businessForm.city} 
-                        onValueChange={(value) => setBusinessForm({...businessForm, city: value})}
-                        disabled={!selectedState}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder={selectedState ? "Select city" : "Select state first"} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {availableCities.map((city) => (
-                            <SelectItem key={city} value={city}>
-                              {city}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <Label htmlFor="postalCode">Postal Code</Label>
+                      <Input
+                        id="postalCode"
+                        value={businessForm.postalCode}
+                        onChange={(e) => setBusinessForm({...businessForm, postalCode: e.target.value})}
+                        placeholder="12345"
+                      />
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="postalCode">Postal Code</Label>
-                    <Input
-                      id="postalCode"
-                      value={businessForm.postalCode}
-                      onChange={(e) => setBusinessForm({...businessForm, postalCode: e.target.value})}
-                      placeholder="12345"
-                    />
+                  <div className="flex justify-end">
+                    <Button onClick={handleBusinessSubmit} className="bg-save hover:bg-save-hover text-save-foreground">
+                      <Save className="h-4 w-4 mr-2" />
+                      {mode === 'add' ? 'Create Business' : 'Save Changes'}
+                    </Button>
                   </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <Button onClick={handleBusinessSubmit} className="bg-save hover:bg-save-hover text-save-foreground">
-                    <Save className="h-4 w-4 mr-2" />
-                    {mode === 'add' ? 'Create Business' : 'Save Changes'}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            )}
           </div>
         )}
 
