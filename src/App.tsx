@@ -93,8 +93,7 @@ const App = () => (
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/auth" element={<AuthPage />} />
                 
-                {/* Admin Routes */}
-                <Route path="/admin/login" element={<AdminLogin />} />
+                {/* Admin Routes - No separate login needed */}
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 
                 {/* POS Application Routes */}

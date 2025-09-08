@@ -69,6 +69,27 @@ const AuthPage = () => {
     setIsLoading(true);
 
     try {
+      // Check if this is an admin login
+      if (email === 'admn.bitvend@gmail.com') {
+        // Admin authentication
+        if (password === 'admin123') {
+          // Store admin session
+          localStorage.setItem('admin-session', JSON.stringify({
+            email: email,
+            loginTime: new Date().toISOString(),
+            role: 'super_admin'
+          }));
+          
+          toast.success('Admin login successful! Redirecting to admin dashboard...');
+          navigate('/admin/dashboard');
+          return;
+        } else {
+          toast.error('Invalid admin credentials');
+          return;
+        }
+      }
+      
+      // Regular user authentication via Supabase
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -290,20 +311,6 @@ const AuthPage = () => {
                           onClick={() => setCurrentMode('forgot')}
                         >
                           Forgot your password?
-                        </Button>
-                      </div>
-
-                      <div className="text-center pt-4 border-t">
-                        <p className="text-sm text-muted-foreground mb-2">Administrator?</p>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => window.location.href = '/admin/login'}
-                          className="gap-2"
-                        >
-                          <Shield className="h-4 w-4" />
-                          Admin Login
                         </Button>
                       </div>
                     </form>
