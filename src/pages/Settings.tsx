@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { FeatureGate } from '@/components/FeatureGate';
 import { SubscriptionBadge } from '@/components/SubscriptionBadge';
 import { showSaveToast, showUploadToast } from '@/components/SettingsToast';
+import { useSubscription } from '@/contexts/SubscriptionContext';
 import { useBusiness } from '@/contexts/BusinessContext';
 import { countries } from '@/data/countries';
 import { 
@@ -50,7 +51,8 @@ import {
 const Settings = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { businesses, currentBusiness, addBusiness, updateBusiness } = useBusiness();
+  const { hasFeature } = useSubscription();
+  const { businesses, currentBusiness, addBusiness, updateBusiness, deleteBusiness, setCurrentBusiness } = useBusiness();
   
   // Get URL parameters for navigation
   const section = searchParams.get('section') || 'business';
@@ -62,6 +64,8 @@ const Settings = () => {
   const [activeSection, setActiveSection] = useState(section);
   const [activeSubsection, setActiveSubsection] = useState(subsection);
   const [showPassword, setShowPassword] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [businessToDelete, setBusinessToDelete] = useState<string | null>(null);
 
   // Business form state
   const [businessForm, setBusinessForm] = useState(() => {
@@ -293,7 +297,7 @@ const Settings = () => {
                         const content = (
                           <Button
                             key={subsection.key}
-                            variant={isActiveSubsection ? "default" : "ghost"}
+                            variant={isActiveSubsection ? "secondary" : "ghost"}
                             size="sm"
                             className="w-full justify-start transition-all duration-200 hover:scale-105 animate-fadeInUp"
                             style={{ animationDelay: `${subIndex * 0.05}s` }}
@@ -326,8 +330,12 @@ const Settings = () => {
           <div className="space-y-6 animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Business Information</h1>
-                <p className="text-muted-foreground">Manage your business details and branding</p>
+                <h1 className="text-2xl font-bold text-foreground">
+                  {mode === 'add' ? 'Add New Business' : editId ? 'Edit Business' : 'Business Management'}
+                </h1>
+                <p className="text-muted-foreground">
+                  {mode === 'add' ? 'Create a new business profile' : editId ? 'Update business information' : 'Manage your business profiles and details'}
+                </p>
               </div>
               {(mode === 'add' || editId) && (
                 <Button variant="outline" onClick={() => navigate('/dashboard/settings?section=business&subsection=business-info')}>
@@ -336,11 +344,127 @@ const Settings = () => {
               )}
             </div>
 
+            {/* Business List (when not adding/editing) */}
+            {!mode && !editId && (
+              <Card className="animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                      <Building2 className="h-5 w-5" />
+                      Your Businesses ({businesses.length})
+                    </CardTitle>
+                    <FeatureGate 
+                      feature="multi_branch_support"
+                      fallback={
+                        <Badge variant="outline" className="text-xs">
+                          Upgrade to Pro for multiple businesses
+                        </Badge>
+                      }
+                    >
+                      <Button 
+                        onClick={() => navigate('/dashboard/settings?section=business&subsection=business-info&mode=add')}
+                        size="sm"
+                        className="gap-2"
+                      >
+                        <Plus className="h-4 w-4" />
+                        Add Business
+                      </Button>
+                    </FeatureGate>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {businesses.map((business, index) => (
+                    <div 
+                      key={business.id} 
+                      className={`p-4 border rounded-lg transition-all duration-200 hover:shadow-md animate-fadeInUp ${
+                        currentBusiness?.id === business.id ? 'border-primary bg-primary/5' : 'border-border'
+                      }`}
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center">
+                            {business.logoUrl ? (
+                              <img 
+                                src={business.logoUrl} 
+                                alt={business.businessName}
+                                className="w-10 h-10 rounded object-cover"
+                              />
+                            ) : (
+                              <Building2 className="h-6 w-6 text-muted-foreground" />
+                            )}
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-foreground">{business.businessName}</h3>
+                            <p className="text-sm text-muted-foreground capitalize">
+                              {business.businessType} • {business.city}, {business.country}
+                            </p>
+                            {currentBusiness?.id === business.id && (
+                              <Badge variant="default" className="text-xs mt-1">Current Business</Badge>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          {currentBusiness?.id !== business.id && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setCurrentBusiness(business.id)}
+                            >
+                              Switch To
+                            </Button>
+                          )}
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => navigate(`/dashboard/settings?section=business&subsection=business-info&edit=${business.id}`)}
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          {businesses.length > 1 && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setBusinessToDelete(business.id);
+                                setShowDeleteDialog(true);
+                              }}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {!hasFeature('multi_branch_support') && businesses.length >= 1 && (
+                    <div className="p-4 border-2 border-dashed border-muted-foreground/20 rounded-lg text-center">
+                      <Crown className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Want to manage multiple businesses?
+                      </p>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => navigate('/dashboard/subscription')}
+                      >
+                        Upgrade to Pro Plan
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Business Form (when adding/editing) */}
+            {(mode === 'add' || editId) && (
             <Card className="animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Building2 className="h-5 w-5" />
-                  {mode === 'add' ? 'Add New Business' : editId ? 'Edit Business' : 'Business Details'}
+                  {mode === 'add' ? 'New Business Details' : 'Edit Business Details'}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -728,6 +852,42 @@ const Settings = () => {
           </div>
         )}
       </div>
+
+      {/* Delete Business Dialog */}
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Business</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-muted-foreground">
+              Are you sure you want to delete this business? This action cannot be undone.
+            </p>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setShowDeleteDialog(false)}>
+                Cancel
+              </Button>
+              <Button 
+                variant="destructive"
+                onClick={() => {
+                  if (businessToDelete) {
+                    try {
+                      deleteBusiness(businessToDelete);
+                      showSaveToast('Business deleted successfully!');
+                    } catch (error) {
+                      console.error('Cannot delete business:', error);
+                    }
+                  }
+                  setShowDeleteDialog(false);
+                  setBusinessToDelete(null);
+                }}
+              >
+                Delete Business
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
