@@ -41,6 +41,8 @@ import {
 import { useSettings } from '@/hooks/useSettings';
 import { useToast } from '@/hooks/use-toast';
 import { countries } from '@/data/countries';
+import { useBusiness } from '@/contexts/BusinessContext';
+import { useSubscription } from '@/contexts/SubscriptionContext';
 
 interface Business {
   id: string;
@@ -68,17 +70,16 @@ interface Business {
 const Settings = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { settings, updateSettings } = useSettings();
   const { 
-    settings, 
-    updateSettings, 
     businesses, 
     addBusiness, 
     updateBusiness, 
     deleteBusiness, 
     currentBusiness, 
-    switchBusiness,
-    hasFeature 
-  } = useSettings();
+    switchBusiness 
+  } = useBusiness();
+  const { hasFeature } = useSubscription();
 
   // State management
   const [activeSection, setActiveSection] = useState('general');
