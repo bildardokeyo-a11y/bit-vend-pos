@@ -389,8 +389,8 @@ const SuperAdmin = () => {
             <TableBody>
               {filteredUsers.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.username}</TableCell>
-                  <TableCell>{user.email}</TableCell>
+                  <TableCell className="font-medium text-foreground">{user.username}</TableCell>
+                  <TableCell className="text-foreground">{user.email}</TableCell>
                   <TableCell>
                     <Badge variant={getRoleBadge(user.role)}>
                       {user.role.replace('_', ' ')}
@@ -401,8 +401,8 @@ const SuperAdmin = () => {
                       {user.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>{user.lastLogin}</TableCell>
-                  <TableCell>{user.createdAt}</TableCell>
+                  <TableCell className="text-foreground">{user.lastLogin}</TableCell>
+                  <TableCell className="text-foreground">{user.createdAt}</TableCell>
                   <TableCell>
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">

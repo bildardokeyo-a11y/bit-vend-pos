@@ -238,7 +238,7 @@ const Sales = () => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline">
+                    <Badge variant="secondary" className="bg-muted text-foreground border border-border">
                       {sale.paymentMethod.replace('_', ' ').toUpperCase()}
                     </Badge>
                   </TableCell>
