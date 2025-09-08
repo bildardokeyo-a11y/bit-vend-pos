@@ -615,22 +615,44 @@ const Settings = () => {
 
         {/* Subscription */}
         {activeSection === 'business' && activeSubsection === 'subscription' && (
-          <FeatureGate feature="basic_sales_tracking">
-            <div className="space-y-6 animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">Subscription Management</h1>
-                <p className="text-muted-foreground">Manage your subscription plan and billing</p>
-              </div>
-              
-              <div className="animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
-                <iframe 
-                  src="/dashboard/subscription" 
-                  className="w-full h-[800px] border rounded-lg"
-                  title="Subscription Management"
-                />
-              </div>
+          <div className="space-y-6 animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Subscription Management</h1>
+              <p className="text-muted-foreground">Manage your subscription plan and billing</p>
             </div>
-          </FeatureGate>
+            
+            <Card className="animate-slideInLeft" style={{ animationDelay: '0.4s' }}>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <CreditCard className="h-5 w-5" />
+                  Subscription Plans
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">
+                  View and manage your subscription plans, billing information, and payment methods.
+                </p>
+                
+                <div className="flex gap-4">
+                  <Button 
+                    onClick={() => navigate('/dashboard/subscription')}
+                    className="bg-primary hover:bg-primary/90"
+                  >
+                    <Crown className="h-4 w-4 mr-2" />
+                    View Plans & Pricing
+                  </Button>
+                  
+                  <Button 
+                    variant="outline"
+                    onClick={() => navigate('/dashboard/subscription/manage')}
+                  >
+                    <SettingsIcon className="h-4 w-4 mr-2" />
+                    Manage Subscription
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         )}
 
         {/* Receipt Settings */}
