@@ -263,7 +263,7 @@ const ContactPage = () => {
                       />
                     </div>
 
-                    <Button type="submit" className="w-full" disabled={isLoading}>
+                    <Button type="submit" className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white" disabled={isLoading}>
                       {isLoading ? (
                         'Sending Message...'
                       ) : (
@@ -384,7 +384,7 @@ const ContactPage = () => {
               <Button size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8">
                 Visit Help Center
               </Button>
-              <Button variant="outline" size="lg" className="px-8 border-orange-500/20 text-orange-600 hover:bg-orange-500/10">
+              <Button variant="outline" size="lg" className="px-8 border-white text-white hover:bg-white hover:text-orange-600">
                 Start Live Chat
               </Button>
             </div>
