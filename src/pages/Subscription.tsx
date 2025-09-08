@@ -277,7 +277,7 @@ const Subscription = () => {
 
       {/* Subscription Plans */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
-        {subscriptionPlans.map((plan) => {
+        {subscriptionPlans.map((plan, index) => {
           const IconComponent = plan.icon;
           const isCurrentPlan = plan.id === currentPlan;
           const isSelected = plan.id === selectedPlan;
