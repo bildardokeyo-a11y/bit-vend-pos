@@ -68,6 +68,8 @@ const Settings = () => {
   const [businessToDelete, setBusinessToDelete] = useState<string | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string>('');
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string>('');
 
   // Business form state
   const [businessForm, setBusinessForm] = useState(() => {
@@ -86,7 +88,15 @@ const Settings = () => {
         state: business.state,
         postalCode: business.postalCode,
         country: business.country,
-        operatingHours: business.operatingHours || getDefaultBusinessForm().operatingHours
+        operatingHours: business.operatingHours || {
+          monday: { open: '09:00', close: '17:00', closed: false },
+          tuesday: { open: '09:00', close: '17:00', closed: false },
+          wednesday: { open: '09:00', close: '17:00', closed: false },
+          thursday: { open: '09:00', close: '17:00', closed: false },
+          friday: { open: '09:00', close: '17:00', closed: false },
+          saturday: { open: '09:00', close: '17:00', closed: false },
+          sunday: { open: '09:00', close: '17:00', closed: true }
+        }
       } : getDefaultBusinessForm();
     }
     return currentBusiness ? {
@@ -102,7 +112,15 @@ const Settings = () => {
       state: currentBusiness.state,
       postalCode: currentBusiness.postalCode,
       country: currentBusiness.country,
-      operatingHours: currentBusiness.operatingHours || getDefaultBusinessForm().operatingHours
+      operatingHours: currentBusiness.operatingHours || {
+        monday: { open: '09:00', close: '17:00', closed: false },
+        tuesday: { open: '09:00', close: '17:00', closed: false },
+        wednesday: { open: '09:00', close: '17:00', closed: false },
+        thursday: { open: '09:00', close: '17:00', closed: false },
+        friday: { open: '09:00', close: '17:00', closed: false },
+        saturday: { open: '09:00', close: '17:00', closed: false },
+        sunday: { open: '09:00', close: '17:00', closed: true }
+      }
     } : getDefaultBusinessForm();
   });
 
@@ -158,6 +176,25 @@ const Settings = () => {
         security: 'general'
       };
       setActiveSubsection(defaultSubsections[newSection as keyof typeof defaultSubsections] || 'general');
+    }
+  };
+
+  // Handle logo upload
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setLogoFile(file);
+      
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setLogoPreview(result);
+        setBusinessForm({...businessForm, logoUrl: result});
+      };
+      reader.readAsDataURL(file);
+      
+      showUploadToast('Logo uploaded successfully!');
     }
   };
 
@@ -311,7 +348,7 @@ const Settings = () => {
                   
                   {isActiveSection && (
                     <div className="ml-4 space-y-1 animate-slideInLeft" style={{ animationDelay: '0.1s' }}>
-                      {section.subsections.map((subsection, subIndex) => {
+                      {section.subsections?.map((subsection, subIndex) => {
                         const SubIcon = subsection.icon;
                         const isActiveSubsection = activeSubsection === subsection.key;
                         
@@ -594,6 +631,37 @@ const Settings = () => {
                             <Upload className="h-4 w-4" />
                           </Button>
                           <input
+                          <div className="flex-1 space-y-2">
+                            <Input
+                              id="logoUrl"
+                              value={businessForm.logoUrl}
+                              onChange={(e) => setBusinessForm({...businessForm, logoUrl: e.target.value})}
+                              placeholder="https://example.com/logo.png or upload image"
+                            />
+                            {(logoPreview || businessForm.logoUrl) && (
+                              <div className="flex items-center gap-2 p-2 border rounded">
+                                <img 
+                                  src={logoPreview || businessForm.logoUrl} 
+                                  alt="Logo preview"
+                                  className="w-8 h-8 rounded object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    target.style.display = 'none';
+                                  }}
+                                />
+                                <span className="text-xs text-muted-foreground">Logo preview</span>
+                              </div>
+                            )}
+                          </div>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => document.getElementById('logo-upload')?.click()}
+                            type="button"
+                          >
+                            <Upload className="h-4 w-4" />
+                          </Button>
+                          <input
                             id="logo-upload"
                             type="file"
                             accept="image/*"
@@ -720,7 +788,7 @@ const Settings = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {Object.entries(businessForm.operatingHours).map(([day, hours], index) => (
+                {Object.entries(businessForm.operatingHours || {}).map(([day, hours], index) => (
                   <div key={day} className="flex items-center gap-4 animate-fadeInUp" style={{ animationDelay: `${index * 0.1}s` }}>
                     <div className="w-24">
                       <Label className="capitalize">{day}</Label>
@@ -731,7 +799,7 @@ const Settings = () => {
                         setBusinessForm({
                           ...businessForm,
                           operatingHours: {
-                            ...businessForm.operatingHours,
+                            ...(businessForm.operatingHours || {}),
                             [day]: { ...hours, closed: !checked }
                           }
                         })
@@ -746,7 +814,7 @@ const Settings = () => {
                             setBusinessForm({
                               ...businessForm,
                               operatingHours: {
-                                ...businessForm.operatingHours,
+                                ...(businessForm.operatingHours || {}),
                                 [day]: { ...hours, open: e.target.value }
                               }
                             })
@@ -761,7 +829,7 @@ const Settings = () => {
                             setBusinessForm({
                               ...businessForm,
                               operatingHours: {
-                                ...businessForm.operatingHours,
+                                ...(businessForm.operatingHours || {}),
                                 [day]: { ...hours, close: e.target.value }
                               }
                             })
