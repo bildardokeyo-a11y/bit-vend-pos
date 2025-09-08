@@ -65,13 +65,12 @@ import TaxSettings from "./pages/TaxSettings";
 import Backup from "./pages/Backup";
 import Subscription from "./pages/Subscription";
 import SubscriptionManage from "./pages/SubscriptionManage";
+import AdminSettings from "./pages/AdminSettings";
 import LandingPage from "./pages/LandingPage";
 import AuthPage from "./pages/AuthPage";
 import PricingPage from "./pages/PricingPage";
 import FeaturesPage from "./pages/FeaturesPage";
 import ContactPage from "./pages/ContactPage";
-import AdminLogin from "./pages/AdminLogin";
-import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -92,9 +91,6 @@ const App = () => (
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/auth" element={<AuthPage />} />
-                
-                {/* Admin Routes - No separate login needed */}
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 
                 {/* POS Application Routes */}
                 <Route path="/dashboard" element={<Layout />}>
@@ -151,6 +147,10 @@ const App = () => (
                   <Route path="subscription" element={<Subscription />} />
                   <Route path="subscription/manage" element={<SubscriptionManage />} />
                   <Route path="settings" element={<Settings />} />
+                  <Route path="admin-settings" element={<AdminSettings />} />
+                  <Route path="superadmin" element={<SuperAdmin />} />
+                  <Route path="application" element={<Application />} />
+                  <Route path="layout" element={<LayoutPage />} />
                 </Route>
                 
                 <Route path="*" element={<NotFound />} />

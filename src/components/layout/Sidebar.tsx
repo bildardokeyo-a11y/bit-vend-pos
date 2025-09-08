@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 import {
   BarChart3,
   Shield,
@@ -54,6 +55,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAdmin } = useAdminAuth();
 
   const menuItems = [
     {
@@ -150,6 +152,14 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
         { href: '/dashboard/backup', icon: Database, label: 'Backup & Restore' },
       ]
     },
+    ...(isAdmin ? [{
+      title: 'Admin Only',
+      items: [
+        { href: '/dashboard/superadmin', icon: Shield, label: 'Super Admin' },
+        { href: '/dashboard/application', icon: Settings, label: 'Application' },
+        { href: '/dashboard/layout', icon: LayoutGrid, label: 'Layout' },
+      ]
+    }] : []),
   ];
 
   return (

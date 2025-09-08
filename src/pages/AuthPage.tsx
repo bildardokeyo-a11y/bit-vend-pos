@@ -85,7 +85,7 @@ const AuthPage = () => {
           }));
           
           toast.success('Admin login successful! Redirecting to admin dashboard...');
-          navigate('/admin/dashboard');
+          navigate('/dashboard');
           return;
         } else {
           toast.error('Invalid admin credentials');

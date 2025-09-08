@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useSearch } from '@/hooks/useSearch';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { SearchDropdown } from '@/components/ui/search-dropdown';
 import { useBusiness } from '@/contexts/BusinessContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -90,6 +91,7 @@ const Topbar: React.FC<TopbarProps> = ({
   onToggleDarkMode,
 }) => {
   const navigate = useNavigate();
+  const { isAdmin, logout: adminLogout } = useAdminAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const { businesses, currentBusiness, setCurrentBusiness } = useBusiness();
   
@@ -382,9 +384,22 @@ const Topbar: React.FC<TopbarProps> = ({
             <DropdownMenuItem onClick={() => navigate('/profile')}>
               Profile Settings
             </DropdownMenuItem>
+            {isAdmin && (
+              <DropdownMenuItem onClick={() => navigate('/dashboard/admin-settings')}>
+                Admin Settings
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem onClick={() => navigate('/settings')}>
               System Settings
             </DropdownMenuItem>
+            {isAdmin && (
+              <DropdownMenuItem onClick={() => {
+                adminLogout();
+                window.location.href = '/';
+              }}>
+                Logout as Admin
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem onClick={async () => {
               await supabase.auth.signOut();
               window.location.href = '/';
