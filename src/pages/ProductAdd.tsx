@@ -180,9 +180,9 @@ const ProductAdd = () => {
   }, [formData.purchasePrice, formData.sellingPrice]);
 
   return (
-    <div className="p-6 space-y-6 bg-background dark:bg-settings-form min-h-screen">
+    <div className="space-y-6 p-6 bg-background dark:bg-settings-form min-h-screen animate-fadeInUp">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-slideInLeft">
         <div className="flex items-center gap-4">
           <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
             <span className="text-white text-lg font-bold">+</span>
@@ -197,7 +197,7 @@ const ProductAdd = () => {
       </div>
 
       {/* Progress Bar */}
-      <div className="space-y-2">
+      <div className="space-y-2 animate-slideInLeft" style={{ animationDelay: '0.1s' }}>
         <div className="flex justify-between text-sm">
           <span className="text-foreground">Step {currentStep} of 4</span>
           <span className="text-foreground">{Math.round(progress)}%</span>
@@ -211,10 +211,10 @@ const ProductAdd = () => {
       </div>
 
       {/* Form */}
-      <Card className="bg-card dark:bg-settings-form shadow-lg border border-border">
+      <Card className="bg-card dark:bg-settings-form shadow-lg border border-border animate-slideInLeft" style={{ animationDelay: '0.2s' }}>
         <CardContent className="p-0">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="w-full h-12 bg-muted/50 rounded-none border-b">
+            <TabsList className="w-full h-12 bg-muted/50 rounded-none border-b animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.id}
@@ -232,9 +232,9 @@ const ProductAdd = () => {
             </TabsList>
 
             {/* General Tab */}
-            <TabsContent value="general" className="p-6 space-y-6">
+            <TabsContent value="general" className="p-6 space-y-6 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
                   <Label htmlFor="name">Product Name *</Label>
                   <Input
                     id="name"
@@ -244,7 +244,7 @@ const ProductAdd = () => {
                     className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
                   <Label htmlFor="category">Category *</Label>
                   <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
                     <SelectTrigger className="dark:bg-settings-form dark:text-white">
@@ -259,7 +259,7 @@ const ProductAdd = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.7s' }}>
                   <Label htmlFor="addedBy">Added By</Label>
                   <Select value={formData.addedBy} onValueChange={(value) => handleInputChange('addedBy', value)}>
                     <SelectTrigger className="dark:bg-settings-form dark:text-white">
@@ -275,7 +275,7 @@ const ProductAdd = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.8s' }}>
                   <Label>Created Date</Label>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -301,7 +301,7 @@ const ProductAdd = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.9s' }}>
                   <Label htmlFor="warranty">Warranty (months)</Label>
                   <Input
                     id="warranty"
@@ -312,7 +312,7 @@ const ProductAdd = () => {
                     className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.0s' }}>
                   <Label htmlFor="productType">Product Type</Label>
                   <Select value={formData.productType} onValueChange={(value) => handleInputChange('productType', value)}>
                     <SelectTrigger className="dark:bg-settings-form dark:text-white">
@@ -330,7 +330,7 @@ const ProductAdd = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.1s' }}>
                   <Label htmlFor="sku">SKU / Code *</Label>
                   <div className="flex gap-2">
                     <Input
@@ -346,7 +346,7 @@ const ProductAdd = () => {
                   </div>
                   <p className="text-xs text-muted-foreground">Click generate to create a unique SKU</p>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.2s' }}>
                   <Label htmlFor="barcode">Barcode</Label>
                   <div className="flex gap-2">
                     <Input
@@ -362,7 +362,7 @@ const ProductAdd = () => {
                   </div>
                   <p className="text-xs text-muted-foreground">Barcode auto-renders below when generated or typed</p>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.3s' }}>
                   <Label htmlFor="brand">Brand</Label>
                   <Input
                     id="brand"
@@ -375,7 +375,7 @@ const ProductAdd = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.4s' }}>
                   <Label htmlFor="supplier">Supplier</Label>
                   <Select value={formData.supplier} onValueChange={(value) => handleInputChange('supplier', value)}>
                     <SelectTrigger className="dark:bg-settings-form dark:text-white">
@@ -390,7 +390,7 @@ const ProductAdd = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.5s' }}>
                   <Label htmlFor="batchLotNo">Batch / Lot No.</Label>
                   <Input
                     id="batchLotNo"
@@ -400,7 +400,7 @@ const ProductAdd = () => {
                     className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.6s' }}>
                   <Label>Barcode Preview</Label>
                   <div className="h-10 bg-gray-100 dark:bg-settings-form rounded border flex items-center justify-center text-xs text-muted-foreground">
                     {formData.barcode || 'Generate barcode to preview'}
@@ -409,7 +409,7 @@ const ProductAdd = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.7s' }}>
                   <Label>Expiry Date</Label>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -435,7 +435,7 @@ const ProductAdd = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.8s' }}>
                   <Label htmlFor="multipleBarcodes">Multiple Barcodes</Label>
                   <Input
                     id="multipleBarcodes"
@@ -450,9 +450,9 @@ const ProductAdd = () => {
             </TabsContent>
 
             {/* Pricing Tab */}
-            <TabsContent value="pricing" className="p-6 space-y-6">
+            <TabsContent value="pricing" className="p-6 space-y-6 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
                   <Label htmlFor="purchasePrice">Purchase Price *</Label>
                   <Input
                     id="purchasePrice"
@@ -464,7 +464,7 @@ const ProductAdd = () => {
                     className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
                   <Label htmlFor="sellingPrice">Selling Price *</Label>
                   <Input
                     id="sellingPrice"
@@ -476,7 +476,7 @@ const ProductAdd = () => {
                     className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.7s' }}>
                   <Label htmlFor="discount">Discount</Label>
                   <div className="flex gap-2">
                     <Input
@@ -501,7 +501,7 @@ const ProductAdd = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.8s' }}>
                   <Label htmlFor="tax">Tax (%)</Label>
                   <Input
                     id="tax"
@@ -512,7 +512,7 @@ const ProductAdd = () => {
                     className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.9s' }}>
                   <Label htmlFor="profitMargin">Profit Margin</Label>
                   <Input
                     id="profitMargin"
@@ -527,7 +527,7 @@ const ProductAdd = () => {
               </div>
 
               <div className="flex items-center justify-end">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 animate-fadeInUp" style={{ animationDelay: '1.0s' }}>
                   <Switch
                     checked={formData.taxable}
                     onCheckedChange={(checked) => handleInputChange('taxable', checked)}
@@ -538,9 +538,9 @@ const ProductAdd = () => {
             </TabsContent>
 
             {/* Inventory Tab */}
-            <TabsContent value="inventory" className="p-6 space-y-6">
+            <TabsContent value="inventory" className="p-6 space-y-6 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
                   <Label htmlFor="unit">Unit *</Label>
                   <Select value={formData.unit} onValueChange={(value) => handleInputChange('unit', value)}>
                     <SelectTrigger className="dark:bg-settings-form dark:text-white">
@@ -555,7 +555,7 @@ const ProductAdd = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
                   <Label htmlFor="stockQuantity">Stock Quantity *</Label>
                   <Input
                     id="stockQuantity"
@@ -566,7 +566,7 @@ const ProductAdd = () => {
                     className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.7s' }}>
                   <Label htmlFor="minStockAlert">Min Stock Alert</Label>
                   <Input
                     id="minStockAlert"
@@ -577,7 +577,7 @@ const ProductAdd = () => {
                     className="dark:bg-settings-form dark:text-white"
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.8s' }}>
                   <Label htmlFor="reorderPoint">Reorder Point</Label>
                   <Input
                     id="reorderPoint"
@@ -590,7 +590,7 @@ const ProductAdd = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-settings-form rounded">
+              <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-settings-form rounded animate-fadeInUp" style={{ animationDelay: '0.9s' }}>
                 <div>
                   <h3 className="font-medium">Advanced Inventory Settings</h3>
                   <p className="text-sm text-muted-foreground">Track serial numbers? lot/expiry? batch-level stock?</p>
@@ -603,9 +603,9 @@ const ProductAdd = () => {
             </TabsContent>
 
             {/* Extras Tab */}
-            <TabsContent value="extras" className="p-6 space-y-6">
+            <TabsContent value="extras" className="p-6 space-y-6 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
+                <div className="space-y-4 animate-slideInLeft" style={{ animationDelay: '0.5s' }}>
                   <div className="space-y-2">
                     <Label>Product Image</Label>
                     <div 
@@ -668,7 +668,7 @@ const ProductAdd = () => {
                     </p>
                   </div>
 
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 animate-fadeInUp" style={{ animationDelay: '0.8s' }}>
                     <Switch
                       checked={formData.featuredProduct}
                       onCheckedChange={(checked) => handleInputChange('featuredProduct', checked)}
@@ -677,7 +677,7 @@ const ProductAdd = () => {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 animate-slideInLeft" style={{ animationDelay: '0.6s' }}>
                   <div className="space-y-2">
                     <Label htmlFor="description">Description</Label>
                     <Textarea
@@ -693,7 +693,7 @@ const ProductAdd = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '0.9s' }}>
                   <Label htmlFor="status">Status</Label>
                   <Select value={formData.status} onValueChange={(value) => handleInputChange('status', value)}>
                     <SelectTrigger className="dark:bg-settings-form dark:text-white">
@@ -708,7 +708,7 @@ const ProductAdd = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 animate-fadeInUp" style={{ animationDelay: '1.0s' }}>
                   <Label htmlFor="tags">Tags</Label>
                   <Input
                     id="tags"
@@ -723,12 +723,12 @@ const ProductAdd = () => {
           </Tabs>
 
           {/* Action Buttons */}
-          <div className="flex justify-end gap-4 p-6 border-t dark:border-gray-600">
+          <div className="flex justify-end gap-4 p-6 border-t dark:border-gray-600 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
             <Button
               type="button"
               variant="outline"
               onClick={handleReset}
-              className="gap-2 transition-all duration-200 dark:bg-settings-form dark:text-white"
+              className="gap-2 transition-all duration-200 dark:bg-settings-form dark:text-white hover:scale-105 active:scale-95"
             >
               <RotateCcw className="h-4 w-4" />
               Reset
@@ -738,7 +738,7 @@ const ProductAdd = () => {
               type="button"
               variant="outline"
               onClick={handleCancel}
-              className="gap-2 transition-all duration-200 border-cancel text-cancel hover:bg-cancel/10 dark:border-cancel dark:text-cancel dark:hover:bg-cancel/10"
+              className="gap-2 transition-all duration-200 border-cancel text-cancel hover:bg-cancel/10 dark:border-cancel dark:text-cancel dark:hover:bg-cancel/10 hover:scale-105 active:scale-95"
             >
               <X className="h-4 w-4" />
               Cancel
@@ -747,7 +747,7 @@ const ProductAdd = () => {
             <Button
               type="button"
               onClick={handleSubmit}
-              className="bg-save hover:bg-save-hover text-save-foreground gap-2 transition-all duration-200"
+              className="bg-save hover:bg-save-hover text-save-foreground gap-2 transition-all duration-200 hover:scale-105 active:scale-95"
             >
               <Save className="h-4 w-4" />
               Save Product
