@@ -144,10 +144,10 @@ const PricingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background marketing-page" data-page="pricing">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex h-16 items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
               <div className="h-8 w-8 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
@@ -179,7 +179,7 @@ const PricingPage = () => {
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-orange-500/10 via-background to-blue-600/10">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center max-w-4xl mx-auto">
             <Badge className="mb-6 bg-gradient-to-r from-orange-500/10 to-blue-600/10 text-orange-600 dark:text-orange-400 border-orange-500/20">
               Simple & Transparent Pricing
@@ -215,7 +215,7 @@ const PricingPage = () => {
 
       {/* Pricing Plans */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {plans.map((plan, index) => {
               const IconComponent = plan.icon;
@@ -291,7 +291,7 @@ const PricingPage = () => {
 
       {/* Add-ons */}
       <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Powerful Add-ons
@@ -325,7 +325,7 @@ const PricingPage = () => {
 
       {/* FAQ */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Frequently Asked Questions
@@ -354,7 +354,7 @@ const PricingPage = () => {
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-br from-orange-500 to-blue-600">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 max-w-7xl text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Get Started?
           </h2>

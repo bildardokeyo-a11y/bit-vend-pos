@@ -175,10 +175,10 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background marketing-page" data-page="auth">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex h-16 items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
               <div className="h-8 w-8 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
@@ -210,7 +210,7 @@ const AuthPage = () => {
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-orange-500/10 via-background to-blue-600/10">
-        <div className="container mx-auto px-4 flex items-center justify-center min-h-[70vh]">
+        <div className="container mx-auto px-4 max-w-7xl flex items-center justify-center min-h-[70vh]">
           <div className="w-full max-w-lg">
             {/* Header */}
             <div className="text-center mb-8">

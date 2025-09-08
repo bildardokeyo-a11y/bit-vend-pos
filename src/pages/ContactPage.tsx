@@ -111,10 +111,10 @@ const ContactPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background marketing-page" data-page="contact">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex h-16 items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
               <div className="h-8 w-8 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
@@ -146,7 +146,7 @@ const ContactPage = () => {
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-orange-500/10 via-background to-blue-600/10">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16">
             <Badge className="mb-6 bg-gradient-to-r from-orange-500/10 to-blue-600/10 text-orange-600 dark:text-orange-400 border-orange-500/20">
               Contact Us
@@ -163,7 +163,7 @@ const ContactPage = () => {
       </section>
 
       <div className="py-20">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
             {/* Contact Form */}
