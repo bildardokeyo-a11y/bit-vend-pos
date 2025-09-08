@@ -334,8 +334,6 @@ const Variants = () => {
                 <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
-              </TableRow>
-            </TableHeader>
             <TableBody>
               {filteredVariants.map((variant) => (
                 <TableRow key={variant.id}>
