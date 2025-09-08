@@ -26,72 +26,68 @@ const PricingPage = () => {
   
   const plans = [
     {
-      name: 'Starter',
-      price: 'Free',
-      period: 'Forever',
-      description: 'Perfect for small businesses just getting started',
-      icon: Zap,
+      name: 'Starter Plan',
+      price: '$9',
+      period: '/month',
+      description: 'Best for small shops',
+      icon: Building2,
       popular: false,
       features: [
-        'Up to 100 products',
-        'Basic POS functionality',
-        'Simple inventory tracking',
-        'Basic reporting',
-        'Cash payments only',
-        'Single location',
-        'Email support',
-        'Mobile app access'
+        'Basic inventory & sales tracking',
+        'M-Pesa payments enabled',
+        'Simple reports',
+        'Email support'
       ],
       limitations: [
-        'Limited to 50 transactions/month',
-        'Basic templates only',
-        'No integrations'
+        'Single user only',
+        'Basic features only'
       ]
     },
     {
-      name: 'Professional',
-      price: '$29',
+      name: 'Standard Plan',
+      price: '$19',
       period: '/month',
-      description: 'Ideal for growing businesses with multiple needs',
-      icon: Building2,
+      description: 'Perfect for growing businesses',
+      icon: Star,
       popular: true,
       features: [
-        'Unlimited products',
-        'Advanced POS features',
-        'Full inventory management',
-        'Advanced reporting & analytics',
-        'All payment methods (M-Pesa, cards)',
-        'Up to 3 locations',
-        'Customer management',
-        'Barcode scanning',
+        'Everything in Starter',
+        'Multi-user accounts (cashiers/staff)',
+        'Advanced sales & expense reports',
         'Low stock alerts',
-        'Staff management',
-        'Priority support',
-        'Custom receipt templates'
+        'Priority email support'
       ],
       limitations: []
     },
     {
-      name: 'Enterprise',
-      price: '$99',
+      name: 'Pro Plan',
+      price: '$39',
       period: '/month',
-      description: 'For large businesses with advanced requirements',
+      description: 'Advanced features for scaling',
       icon: Crown,
       popular: false,
       features: [
-        'Everything in Professional',
-        'Unlimited locations',
-        'Advanced user roles & permissions',
-        'API access',
-        'Custom integrations',
-        'White-label options',
-        'Advanced analytics & forecasting',
-        'Multi-currency support',
-        'Bulk operations',
-        'Custom workflows',
+        'Everything in Standard',
+        'Multi-branch support',
+        'Customer & supplier management',
+        'Customizable receipts & invoices',
+        'Priority chat support'
+      ],
+      limitations: []
+    },
+    {
+      name: 'Enterprise Plan',
+      price: '$79',
+      period: '/month',
+      description: 'Complete solution for large operations',
+      icon: Crown,
+      popular: false,
+      features: [
+        'Everything in Pro',
+        'Unlimited branches & users',
+        'API & advanced integrations',
         'Dedicated account manager',
-        '24/7 phone support',
-        'On-site training'
+        '24/7 priority support'
       ],
       limitations: []
     }
@@ -99,19 +95,19 @@ const PricingPage = () => {
 
   const addOns = [
     {
-      name: 'E-commerce Integration',
-      price: '$15/month',
-      description: 'Connect with Shopify, WooCommerce, and other platforms'
+      name: 'Additional Users',
+      price: '$5/month per user',
+      description: 'Add more staff members beyond plan limits'
     },
     {
-      name: 'Advanced Analytics',
-      price: '$20/month',
-      description: 'Predictive analytics, forecasting, and business intelligence'
-    },
-    {
-      name: 'Additional Locations',
-      price: '$10/month per location',
+      name: 'Extra Branches',
+      price: '$10/month per branch',
       description: 'Add more store locations beyond plan limits'
+    },
+    {
+      name: 'Premium Support',
+      price: '$25/month',
+      description: '24/7 phone support and priority assistance'
     },
     {
       name: 'Custom Development',
@@ -257,7 +253,7 @@ const PricingPage = () => {
                       variant={plan.popular ? 'default' : 'outline'}
                     >
                       <Link to="/auth">
-                        {plan.price === 'Free' ? 'Get Started Free' : `Start ${plan.name} Trial`}
+                        {plan.name === 'Starter Plan' ? 'Start Free Trial' : `Choose ${plan.name}`}
                       </Link>
                     </Button>
                     

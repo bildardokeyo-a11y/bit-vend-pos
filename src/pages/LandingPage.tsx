@@ -288,6 +288,131 @@ const LandingPage = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+              Simple, transparent pricing
+            </h2>
+            <p className="text-muted-foreground">
+              Choose the perfect plan for your business needs
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {[
+              {
+                name: 'Starter Plan',
+                price: '$9',
+                period: '/month',
+                description: 'Best for small shops',
+                icon: Building2,
+                popular: false,
+                features: ['Basic inventory & sales tracking', 'M-Pesa payments enabled', 'Simple reports', 'Email support']
+              },
+              {
+                name: 'Standard Plan',
+                price: '$19',
+                period: '/month',
+                description: 'Perfect for growing businesses',
+                icon: Star,
+                popular: true,
+                features: ['Everything in Starter', 'Multi-user accounts', 'Advanced reports', 'Priority support']
+              },
+              {
+                name: 'Pro Plan',
+                price: '$39',
+                period: '/month',
+                description: 'Advanced features for scaling',
+                icon: Crown,
+                popular: false,
+                features: ['Everything in Standard', 'Multi-branch support', 'Customer management', 'Custom receipts']
+              },
+              {
+                name: 'Enterprise Plan',
+                price: '$79',
+                period: '/month',
+                description: 'Complete solution for large operations',
+                icon: Crown,
+                popular: false,
+                features: ['Everything in Pro', 'Unlimited branches & users', 'API integrations', '24/7 support']
+              }
+            ].map((plan, index) => {
+              const IconComponent = plan.icon;
+              return (
+                <Card key={index} className={`relative hover:shadow-xl transition-all duration-300 ${
+                  plan.popular ? 'ring-2 ring-orange-500 scale-105' : ''
+                }`}>
+                  {plan.popular && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <Badge className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-1">
+                        <Star className="h-3 w-3 mr-1" />
+                        Most Popular
+                      </Badge>
+                    </div>
+                  )}
+                  
+                  <CardHeader className="text-center">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500/10 to-blue-600/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                      <IconComponent className="h-6 w-6 text-orange-500" />
+                    </div>
+                    <CardTitle className="text-lg font-bold text-foreground">
+                      {plan.name}
+                    </CardTitle>
+                    <div className="mb-2">
+                      <span className="text-2xl font-bold text-foreground">{plan.price}</span>
+                      <span className="text-muted-foreground text-sm">{plan.period}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{plan.description}</p>
+                  </CardHeader>
+                  
+                  <CardContent className="space-y-4">
+                    <Button 
+                      asChild 
+                      className={`w-full ${
+                        plan.popular 
+                          ? 'bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white' 
+                          : ''
+                      }`}
+                      variant={plan.popular ? 'default' : 'outline'}
+                      size="sm"
+                    >
+                      <Link to="/auth">
+                        {plan.name === 'Starter Plan' ? 'Start Free Trial' : `Choose ${plan.name}`}
+                      </Link>
+                    </Button>
+                    
+                    <div className="space-y-2">
+                      {plan.features.slice(0, 3).map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
+                          <span className="text-xs text-muted-foreground">{feature}</span>
+                        </div>
+                      ))}
+                      {plan.features.length > 3 && (
+                        <div className="text-xs text-muted-foreground text-center">
+                          +{plan.features.length - 3} more features
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+          
+          <div className="text-center mt-8">
+            <Button asChild size="lg" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white">
+              <Link to="/pricing">
+                View All Plans & Features
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
               Trusted by businesses worldwide
             </h2>
             <p className="text-muted-foreground">
