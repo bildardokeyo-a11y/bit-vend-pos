@@ -18,7 +18,9 @@ import {
   Users,
   ArrowLeft,
   Sun,
-  Moon
+  Moon,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -42,6 +44,8 @@ const AuthPage = () => {
   const [referralCodeInput, setReferralCodeInput] = useState(referralCode);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [currentMode, setCurrentMode] = useState<'signin' | 'signup' | 'forgot'>(mode as any);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Check if user is already authenticated
   useEffect(() => {
@@ -289,13 +293,20 @@ const AuthPage = () => {
                           <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                           <Input
                             id="signin-password"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             placeholder="Enter your password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="pl-10"
+                            className="pl-10 pr-10"
                             required
                           />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          </button>
                         </div>
                       </div>
 
@@ -390,13 +401,20 @@ const AuthPage = () => {
                             <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               id="password"
-                              type="password"
+                              type={showPassword ? "text" : "password"}
                               placeholder="Create password"
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
-                              className="pl-10"
+                              className="pl-10 pr-10"
                               required
                             />
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword(!showPassword)}
+                              className="absolute right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                            </button>
                           </div>
                         </div>
 
@@ -406,13 +424,20 @@ const AuthPage = () => {
                             <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               id="confirmPassword"
-                              type="password"
+                              type={showConfirmPassword ? "text" : "password"}
                               placeholder="Confirm password"
                               value={confirmPassword}
                               onChange={(e) => setConfirmPassword(e.target.value)}
-                              className="pl-10"
+                              className="pl-10 pr-10"
                               required
                             />
+                            <button
+                              type="button"
+                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                              className="absolute right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                            </button>
                           </div>
                         </div>
                       </div>
