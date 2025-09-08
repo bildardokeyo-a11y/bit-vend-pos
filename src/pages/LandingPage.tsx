@@ -26,7 +26,8 @@ import {
   Target,
   Sparkles,
   Sun,
-  Moon
+  Moon,
+  Crown
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
