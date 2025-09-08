@@ -110,32 +110,7 @@ const ReportView: React.FC = () => {
 
   // Generate comprehensive sample data with more variety
   const generateReportData = (report: ReportType) => {
-    const sampleProducts = ['Premium Espresso Blend', 'Organic Green Tea', 'Gourmet Chocolate Cake', 'Vintage Wine Selection', 'Artisan Croissant', 'Truffle Collection', 'French Roast Coffee', 'Earl Grey Tea', 'Cheesecake Slice', 'Sparkling Water'];
-    const sampleCategories = ['Electronics', 'Computers', 'Tablets', 'Accessories', 'Coffee', 'Tea', 'Dessert', 'Beverages', 'Pastry', 'Confectionery'];
-    const sampleEmployees = ['Alice Johnson', 'Bob Smith', 'Carol Wilson', 'David Brown', 'Eva Davis'];
-    const sampleCustomers = ['John Doe', 'Jane Smith', 'Mike Johnson', 'Sarah Wilson', 'Tom Davis', 'Walk-in Customer'];
-
-    const baseData = Array.from({ length: 50 }, (_, i) => {
-      const date = new Date();
-      date.setDate(date.getDate() - Math.floor(Math.random() * 30));
-      
-      return {
-        id: (i + 1).toString(),
-        date: date.toISOString().split('T')[0],
-        customer: sampleCustomers[Math.floor(Math.random() * sampleCustomers.length)],
-        product: sampleProducts[Math.floor(Math.random() * sampleProducts.length)],
-        category: sampleCategories[Math.floor(Math.random() * sampleCategories.length)],
-        employee: sampleEmployees[Math.floor(Math.random() * sampleEmployees.length)],
-        amount: (Math.random() * 2000 + 100).toFixed(2),
-        quantity: Math.floor(Math.random() * 10) + 1,
-        status: ['Completed', 'Pending', 'Refunded'][Math.floor(Math.random() * 3)],
-        payment: ['Cash', 'Card', 'Bank Transfer'][Math.floor(Math.random() * 3)],
-        vendor: `Vendor ${Math.floor(Math.random() * 5) + 1}`,
-        branch: 'Main Branch',
-        invoiceNo: `INV-${String(i + 1).padStart(3, '0')}`,
-        time: `${Math.floor(Math.random() * 12) + 1}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')} ${Math.random() > 0.5 ? 'AM' : 'PM'}`
-      };
-    });
+    const baseData = [];
 
     // Define columns based on report type and filters
     let columns = ['ID'];
@@ -671,6 +646,13 @@ const ReportView: React.FC = () => {
                     <PaginationNext
                       onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                       className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+              {paginatedData.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={reportData.columns.length} className="text-center py-8 text-muted-foreground">
+                    No data available for this report. Add business transactions to generate report data.
+                  </TableCell>
+                </TableRow>
+              )}
                     />
                   </PaginationItem>
                 </PaginationContent>

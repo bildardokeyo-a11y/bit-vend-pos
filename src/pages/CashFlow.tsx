@@ -21,28 +21,12 @@ const CashFlow = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('current-month');
   const [showModal, setShowModal] = useState(false);
 
-  const cashFlowData = {
-    period: 'January 2024',
-    operatingActivities: [
-      { description: 'Net Income', amount: 75000 },
-      { description: 'Depreciation and Amortization', amount: 15000 },
-      { description: 'Increase in Accounts Receivable', amount: -12000 },
-      { description: 'Increase in Inventory', amount: -25000 },
-      { description: 'Increase in Accounts Payable', amount: 8000 },
-      { description: 'Decrease in Prepaid Expenses', amount: 3000 }
-    ],
-    investingActivities: [
-      { description: 'Purchase of Equipment', amount: -45000 },
-      { description: 'Sale of Old Equipment', amount: 8000 },
-      { description: 'Investment in Securities', amount: -20000 }
-    ],
-    financingActivities: [
-      { description: 'Bank Loan Proceeds', amount: 50000 },
-      { description: 'Owner Capital Investment', amount: 25000 },
-      { description: 'Loan Principal Payments', amount: -15000 },
-      { description: 'Dividends Paid', amount: -10000 }
-    ]
-  };
+  const [cashFlowData] = useState({
+    period: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+    operatingActivities: [],
+    investingActivities: [],
+    financingActivities: []
+  });
 
   const calculateTotal = (activities: any[]) => {
     return activities.reduce((sum, activity) => sum + activity.amount, 0);
@@ -250,70 +234,78 @@ const CashFlow = () => {
             <CardTitle>Cash Flow Statement for {cashFlowData.period}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-semibold mb-3 text-lg">Operating Activities</h4>
-                {cashFlowData.operatingActivities.map((activity, index) => (
-                  <div key={index} className="flex justify-between py-2">
-                    <span>{activity.description}</span>
-                    <span className={`font-medium ${activity.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {activity.amount >= 0 ? '+' : ''}${activity.amount.toLocaleString()}
+            {netCashFlow === 0 && cashFlowData.operatingActivities.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <TrendingUp className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>No cash flow data available</p>
+                <p className="text-sm">Add financial transactions to generate cash flow statement</p>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-semibold mb-3 text-lg">Operating Activities</h4>
+                  {cashFlowData.operatingActivities.map((activity, index) => (
+                    <div key={index} className="flex justify-between py-2">
+                      <span>{activity.description}</span>
+                      <span className={`font-medium ${activity.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {activity.amount >= 0 ? '+' : ''}${activity.amount.toLocaleString()}
+                      </span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between py-3 border-t font-semibold">
+                    <span>Net Cash from Operating Activities</span>
+                    <span className={operatingCashFlow >= 0 ? 'text-green-600' : 'text-red-600'}>
+                      ${operatingCashFlow.toLocaleString()}
                     </span>
                   </div>
-                ))}
-                <div className="flex justify-between py-3 border-t font-semibold">
-                  <span>Net Cash from Operating Activities</span>
-                  <span className={operatingCashFlow >= 0 ? 'text-green-600' : 'text-red-600'}>
-                    ${operatingCashFlow.toLocaleString()}
-                  </span>
                 </div>
-              </div>
 
-              <div>
-                <h4 className="font-semibold mb-3 text-lg">Investing Activities</h4>
-                {cashFlowData.investingActivities.map((activity, index) => (
-                  <div key={index} className="flex justify-between py-2">
-                    <span>{activity.description}</span>
-                    <span className={`font-medium ${activity.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {activity.amount >= 0 ? '+' : ''}${activity.amount.toLocaleString()}
+                <div>
+                  <h4 className="font-semibold mb-3 text-lg">Investing Activities</h4>
+                  {cashFlowData.investingActivities.map((activity, index) => (
+                    <div key={index} className="flex justify-between py-2">
+                      <span>{activity.description}</span>
+                      <span className={`font-medium ${activity.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {activity.amount >= 0 ? '+' : ''}${activity.amount.toLocaleString()}
+                      </span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between py-3 border-t font-semibold">
+                    <span>Net Cash from Investing Activities</span>
+                    <span className={investingCashFlow >= 0 ? 'text-green-600' : 'text-red-600'}>
+                      ${investingCashFlow.toLocaleString()}
                     </span>
                   </div>
-                ))}
-                <div className="flex justify-between py-3 border-t font-semibold">
-                  <span>Net Cash from Investing Activities</span>
-                  <span className={investingCashFlow >= 0 ? 'text-green-600' : 'text-red-600'}>
-                    ${investingCashFlow.toLocaleString()}
-                  </span>
                 </div>
-              </div>
 
-              <div>
-                <h4 className="font-semibold mb-3 text-lg">Financing Activities</h4>
-                {cashFlowData.financingActivities.map((activity, index) => (
-                  <div key={index} className="flex justify-between py-2">
-                    <span>{activity.description}</span>
-                    <span className={`font-medium ${activity.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {activity.amount >= 0 ? '+' : ''}${activity.amount.toLocaleString()}
+                <div>
+                  <h4 className="font-semibold mb-3 text-lg">Financing Activities</h4>
+                  {cashFlowData.financingActivities.map((activity, index) => (
+                    <div key={index} className="flex justify-between py-2">
+                      <span>{activity.description}</span>
+                      <span className={`font-medium ${activity.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {activity.amount >= 0 ? '+' : ''}${activity.amount.toLocaleString()}
+                      </span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between py-3 border-t font-semibold">
+                    <span>Net Cash from Financing Activities</span>
+                    <span className={financingCashFlow >= 0 ? 'text-green-600' : 'text-red-600'}>
+                      ${financingCashFlow.toLocaleString()}
                     </span>
                   </div>
-                ))}
-                <div className="flex justify-between py-3 border-t font-semibold">
-                  <span>Net Cash from Financing Activities</span>
-                  <span className={financingCashFlow >= 0 ? 'text-green-600' : 'text-red-600'}>
-                    ${financingCashFlow.toLocaleString()}
-                  </span>
                 </div>
-              </div>
 
-              <div className="bg-muted p-4 rounded-lg">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold">Net Increase in Cash</span>
-                  <span className={`text-2xl font-bold ${netCashFlow >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    ${netCashFlow.toLocaleString()}
-                  </span>
+                <div className="bg-muted p-4 rounded-lg">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-bold">Net Increase in Cash</span>
+                    <span className={`text-2xl font-bold ${netCashFlow >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      ${netCashFlow.toLocaleString()}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </CardContent>
         </Card>
       </div>

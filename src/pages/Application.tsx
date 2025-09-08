@@ -52,45 +52,16 @@ const Application = () => {
     supportPhone: '+1-555-0123'
   });
 
-  const applicationStats = [
-    { name: 'Total Users', value: '1,234', icon: Monitor, status: 'healthy' },
-    { name: 'Active Sessions', value: '89', icon: Activity, status: 'healthy' },
-    { name: 'Database Size', value: '2.4 GB', icon: Database, status: 'warning' },
-    { name: 'API Calls Today', value: '15,678', icon: Globe, status: 'healthy' },
-    { name: 'Uptime', value: '99.9%', icon: CheckCircle, status: 'healthy' },
-    { name: 'Response Time', value: '120ms', icon: Clock, status: 'healthy' }
-  ];
+  const [applicationStats] = useState([
+    { name: 'Total Users', value: '0', icon: Monitor, status: 'healthy' },
+    { name: 'Active Sessions', value: '0', icon: Activity, status: 'healthy' },
+    { name: 'Database Size', value: '0 MB', icon: Database, status: 'healthy' },
+    { name: 'API Calls Today', value: '0', icon: Globe, status: 'healthy' },
+    { name: 'Uptime', value: '100%', icon: CheckCircle, status: 'healthy' },
+    { name: 'Response Time', value: '0ms', icon: Clock, status: 'healthy' }
+  ]);
 
-  const systemLogs = [
-    {
-      id: 1,
-      timestamp: '2024-01-31 14:30:25',
-      level: 'INFO',
-      message: 'Application started successfully',
-      category: 'System'
-    },
-    {
-      id: 2,
-      timestamp: '2024-01-31 14:25:10',
-      level: 'WARNING',
-      message: 'Database connection pool near limit (85%)',
-      category: 'Database'
-    },
-    {
-      id: 3,
-      timestamp: '2024-01-31 14:20:05',
-      level: 'ERROR',
-      message: 'Failed login attempt from IP 192.168.1.100',
-      category: 'Security'
-    },
-    {
-      id: 4,
-      timestamp: '2024-01-31 14:15:00',
-      level: 'INFO',
-      message: 'Scheduled backup completed successfully',
-      category: 'Backup'
-    }
-  ];
+  const [systemLogs] = useState([]);
 
   const handleSaveSettings = () => {
     toast.success('Application settings saved successfully!');
@@ -460,20 +431,28 @@ const Application = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {systemLogs.map((log) => (
-                  <div key={log.id} className="flex items-start gap-4 p-4 border rounded-lg">
-                    <Badge variant={getLogLevelBadge(log.level)}>
-                      {log.level}
-                    </Badge>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-medium">{log.category}</span>
-                        <span className="text-sm text-muted-foreground">{log.timestamp}</span>
-                      </div>
-                      <p className="text-sm">{log.message}</p>
-                    </div>
+                {systemLogs.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <Activity className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p>No system logs available</p>
+                    <p className="text-sm">System activity will appear here</p>
                   </div>
-                ))}
+                ) : (
+                  systemLogs.map((log) => (
+                    <div key={log.id} className="flex items-start gap-4 p-4 border rounded-lg">
+                      <Badge variant={getLogLevelBadge(log.level)}>
+                        {log.level}
+                      </Badge>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-sm font-medium">{log.category}</span>
+                          <span className="text-sm text-muted-foreground">{log.timestamp}</span>
+                        </div>
+                        <p className="text-sm">{log.message}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>

@@ -27,74 +27,17 @@ const AccountStatement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const accounts = [
-    { id: '1000', name: 'Cash and Cash Equivalents' },
-    { id: '1100', name: 'Accounts Receivable' },
-    { id: '2000', name: 'Accounts Payable' },
-    { id: '4000', name: 'Sales Revenue' },
-    { id: '5000', name: 'Cost of Goods Sold' }
-  ];
+  const [accounts] = useState([]);
 
-  const accountStatementData = {
+  const [accountStatementData] = useState({
     accountInfo: {
-      accountCode: '1000',
-      accountName: 'Cash and Cash Equivalents',
-      openingBalance: 125000.00,
-      closingBalance: 145832.45
+      accountCode: '',
+      accountName: '',
+      openingBalance: 0,
+      closingBalance: 0
     },
-    transactions: [
-      {
-        id: 1,
-        date: '2024-01-31',
-        description: 'Cash Sale - INV-2024-001',
-        reference: 'CS-001',
-        debit: 5500.00,
-        credit: 0,
-        balance: 130500.00,
-        type: 'receipt'
-      },
-      {
-        id: 2,
-        date: '2024-01-30',
-        description: 'Supplier Payment - SUP-001',
-        reference: 'PY-001',
-        debit: 0,
-        credit: 2800.00,
-        balance: 125000.00,
-        type: 'payment'
-      },
-      {
-        id: 3,
-        date: '2024-01-29',
-        description: 'Bank Deposit',
-        reference: 'BD-001',
-        debit: 15000.00,
-        credit: 0,
-        balance: 127800.00,
-        type: 'deposit'
-      },
-      {
-        id: 4,
-        date: '2024-01-28',
-        description: 'Office Rent Payment',
-        reference: 'RN-001',
-        debit: 0,
-        credit: 3500.00,
-        balance: 112800.00,
-        type: 'payment'
-      },
-      {
-        id: 5,
-        date: '2024-01-27',
-        description: 'Customer Payment - CUST-001',
-        reference: 'RC-002',
-        debit: 8750.00,
-        credit: 0,
-        balance: 116300.00,
-        type: 'receipt'
-      }
-    ]
-  };
+    transactions: []
+  });
 
   const filteredTransactions = accountStatementData.transactions.filter(transaction =>
     transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -315,46 +258,57 @@ const AccountStatement = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            {accountStatementData.accountInfo.accountCode} - {accountStatementData.accountInfo.accountName}
+            {accountStatementData.accountInfo.accountCode ? 
+              `${accountStatementData.accountInfo.accountCode} - ${accountStatementData.accountInfo.accountName}` :
+              'Account Statement'
+            }
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-500 hover:bg-blue-500">
-                <TableHead className="text-white font-semibold">Date</TableHead>
-                <TableHead className="text-white font-semibold">Description</TableHead>
-                <TableHead className="text-white font-semibold">Reference</TableHead>
-                <TableHead className="text-white font-semibold">Type</TableHead>
-                <TableHead className="text-white font-semibold text-right">Debit</TableHead>
-                <TableHead className="text-white font-semibold text-right">Credit</TableHead>
-                <TableHead className="text-white font-semibold text-right">Balance</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredTransactions.map((transaction) => (
-                <TableRow key={transaction.id}>
-                  <TableCell>{transaction.date}</TableCell>
-                  <TableCell>{transaction.description}</TableCell>
-                  <TableCell className="font-medium">{transaction.reference}</TableCell>
-                  <TableCell>
-                    <Badge variant={getTransactionBadge(transaction.type)}>
-                      {transaction.type}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {transaction.debit > 0 ? `$${transaction.debit.toLocaleString()}` : '-'}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {transaction.credit > 0 ? `$${transaction.credit.toLocaleString()}` : '-'}
-                  </TableCell>
-                  <TableCell className="text-right font-medium">
-                    ${transaction.balance.toLocaleString()}
-                  </TableCell>
+          {filteredTransactions.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground">
+              <FileText className="h-16 w-16 mx-auto mb-4 opacity-50" />
+              <h3 className="text-lg font-semibold mb-2">No Account Statement Data</h3>
+              <p>Select an account and add transactions to view account statement</p>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-blue-500 hover:bg-blue-500">
+                  <TableHead className="text-white font-semibold">Date</TableHead>
+                  <TableHead className="text-white font-semibold">Description</TableHead>
+                  <TableHead className="text-white font-semibold">Reference</TableHead>
+                  <TableHead className="text-white font-semibold">Type</TableHead>
+                  <TableHead className="text-white font-semibold text-right">Debit</TableHead>
+                  <TableHead className="text-white font-semibold text-right">Credit</TableHead>
+                  <TableHead className="text-white font-semibold text-right">Balance</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filteredTransactions.map((transaction) => (
+                  <TableRow key={transaction.id}>
+                    <TableCell>{transaction.date}</TableCell>
+                    <TableCell>{transaction.description}</TableCell>
+                    <TableCell className="font-medium">{transaction.reference}</TableCell>
+                    <TableCell>
+                      <Badge variant={getTransactionBadge(transaction.type)}>
+                        {transaction.type}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {transaction.debit > 0 ? `$${transaction.debit.toLocaleString()}` : '-'}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {transaction.credit > 0 ? `$${transaction.credit.toLocaleString()}` : '-'}
+                    </TableCell>
+                    <TableCell className="text-right font-medium">
+                      ${transaction.balance.toLocaleString()}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
     </div>

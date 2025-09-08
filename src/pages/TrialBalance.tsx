@@ -21,26 +21,10 @@ const TrialBalance = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('current-month');
   const [showModal, setShowModal] = useState(false);
 
-  const trialBalanceData = {
-    asOfDate: '2024-01-31',
-    accounts: [
-      { accountCode: '1000', accountName: 'Cash and Cash Equivalents', debit: 145832.45, credit: 0 },
-      { accountCode: '1100', accountName: 'Accounts Receivable', debit: 85430.22, credit: 0 },
-      { accountCode: '1200', accountName: 'Inventory', debit: 234567.89, credit: 0 },
-      { accountCode: '1300', accountName: 'Prepaid Expenses', debit: 12450.00, credit: 0 },
-      { accountCode: '1500', accountName: 'Property, Plant & Equipment', debit: 450000.00, credit: 0 },
-      { accountCode: '1600', accountName: 'Accumulated Depreciation', debit: 0, credit: 85000.00 },
-      { accountCode: '2000', accountName: 'Accounts Payable', debit: 0, credit: 65432.10 },
-      { accountCode: '2100', accountName: 'Accrued Expenses', debit: 0, credit: 23456.78 },
-      { accountCode: '2200', accountName: 'Notes Payable', debit: 0, credit: 250000.00 },
-      { accountCode: '3000', accountName: 'Owner\'s Capital', debit: 0, credit: 250000.00 },
-      { accountCode: '3100', accountName: 'Retained Earnings', debit: 0, credit: 84392.68 },
-      { accountCode: '4000', accountName: 'Sales Revenue', debit: 0, credit: 350000.00 },
-      { accountCode: '5000', accountName: 'Cost of Goods Sold', debit: 180000.00, credit: 0 },
-      { accountCode: '6000', accountName: 'Operating Expenses', debit: 95000.00, credit: 0 },
-      { accountCode: '6100', accountName: 'Depreciation Expense', debit: 15000.00, credit: 0 }
-    ]
-  };
+  const [trialBalanceData] = useState({
+    asOfDate: new Date().toISOString().split('T')[0],
+    accounts: []
+  });
 
   const totalDebits = trialBalanceData.accounts.reduce((sum, account) => sum + account.debit, 0);
   const totalCredits = trialBalanceData.accounts.reduce((sum, account) => sum + account.credit, 0);
@@ -126,24 +110,34 @@ const TrialBalance = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {trialBalanceData.accounts.map((account, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium">{account.accountCode}</TableCell>
-                          <TableCell>{account.accountName}</TableCell>
-                          <TableCell className="text-right">
-                            {account.debit > 0 ? `$${account.debit.toLocaleString()}` : '-'}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {account.credit > 0 ? `$${account.credit.toLocaleString()}` : '-'}
+                      {trialBalanceData.accounts.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                            No trial balance data available. Add chart of accounts to generate trial balance.
                           </TableCell>
                         </TableRow>
-                      ))}
-                      <TableRow className="border-t-2">
-                        <TableCell className="font-bold">TOTALS</TableCell>
-                        <TableCell></TableCell>
-                        <TableCell className="text-right font-bold">${totalDebits.toLocaleString()}</TableCell>
-                        <TableCell className="text-right font-bold">${totalCredits.toLocaleString()}</TableCell>
-                      </TableRow>
+                      ) : (
+                        <>
+                          {trialBalanceData.accounts.map((account, index) => (
+                            <TableRow key={index}>
+                              <TableCell className="font-medium">{account.accountCode}</TableCell>
+                              <TableCell>{account.accountName}</TableCell>
+                              <TableCell className="text-right">
+                                {account.debit > 0 ? `$${account.debit.toLocaleString()}` : '-'}
+                              </TableCell>
+                              <TableCell className="text-right">
+                                {account.credit > 0 ? `$${account.credit.toLocaleString()}` : '-'}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                          <TableRow className="border-t-2">
+                            <TableCell className="font-bold">TOTALS</TableCell>
+                            <TableCell></TableCell>
+                            <TableCell className="text-right font-bold">${totalDebits.toLocaleString()}</TableCell>
+                            <TableCell className="text-right font-bold">${totalCredits.toLocaleString()}</TableCell>
+                          </TableRow>
+                        </>
+                      )}
                     </TableBody>
                   </Table>
                 </div>
@@ -202,36 +196,44 @@ const TrialBalance = () => {
           <CardTitle>Trial Balance as of {trialBalanceData.asOfDate}</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-blue-500 hover:bg-blue-500">
-                <TableHead className="text-white font-semibold">Account Code</TableHead>
-                <TableHead className="text-white font-semibold">Account Name</TableHead>
-                <TableHead className="text-white font-semibold text-right">Debit</TableHead>
-                <TableHead className="text-white font-semibold text-right">Credit</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {trialBalanceData.accounts.map((account, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">{account.accountCode}</TableCell>
-                  <TableCell>{account.accountName}</TableCell>
-                  <TableCell className="text-right">
-                    {account.debit > 0 ? `$${account.debit.toLocaleString()}` : '-'}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {account.credit > 0 ? `$${account.credit.toLocaleString()}` : '-'}
-                  </TableCell>
+          {trialBalanceData.accounts.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground">
+              <DollarSign className="h-16 w-16 mx-auto mb-4 opacity-50" />
+              <h3 className="text-lg font-semibold mb-2">No Trial Balance Data</h3>
+              <p>Add chart of accounts and transactions to generate trial balance</p>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-blue-500 hover:bg-blue-500">
+                  <TableHead className="text-white font-semibold">Account Code</TableHead>
+                  <TableHead className="text-white font-semibold">Account Name</TableHead>
+                  <TableHead className="text-white font-semibold text-right">Debit</TableHead>
+                  <TableHead className="text-white font-semibold text-right">Credit</TableHead>
                 </TableRow>
-              ))}
-              <TableRow className="border-t-2 font-bold">
-                <TableCell>TOTALS</TableCell>
-                <TableCell></TableCell>
-                <TableCell className="text-right">${totalDebits.toLocaleString()}</TableCell>
-                <TableCell className="text-right">${totalCredits.toLocaleString()}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {trialBalanceData.accounts.map((account, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium">{account.accountCode}</TableCell>
+                    <TableCell>{account.accountName}</TableCell>
+                    <TableCell className="text-right">
+                      {account.debit > 0 ? `$${account.debit.toLocaleString()}` : '-'}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {account.credit > 0 ? `$${account.credit.toLocaleString()}` : '-'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow className="border-t-2 font-bold">
+                  <TableCell>TOTALS</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell className="text-right">${totalDebits.toLocaleString()}</TableCell>
+                  <TableCell className="text-right">${totalCredits.toLocaleString()}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
     </div>

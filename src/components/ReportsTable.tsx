@@ -143,13 +143,7 @@ const ReportsTable: React.FC = () => {
 
   // Generate sample data for the selected report
   const generateSampleData = (report: ReportType) => {
-    const baseData = [
-      { id: '1', date: '2024-01-15', customer: 'John Doe', amount: '$1,042.80', status: 'Completed', category: 'Electronics', employee: 'Alice Johnson' },
-      { id: '2', date: '2024-01-15', customer: 'Walk-in Customer', amount: '$828.90', status: 'Completed', category: 'Electronics', employee: 'Bob Smith' },
-      { id: '3', date: '2024-01-14', customer: 'Jane Smith', amount: '$2,185.80', status: 'Completed', category: 'Computers', employee: 'Alice Johnson' },
-      { id: '4', date: '2024-01-14', customer: 'Walk-in Customer', amount: '$1,977.80', status: 'Completed', category: 'Tablets', employee: 'Carol Wilson' },
-      { id: '5', date: '2024-01-13', customer: 'Mike Johnson', amount: '$484.88', status: 'Completed', category: 'Accessories', employee: 'Bob Smith' },
-    ];
+    const baseData = [];
 
     // Filter columns based on report filters
     const columns = ['ID', ...report.filters.map(filter => filter.charAt(0).toUpperCase() + filter.slice(1)), 'Amount'];
@@ -493,6 +487,13 @@ const ReportsTable: React.FC = () => {
               ))}
             </TableBody>
           </Table>
+          
+          {paginatedReports.length === 0 && (
+            <div className="text-center py-8 text-muted-foreground">
+              <FileBarChart className="h-12 w-12 mx-auto mb-4 opacity-50" />
+              <p>No reports match your search criteria</p>
+            </div>
+          )}
         </div>
 
         {/* Pagination */}
