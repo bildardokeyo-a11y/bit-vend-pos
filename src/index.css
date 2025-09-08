@@ -207,7 +207,11 @@ All colors MUST be HSL.
   }
 
   /* Override overflow for landing page */
-  body:has([data-page="landing"]) {
+  body:has([data-page="landing"]),
+  body:has([data-page="features"]),
+  body:has([data-page="pricing"]),
+  body:has([data-page="contact"]),
+  body:has([data-page="auth"]) {
     @apply overflow-auto;
   }
 
@@ -232,27 +236,16 @@ All colors MUST be HSL.
     transition-duration: 0.2s !important;
   }
 
-  /* Ensure proper scrolling for marketing pages */
-  .marketing-page {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 100vh;
-  }
-
   /* Fix for horizontal scroll issues */
   .container {
     max-width: 100%;
-    overflow-x: hidden;
   }
 
   /* Prevent horizontal overflow on mobile */
   @media (max-width: 768px) {
-    .grid {
-      overflow-x: hidden;
-    }
-    
-    .flex {
-      flex-wrap: wrap;
+    * {
+      max-width: 100vw;
+      overflow-x: auto;
     }
   }
 }
