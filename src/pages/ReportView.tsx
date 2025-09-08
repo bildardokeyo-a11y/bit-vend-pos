@@ -603,6 +603,13 @@ const ReportView: React.FC = () => {
                     ))}
                   </TableRow>
                 ))}
+                {paginatedData.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={reportData.columns.length} className="text-center py-8 text-muted-foreground">
+                      No data available for this report. Add business transactions to generate report data.
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
           </div>
@@ -629,30 +636,12 @@ const ReportView: React.FC = () => {
                     } else {
                       page = currentPage - 2 + i;
                     }
-                    
-                    return (
-                      <PaginationItem key={page}>
-                        <PaginationLink
-                          onClick={() => handlePageChange(page)}
-                          isActive={currentPage === page}
-                          className="cursor-pointer"
-                        >
-                          {page}
-                        </PaginationLink>
-                      </PaginationItem>
-                    );
-                  })}
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-                      className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-              {paginatedData.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={reportData.columns.length} className="text-center py-8 text-muted-foreground">
-                    No data available for this report. Add business transactions to generate report data.
-                  </TableCell>
-                </TableRow>
-              )}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
                     />
                   </PaginationItem>
                 </PaginationContent>
@@ -660,7 +649,7 @@ const ReportView: React.FC = () => {
             </div>
           )}
 
-          {filteredData.length === 0 && (
+          {filteredData.length === 0 && paginatedData.length === 0 && (
             <div className="text-center py-8">
               <p className="text-muted-foreground">No data found matching your filters.</p>
               <Button variant="outline" onClick={resetFilters} className="mt-4">
