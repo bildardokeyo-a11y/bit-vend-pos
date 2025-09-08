@@ -66,6 +66,8 @@ const Settings = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [businessToDelete, setBusinessToDelete] = useState<string | null>(null);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string>('');
 
   // Business form state
   const [businessForm, setBusinessForm] = useState(() => {
@@ -156,6 +158,25 @@ const Settings = () => {
         security: 'general'
       };
       setActiveSubsection(defaultSubsections[newSection as keyof typeof defaultSubsections] || 'general');
+    }
+  };
+
+  // Handle logo upload
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setLogoFile(file);
+      
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setLogoPreview(result);
+        setBusinessForm({...businessForm, logoUrl: result});
+      };
+      reader.readAsDataURL(file);
+      
+      showUploadToast('Logo uploaded successfully!');
     }
   };
 
@@ -356,7 +377,7 @@ const Settings = () => {
                     <FeatureGate 
                       feature="multi_branch_support"
                       fallback={
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs bg-muted text-muted-foreground border-muted-foreground/20">
                           Upgrade to Pro for multiple businesses
                         </Badge>
                       }
@@ -442,7 +463,7 @@ const Settings = () => {
                   {!hasFeature('multi_branch_support') && businesses.length >= 1 && (
                     <div className="p-4 border-2 border-dashed border-muted-foreground/20 rounded-lg text-center">
                       <Crown className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <p className="text-sm text-foreground mb-2">
                         Want to manage multiple businesses?
                       </p>
                       <Button 
@@ -542,15 +563,43 @@ const Settings = () => {
                       <div>
                         <Label htmlFor="logoUrl">Logo URL</Label>
                         <div className="flex gap-2">
-                          <Input
-                            id="logoUrl"
-                            value={businessForm.logoUrl}
-                            onChange={(e) => setBusinessForm({...businessForm, logoUrl: e.target.value})}
-                            placeholder="https://example.com/logo.png"
-                          />
-                          <Button variant="outline" size="sm">
+                          <div className="flex-1 space-y-2">
+                            <Input
+                              id="logoUrl"
+                              value={businessForm.logoUrl}
+                              onChange={(e) => setBusinessForm({...businessForm, logoUrl: e.target.value})}
+                              placeholder="https://example.com/logo.png or upload image"
+                            />
+                            {(logoPreview || businessForm.logoUrl) && (
+                              <div className="flex items-center gap-2 p-2 border rounded">
+                                <img 
+                                  src={logoPreview || businessForm.logoUrl} 
+                                  alt="Logo preview"
+                                  className="w-8 h-8 rounded object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    target.style.display = 'none';
+                                  }}
+                                />
+                                <span className="text-xs text-muted-foreground">Logo preview</span>
+                              </div>
+                            )}
+                          </div>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => document.getElementById('logo-upload')?.click()}
+                            type="button"
+                          >
                             <Upload className="h-4 w-4" />
                           </Button>
+                          <input
+                            id="logo-upload"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleLogoUpload}
+                            className="hidden"
+                          />
                         </div>
                       </div>
                     </div>
@@ -649,7 +698,7 @@ const Settings = () => {
                       {mode === 'add' ? 'Create Business' : 'Save Changes'}
                     </Button>
                   </div>
-                </CardContent>
+                    {isActiveSection && section.subsections && (
               </Card>
             )}
           </div>
