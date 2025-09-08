@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import {
   BarChart3,
@@ -53,6 +53,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const menuItems = [
     {

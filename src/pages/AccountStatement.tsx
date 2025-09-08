@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react';
 
 const AccountStatement = () => {
+  const navigate = useNavigate();
   const [selectedAccount, setSelectedAccount] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('current-month');
   const [searchTerm, setSearchTerm] = useState('');
