@@ -84,7 +84,7 @@ const Settings = () => {
         state: business.state,
         postalCode: business.postalCode,
         country: business.country,
-        operatingHours: business.operatingHours
+        operatingHours: business.operatingHours || getDefaultBusinessForm().operatingHours
       } : getDefaultBusinessForm();
     }
     return currentBusiness ? {
@@ -100,7 +100,7 @@ const Settings = () => {
       state: currentBusiness.state,
       postalCode: currentBusiness.postalCode,
       country: currentBusiness.country,
-      operatingHours: currentBusiness.operatingHours
+      operatingHours: currentBusiness.operatingHours || getDefaultBusinessForm().operatingHours
     } : getDefaultBusinessForm();
   });
 
