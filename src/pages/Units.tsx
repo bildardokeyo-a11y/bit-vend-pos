@@ -159,10 +159,10 @@ const Units = () => {
 
   const getTypeColor = (type: Unit['type']) => {
     const colors = {
-      quantity: 'bg-blue-100 text-blue-800',
-      weight: 'bg-green-100 text-green-800',
-      volume: 'bg-purple-100 text-purple-800',
-      length: 'bg-orange-100 text-orange-800'
+      quantity: 'bg-blue-500/10 text-blue-500 border border-blue-500/20',
+      weight: 'bg-green-500/10 text-green-500 border border-green-500/20',
+      volume: 'bg-purple-500/10 text-purple-500 border border-purple-500/20',
+      length: 'bg-orange-500/10 text-orange-500 border border-orange-500/20'
     };
     return colors[type];
   };
@@ -325,14 +325,14 @@ const Units = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Short Name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Base Unit</TableHead>
-                <TableHead>Conversion</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead className="text-white">Name</TableHead>
+                <TableHead className="text-white">Short Name</TableHead>
+                <TableHead className="text-white">Type</TableHead>
+                <TableHead className="text-white">Base Unit</TableHead>
+                <TableHead className="text-white">Conversion</TableHead>
+                <TableHead className="text-white">Status</TableHead>
+                <TableHead className="text-white">Created</TableHead>
+                <TableHead className="text-white">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
