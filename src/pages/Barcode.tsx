@@ -39,48 +39,7 @@ const Barcode = () => {
     paperSize: 'A4'
   });
 
-  const [products] = useState<Product[]>([
-    {
-      id: '1',
-      name: 'Premium Coffee Beans',
-      sku: 'COFFEE-001',
-      barcode: '1234567890123',
-      price: 12.99,
-      category: 'Beverages'
-    },
-    {
-      id: '2',
-      name: 'Organic Milk 1L',
-      sku: 'MILK-001', 
-      barcode: '2345678901234',
-      price: 3.49,
-      category: 'Dairy'
-    },
-    {
-      id: '3',
-      name: 'Artisan Bread',
-      sku: 'BREAD-001',
-      barcode: '3456789012345',
-      price: 4.99,
-      category: 'Bakery'
-    },
-    {
-      id: '4',
-      name: 'Fresh Apples',
-      sku: 'APPLE-001',
-      barcode: '4567890123456',
-      price: 2.99,
-      category: 'Produce'
-    },
-    {
-      id: '5',
-      name: 'Chocolate Cookies',
-      sku: 'COOKIE-001',
-      barcode: '5678901234567',
-      price: 5.99,
-      category: 'Snacks'
-    }
-  ]);
+  const [products] = useState<Product[]>([]);
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

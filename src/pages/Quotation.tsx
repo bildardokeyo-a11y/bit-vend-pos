@@ -32,56 +32,7 @@ const Quotation = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
 
-  const quotations = [
-    {
-      id: 'QUO-2024-001',
-      customer: 'TechCorp Solutions',
-      customerEmail: 'contact@techcorp.com',
-      date: '2024-01-15',
-      validUntil: '2024-02-15',
-      items: [
-        { name: 'MacBook Pro 16"', quantity: 5, price: 2499.99, total: 12499.95 },
-        { name: 'iPhone 15 Pro', quantity: 10, price: 999.99, total: 9999.90 }
-      ],
-      subtotal: 22499.85,
-      tax: 1799.99,
-      total: 24299.84,
-      status: 'sent',
-      notes: 'Bulk order discount applied'
-    },
-    {
-      id: 'QUO-2024-002',
-      customer: 'StartupX Inc',
-      customerEmail: 'orders@startupx.com',
-      date: '2024-01-14',
-      validUntil: '2024-02-14',
-      items: [
-        { name: 'Dell XPS 13', quantity: 3, price: 1299.99, total: 3899.97 },
-        { name: 'Wireless Mouse', quantity: 3, price: 79.99, total: 239.97 }
-      ],
-      subtotal: 4139.94,
-      tax: 331.20,
-      total: 4471.14,
-      status: 'accepted',
-      notes: 'Rush delivery requested'
-    },
-    {
-      id: 'QUO-2024-003',
-      customer: 'Global Enterprises',
-      customerEmail: 'procurement@global.com',
-      date: '2024-01-13',
-      validUntil: '2024-02-13',
-      items: [
-        { name: 'Surface Pro 9', quantity: 8, price: 1099.99, total: 8799.92 },
-        { name: 'Type Cover', quantity: 8, price: 129.99, total: 1039.92 }
-      ],
-      subtotal: 9839.84,
-      tax: 787.19,
-      total: 10627.03,
-      status: 'draft',
-      notes: ''
-    }
-  ];
+  const [quotations] = useState([]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {

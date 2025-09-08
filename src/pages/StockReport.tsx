@@ -6,11 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useSEO } from '@/lib/seo';
 import { Search } from 'lucide-react';
 
-const mock = [
-  { id: 1, name: 'Premium Espresso Blend', sku: 'ESP-001', stock: 150, status: 'Active' },
-  { id: 2, name: 'Organic Green Tea', sku: 'TEA-002', stock: 75, status: 'Active' },
-  { id: 3, name: 'Gourmet Chocolate Cake', sku: 'CAK-003', stock: 25, status: 'Active' },
-];
+const mock = [];
 
 const StockReport: React.FC = () => {
   useSEO('Stock Report | Bit Vend POS', 'View stock levels and item availability across inventory.', '/stock-report');

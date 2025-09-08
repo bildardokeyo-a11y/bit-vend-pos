@@ -37,58 +37,7 @@ const IncomeCategory = () => {
     isActive: true
   });
 
-  const [categories] = useState<IncomeCategory[]>([
-    {
-      id: '1',
-      name: 'Product Sales',
-      description: 'Revenue from product sales and merchandise',
-      color: '#10B981',
-      isActive: true,
-      createdAt: '2024-01-15',
-      incomeCount: 25,
-      totalAmount: 45000
-    },
-    {
-      id: '2',
-      name: 'Service Revenue',
-      description: 'Income from consulting and professional services',
-      color: '#3B82F6',
-      isActive: true,
-      createdAt: '2024-01-14',
-      incomeCount: 18,
-      totalAmount: 32000
-    },
-    {
-      id: '3',
-      name: 'Investment Returns',
-      description: 'Dividends, interest, and capital gains',
-      color: '#F59E0B',
-      isActive: true,
-      createdAt: '2024-01-13',
-      incomeCount: 8,
-      totalAmount: 12500
-    },
-    {
-      id: '4',
-      name: 'Rental Income',
-      description: 'Property and equipment rental income',
-      color: '#8B5CF6',
-      isActive: true,
-      createdAt: '2024-01-12',
-      incomeCount: 12,
-      totalAmount: 18000
-    },
-    {
-      id: '5',
-      name: 'Licensing Fees',
-      description: 'Royalties and licensing revenue',
-      color: '#EC4899',
-      isActive: false,
-      createdAt: '2024-01-11',
-      incomeCount: 3,
-      totalAmount: 5500
-    }
-  ]);
+  const [categories] = useState<IncomeCategory[]>([]);
 
   const filteredCategories = useMemo(() => {
     return categories.filter(category =>

@@ -5,10 +5,7 @@ import { Input } from '@/components/ui/input';
 import { useSEO } from '@/lib/seo';
 import { Search } from 'lucide-react';
 
-const data = [
-  { id: 1, date: '2024-01-15', category: 'Utilities', amount: 120.5 },
-  { id: 2, date: '2024-01-16', category: 'Supplies', amount: 89.99 },
-];
+const data = [];
 
 const ExpenseReport: React.FC = () => {
   useSEO('Expense Report | Bit Vend POS', 'Track expenses by category and date.', '/expense-report');

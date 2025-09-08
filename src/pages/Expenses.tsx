@@ -150,7 +150,7 @@ const Expenses: React.FC = () => {
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
   const approvedExpenses = expenses.filter(e => e.status === 'approved').reduce((sum, e) => sum + e.amount, 0);
   const pendingExpenses = expenses.filter(e => e.status === 'pending').reduce((sum, e) => sum + e.amount, 0);
-  const monthlyExpenses = expenses.filter(e => e.date.startsWith('2024-01')).reduce((sum, e) => sum + e.amount, 0);
+  const monthlyExpenses = expenses.filter(e => e.date.startsWith(new Date().toISOString().slice(0, 7))).reduce((sum, e) => sum + e.amount, 0);
 
   // Category breakdown
   const categoryBreakdown = expenseCategories.map(category => {

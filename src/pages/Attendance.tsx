@@ -26,68 +26,7 @@ const Attendance = () => {
   const [departmentFilter, setDepartmentFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  const attendanceData = [
-    {
-      id: '1',
-      employeeId: 'EMP-001',
-      name: 'John Smith',
-      department: 'Sales',
-      position: 'Sales Manager',
-      checkIn: '09:00 AM',
-      checkOut: '06:00 PM',
-      totalHours: '9h 0m',
-      status: 'present',
-      date: '2024-01-15'
-    },
-    {
-      id: '2',
-      employeeId: 'EMP-002',
-      name: 'Sarah Johnson',
-      department: 'Marketing',
-      position: 'Marketing Specialist',
-      checkIn: '08:45 AM',
-      checkOut: '05:30 PM',
-      totalHours: '8h 45m',
-      status: 'present',
-      date: '2024-01-15'
-    },
-    {
-      id: '3',
-      employeeId: 'EMP-003',
-      name: 'Mike Davis',
-      department: 'IT',
-      position: 'Software Developer',
-      checkIn: '09:15 AM',
-      checkOut: null,
-      totalHours: null,
-      status: 'late',
-      date: '2024-01-15'
-    },
-    {
-      id: '4',
-      employeeId: 'EMP-004',
-      name: 'Emily Brown',
-      department: 'HR',
-      position: 'HR Manager',
-      checkIn: null,
-      checkOut: null,
-      totalHours: null,
-      status: 'absent',
-      date: '2024-01-15'
-    },
-    {
-      id: '5',
-      employeeId: 'EMP-005',
-      name: 'David Wilson',
-      department: 'Finance',
-      position: 'Accountant',
-      checkIn: '08:30 AM',
-      checkOut: '05:00 PM',
-      totalHours: '8h 30m',
-      status: 'present',
-      date: '2024-01-15'
-    }
-  ];
+  const [attendanceData] = useState([]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {

@@ -25,58 +25,7 @@ const PurchaseReport = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [showModal, setShowModal] = useState(false);
 
-  const purchaseData = [
-    {
-      id: 'PO-2024-001',
-      date: '2024-01-15',
-      supplier: 'Apple Inc.',
-      items: 'iPhone 15 Pro, MacBook Air M2',
-      quantity: 75,
-      amount: 76099.19,
-      status: 'delivered',
-      paymentStatus: 'paid'
-    },
-    {
-      id: 'PO-2024-002',
-      date: '2024-01-14',
-      supplier: 'Samsung Electronics',
-      items: 'Galaxy S24 Ultra, Galaxy Watch 6',
-      quantity: 45,
-      amount: 44525.51,
-      status: 'shipped',
-      paymentStatus: 'pending'
-    },
-    {
-      id: 'PO-2024-003',
-      date: '2024-01-13',
-      supplier: 'Dell Technologies',
-      items: 'XPS 13 Laptop, Wireless Mouse',
-      quantity: 40,
-      amount: 30007.57,
-      status: 'pending',
-      paymentStatus: 'pending'
-    },
-    {
-      id: 'PO-2024-004',
-      date: '2024-01-12',
-      supplier: 'Microsoft Corp',
-      items: 'Surface Pro 9, Type Cover',
-      quantity: 20,
-      amount: 25999.80,
-      status: 'delivered',
-      paymentStatus: 'paid'
-    },
-    {
-      id: 'PO-2024-005',
-      date: '2024-01-11',
-      supplier: 'HP Inc.',
-      items: 'HP EliteBook, HP Monitor',
-      quantity: 30,
-      amount: 35000.00,
-      status: 'delivered',
-      paymentStatus: 'paid'
-    }
-  ];
+  const [purchaseData] = useState([]);
 
   const filteredData = purchaseData.filter(item => {
     const matchesSearch = item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||

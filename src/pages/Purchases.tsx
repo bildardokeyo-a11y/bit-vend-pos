@@ -27,59 +27,7 @@ const Purchases = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [supplierFilter, setSupplierFilter] = useState('all');
 
-  const purchases = [
-    {
-      id: 'PO-2024-001',
-      supplier: 'Apple Inc.',
-      orderDate: '2024-01-15',
-      expectedDelivery: '2024-01-22',
-      items: [
-        { name: 'iPhone 15 Pro', quantity: 50, unitCost: 899.99, total: 44999.50 },
-        { name: 'MacBook Air M2', quantity: 25, unitCost: 999.99, total: 24999.75 }
-      ],
-      subtotal: 69999.25,
-      tax: 5599.94,
-      shipping: 500.00,
-      total: 76099.19,
-      status: 'delivered',
-      paymentStatus: 'paid',
-      notes: 'Bulk order for Q1 inventory'
-    },
-    {
-      id: 'PO-2024-002',
-      supplier: 'Samsung Electronics',
-      orderDate: '2024-01-14',
-      expectedDelivery: '2024-01-20',
-      items: [
-        { name: 'Galaxy S24 Ultra', quantity: 30, unitCost: 1199.99, total: 35999.70 },
-        { name: 'Galaxy Watch 6', quantity: 15, unitCost: 329.99, total: 4949.85 }
-      ],
-      subtotal: 40949.55,
-      tax: 3275.96,
-      shipping: 300.00,
-      total: 44525.51,
-      status: 'shipped',
-      paymentStatus: 'pending',
-      notes: 'Express shipping requested'
-    },
-    {
-      id: 'PO-2024-003',
-      supplier: 'Dell Technologies',
-      orderDate: '2024-01-13',
-      expectedDelivery: '2024-01-25',
-      items: [
-        { name: 'XPS 13 Laptop', quantity: 20, unitCost: 1299.99, total: 25999.80 },
-        { name: 'Wireless Mouse', quantity: 20, unitCost: 79.99, total: 1599.80 }
-      ],
-      subtotal: 27599.60,
-      tax: 2207.97,
-      shipping: 200.00,
-      total: 30007.57,
-      status: 'pending',
-      paymentStatus: 'pending',
-      notes: ''
-    }
-  ];
+  const [purchases] = useState([]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {

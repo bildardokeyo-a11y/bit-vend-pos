@@ -40,38 +40,7 @@ const StockTransfer = () => {
     notes: ''
   });
 
-  const [transfers] = useState<StockTransfer[]>([
-    {
-      id: '1',
-      referenceNo: 'ST-001',
-      product: 'Laptop Dell XPS 13',
-      quantity: 5,
-      fromLocation: 'Main Warehouse',
-      toLocation: 'Branch Store A',
-      date: '2024-01-15',
-      status: 'completed'
-    },
-    {
-      id: '2',
-      referenceNo: 'ST-002',
-      product: 'iPhone 15 Pro',
-      quantity: 10,
-      fromLocation: 'Branch Store A',
-      toLocation: 'Branch Store B',
-      date: '2024-01-14',
-      status: 'in-transit'
-    },
-    {
-      id: '3',
-      referenceNo: 'ST-003',
-      product: 'Samsung Monitor',
-      quantity: 3,
-      fromLocation: 'Main Warehouse',
-      toLocation: 'Branch Store C',
-      date: '2024-01-13',
-      status: 'pending'
-    }
-  ]);
+  const [transfers] = useState<StockTransfer[]>([]);
 
   const filteredTransfers = useMemo(() => {
     return transfers.filter(transfer =>

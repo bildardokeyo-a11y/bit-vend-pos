@@ -38,36 +38,7 @@ const StockOut = () => {
     notes: ''
   });
 
-  const [stockOutItems] = useState<StockOutItem[]>([
-    {
-      id: '1',
-      referenceNo: 'SO-001',
-      product: 'Laptop Dell XPS 13',
-      quantity: 2,
-      reason: 'Damaged',
-      date: '2024-01-15',
-      status: 'completed',
-      notes: 'Water damage during transport'
-    },
-    {
-      id: '2',
-      referenceNo: 'SO-002',
-      product: 'iPhone 15 Pro',
-      quantity: 1,
-      reason: 'Expired',
-      date: '2024-01-14',
-      status: 'pending'
-    },
-    {
-      id: '3',
-      referenceNo: 'SO-003',
-      product: 'Samsung Monitor',
-      quantity: 3,
-      reason: 'Theft',
-      date: '2024-01-13',
-      status: 'completed'
-    }
-  ]);
+  const [stockOutItems] = useState<StockOutItem[]>([]);
 
   const filteredItems = useMemo(() => {
     return stockOutItems.filter(item =>

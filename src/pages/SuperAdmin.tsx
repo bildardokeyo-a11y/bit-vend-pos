@@ -57,44 +57,7 @@ const SuperAdmin = () => {
     status: 'active' as SystemUser['status']
   });
 
-  const [systemUsers] = useState<SystemUser[]>([
-    {
-      id: 1,
-      username: 'admin',
-      email: 'admin@company.com',
-      role: 'super_admin',
-      status: 'active',
-      lastLogin: '2024-01-31 10:30:00',
-      createdAt: '2023-01-01'
-    },
-    {
-      id: 2,
-      username: 'john_admin',
-      email: 'john@company.com',
-      role: 'admin',
-      status: 'active',
-      lastLogin: '2024-01-30 15:45:00',
-      createdAt: '2023-06-15'
-    },
-    {
-      id: 3,
-      username: 'sarah_mod',
-      email: 'sarah@company.com',
-      role: 'moderator',
-      status: 'active',
-      lastLogin: '2024-01-29 09:20:00',
-      createdAt: '2023-08-20'
-    },
-    {
-      id: 4,
-      username: 'mike_admin',
-      email: 'mike@company.com',
-      role: 'admin',
-      status: 'suspended',
-      lastLogin: '2024-01-15 11:10:00',
-      createdAt: '2023-03-10'
-    }
-  ]);
+  const [systemUsers] = useState<SystemUser[]>([]);
 
   const systemMetrics: SystemMetric[] = [
     { name: 'CPU Usage', value: '23%', status: 'healthy', icon: Cpu },

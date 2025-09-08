@@ -26,44 +26,7 @@ const MoneyTransfer = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
 
-  const transfers = [
-    {
-      id: 'TRF-001',
-      date: '2024-01-15',
-      fromAccount: 'Business Checking (****4521)',
-      toAccount: 'Business Savings (****7890)',
-      amount: 5000.00,
-      type: 'internal',
-      status: 'completed',
-      reference: 'Monthly Savings Transfer',
-      fees: 0.00,
-      completedAt: '2024-01-15 10:30 AM'
-    },
-    {
-      id: 'TRF-002',
-      date: '2024-01-14',
-      fromAccount: 'Business Checking (****4521)',
-      toAccount: 'Supplier Payment - ABC Corp',
-      amount: 12500.00,
-      type: 'external',
-      status: 'pending',
-      reference: 'Invoice Payment #INV-001',
-      fees: 25.00,
-      completedAt: null
-    },
-    {
-      id: 'TRF-003',
-      date: '2024-01-13',
-      fromAccount: 'Petty Cash',
-      toAccount: 'Business Checking (****4521)',
-      amount: 200.00,
-      type: 'cash_deposit',
-      status: 'completed',
-      reference: 'Cash deposit from daily sales',
-      fees: 0.00,
-      completedAt: '2024-01-13 04:15 PM'
-    }
-  ];
+  const [transfers] = useState([]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {

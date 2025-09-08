@@ -41,73 +41,7 @@ const Users = () => {
     isActive: true
   });
 
-  const [usersData, setUsersData] = useState([
-    {
-      id: '1',
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'john.smith@company.com',
-      phone: '+1 555-0101',
-      role: 'admin',
-      department: 'IT',
-      isActive: true,
-      lastLogin: '2024-01-15 10:30 AM',
-      createdAt: '2023-06-15',
-      avatar: null
-    },
-    {
-      id: '2',
-      firstName: 'Sarah',
-      lastName: 'Johnson',
-      email: 'sarah.johnson@company.com',
-      phone: '+1 555-0102',
-      role: 'manager',
-      department: 'Sales',
-      isActive: true,
-      lastLogin: '2024-01-15 09:45 AM',
-      createdAt: '2023-07-20',
-      avatar: null
-    },
-    {
-      id: '3',
-      firstName: 'Mike',
-      lastName: 'Davis',
-      email: 'mike.davis@company.com',
-      phone: '+1 555-0103',
-      role: 'employee',
-      department: 'Marketing',
-      isActive: true,
-      lastLogin: '2024-01-14 04:20 PM',
-      createdAt: '2023-08-10',
-      avatar: null
-    },
-    {
-      id: '4',
-      firstName: 'Emily',
-      lastName: 'Brown',
-      email: 'emily.brown@company.com',
-      phone: '+1 555-0104',
-      role: 'manager',
-      department: 'HR',
-      isActive: false,
-      lastLogin: '2024-01-10 02:15 PM',
-      createdAt: '2023-05-05',
-      avatar: null
-    },
-    {
-      id: '5',
-      firstName: 'David',
-      lastName: 'Wilson',
-      email: 'david.wilson@company.com',
-      phone: '+1 555-0105',
-      role: 'employee',
-      department: 'Finance',
-      isActive: true,
-      lastLogin: '2024-01-15 08:00 AM',
-      createdAt: '2023-09-12',
-      avatar: null
-    }
-  ]);
+  const [usersData, setUsersData] = useState([]);
 
   const getRoleBadge = (role: string) => {
     switch (role) {

@@ -36,68 +36,7 @@ interface InventoryItem {
 const Inventory = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [inventoryData, setInventoryData] = useState<InventoryItem[]>([
-    {
-      id: '1',
-      name: 'Premium Coffee Beans',
-      sku: 'COFFEE-001',
-      category: 'Beverages',
-      currentStock: 150,
-      lowStockThreshold: 20,
-      unitPrice: 12.99,
-      totalValue: 1948.50,
-      lastUpdated: '2024-01-15T10:30:00Z',
-      status: 'in-stock'
-    },
-    {
-      id: '2',
-      name: 'Organic Milk 1L',
-      sku: 'MILK-001',
-      category: 'Dairy',
-      currentStock: 8,
-      lowStockThreshold: 15,
-      unitPrice: 3.49,
-      totalValue: 27.92,
-      lastUpdated: '2024-01-15T09:15:00Z',
-      status: 'low-stock'
-    },
-    {
-      id: '3',
-      name: 'Artisan Bread',
-      sku: 'BREAD-001',
-      category: 'Bakery',
-      currentStock: 0,
-      lowStockThreshold: 10,
-      unitPrice: 4.99,
-      totalValue: 0,
-      lastUpdated: '2024-01-15T08:00:00Z',
-      status: 'out-of-stock'
-    },
-    {
-      id: '4',
-      name: 'Fresh Apples',
-      sku: 'APPLE-001',
-      category: 'Produce',
-      currentStock: 45,
-      lowStockThreshold: 25,
-      unitPrice: 2.99,
-      totalValue: 134.55,
-      lastUpdated: '2024-01-15T07:45:00Z',
-      status: 'in-stock'
-    },
-    {
-      id: '5',
-      name: 'Chocolate Cookies',
-      sku: 'COOKIE-001',
-      category: 'Snacks',
-      currentStock: 12,
-      lowStockThreshold: 20,
-      unitPrice: 5.99,
-      totalValue: 71.88,
-      lastUpdated: '2024-01-15T11:20:00Z',
-      status: 'low-stock'
-    }
-  ]);
+  const [inventoryData, setInventoryData] = useState<InventoryItem[]>([]);
 
   const filteredInventory = inventoryData.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

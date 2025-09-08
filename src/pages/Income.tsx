@@ -41,49 +41,7 @@ const Income = () => {
     paymentMethod: ''
   });
 
-  const [incomes] = useState<Income[]>([
-    {
-      id: '1',
-      title: 'Product Sales Revenue',
-      amount: 15000,
-      category: 'Sales',
-      source: 'Online Store',
-      date: '2024-01-15',
-      status: 'received',
-      paymentMethod: 'Bank Transfer',
-      description: 'Monthly sales revenue from online store'
-    },
-    {
-      id: '2',
-      title: 'Consulting Services',
-      amount: 8500,
-      category: 'Services',
-      source: 'ABC Corp',
-      date: '2024-01-14',
-      status: 'pending',
-      paymentMethod: 'Check'
-    },
-    {
-      id: '3',
-      title: 'Investment Returns',
-      amount: 2200,
-      category: 'Investment',
-      source: 'Stock Portfolio',
-      date: '2024-01-13',
-      status: 'received',
-      paymentMethod: 'Bank Transfer'
-    },
-    {
-      id: '4',
-      title: 'Rental Income',
-      amount: 3500,
-      category: 'Property',
-      source: 'Office Space',
-      date: '2024-01-12',
-      status: 'received',
-      paymentMethod: 'Cash'
-    }
-  ]);
+  const [incomes] = useState<Income[]>([]);
 
   const filteredIncomes = useMemo(() => {
     return incomes.filter(income =>

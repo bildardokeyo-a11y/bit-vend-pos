@@ -27,47 +27,7 @@ const SalesReturn = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('today');
 
-  const salesReturns = [
-    {
-      id: 'SR001',
-      originalInvoice: 'INV-2024-001',
-      customer: 'John Smith',
-      returnDate: '2024-01-15',
-      items: [
-        { name: 'iPhone 13 Pro', quantity: 1, returnPrice: 999.99, reason: 'Defective' }
-      ],
-      totalAmount: 999.99,
-      status: 'completed',
-      reason: 'Product defective',
-      refundMethod: 'original_payment'
-    },
-    {
-      id: 'SR002',
-      originalInvoice: 'INV-2024-002',
-      customer: 'Sarah Johnson',
-      returnDate: '2024-01-14',
-      items: [
-        { name: 'Samsung Galaxy S23', quantity: 1, returnPrice: 799.99, reason: 'Change of mind' }
-      ],
-      totalAmount: 799.99,
-      status: 'pending',
-      reason: 'Customer changed mind',
-      refundMethod: 'store_credit'
-    },
-    {
-      id: 'SR003',
-      originalInvoice: 'INV-2024-003',
-      customer: 'Mike Davis',
-      returnDate: '2024-01-13',
-      items: [
-        { name: 'MacBook Air M2', quantity: 1, returnPrice: 1199.99, reason: 'Wrong model' }
-      ],
-      totalAmount: 1199.99,
-      status: 'completed',
-      reason: 'Wrong product ordered',
-      refundMethod: 'original_payment'
-    }
-  ];
+  const [salesReturns] = useState([]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {

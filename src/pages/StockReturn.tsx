@@ -42,42 +42,7 @@ const StockReturn = () => {
     notes: ''
   });
 
-  const [returns] = useState<StockReturn[]>([
-    {
-      id: '1',
-      referenceNo: 'SR-001',
-      product: 'Laptop Dell XPS 13',
-      quantity: 1,
-      reason: 'Defective',
-      condition: 'Damaged',
-      customer: 'John Doe',
-      date: '2024-01-15',
-      status: 'approved',
-      notes: 'Screen flickering issue'
-    },
-    {
-      id: '2',
-      referenceNo: 'SR-002',
-      product: 'iPhone 15 Pro',
-      quantity: 1,
-      reason: 'Customer Request',
-      condition: 'Good',
-      customer: 'Jane Smith',
-      date: '2024-01-14',
-      status: 'pending'
-    },
-    {
-      id: '3',
-      referenceNo: 'SR-003',
-      product: 'Samsung Monitor',
-      quantity: 2,
-      reason: 'Wrong Item',
-      condition: 'New',
-      customer: 'Mike Johnson',
-      date: '2024-01-13',
-      status: 'approved'
-    }
-  ]);
+  const [returns] = useState<StockReturn[]>([]);
 
   const filteredReturns = useMemo(() => {
     return returns.filter(returnItem =>

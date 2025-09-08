@@ -42,42 +42,7 @@ const StockAdjustment = () => {
     notes: ''
   });
 
-  const [adjustments] = useState<StockAdjustment[]>([
-    {
-      id: '1',
-      referenceNo: 'SA-001',
-      product: 'Laptop Dell XPS 13',
-      currentStock: 50,
-      adjustedStock: 48,
-      adjustmentType: 'decrease',
-      reason: 'Physical Count Variance',
-      date: '2024-01-15',
-      status: 'approved',
-      notes: 'Two units missing during inventory count'
-    },
-    {
-      id: '2',
-      referenceNo: 'SA-002',
-      product: 'iPhone 15 Pro',
-      currentStock: 25,
-      adjustedStock: 30,
-      adjustmentType: 'increase',
-      reason: 'Found Inventory',
-      date: '2024-01-14',
-      status: 'pending'
-    },
-    {
-      id: '3',
-      referenceNo: 'SA-003',
-      product: 'Samsung Monitor',
-      currentStock: 15,
-      adjustedStock: 12,
-      adjustmentType: 'decrease',
-      reason: 'Damaged Goods',
-      date: '2024-01-13',
-      status: 'approved'
-    }
-  ]);
+  const [adjustments] = useState<StockAdjustment[]>([]);
 
   const filteredAdjustments = useMemo(() => {
     return adjustments.filter(adjustment =>

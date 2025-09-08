@@ -65,47 +65,7 @@ const StockIn: React.FC = () => {
   });
 
   // Sample stock in history
-  const [stockInHistory] = useState<StockInTransaction[]>([
-    {
-      id: '1',
-      referenceNo: 'SI-001',
-      supplierName: 'ABC Suppliers Ltd',
-      receivedDate: '2024-01-15',
-      totalItems: 25,
-      totalAmount: 1250.00,
-      status: 'received',
-      notes: 'Monthly inventory replenishment',
-      items: [],
-      addedBy: 'Alice Johnson',
-      addedAt: '2024-01-15T09:30:00'
-    },
-    {
-      id: '2',
-      referenceNo: 'SI-002',
-      supplierName: 'Global Trade Inc',
-      receivedDate: '2024-01-14',
-      totalItems: 15,
-      totalAmount: 890.50,
-      status: 'pending',
-      notes: 'Urgent restock for high-demand items',
-      items: [],
-      addedBy: 'Bob Smith',
-      addedAt: '2024-01-14T14:45:00'
-    },
-    {
-      id: '3',
-      referenceNo: 'SI-003',
-      supplierName: 'Premium Wholesale Co',
-      receivedDate: '2024-01-13',
-      totalItems: 32,
-      totalAmount: 1680.75,
-      status: 'received',
-      notes: 'Bulk order for seasonal items',
-      items: [],
-      addedBy: 'Carol Wilson',
-      addedAt: '2024-01-13T11:20:00'
-    }
-  ]);
+  const [stockInHistory] = useState<StockInTransaction[]>([]);
 
   const [selectedProduct, setSelectedProduct] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'new' | 'history'>('new');

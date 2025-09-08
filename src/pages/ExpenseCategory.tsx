@@ -37,48 +37,7 @@ const ExpenseCategory = () => {
     isActive: true
   });
 
-  const [categories] = useState<ExpenseCategory[]>([
-    {
-      id: '1',
-      name: 'Office Supplies',
-      description: 'Stationery, paper, pens, and other office materials',
-      color: '#3B82F6',
-      isActive: true,
-      createdAt: '2024-01-15',
-      expenseCount: 15,
-      totalAmount: 2500
-    },
-    {
-      id: '2',
-      name: 'Travel & Transportation',
-      description: 'Business trips, fuel, parking, and transport costs',
-      color: '#10B981',
-      isActive: true,
-      createdAt: '2024-01-14',
-      expenseCount: 8,
-      totalAmount: 4200
-    },
-    {
-      id: '3',
-      name: 'Marketing & Advertising',
-      description: 'Promotional materials, ads, and marketing campaigns',
-      color: '#F59E0B',
-      isActive: true,
-      createdAt: '2024-01-13',
-      expenseCount: 12,
-      totalAmount: 8500
-    },
-    {
-      id: '4',
-      name: 'Utilities',
-      description: 'Electricity, water, internet, and other utilities',
-      color: '#EF4444',
-      isActive: false,
-      createdAt: '2024-01-12',
-      expenseCount: 6,
-      totalAmount: 1800
-    }
-  ]);
+  const [categories] = useState<ExpenseCategory[]>([]);
 
   const filteredCategories = useMemo(() => {
     return categories.filter(category =>

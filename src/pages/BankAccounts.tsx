@@ -27,57 +27,7 @@ const BankAccounts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [bankFilter, setBankFilter] = useState('all');
 
-  const bankAccounts = [
-    {
-      id: '1',
-      accountName: 'Business Checking',
-      bankName: 'Chase Bank',
-      accountNumber: '****4521',
-      accountType: 'checking',
-      balance: 145832.45,
-      currency: 'USD',
-      status: 'active',
-      isDefault: true,
-      lastSync: '2024-01-15 10:30 AM',
-      recentTransactions: [
-        { date: '2024-01-15', description: 'Payment from Customer #001', amount: 2500.00, type: 'credit' },
-        { date: '2024-01-14', description: 'Office Supplies Purchase', amount: -234.56, type: 'debit' },
-        { date: '2024-01-13', description: 'Monthly Salary Payment', amount: -15000.00, type: 'debit' }
-      ]
-    },
-    {
-      id: '2',
-      accountName: 'Business Savings',
-      bankName: 'Bank of America',
-      accountNumber: '****7890',
-      accountType: 'savings',
-      balance: 89450.12,
-      currency: 'USD',
-      status: 'active',
-      isDefault: false,
-      lastSync: '2024-01-15 09:15 AM',
-      recentTransactions: [
-        { date: '2024-01-12', description: 'Monthly Transfer from Checking', amount: 5000.00, type: 'credit' },
-        { date: '2024-01-01', description: 'Interest Payment', amount: 45.12, type: 'credit' }
-      ]
-    },
-    {
-      id: '3',
-      accountName: 'Petty Cash',
-      bankName: 'Cash Account',
-      accountNumber: 'CASH-001',
-      accountType: 'cash',
-      balance: 1250.00,
-      currency: 'USD',
-      status: 'active',
-      isDefault: false,
-      lastSync: '2024-01-15 08:00 AM',
-      recentTransactions: [
-        { date: '2024-01-15', description: 'Office Lunch', amount: -45.00, type: 'debit' },
-        { date: '2024-01-14', description: 'Parking Fee', amount: -15.00, type: 'debit' }
-      ]
-    }
-  ];
+  const [bankAccounts] = useState([]);
 
   const getAccountIcon = (type: string) => {
     switch (type) {
