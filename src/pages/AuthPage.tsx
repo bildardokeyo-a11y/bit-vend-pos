@@ -23,6 +23,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useTheme } from 'next-themes';
+import { Shield } from 'lucide-react';
 
 const AuthPage = () => {
   const { theme, setTheme } = useTheme();
@@ -289,6 +290,20 @@ const AuthPage = () => {
                           onClick={() => setCurrentMode('forgot')}
                         >
                           Forgot your password?
+                        </Button>
+                      </div>
+
+                      <div className="text-center pt-4 border-t">
+                        <p className="text-sm text-muted-foreground mb-2">Administrator?</p>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.location.href = '/admin/login'}
+                          className="gap-2"
+                        >
+                          <Shield className="h-4 w-4" />
+                          Admin Login
                         </Button>
                       </div>
                     </form>

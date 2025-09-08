@@ -70,6 +70,8 @@ import AuthPage from "./pages/AuthPage";
 import PricingPage from "./pages/PricingPage";
 import FeaturesPage from "./pages/FeaturesPage";
 import ContactPage from "./pages/ContactPage";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -91,12 +93,13 @@ const App = () => (
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/auth" element={<AuthPage />} />
                 
+                {/* Admin Routes */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                
                 {/* POS Application Routes */}
                 <Route path="/dashboard" element={<Layout />}>
                   <Route index element={<Index />} />
-                  <Route path="superadmin" element={<SuperAdmin />} />
-                  <Route path="application" element={<Application />} />
-                  <Route path="layout" element={<LayoutPage />} />
                   <Route path="checkout" element={<Checkout />} />
                   <Route path="receipt" element={<Receipt />} />
                   <Route path="sales" element={<Sales />} />

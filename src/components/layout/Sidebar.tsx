@@ -60,9 +60,6 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
       title: 'Main',
       items: [
         { href: '/dashboard', icon: BarChart3, label: 'Dashboard' },
-        { href: '/dashboard/superadmin', icon: Shield, label: 'Super Admin' },
-        { href: '/dashboard/application', icon: Layers, label: 'Application' },
-        { href: '/dashboard/layout', icon: LayoutGrid, label: 'Layout' },
       ]
     },
     {

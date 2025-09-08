@@ -202,6 +202,19 @@ const Subscription = () => {
     const plan = subscriptionPlans.find(p => p.id === selectedPlan);
     const payment = paymentMethods.find(p => p.id === selectedPayment);
     
+    // Check for referral code discount
+    const urlParams = new URLSearchParams(window.location.search);
+    const referralCode = urlParams.get('ref') || localStorage.getItem('applied-referral-code');
+    let finalPrice = plan?.price || 0;
+    let discountAmount = 0;
+    
+    if (referralCode) {
+      // In a real app, this would fetch from the database
+      // For now, we'll simulate a 30% discount
+      discountAmount = Math.round(finalPrice * 0.30);
+      finalPrice = finalPrice - discountAmount;
+    }
+    
     // Validate payment data based on selected method
     let isValid = false;
     let paymentInfo = '';
@@ -233,10 +246,18 @@ const Subscription = () => {
     }
     
     if (plan && payment) {
-      toast.success(`Subscription to ${plan.name} ($${plan.price}/month) via ${paymentInfo} is ready for backend processing`);
+      const message = referralCode 
+        ? `Subscription to ${plan.name} ($${finalPrice}/month, $${discountAmount} discount applied) via ${paymentInfo} is ready for backend processing`
+        : `Subscription to ${plan.name} ($${plan.price}/month) via ${paymentInfo} is ready for backend processing`;
+      
+      toast.success(message);
       console.log('Payment Data Ready:', {
         plan: plan.id,
         paymentMethod: selectedPayment,
+        referralCode,
+        originalPrice: plan.price,
+        discountAmount,
+        finalPrice,
         paymentData: selectedPayment === 'card' ? cardData : 
                      selectedPayment === 'paypal' ? paypalData : mpesaData
       });
