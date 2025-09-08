@@ -52,6 +52,7 @@ interface StockInTransaction {
 }
 
 const StockIn: React.FC = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [stockInItems, setStockInItems] = useState<StockInItem[]>([]);
   const [formData, setFormData] = useState({

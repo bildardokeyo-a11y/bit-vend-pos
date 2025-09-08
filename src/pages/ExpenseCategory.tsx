@@ -281,14 +281,14 @@ const ExpenseCategory = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Category</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Expenses</TableHead>
-                <TableHead>Total Amount</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Category</TableHead>
+                <TableHead className="text-white font-semibold">Description</TableHead>
+                <TableHead className="text-white font-semibold">Expenses</TableHead>
+                <TableHead className="text-white font-semibold">Total Amount</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Created</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

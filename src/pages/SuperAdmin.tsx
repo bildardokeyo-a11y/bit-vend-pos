@@ -376,14 +376,14 @@ const SuperAdmin = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Username</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Last Login</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Username</TableHead>
+                <TableHead className="text-white font-semibold">Email</TableHead>
+                <TableHead className="text-white font-semibold">Role</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Last Login</TableHead>
+                <TableHead className="text-white font-semibold">Created</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

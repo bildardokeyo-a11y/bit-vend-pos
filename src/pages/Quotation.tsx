@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 
 const Quotation = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
@@ -117,7 +118,7 @@ const Quotation = () => {
             <FileText className="w-4 h-4 mr-2" />
             Templates
           </Button>
-          <Button>
+          <Button onClick={() => navigate('/dashboard/products/add')}>
             <Plus className="w-4 h-4 mr-2" />
             New Quotation
           </Button>

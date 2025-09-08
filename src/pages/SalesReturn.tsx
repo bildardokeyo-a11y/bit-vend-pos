@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 
 const SalesReturn = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('today');
@@ -100,7 +101,7 @@ const SalesReturn = () => {
             <FileText className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button>
+          <Button onClick={() => navigate('/dashboard/checkout')}>
             <RefreshCw className="w-4 h-4 mr-2" />
             Process Return
           </Button>

@@ -336,15 +336,15 @@ const Income = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Source</TableHead>
-                <TableHead>Payment Method</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Title</TableHead>
+                <TableHead className="text-white font-semibold">Amount</TableHead>
+                <TableHead className="text-white font-semibold">Category</TableHead>
+                <TableHead className="text-white font-semibold">Source</TableHead>
+                <TableHead className="text-white font-semibold">Payment Method</TableHead>
+                <TableHead className="text-white font-semibold">Date</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

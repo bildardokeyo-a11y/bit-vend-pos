@@ -116,11 +116,11 @@ const TrialBalance = () => {
                   </div>
                   <Table>
                     <TableHeader>
-                      <TableRow>
-                        <TableHead>Account Code</TableHead>
-                        <TableHead>Account Name</TableHead>
-                        <TableHead className="text-right">Debit</TableHead>
-                        <TableHead className="text-right">Credit</TableHead>
+                      <TableRow className="bg-blue-500 hover:bg-blue-500">
+                        <TableHead className="text-white font-semibold">Account Code</TableHead>
+                        <TableHead className="text-white font-semibold">Account Name</TableHead>
+                        <TableHead className="text-white font-semibold text-right">Debit</TableHead>
+                        <TableHead className="text-white font-semibold text-right">Credit</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -202,11 +202,11 @@ const TrialBalance = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Account Code</TableHead>
-                <TableHead>Account Name</TableHead>
-                <TableHead className="text-right">Debit</TableHead>
-                <TableHead className="text-right">Credit</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Account Code</TableHead>
+                <TableHead className="text-white font-semibold">Account Name</TableHead>
+                <TableHead className="text-white font-semibold text-right">Debit</TableHead>
+                <TableHead className="text-white font-semibold text-right">Credit</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

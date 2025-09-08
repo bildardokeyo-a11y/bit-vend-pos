@@ -57,6 +57,7 @@ const expenseCategories = [
 ];
 
 const Expenses: React.FC = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<'new' | 'list' | 'analytics'>('new');
   const [filterCategory, setFilterCategory] = useState<string>('all');

@@ -350,16 +350,16 @@ const StockAdjustment = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Reference</TableHead>
-                <TableHead>Product</TableHead>
-                <TableHead>Current</TableHead>
-                <TableHead>Adjusted</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Reason</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Reference</TableHead>
+                <TableHead className="text-white font-semibold">Product</TableHead>
+                <TableHead className="text-white font-semibold">Current</TableHead>
+                <TableHead className="text-white font-semibold">Adjusted</TableHead>
+                <TableHead className="text-white font-semibold">Type</TableHead>
+                <TableHead className="text-white font-semibold">Reason</TableHead>
+                <TableHead className="text-white font-semibold">Date</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -15,7 +15,7 @@ export interface SearchResult {
 // Settings search data
 const settingsResults: SearchResult[] = [
   // Main Settings Page
-  { id: 'settings-main', title: 'Settings', subtitle: 'System configuration and preferences', type: 'setting', path: '/settings' },
+  { id: 'settings-main', title: 'Settings', subtitle: 'System configuration and preferences', type: 'setting', path: '/dashboard/settings' },
   
   // Individual Settings Pages
   { id: 'general-settings', title: 'General Settings', subtitle: 'Language, timezone, and general preferences', type: 'setting', path: '/dashboard/general-settings' },

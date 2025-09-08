@@ -324,14 +324,16 @@ const Variants = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Values</TableHead>
-                <TableHead>Products Using</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Name</TableHead>
+                <TableHead className="text-white font-semibold">Type</TableHead>
+                <TableHead className="text-white font-semibold">Values</TableHead>
+                <TableHead className="text-white font-semibold">Products Using</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Created</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
               </TableRow>
             </TableHeader>
             <TableBody>

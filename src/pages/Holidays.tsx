@@ -393,14 +393,14 @@ const Holidays = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Holiday Name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Start Date</TableHead>
-                <TableHead>End Date</TableHead>
-                <TableHead>Recurring</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Holiday Name</TableHead>
+                <TableHead className="text-white font-semibold">Type</TableHead>
+                <TableHead className="text-white font-semibold">Start Date</TableHead>
+                <TableHead className="text-white font-semibold">End Date</TableHead>
+                <TableHead className="text-white font-semibold">Recurring</TableHead>
+                <TableHead className="text-white font-semibold">Description</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

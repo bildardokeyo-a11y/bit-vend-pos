@@ -260,15 +260,15 @@ const Inventory = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Product</TableHead>
-                <TableHead>SKU</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Current Stock</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Unit Price</TableHead>
-                <TableHead>Total Value</TableHead>
-                <TableHead>Last Updated</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Product</TableHead>
+                <TableHead className="text-white font-semibold">SKU</TableHead>
+                <TableHead className="text-white font-semibold">Category</TableHead>
+                <TableHead className="text-white font-semibold">Current Stock</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Unit Price</TableHead>
+                <TableHead className="text-white font-semibold">Total Value</TableHead>
+                <TableHead className="text-white font-semibold">Last Updated</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

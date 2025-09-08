@@ -124,9 +124,9 @@ const CashFlow = () => {
                   </div>
                   <Table>
                     <TableHeader>
-                      <TableRow>
-                        <TableHead>Description</TableHead>
-                        <TableHead className="text-right">Amount</TableHead>
+                      <TableRow className="bg-blue-500 hover:bg-blue-500">
+                        <TableHead className="text-white font-semibold">Description</TableHead>
+                        <TableHead className="text-white font-semibold text-right">Amount</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>

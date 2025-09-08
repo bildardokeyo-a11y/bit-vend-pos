@@ -324,15 +324,15 @@ const Units = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="text-white">Name</TableHead>
-                <TableHead className="text-white">Short Name</TableHead>
-                <TableHead className="text-white">Type</TableHead>
-                <TableHead className="text-white">Base Unit</TableHead>
-                <TableHead className="text-white">Conversion</TableHead>
-                <TableHead className="text-white">Status</TableHead>
-                <TableHead className="text-white">Created</TableHead>
-                <TableHead className="text-white">Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Name</TableHead>
+                <TableHead className="text-white font-semibold">Short Name</TableHead>
+                <TableHead className="text-white font-semibold">Type</TableHead>
+                <TableHead className="text-white font-semibold">Base Unit</TableHead>
+                <TableHead className="text-white font-semibold">Conversion</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Created</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

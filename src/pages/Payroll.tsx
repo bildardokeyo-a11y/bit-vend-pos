@@ -570,16 +570,16 @@ const Payroll = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Employee</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Pay Period</TableHead>
-                <TableHead className="text-right">Gross Pay</TableHead>
-                <TableHead className="text-right">Taxes</TableHead>
-                <TableHead className="text-right">Net Pay</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Pay Date</TableHead>
-                <TableHead>Actions</TableHead>
+              <TableRow className="bg-blue-500 hover:bg-blue-500">
+                <TableHead className="text-white font-semibold">Employee</TableHead>
+                <TableHead className="text-white font-semibold">Department</TableHead>
+                <TableHead className="text-white font-semibold">Pay Period</TableHead>
+                <TableHead className="text-white font-semibold text-right">Gross Pay</TableHead>
+                <TableHead className="text-white font-semibold text-right">Taxes</TableHead>
+                <TableHead className="text-white font-semibold text-right">Net Pay</TableHead>
+                <TableHead className="text-white font-semibold">Status</TableHead>
+                <TableHead className="text-white font-semibold">Pay Date</TableHead>
+                <TableHead className="text-white font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
