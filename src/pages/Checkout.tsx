@@ -12,6 +12,7 @@ import { CATEGORIES } from '@/data/posData';
 import { useProducts } from '@/contexts/ProductContext';
 import { useSales } from '@/contexts/SalesContext';
 import { useSettings } from '@/hooks/useSettings';
+import { toast } from 'sonner';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -109,7 +110,13 @@ const Checkout = () => {
 
   const handlePayment = () => {
     if (!isPaymentValid()) {
-      return; // Prevent navigation if payment details are incomplete
+      toast.error('Please fill in all payment details');
+      return;
+    }
+    
+    if (cart.length === 0) {
+      toast.error('Your cart is empty');
+      return;
     }
     
     // Create sale record using SalesContext
@@ -132,11 +139,16 @@ const Checkout = () => {
         total: finalTotal,
         paymentMethod: paymentMethod.toLowerCase() as 'cash' | 'card' | 'mobile',
         status: 'completed',
+        salesPerson: 'Current User',
         receiptTemplate: settings.receiptTemplate || 'classic-receipt'
       });
 
       // Clear cart after successful payment
       setCart([]);
+      localStorage.removeItem('pos-cart');
+      
+      // Show success message
+      toast.success(`Payment of $${finalTotal.toFixed(2)} processed successfully!`);
       
       navigate('/receipt', {
         state: {
@@ -151,17 +163,7 @@ const Checkout = () => {
       });
     } catch (error) {
       console.error('Error processing sale:', error);
-      // Still navigate to show receipt, but log the error
-      navigate('/receipt', {
-        state: {
-          cart,
-          total: finalTotal,
-          tax,
-          subtotal: cartTotal,
-          paymentMethod,
-          receiptTemplate: settings.receiptTemplate || 'classic-receipt'
-        }
-      });
+      toast.error('Error processing payment. Please try again.');
     }
   };
 

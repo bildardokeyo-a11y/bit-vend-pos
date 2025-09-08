@@ -19,9 +19,7 @@ interface Role {
 }
 
 const roles: Role[] = [
-  { id: '1', name: 'Admin', permissions: 'All Access', description: 'Full system access and user management', userCount: 2 },
-  { id: '2', name: 'Manager', permissions: 'Sales, Inventory', description: 'Manage sales operations and inventory', userCount: 5 },
-  { id: '3', name: 'Cashier', permissions: 'POS, Receipts', description: 'Handle point of sale transactions', userCount: 8 },
+  // Roles will be loaded from database
 ];
 
 const Roles: React.FC = () => {

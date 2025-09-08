@@ -52,51 +52,7 @@ const Suppliers = () => {
   });
 
   const [suppliers, setSuppliers] = useState<Supplier[]>([
-    {
-      id: '1',
-      companyName: 'Fresh Foods Inc.',
-      contactPerson: 'John Smith',
-      email: 'john@freshfoods.com',
-      phone: '+1 555-0123',
-      address: '123 Supply Street',
-      city: 'New York',
-      country: 'USA',
-      paymentTerms: '30',
-      status: 'active',
-      totalOrders: 45,
-      totalAmount: 12500.00,
-      createdAt: '2024-01-10T08:00:00Z'
-    },
-    {
-      id: '2',
-      companyName: 'Organic Produce Co.',
-      contactPerson: 'Sarah Johnson',
-      email: 'sarah@organicproduce.com',
-      phone: '+1 555-0456',
-      address: '456 Green Lane',
-      city: 'California',
-      country: 'USA',
-      paymentTerms: '15',
-      status: 'active',
-      totalOrders: 32,
-      totalAmount: 8750.00,
-      createdAt: '2024-01-12T09:30:00Z'
-    },
-    {
-      id: '3',
-      companyName: 'Dairy Delights Ltd.',
-      contactPerson: 'Mike Wilson',
-      email: 'mike@dairydelights.com',
-      phone: '+1 555-0789',
-      address: '789 Milk Road',
-      city: 'Wisconsin',
-      country: 'USA',
-      paymentTerms: '45',
-      status: 'inactive',
-      totalOrders: 18,
-      totalAmount: 4200.00,
-      createdAt: '2024-01-08T14:15:00Z'
-    }
+    // Suppliers will be loaded from database
   ]);
 
   const filteredSuppliers = suppliers.filter(supplier =>

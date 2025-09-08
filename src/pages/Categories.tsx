@@ -41,46 +41,7 @@ const Categories = () => {
   });
 
   const [categories, setCategories] = useState<Category[]>([
-    {
-      id: '1',
-      name: 'Coffee',
-      description: 'Premium coffee blends and single origins',
-      productCount: 15,
-      status: 'active',
-      createdAt: '2024-01-10T08:00:00Z'
-    },
-    {
-      id: '2',
-      name: 'Tea',
-      description: 'Organic teas and herbal blends',
-      productCount: 8,
-      status: 'active',
-      createdAt: '2024-01-12T09:30:00Z'
-    },
-    {
-      id: '3',
-      name: 'Desserts',
-      description: 'Cakes, pastries and sweet treats',
-      productCount: 22,
-      status: 'active',
-      createdAt: '2024-01-08T14:15:00Z'
-    },
-    {
-      id: '4',
-      name: 'Beverages',
-      description: 'Non-alcoholic and alcoholic beverages',
-      productCount: 12,
-      status: 'active',
-      createdAt: '2024-01-05T11:20:00Z'
-    },
-    {
-      id: '5',
-      name: 'Pastry',
-      description: 'Fresh baked pastries and bread',
-      productCount: 6,
-      status: 'inactive',
-      createdAt: '2024-01-03T16:45:00Z'
-    }
+    // Categories will be loaded from database
   ]);
 
   const filteredCategories = categories.filter(category =>

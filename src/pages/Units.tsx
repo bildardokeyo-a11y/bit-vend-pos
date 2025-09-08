@@ -42,58 +42,7 @@ const Units = () => {
   });
 
   const [units, setUnits] = useState<Unit[]>([
-    {
-      id: '1',
-      name: 'Piece',
-      shortName: 'pcs',
-      type: 'quantity',
-      isActive: true,
-      createdAt: '2024-01-10T08:00:00Z'
-    },
-    {
-      id: '2',
-      name: 'Kilogram',
-      shortName: 'kg',
-      type: 'weight',
-      isActive: true,
-      createdAt: '2024-01-10T08:15:00Z'
-    },
-    {
-      id: '3',
-      name: 'Gram',
-      shortName: 'g',
-      type: 'weight',
-      baseUnit: 'kg',
-      conversionFactor: 0.001,
-      isActive: true,
-      createdAt: '2024-01-10T08:20:00Z'
-    },
-    {
-      id: '4',
-      name: 'Liter',
-      shortName: 'L',
-      type: 'volume',
-      isActive: true,
-      createdAt: '2024-01-10T08:25:00Z'
-    },
-    {
-      id: '5',
-      name: 'Milliliter',
-      shortName: 'ml',
-      type: 'volume',
-      baseUnit: 'L',
-      conversionFactor: 0.001,
-      isActive: true,
-      createdAt: '2024-01-10T08:30:00Z'
-    },
-    {
-      id: '6',
-      name: 'Meter',
-      shortName: 'm',
-      type: 'length',
-      isActive: true,
-      createdAt: '2024-01-10T08:35:00Z'
-    }
+    // Units will be loaded from database
   ]);
 
   const filteredUnits = units.filter(unit =>

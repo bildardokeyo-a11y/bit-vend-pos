@@ -55,76 +55,7 @@ const Brands = () => {
   });
 
   const [brands, setBrands] = useState<Brand[]>([
-    {
-      id: '1',
-      name: 'Premium Coffee Co.',
-      description: 'Artisanal coffee roasters specializing in single-origin beans',
-      manufacturer: 'Premium Coffee Co.',
-      country: 'Colombia',
-      website: 'https://premiumcoffee.com',
-      contactEmail: 'contact@premiumcoffee.com',
-      productCount: 15,
-      status: 'active',
-      establishedYear: 1995,
-      logoUrl: '',
-      createdAt: '2024-01-10T08:00:00Z'
-    },
-    {
-      id: '2',
-      name: 'Organic Tea Gardens',
-      description: 'Organic tea producer from the highlands of Ceylon',
-      manufacturer: 'Organic Tea Gardens Ltd.',
-      country: 'Sri Lanka',
-      website: 'https://organicteagardens.com',
-      contactEmail: 'info@organicteagardens.com',
-      productCount: 12,
-      status: 'active',
-      establishedYear: 1982,
-      logoUrl: '',
-      createdAt: '2024-01-12T09:30:00Z'
-    },
-    {
-      id: '3',
-      name: 'Gourmet Delights',
-      description: 'Premium confectionery and dessert manufacturer',
-      manufacturer: 'Gourmet Delights Inc.',
-      country: 'France',
-      website: 'https://gourmetdelights.fr',
-      contactEmail: 'hello@gourmetdelights.fr',
-      productCount: 28,
-      status: 'active',
-      establishedYear: 1923,
-      logoUrl: '',
-      createdAt: '2024-01-08T14:15:00Z'
-    },
-    {
-      id: '4',
-      name: 'Artisan Bakery',
-      description: 'Traditional bakery specializing in handcrafted pastries',
-      manufacturer: 'Artisan Bakery Co.',
-      country: 'Italy',
-      website: 'https://artisanbakery.it',
-      contactEmail: 'orders@artisanbakery.it',
-      productCount: 8,
-      status: 'active',
-      establishedYear: 1956,
-      logoUrl: '',
-      createdAt: '2024-01-05T11:20:00Z'
-    },
-    {
-      id: '5',
-      name: 'Vintage Wines',
-      description: 'Premium wine collection from historic vineyards',
-      manufacturer: 'Vintage Wines Estate',
-      country: 'Spain',
-      website: 'https://vintagewines.es',
-      contactEmail: 'cellar@vintagewines.es',
-      productCount: 3,
-      status: 'inactive',
-      establishedYear: 1887,
-      logoUrl: '',
-      createdAt: '2024-01-03T16:45:00Z'
-    }
+    // Brands will be loaded from database
   ]);
 
   const filteredBrands = brands.filter(brand =>

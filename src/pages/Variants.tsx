@@ -39,42 +39,7 @@ const Variants = () => {
   });
 
   const [variants, setVariants] = useState<Variant[]>([
-    {
-      id: '1',
-      name: 'Size',
-      values: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-      type: 'size',
-      isActive: true,
-      productCount: 15,
-      createdAt: '2024-01-10T08:00:00Z'
-    },
-    {
-      id: '2',
-      name: 'Color',
-      values: ['Red', 'Blue', 'Green', 'Black', 'White', 'Yellow'],
-      type: 'color',
-      isActive: true,
-      productCount: 12,
-      createdAt: '2024-01-10T08:15:00Z'
-    },
-    {
-      id: '3',
-      name: 'Material',
-      values: ['Cotton', 'Polyester', 'Wool', 'Silk', 'Denim'],
-      type: 'material',
-      isActive: true,
-      productCount: 8,
-      createdAt: '2024-01-10T08:20:00Z'
-    },
-    {
-      id: '4',
-      name: 'Storage Capacity',
-      values: ['16GB', '32GB', '64GB', '128GB', '256GB'],
-      type: 'custom',
-      isActive: true,
-      productCount: 5,
-      createdAt: '2024-01-10T08:25:00Z'
-    }
+    // Variants will be loaded from database
   ]);
 
   const filteredVariants = variants.filter(variant =>

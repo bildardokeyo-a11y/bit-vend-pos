@@ -57,70 +57,7 @@ const Customers = () => {
   });
 
   const [customers, setCustomers] = useState<Customer[]>([
-    {
-      id: '1',
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@example.com',
-      phone: '+1 555-0123',
-      address: '123 Main Street',
-      city: 'New York',
-      country: 'USA',
-      customerType: 'vip',
-      status: 'active',
-      totalOrders: 28,
-      totalSpent: 1250.50,
-      lastOrderDate: '2024-01-15T10:30:00Z',
-      createdAt: '2023-06-10T08:00:00Z'
-    },
-    {
-      id: '2',
-      firstName: 'Sarah',
-      lastName: 'Wilson',
-      email: 'sarah.wilson@example.com',
-      phone: '+1 555-0456',
-      address: '456 Oak Avenue',
-      city: 'Los Angeles',
-      country: 'USA',
-      customerType: 'regular',
-      status: 'active',
-      totalOrders: 12,
-      totalSpent: 450.75,
-      lastOrderDate: '2024-01-14T14:20:00Z',
-      createdAt: '2023-08-22T09:30:00Z'
-    },
-    {
-      id: '3',
-      firstName: 'Mike',
-      lastName: 'Johnson',
-      email: 'mike.johnson@example.com',
-      phone: '+1 555-0789',
-      address: '789 Pine Street',
-      city: 'Chicago',
-      country: 'USA',
-      customerType: 'wholesale',
-      status: 'active',
-      totalOrders: 45,
-      totalSpent: 3200.00,
-      lastOrderDate: '2024-01-13T16:45:00Z',
-      createdAt: '2023-05-15T14:15:00Z'
-    },
-    {
-      id: '4',
-      firstName: 'Emily',
-      lastName: 'Davis',
-      email: 'emily.davis@example.com',
-      phone: '+1 555-0321',
-      address: '321 Elm Street',
-      city: 'Miami',
-      country: 'USA',
-      customerType: 'regular',
-      status: 'inactive',
-      totalOrders: 5,
-      totalSpent: 125.25,
-      lastOrderDate: '2023-12-20T09:15:00Z',
-      createdAt: '2023-11-08T11:20:00Z'
-    }
+    // Customers will be loaded from database
   ]);
 
   const filteredCustomers = customers.filter(customer =>

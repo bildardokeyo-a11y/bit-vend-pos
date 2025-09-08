@@ -40,72 +40,7 @@ const Sales = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const [sales] = useState<Sale[]>([
-    {
-      id: '1',
-      invoiceNumber: 'INV-2024-001',
-      customerName: 'John Doe',
-      customerEmail: 'john@example.com',
-      items: [
-        { productName: 'Premium Espresso Blend', quantity: 2, price: 24.99 },
-        { productName: 'Organic Green Tea', quantity: 1, price: 18.50 }
-      ],
-      subtotal: 68.48,
-      tax: 6.85,
-      total: 75.33,
-      status: 'completed',
-      paymentMethod: 'card',
-      saleDate: '2024-01-15T10:30:00Z',
-      salesPerson: 'Alice Johnson'
-    },
-    {
-      id: '2',
-      invoiceNumber: 'INV-2024-002',
-      customerName: 'Sarah Wilson',
-      customerEmail: 'sarah@example.com',
-      items: [
-        { productName: 'Gourmet Chocolate Cake', quantity: 1, price: 45.00 }
-      ],
-      subtotal: 45.00,
-      tax: 4.50,
-      total: 49.50,
-      status: 'pending',
-      paymentMethod: 'cash',
-      saleDate: '2024-01-15T14:20:00Z',
-      salesPerson: 'Bob Smith'
-    },
-    {
-      id: '3',
-      invoiceNumber: 'INV-2024-003',
-      customerName: 'Mike Johnson',
-      customerEmail: 'mike@example.com',
-      items: [
-        { productName: 'Vintage Wine Selection', quantity: 1, price: 89.99 },
-        { productName: 'Truffle Collection', quantity: 1, price: 65.00 }
-      ],
-      subtotal: 154.99,
-      tax: 15.50,
-      total: 170.49,
-      status: 'completed',
-      paymentMethod: 'bank_transfer',
-      saleDate: '2024-01-14T16:45:00Z',
-      salesPerson: 'Alice Johnson'
-    },
-    {
-      id: '4',
-      invoiceNumber: 'INV-2024-004',
-      customerName: 'Emily Davis',
-      customerEmail: 'emily@example.com',
-      items: [
-        { productName: 'Artisan Croissant', quantity: 3, price: 12.99 }
-      ],
-      subtotal: 38.97,
-      tax: 3.90,
-      total: 42.87,
-      status: 'cancelled',
-      paymentMethod: 'card',
-      saleDate: '2024-01-13T09:15:00Z',
-      salesPerson: 'Bob Smith'
-    }
+    // Sales will be loaded from SalesContext
   ]);
 
   const filteredSales = sales.filter(sale =>
