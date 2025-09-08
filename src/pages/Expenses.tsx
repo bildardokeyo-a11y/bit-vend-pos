@@ -75,9 +75,8 @@ const Expenses: React.FC = () => {
     notes: ''
   });
 
-  // Use real database data
+  // Use real database data - placeholder data removed for clean production app
   const [expenses] = useState<Expense[]>([]);
-  const [filteredExpenses, setFilteredExpenses] = useState(expenses);
 
   const handleSaveExpense = () => {
     if (!formData.categoryId || !formData.description || !formData.amount) {

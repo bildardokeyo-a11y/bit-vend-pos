@@ -66,60 +66,8 @@ const SalesReport: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [activeView, setActiveView] = useState<'overview' | 'detailed' | 'products' | 'customers'>('overview');
 
-  // Use real database data
+  // Use real database data - placeholder data removed for clean production app
   const [sales] = useState<Sale[]>([]);
-  const [filteredSales, setFilteredSales] = useState(sales);
-
-  // Calculate metrics from real sales data
-      customerName: 'Jane Smith',
-      customerPhone: '+1-555-0456',
-      items: [
-        { productId: 6, productName: 'MacBook Pro 14"', quantity: 1, unitPrice: 1999.00, total: 1999.00 },
-        { productId: 7, productName: 'Magic Mouse', quantity: 1, unitPrice: 79.00, total: 79.00 }
-      ],
-      subtotal: 2078.00,
-      tax: 207.80,
-      discount: 100.00,
-      total: 2185.80,
-      paymentMethod: 'card',
-      status: 'completed',
-      cashier: 'Alice Johnson'
-    },
-    {
-      id: '4',
-      invoiceNo: 'INV-004',
-      date: '2024-01-14',
-      time: '4:20 PM',
-      items: [
-        { productId: 3, productName: 'iPad Pro 11"', quantity: 2, unitPrice: 899.00, total: 1798.00 }
-      ],
-      subtotal: 1798.00,
-      tax: 179.80,
-      discount: 0,
-      total: 1977.80,
-      paymentMethod: 'bank',
-      status: 'completed',
-      cashier: 'Carol Wilson'
-    },
-    {
-      id: '5',
-      invoiceNo: 'INV-005',
-      date: '2024-01-13',
-      time: '9:10 AM',
-      customerName: 'Mike Johnson',
-      items: [
-        { productId: 4, productName: 'Apple Watch Series 8', quantity: 1, unitPrice: 399.00, total: 399.00 },
-        { productId: 8, productName: 'iPhone Case', quantity: 2, unitPrice: 29.99, total: 59.98 }
-      ],
-      subtotal: 458.98,
-      tax: 45.90,
-      discount: 20.00,
-      total: 484.88,
-      paymentMethod: 'cash',
-      status: 'completed',
-      cashier: 'Bob Smith'
-    }
-  ]);
 
   // Filter sales based on date range and filters
   const filteredSales = useMemo(() => {

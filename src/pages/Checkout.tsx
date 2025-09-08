@@ -53,8 +53,8 @@ const Checkout = () => {
   
   // Use only database products
   const filteredProducts = selectedCategory === "All" 
-    ? products.filter(p => p.is_active) 
-    : products.filter(p => p.categories?.name === selectedCategory && p.is_active);
+    ? products
+    : products.filter(p => p.category === selectedCategory);
 
   const addToCart = (product: any) => {
     // Animate the + button
