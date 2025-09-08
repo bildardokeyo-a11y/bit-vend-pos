@@ -234,14 +234,14 @@ const AccountStatement = () => {
                             </Badge>
                           </TableCell>
                           <TableCell className="text-right">
-                        <TableRow className="bg-blue-500 hover:bg-blue-500">
-                          <TableHead className="text-white font-semibold">Date</TableHead>
-                          <TableHead className="text-white font-semibold">Description</TableHead>
-                          <TableHead className="text-white font-semibold">Reference</TableHead>
-                          <TableHead className="text-white font-semibold">Type</TableHead>
-                          <TableHead className="text-white font-semibold text-right">Debit</TableHead>
-                          <TableHead className="text-white font-semibold text-right">Credit</TableHead>
-                          <TableHead className="text-white font-semibold text-right">Balance</TableHead>
+                            {transaction.debit > 0 ? `$${transaction.debit.toLocaleString()}` : '-'}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {transaction.credit > 0 ? `$${transaction.credit.toLocaleString()}` : '-'}
+                          </TableCell>
+                          <TableCell className="text-right font-medium">
+                            ${transaction.balance.toLocaleString()}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
