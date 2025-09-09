@@ -836,6 +836,232 @@ const Settings = () => {
           </Card>
         );
       }
+
+      if (activeSubsection === 'business-operating-hours') {
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Operating Hours</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                  <div key={day} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div className="flex items-center gap-4">
+                      <span className="font-medium w-20">{day}</span>
+                      <Switch defaultChecked={day !== 'Sunday'} />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Input type="time" defaultValue="09:00" className="w-24" />
+                      <span>to</span>
+                      <Input type="time" defaultValue="17:00" className="w-24" />
+                    </div>
+                  </div>
+                ))}
+                <Button className="bg-save hover:bg-save-hover text-save-foreground">
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Hours
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      }
+    }
+
+    if (activeSection === 'invoice') {
+      if (activeSubsection === 'receipt-settings') {
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Receipt Settings</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Receipt Template</Label>
+                  <Select 
+                    value={invoiceSettings.receiptTemplate} 
+                    onValueChange={(value) => setInvoiceSettings(prev => ({ ...prev, receiptTemplate: value }))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="classic-receipt">Classic</SelectItem>
+                      <SelectItem value="modern-receipt">Modern</SelectItem>
+                      <SelectItem value="minimal-receipt">Minimal</SelectItem>
+                      <SelectItem value="detailed-receipt">Detailed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label>Paper Size</Label>
+                  <Select 
+                    value={invoiceSettings.paperSize} 
+                    onValueChange={(value) => setInvoiceSettings(prev => ({ ...prev, paperSize: value }))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="A4">A4</SelectItem>
+                      <SelectItem value="Letter">Letter</SelectItem>
+                      <SelectItem value="Thermal">Thermal (80mm)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div>
+                <Label>Footer Text</Label>
+                <Textarea
+                  value={invoiceSettings.footerText}
+                  onChange={(e) => setInvoiceSettings(prev => ({ ...prev, footerText: e.target.value }))}
+                  placeholder="Thank you for your business!"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label>Show Logo</Label>
+                  <Switch
+                    checked={invoiceSettings.showLogo}
+                    onCheckedChange={(checked) => setInvoiceSettings(prev => ({ ...prev, showLogo: checked }))}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label>Show Business Info</Label>
+                  <Switch
+                    checked={invoiceSettings.showBusinessInfo}
+                    onCheckedChange={(checked) => setInvoiceSettings(prev => ({ ...prev, showBusinessInfo: checked }))}
+                  />
+                </div>
+              </div>
+
+              <Button className="bg-save hover:bg-save-hover text-save-foreground">
+                <Save className="h-4 w-4 mr-2" />
+                Save Receipt Settings
+              </Button>
+            </CardContent>
+          </Card>
+        );
+      }
+
+      if (activeSubsection === 'numbering') {
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Invoice Numbering</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Invoice Prefix</Label>
+                  <Input
+                    value={invoiceSettings.invoicePrefix}
+                    onChange={(e) => setInvoiceSettings(prev => ({ ...prev, invoicePrefix: e.target.value }))}
+                    placeholder="INV-"
+                  />
+                </div>
+                <div>
+                  <Label>Next Number</Label>
+                  <Input
+                    type="number"
+                    value={invoiceSettings.nextNumber}
+                    onChange={(e) => setInvoiceSettings(prev => ({ ...prev, nextNumber: parseInt(e.target.value) || 1001 }))}
+                  />
+                </div>
+              </div>
+
+              <Button className="bg-save hover:bg-save-hover text-save-foreground">
+                <Save className="h-4 w-4 mr-2" />
+                Save Numbering Settings
+              </Button>
+            </CardContent>
+          </Card>
+        );
+      }
+    }
+
+    if (activeSection === 'tax') {
+      if (activeSubsection === 'tax-rates') {
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Tax Rates</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Default Tax Rate (%)</Label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={taxSettings.defaultTaxRate}
+                    onChange={(e) => setTaxSettings(prev => ({ ...prev, defaultTaxRate: parseFloat(e.target.value) || 0 }))}
+                  />
+                </div>
+                <div>
+                  <Label>Tax Name</Label>
+                  <Input
+                    value={taxSettings.taxName}
+                    onChange={(e) => setTaxSettings(prev => ({ ...prev, taxName: e.target.value }))}
+                    placeholder="VAT, GST, Sales Tax"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label>Tax Number</Label>
+                <Input
+                  value={taxSettings.taxNumber}
+                  onChange={(e) => setTaxSettings(prev => ({ ...prev, taxNumber: e.target.value }))}
+                  placeholder="Your tax registration number"
+                />
+              </div>
+
+              <Button className="bg-save hover:bg-save-hover text-save-foreground">
+                <Save className="h-4 w-4 mr-2" />
+                Save Tax Settings
+              </Button>
+            </CardContent>
+          </Card>
+        );
+      }
+    }
+
+    if (activeSection === 'backup') {
+      if (activeSubsection === 'create-backup') {
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Create Backup</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <p className="text-muted-foreground">Create a backup of your data including products, sales, customers, and settings.</p>
+                
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div>
+                    <h3 className="font-medium">Full System Backup</h3>
+                    <p className="text-sm text-muted-foreground">Includes all data and settings</p>
+                  </div>
+                  <Button>Create Backup</Button>
+                </div>
+
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div>
+                    <h3 className="font-medium">Data Only Backup</h3>
+                    <p className="text-sm text-muted-foreground">Products, sales, and customers only</p>
+                  </div>
+                  <Button variant="outline">Create Backup</Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      }
     }
 
     if (activeSection === 'security') {
@@ -912,10 +1138,10 @@ const Settings = () => {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="admin">Admin</SelectItem>
-                              <SelectItem value="manager">Manager</SelectItem>
-                              <SelectItem value="cashier">Cashier</SelectItem>
-                              <SelectItem value="inventory">Inventory Staff</SelectItem>
+                              <SelectItem value="admin">Admin - Full system access</SelectItem>
+                              <SelectItem value="manager">Manager - Sales and inventory management</SelectItem>
+                              <SelectItem value="cashier">Cashier - POS and basic sales</SelectItem>
+                              <SelectItem value="inventory">Inventory Staff - Stock management only</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -923,20 +1149,102 @@ const Settings = () => {
                         <div>
                           <Label>Permissions</Label>
                           <div className="grid grid-cols-2 gap-4 mt-2">
-                            {Object.entries(userForm.permissions).map(([key, value]) => (
-                              <div key={key} className="flex items-center justify-between">
-                                <Label className="text-sm">{key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</Label>
-                                <Switch
-                                  checked={value}
-                                  onCheckedChange={(checked) => 
-                                    setUserForm(prev => ({
-                                      ...prev,
-                                      permissions: { ...prev.permissions, [key]: checked }
-                                    }))
-                                  }
-                                />
-                              </div>
-                            ))}
+                            <div className="flex items-center justify-between">
+                              <Label className="text-sm">POS Access</Label>
+                              <Switch
+                                checked={userForm.permissions.pos_access}
+                                onCheckedChange={(checked) => 
+                                  setUserForm(prev => ({
+                                    ...prev,
+                                    permissions: { ...prev.permissions, pos_access: checked }
+                                  }))
+                                }
+                              />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <Label className="text-sm">Inventory View</Label>
+                              <Switch
+                                checked={userForm.permissions.inventory_view}
+                                onCheckedChange={(checked) => 
+                                  setUserForm(prev => ({
+                                    ...prev,
+                                    permissions: { ...prev.permissions, inventory_view: checked }
+                                  }))
+                                }
+                              />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <Label className="text-sm">Inventory Edit</Label>
+                              <Switch
+                                checked={userForm.permissions.inventory_edit}
+                                onCheckedChange={(checked) => 
+                                  setUserForm(prev => ({
+                                    ...prev,
+                                    permissions: { ...prev.permissions, inventory_edit: checked }
+                                  }))
+                                }
+                              />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <Label className="text-sm">Sales View</Label>
+                              <Switch
+                                checked={userForm.permissions.sales_view}
+                                onCheckedChange={(checked) => 
+                                  setUserForm(prev => ({
+                                    ...prev,
+                                    permissions: { ...prev.permissions, sales_view: checked }
+                                  }))
+                                }
+                              />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <Label className="text-sm">Sales Edit</Label>
+                              <Switch
+                                checked={userForm.permissions.sales_edit}
+                                onCheckedChange={(checked) => 
+                                  setUserForm(prev => ({
+                                    ...prev,
+                                    permissions: { ...prev.permissions, sales_edit: checked }
+                                  }))
+                                }
+                              />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <Label className="text-sm">Reports View</Label>
+                              <Switch
+                                checked={userForm.permissions.reports_view}
+                                onCheckedChange={(checked) => 
+                                  setUserForm(prev => ({
+                                    ...prev,
+                                    permissions: { ...prev.permissions, reports_view: checked }
+                                  }))
+                                }
+                              />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <Label className="text-sm">Settings View</Label>
+                              <Switch
+                                checked={userForm.permissions.settings_view}
+                                onCheckedChange={(checked) => 
+                                  setUserForm(prev => ({
+                                    ...prev,
+                                    permissions: { ...prev.permissions, settings_view: checked }
+                                  }))
+                                }
+                              />
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <Label className="text-sm">User Management</Label>
+                              <Switch
+                                checked={userForm.permissions.user_management}
+                                onCheckedChange={(checked) => 
+                                  setUserForm(prev => ({
+                                    ...prev,
+                                    permissions: { ...prev.permissions, user_management: checked }
+                                  }))
+                                }
+                              />
+                            </div>
                           </div>
                         </div>
 
@@ -1104,6 +1412,54 @@ const Settings = () => {
                   Change Password
                 </Button>
               </div>
+            </CardContent>
+          </Card>
+        );
+      }
+
+      if (activeSubsection === 'general') {
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle>Security Settings</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Session Timeout (minutes)</Label>
+                  <Input
+                    type="number"
+                    value={securitySettings.sessionTimeout}
+                    onChange={(e) => setSecuritySettings(prev => ({ ...prev, sessionTimeout: parseInt(e.target.value) || 30 }))}
+                  />
+                </div>
+                <div>
+                  <Label>Max Login Attempts</Label>
+                  <Input
+                    type="number"
+                    value={securitySettings.maxLoginAttempts}
+                    onChange={(e) => setSecuritySettings(prev => ({ ...prev, maxLoginAttempts: parseInt(e.target.value) || 5 }))}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Two-Factor Authentication</Label>
+                    <p className="text-sm text-muted-foreground">Add an extra layer of security</p>
+                  </div>
+                  <Switch
+                    checked={securitySettings.twoFactorEnabled}
+                    onCheckedChange={(checked) => setSecuritySettings(prev => ({ ...prev, twoFactorEnabled: checked }))}
+                  />
+                </div>
+              </div>
+
+              <Button className="bg-save hover:bg-save-hover text-save-foreground">
+                <Save className="h-4 w-4 mr-2" />
+                Save Security Settings
+              </Button>
             </CardContent>
           </Card>
         );
