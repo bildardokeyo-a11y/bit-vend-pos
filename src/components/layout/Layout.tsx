@@ -4,7 +4,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
-import { SubscriptionProvider } from '@/contexts/SubscriptionContext';
 
 type LayoutProps = { children?: React.ReactNode };
 
@@ -58,22 +57,20 @@ const Layout: React.FC<LayoutProps> = () => {
   }, []);
 
   return (
-    <SubscriptionProvider>
-      <div className="min-h-screen bg-background text-foreground">
-        <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
-        <Topbar
-          collapsed={sidebarCollapsed}
-          onToggleSidebar={toggleSidebar}
-          darkMode={darkMode}
-          onToggleDarkMode={toggleDarkMode}
-        />
-        <main className={cn('pos-content bg-background dark:bg-black transition-all duration-300 ease-in-out', sidebarCollapsed && 'collapsed')}>
-          <div className="animate-fadeInUp transition-all duration-300">
-            <Outlet />
-          </div>
-        </main>
-      </div>
-    </SubscriptionProvider>
+    <div className="min-h-screen bg-background text-foreground">
+      <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
+      <Topbar
+        collapsed={sidebarCollapsed}
+        onToggleSidebar={toggleSidebar}
+        darkMode={darkMode}
+        onToggleDarkMode={toggleDarkMode}
+      />
+      <main className={cn('pos-content bg-background dark:bg-black transition-all duration-300 ease-in-out', sidebarCollapsed && 'collapsed')}>
+        <div className="animate-fadeInUp transition-all duration-300">
+          <Outlet />
+        </div>
+      </main>
+    </div>
   );
 };
 
