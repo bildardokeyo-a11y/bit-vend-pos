@@ -719,7 +719,7 @@ const Settings = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {Object.entries(businessForm.operatingHours || {}).map(([day, hours], index) => (
-                    <div key={day} className="flex items-center gap-4 animate-fadeInUp" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <div key={day} className="flex items-center gap-4">
                       <div className="w-24">
                         <Label className="capitalize">{day}</Label>
                       </div>

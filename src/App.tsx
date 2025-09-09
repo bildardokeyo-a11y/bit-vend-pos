@@ -71,6 +71,13 @@ import AuthPage from "./pages/AuthPage";
 import PricingPage from "./pages/PricingPage";
 import FeaturesPage from "./pages/FeaturesPage";
 import ContactPage from "./pages/ContactPage";
+import { ArrowLeft, Save } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 
 const queryClient = new QueryClient();
 
@@ -100,7 +107,6 @@ const App = () => (
                   <Route path="sales" element={<Sales />} />
                   <Route path="sales-return" element={<SalesReturn />} />
                   <Route path="quotation" element={<Quotation />} />
-                  <Route path="quotation/new" element={<NewQuotationPage />} />
                   <Route path="purchases" element={<Purchases />} />
                   <Route path="products" element={<Products />} />
                   <Route path="products/add" element={<ProductAdd />} />
