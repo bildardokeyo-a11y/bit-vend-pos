@@ -8,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 import { BusinessProvider } from "@/contexts/BusinessContext";
 import { ProductProvider } from "@/contexts/ProductContext";
 import { SalesProvider } from "@/contexts/SalesContext";
+import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
 import Layout from "./components/layout/Layout";
 import Index from "./pages/Index";
 import SuperAdmin from "./pages/SuperAdmin";
