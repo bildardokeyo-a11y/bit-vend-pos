@@ -42,6 +42,8 @@ const Units = () => {
   });
 
   const [units, setUnits] = useState<Unit[]>([
+  ]
+  )
 
   const filteredUnits = units.filter(unit =>
     unit.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

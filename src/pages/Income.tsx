@@ -42,6 +42,8 @@ const Income = () => {
   });
 
   const [incomes] = useState<Income[]>([
+  ]
+  )
 
   const filteredIncomes = useMemo(() => {
     return incomes.filter(income =>
