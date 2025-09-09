@@ -42,7 +42,32 @@ const StockReturn = () => {
     notes: ''
   });
 
-  const [returns] = useState<StockReturn[]>([]);
+  const [returns] = useState<StockReturn[]>([
+    {
+      id: '1',
+      referenceNo: 'SR-2024-001',
+      product: 'Wireless Mouse',
+      quantity: 5,
+      reason: 'Defective',
+      condition: 'Damaged',
+      date: '2024-01-20',
+      status: 'approved',
+      customer: 'John Doe',
+      notes: 'Multiple units not working properly'
+    },
+    {
+      id: '2',
+      referenceNo: 'SR-2024-002',
+      product: 'Laptop Dell XPS 13',
+      quantity: 1,
+      reason: 'Customer Request',
+      condition: 'Good',
+      date: '2024-01-22',
+      status: 'pending',
+      customer: 'Jane Smith',
+      notes: 'Customer changed mind'
+    }
+  ]);
 
   const filteredReturns = useMemo(() => {
     return returns.filter(returnItem =>

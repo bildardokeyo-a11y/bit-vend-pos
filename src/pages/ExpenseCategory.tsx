@@ -37,7 +37,38 @@ const ExpenseCategory = () => {
     isActive: true
   });
 
-  const [categories] = useState<ExpenseCategory[]>([]);
+  const [categories] = useState<ExpenseCategory[]>([
+    {
+      id: '1',
+      name: 'Office Supplies',
+      description: 'Stationery, equipment, and office materials',
+      color: '#3B82F6',
+      isActive: true,
+      createdAt: '2024-01-01',
+      expenseCount: 5,
+      totalAmount: 750
+    },
+    {
+      id: '2',
+      name: 'Utilities',
+      description: 'Electricity, water, internet, and other utilities',
+      color: '#10B981',
+      isActive: true,
+      createdAt: '2024-01-01',
+      expenseCount: 3,
+      totalAmount: 1200
+    },
+    {
+      id: '3',
+      name: 'Marketing',
+      description: 'Advertising, promotions, and marketing campaigns',
+      color: '#F59E0B',
+      isActive: true,
+      createdAt: '2024-01-01',
+      expenseCount: 2,
+      totalAmount: 500
+    }
+  ]);
 
   const filteredCategories = useMemo(() => {
     return categories.filter(category =>

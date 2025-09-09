@@ -37,7 +37,38 @@ const IncomeCategory = () => {
     isActive: true
   });
 
-  const [categories] = useState<IncomeCategory[]>([]);
+  const [categories] = useState<IncomeCategory[]>([
+    {
+      id: '1',
+      name: 'Product Sales',
+      description: 'Revenue from product sales',
+      color: '#10B981',
+      isActive: true,
+      createdAt: '2024-01-01',
+      incomeCount: 8,
+      totalAmount: 15000
+    },
+    {
+      id: '2',
+      name: 'Services',
+      description: 'Income from service offerings',
+      color: '#3B82F6',
+      isActive: true,
+      createdAt: '2024-01-01',
+      incomeCount: 3,
+      totalAmount: 4500
+    },
+    {
+      id: '3',
+      name: 'Investment',
+      description: 'Returns from investments',
+      color: '#8B5CF6',
+      isActive: true,
+      createdAt: '2024-01-01',
+      incomeCount: 1,
+      totalAmount: 2000
+    }
+  ]);
 
   const filteredCategories = useMemo(() => {
     return categories.filter(category =>

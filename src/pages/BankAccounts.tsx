@@ -27,7 +27,41 @@ const BankAccounts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [bankFilter, setBankFilter] = useState('all');
 
-  const [bankAccounts] = useState([]);
+  const [bankAccounts] = useState([
+    {
+      id: '1',
+      accountName: 'Business Checking',
+      bankName: 'Chase Bank',
+      accountNumber: '****1234',
+      accountType: 'checking',
+      balance: 25000,
+      currency: 'USD',
+      status: 'active',
+      isDefault: true,
+      lastSync: '2024-01-25 10:30 AM',
+      recentTransactions: [
+        { id: '1', description: 'Sales Deposit', amount: 1500, type: 'credit', date: '2024-01-25' },
+        { id: '2', description: 'Office Rent', amount: -2000, type: 'debit', date: '2024-01-24' },
+        { id: '3', description: 'Supplier Payment', amount: -800, type: 'debit', date: '2024-01-23' }
+      ]
+    },
+    {
+      id: '2',
+      accountName: 'Business Savings',
+      bankName: 'Bank of America',
+      accountNumber: '****5678',
+      accountType: 'savings',
+      balance: 50000,
+      currency: 'USD',
+      status: 'active',
+      isDefault: false,
+      lastSync: '2024-01-25 10:30 AM',
+      recentTransactions: [
+        { id: '1', description: 'Interest Payment', amount: 125, type: 'credit', date: '2024-01-20' },
+        { id: '2', description: 'Transfer to Checking', amount: -5000, type: 'debit', date: '2024-01-18' }
+      ]
+    }
+  ]);
 
   const getAccountIcon = (type: string) => {
     switch (type) {

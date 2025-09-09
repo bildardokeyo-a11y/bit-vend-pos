@@ -38,7 +38,28 @@ const StockOut = () => {
     notes: ''
   });
 
-  const [stockOutItems] = useState<StockOutItem[]>([]);
+  const [stockOutItems] = useState<StockOutItem[]>([
+    {
+      id: '1',
+      referenceNo: 'SO-2024-001',
+      product: 'Laptop Dell XPS 13',
+      quantity: 2,
+      reason: 'Damaged',
+      date: '2024-01-20',
+      status: 'completed',
+      notes: 'Water damage during transport'
+    },
+    {
+      id: '2',
+      referenceNo: 'SO-2024-002',
+      product: 'iPhone 15 Pro',
+      quantity: 1,
+      reason: 'Return',
+      date: '2024-01-22',
+      status: 'pending',
+      notes: 'Customer return - defective unit'
+    }
+  ]);
 
   const filteredItems = useMemo(() => {
     return stockOutItems.filter(item =>

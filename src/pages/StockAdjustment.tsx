@@ -42,7 +42,32 @@ const StockAdjustment = () => {
     notes: ''
   });
 
-  const [adjustments] = useState<StockAdjustment[]>([]);
+  const [adjustments] = useState<StockAdjustment[]>([
+    {
+      id: '1',
+      referenceNo: 'SA-2024-001',
+      product: 'iPhone 15 Pro',
+      currentStock: 10,
+      adjustedStock: 8,
+      adjustmentType: 'decrease',
+      reason: 'Physical Count Variance',
+      date: '2024-01-20',
+      status: 'approved',
+      notes: 'Physical count showed 2 units missing'
+    },
+    {
+      id: '2',
+      referenceNo: 'SA-2024-002',
+      product: 'Wireless Mouse',
+      currentStock: 15,
+      adjustedStock: 20,
+      adjustmentType: 'increase',
+      reason: 'Found Inventory',
+      date: '2024-01-22',
+      status: 'pending',
+      notes: 'Found additional units in storage'
+    }
+  ]);
 
   const filteredAdjustments = useMemo(() => {
     return adjustments.filter(adjustment =>
