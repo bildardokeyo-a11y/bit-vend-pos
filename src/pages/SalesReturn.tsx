@@ -21,13 +21,32 @@ import {
   CheckCircle
 } from 'lucide-react';
 
+interface SalesReturnItem {
+  name: string;
+  quantity: number;
+  reason: string;
+  returnPrice: number;
+}
+
+interface SalesReturn {
+  id: string;
+  customer: string;
+  originalInvoice: string;
+  status: string;
+  totalAmount: number;
+  returnDate: string;
+  refundMethod: string;
+  reason: string;
+  items: SalesReturnItem[];
+}
+
 const SalesReturn = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('today');
 
-  const [salesReturns] = useState([]);
+  const [salesReturns] = useState<SalesReturn[]>([]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -43,9 +62,9 @@ const SalesReturn = () => {
   };
 
   const filteredReturns = salesReturns.filter(returnItem => {
-    const matchesSearch = returnItem.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         returnItem.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         returnItem.originalInvoice.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = (returnItem.id || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (returnItem.customer || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (returnItem.originalInvoice || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || returnItem.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -200,15 +219,13 @@ const SalesReturn = () => {
       </div>
 
       {filteredReturns.length === 0 && (
-        {filteredReturns.length === 0 && (
-          <Card>
-            <CardContent className="text-center py-12">
-              <RefreshCw className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No Returns Found</h3>
-              <p className="text-muted-foreground">No returns match your current filters.</p>
-            </CardContent>
-          </Card>
-        )}
+        <Card>
+          <CardContent className="text-center py-12">
+            <RefreshCw className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2">No Returns Found</h3>
+            <p className="text-muted-foreground">No returns match your current filters.</p>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
