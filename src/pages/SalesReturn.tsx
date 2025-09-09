@@ -200,13 +200,15 @@ const SalesReturn = () => {
       </div>
 
       {filteredReturns.length === 0 && (
-        <Card>
-          <CardContent className="text-center py-12">
-            <RefreshCw className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No Returns Found</h3>
-            <p className="text-muted-foreground">No returns match your current filters.</p>
-          </CardContent>
-        </Card>
+        {filteredReturns.length === 0 && (
+          <Card>
+            <CardContent className="text-center py-12">
+              <RefreshCw className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-semibold mb-2">No Returns Found</h3>
+              <p className="text-muted-foreground">No returns match your current filters.</p>
+            </CardContent>
+          </Card>
+        )}
       )}
     </div>
   );

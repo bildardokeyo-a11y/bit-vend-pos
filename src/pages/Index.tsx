@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useProducts } from '@/contexts/ProductContext';
+import { useSales } from '@/contexts/SalesContext';
 import {
   DollarSign,
   Package,

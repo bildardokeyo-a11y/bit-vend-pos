@@ -300,7 +300,7 @@ const Products = () => {
             const jsonData = XLSX.utils.sheet_to_json(worksheet) as any[];
             
             // Validate required fields
-            const requiredFields = ['name', 'price', 'category'];
+            const requiredFields = ['Product Name', 'Price', 'Category'];
             const validProducts = [];
             const errors = [];
             
@@ -314,7 +314,7 @@ const Products = () => {
               }
               
               // Validate price is a number
-              const price = parseFloat(row.price);
+              const price = parseFloat(row['Price']);
               if (isNaN(price) || price <= 0) {
                 errors.push(`Row ${i + 2}: Price must be a valid positive number`);
                 continue;
@@ -322,15 +322,15 @@ const Products = () => {
               
               // Format and validate the product data
               const product = {
-                name: String(row.name).trim(),
-                description: String(row.description || '').trim(),
+                name: String(row['Product Name']).trim(),
+                description: String(row['Description'] || '').trim(),
                 price: price,
-                category: String(row.category).trim(),
-                sku: String(row.sku || '').trim(),
-                stock: parseInt(row.stock) || 0,
-                minStock: parseInt(row.minStock) || 5,
-                brand: String(row.brand || '').trim(),
-                supplier: String(row.supplier || '').trim(),
+                category: String(row['Category']).trim(),
+                sku: String(row['SKU'] || '').trim(),
+                stock: parseInt(row['Stock']) || 0,
+                minStock: parseInt(row['Min Stock']) || 5,
+                brand: String(row['Brand'] || '').trim(),
+                supplier: String(row['Supplier'] || '').trim(),
                 status: 'active' as const
               };
               
@@ -375,7 +375,7 @@ const Products = () => {
           } catch (error) {
             toast({
               title: "Import Error",
-              description: "Failed to import Excel file. Please ensure it's a valid Excel format with required columns: name, price, category.",
+              description: "Failed to import Excel file. Please ensure it's a valid Excel format with required columns: Product Name, Price, Category.",
               variant: "destructive",
             });
             console.error('Import error:', error);

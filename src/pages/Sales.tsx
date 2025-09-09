@@ -14,6 +14,7 @@ import {
   Download
 } from 'lucide-react';
 import { useSEO } from '@/lib/seo';
+import { useSales } from '@/contexts/SalesContext';
 
 interface Sale {
   id: string;
@@ -39,9 +40,7 @@ const Sales = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [sales] = useState<Sale[]>([
-    // Sales will be loaded from SalesContext
-  ]);
+  const { sales } = useSales();
 
   const filteredSales = sales.filter(sale =>
     sale.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||

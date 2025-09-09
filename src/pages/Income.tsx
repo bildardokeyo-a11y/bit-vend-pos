@@ -41,7 +41,30 @@ const Income = () => {
     paymentMethod: ''
   });
 
-  const [incomes] = useState<Income[]>([]);
+  const [incomes] = useState<Income[]>([
+    {
+      id: '1',
+      title: 'Product Sales Revenue',
+      amount: 5000,
+      category: 'Sales',
+      source: 'Retail Store',
+      date: '2024-01-20',
+      description: 'Monthly product sales',
+      status: 'received',
+      paymentMethod: 'Bank Transfer'
+    },
+    {
+      id: '2',
+      title: 'Service Income',
+      amount: 1200,
+      category: 'Services',
+      source: 'Consulting',
+      date: '2024-01-22',
+      description: 'Technical consulting services',
+      status: 'pending',
+      paymentMethod: 'Check'
+    }
+  ]);
 
   const filteredIncomes = useMemo(() => {
     return incomes.filter(income =>

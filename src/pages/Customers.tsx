@@ -57,7 +57,38 @@ const Customers = () => {
   });
 
   const [customers, setCustomers] = useState<Customer[]>([
-    // Customers will be loaded from database
+    {
+      id: '1',
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@email.com',
+      phone: '+1 555-0123',
+      address: '123 Main St',
+      city: 'New York',
+      country: 'USA',
+      customerType: 'regular',
+      status: 'active',
+      totalOrders: 5,
+      totalSpent: 250.00,
+      lastOrderDate: '2024-01-15',
+      createdAt: '2024-01-01'
+    },
+    {
+      id: '2',
+      firstName: 'Jane',
+      lastName: 'Smith',
+      email: 'jane.smith@email.com',
+      phone: '+1 555-0456',
+      address: '456 Oak Ave',
+      city: 'Los Angeles',
+      country: 'USA',
+      customerType: 'vip',
+      status: 'active',
+      totalOrders: 12,
+      totalSpent: 850.00,
+      lastOrderDate: '2024-01-20',
+      createdAt: '2023-12-15'
+    }
   ]);
 
   const filteredCustomers = customers.filter(customer =>

@@ -52,7 +52,36 @@ const Suppliers = () => {
   });
 
   const [suppliers, setSuppliers] = useState<Supplier[]>([
-    // Suppliers will be loaded from database
+    {
+      id: '1',
+      companyName: 'Tech Supplies Inc.',
+      contactPerson: 'Mike Johnson',
+      email: 'mike@techsupplies.com',
+      phone: '+1 555-0789',
+      address: '789 Business Blvd',
+      city: 'Chicago',
+      country: 'USA',
+      paymentTerms: '30',
+      status: 'active',
+      totalOrders: 8,
+      totalAmount: 15000,
+      createdAt: '2024-01-01'
+    },
+    {
+      id: '2',
+      companyName: 'Global Electronics Ltd.',
+      contactPerson: 'Sarah Wilson',
+      email: 'sarah@globalelectronics.com',
+      phone: '+1 555-0321',
+      address: '321 Industrial Way',
+      city: 'Seattle',
+      country: 'USA',
+      paymentTerms: '15',
+      status: 'active',
+      totalOrders: 15,
+      totalAmount: 32000,
+      createdAt: '2023-11-15'
+    }
   ]);
 
   const filteredSuppliers = suppliers.filter(supplier =>

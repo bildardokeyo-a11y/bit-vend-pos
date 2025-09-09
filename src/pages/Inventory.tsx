@@ -36,7 +36,44 @@ interface InventoryItem {
 const Inventory = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [inventoryData, setInventoryData] = useState<InventoryItem[]>([]);
+  const [inventoryData, setInventoryData] = useState<InventoryItem[]>([
+    {
+      id: '1',
+      name: 'Laptop Dell XPS 13',
+      sku: 'LAP-001',
+      category: 'Electronics',
+      currentStock: 15,
+      lowStockThreshold: 5,
+      unitPrice: 1200.00,
+      totalValue: 18000.00,
+      lastUpdated: '2024-01-20T10:30:00Z',
+      status: 'in-stock'
+    },
+    {
+      id: '2',
+      name: 'iPhone 15 Pro',
+      sku: 'PHN-002',
+      category: 'Electronics',
+      currentStock: 3,
+      lowStockThreshold: 5,
+      unitPrice: 999.00,
+      totalValue: 2997.00,
+      lastUpdated: '2024-01-22T14:15:00Z',
+      status: 'low-stock'
+    },
+    {
+      id: '3',
+      name: 'Wireless Mouse',
+      sku: 'ACC-003',
+      category: 'Accessories',
+      currentStock: 0,
+      lowStockThreshold: 10,
+      unitPrice: 25.00,
+      totalValue: 0.00,
+      lastUpdated: '2024-01-23T09:00:00Z',
+      status: 'out-of-stock'
+    }
+  ]);
 
   const filteredInventory = inventoryData.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

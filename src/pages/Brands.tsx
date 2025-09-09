@@ -55,7 +55,32 @@ const Brands = () => {
   });
 
   const [brands, setBrands] = useState<Brand[]>([
-    // Brands will be loaded from database
+    {
+      id: '1',
+      name: 'Apple',
+      description: 'Premium technology products',
+      manufacturer: 'Apple Inc.',
+      country: 'USA',
+      website: 'https://apple.com',
+      contactEmail: 'contact@apple.com',
+      productCount: 8,
+      status: 'active',
+      establishedYear: 1976,
+      createdAt: '2024-01-01'
+    },
+    {
+      id: '2',
+      name: 'Samsung',
+      description: 'Electronics and mobile devices',
+      manufacturer: 'Samsung Electronics',
+      country: 'South Korea',
+      website: 'https://samsung.com',
+      contactEmail: 'contact@samsung.com',
+      productCount: 12,
+      status: 'active',
+      establishedYear: 1938,
+      createdAt: '2024-01-02'
+    }
   ]);
 
   const filteredBrands = brands.filter(brand =>

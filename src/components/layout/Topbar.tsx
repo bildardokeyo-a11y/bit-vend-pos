@@ -389,7 +389,7 @@ const Topbar: React.FC<TopbarProps> = ({
                 Admin Settings
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem onClick={() => navigate('/settings')}>
+            <DropdownMenuItem onClick={() => navigate('/dashboard/settings')}>
               System Settings
             </DropdownMenuItem>
             {isAdmin && (
