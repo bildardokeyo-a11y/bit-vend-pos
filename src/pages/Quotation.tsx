@@ -317,15 +317,13 @@ const Quotation = () => {
       </div>
 
       {filteredQuotations.length === 0 && (
-        {filteredQuotations.length === 0 && (
-          <Card>
-            <CardContent className="text-center py-12">
-              <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No Quotations Found</h3>
-              <p className="text-muted-foreground">No quotations match your current filters.</p>
-            </CardContent>
-          </Card>
-        )}
+        <Card>
+          <CardContent className="text-center py-12">
+            <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2">No Quotations Found</h3>
+            <p className="text-muted-foreground">No quotations match your current filters.</p>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
