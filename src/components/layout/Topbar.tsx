@@ -204,12 +204,14 @@ const Topbar: React.FC<TopbarProps> = ({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="gap-2 max-w-48">
-              <span className="truncate">{currentBusiness?.businessName || 'Select Business'}</span>
+              <span className="truncate">
+                {currentBusiness?.businessName || (businesses.length > 0 ? 'Select Business' : 'Add Business')}
+              </span>
               <ChevronDown size={16} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-64">
-            {businesses.map((business) => (
+            {businesses.length > 0 ? businesses.map((business) => (
               <div key={business.id} className="flex items-center justify-between">
                 <DropdownMenuItem 
                   onClick={() => setCurrentBusiness(business.id)}
@@ -235,20 +237,26 @@ const Topbar: React.FC<TopbarProps> = ({
                   <Edit size={14} />
                 </Button>
               </div>
-            ))}
+            )) : (
+              <div className="p-2 text-center text-muted-foreground">
+                <p className="text-sm">No businesses found</p>
+              </div>
+            )}
             <DropdownMenuItem 
               onClick={() => navigate('/settings?section=business&subsection=business-info&mode=add')}
               className="border-t mt-1 pt-2"
             >
               <Plus size={16} className="mr-2" />
-              Add New Business
+              {businesses.length > 0 ? 'Add New Business' : 'Add Your Business'}
             </DropdownMenuItem>
-            <DropdownMenuItem 
-              onClick={() => navigate('/settings?section=business&subsection=business-info')}
-            >
-              <Settings size={16} className="mr-2" />
-              Business Settings
-            </DropdownMenuItem>
+            {businesses.length > 0 && (
+              <DropdownMenuItem 
+                onClick={() => navigate('/settings?section=business&subsection=business-info')}
+              >
+                <Settings size={16} className="mr-2" />
+                Business Settings
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
 
