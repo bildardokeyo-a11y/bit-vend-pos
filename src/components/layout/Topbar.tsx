@@ -211,7 +211,8 @@ const Topbar: React.FC<TopbarProps> = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-64">
-            {businesses.length > 0 ? businesses.map((business) => (
+            {businesses.length > 0 ? (
+              businesses.map((business) => (
               <div key={business.id} className="flex items-center justify-between">
                 <DropdownMenuItem 
                   onClick={() => setCurrentBusiness(business.id)}
@@ -237,9 +238,11 @@ const Topbar: React.FC<TopbarProps> = ({
                   <Edit size={14} />
                 </Button>
               </div>
-            )) : (
+              ))
+            ) : (
               <div className="p-2 text-center text-muted-foreground">
-                <p className="text-sm">No businesses found</p>
+                <p className="text-sm">No business added</p>
+                <p className="text-xs">Add your business to get started</p>
               </div>
             )}
             <DropdownMenuItem 
