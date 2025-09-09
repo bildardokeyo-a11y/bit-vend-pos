@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
   Plus, 
   Search, 
@@ -70,7 +71,43 @@ const Quotation = () => {
             <FileText className="w-4 h-4 mr-2" />
             Templates
           </Button>
-          <Button onClick={() => navigate('/dashboard/products/add')}>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">
+                <FileText className="w-4 h-4 mr-2" />
+                Templates
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl">
+              <DialogHeader>
+                <DialogTitle>Quotation Templates</DialogTitle>
+              </DialogHeader>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  { id: 'standard', name: 'Standard Quote', description: 'Basic quotation template' },
+                  { id: 'detailed', name: 'Detailed Quote', description: 'Comprehensive quotation with terms' },
+                  { id: 'service', name: 'Service Quote', description: 'Template for service-based quotes' },
+                  { id: 'product', name: 'Product Quote', description: 'Template for product sales' },
+                  { id: 'wholesale', name: 'Wholesale Quote', description: 'Bulk pricing template' },
+                  { id: 'custom', name: 'Custom Template', description: 'Create your own template' }
+                ].map((template) => (
+                  <Card key={template.id} className="cursor-pointer hover:shadow-md transition-shadow">
+                    <CardContent className="p-4">
+                      <div className="text-center space-y-2">
+                        <FileText className="h-8 w-8 mx-auto text-primary" />
+                        <h3 className="font-semibold">{template.name}</h3>
+                        <p className="text-sm text-muted-foreground">{template.description}</p>
+                        <Button size="sm" className="w-full">
+                          Use Template
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </DialogContent>
+          </Dialog>
+          <Button onClick={() => navigate('/dashboard/quotation/new')}>
             <Plus className="w-4 h-4 mr-2" />
             New Quotation
           </Button>
