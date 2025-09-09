@@ -90,6 +90,7 @@ const Settings = () => {
   const [businessToDelete, setBusinessToDelete] = useState<string | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string>('');
+  const [fadeKey, setFadeKey] = useState(0);
 
   // Default business form
   const getDefaultBusinessForm = () => ({
@@ -317,6 +318,9 @@ const Settings = () => {
 
   // Handle section change
   const handleSectionChange = (newSection: string) => {
+    // Trigger fade out
+    setFadeKey(prev => prev + 1);
+    
     setActiveSection(newSection);
     setActiveSubsection(defaultSubsections[newSection as keyof typeof defaultSubsections] || 'general');
   };
@@ -512,6 +516,10 @@ const Settings = () => {
 
         {/* Main Content */}
         <div className="flex-1 p-8">
+          <div 
+            key={fadeKey}
+            className="settings-content-fade"
+          >
           {/* General Settings */}
           {activeSection === 'general' && activeSubsection === 'general' && (
             <div className="space-y-6 animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
@@ -1690,6 +1698,7 @@ const Settings = () => {
               </div>
             </div>
           )}
+          </div>
         </div>
       </div>
 

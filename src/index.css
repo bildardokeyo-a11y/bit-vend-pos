@@ -521,6 +521,37 @@ All colors MUST be HSL.
     --tw-scrollbar-thumb: hsl(var(--muted-foreground) / 0.3);
   }
 
+  /* Settings Page Specific Animations */
+  .settings-content-fade {
+    animation: settingsFadeIn 0.4s ease-out;
+  }
+
+  .settings-save-button {
+    animation: settingsSaveSlideIn 0.3s ease-out;
+  }
+
+  @keyframes settingsFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes settingsSaveSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
   /* Light mode auto-applied styles with vibrant colors */
   form,
   .form-container,
