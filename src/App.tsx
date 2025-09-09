@@ -146,12 +146,14 @@ const App = () => (
                   <Route path="payroll" element={<Payroll />} />
                   <Route path="subscription" element={<Subscription />} />
                   <Route path="subscription/manage" element={<SubscriptionManage />} />
-                  <Route path="settings" element={<Settings />} />
                   <Route path="admin-settings" element={<AdminSettings />} />
                   <Route path="superadmin" element={<SuperAdmin />} />
                   <Route path="application" element={<Application />} />
                   <Route path="layout" element={<LayoutPage />} />
                 </Route>
+                
+                {/* Settings route outside dashboard layout */}
+                <Route path="/settings" element={<Settings />} />
                 
                 <Route path="*" element={<NotFound />} />
               </Routes>
