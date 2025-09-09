@@ -43,9 +43,8 @@ const Sales = () => {
   const { sales } = useSales();
 
   const filteredSales = sales.filter(sale =>
-    sale.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    sale.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    sale.customerEmail.toLowerCase().includes(searchTerm.toLowerCase())
+    sale.invoiceNo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (sale.customerName || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const completedSales = sales.filter(s => s.status === 'completed');
@@ -151,18 +150,18 @@ const Sales = () => {
               {filteredSales.map((sale) => (
                 <TableRow key={sale.id}>
                   <TableCell>
-                    <div className="font-medium">{sale.invoiceNumber}</div>
+                    <div className="font-medium">{sale.invoiceNo}</div>
                   </TableCell>
                   <TableCell>
-                    <div className="font-medium">{sale.customerName}</div>
-                    <div className="text-xs text-muted-foreground">{sale.customerEmail}</div>
+                    <div className="font-medium">{sale.customerName || 'Walk-in Customer'}</div>
+                    <div className="text-xs text-muted-foreground">{sale.customerPhone || 'No contact'}</div>
                   </TableCell>
                   <TableCell>
                     <div className="text-sm">
                       {sale.items.length} item{sale.items.length > 1 ? 's' : ''}
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      {sale.items[0]?.productName}{sale.items.length > 1 && ', ...'}
+                      {sale.items[0]?.productName || 'No items'}{sale.items.length > 1 && ', ...'}
                     </div>
                   </TableCell>
                   <TableCell>
@@ -177,14 +176,14 @@ const Sales = () => {
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm">{sale.salesPerson}</span>
+                    <span className="text-sm">{sale.salesPerson || 'System'}</span>
                   </TableCell>
                   <TableCell>
                     <div className="text-sm">
-                      {new Date(sale.saleDate).toLocaleDateString()}
+                      {new Date(sale.date).toLocaleDateString()}
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      {new Date(sale.saleDate).toLocaleTimeString()}
+                      {new Date(sale.date + 'T' + sale.time).toLocaleTimeString()}
                     </div>
                   </TableCell>
                   <TableCell>

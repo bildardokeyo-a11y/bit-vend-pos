@@ -42,46 +42,6 @@ const Users = () => {
   });
 
   const [usersData, setUsersData] = useState([
-    {
-      id: '1',
-      firstName: 'John',
-      lastName: 'Admin',
-      email: 'admin@company.com',
-      phone: '+1 555-0001',
-      role: 'admin',
-      department: 'IT',
-      isActive: true,
-      lastLogin: '2024-01-25',
-      createdAt: '2024-01-01',
-      avatar: null
-    },
-    {
-      id: '2',
-      firstName: 'Sarah',
-      lastName: 'Manager',
-      email: 'sarah@company.com',
-      phone: '+1 555-0002',
-      role: 'manager',
-      department: 'Sales',
-      isActive: true,
-      lastLogin: '2024-01-24',
-      createdAt: '2024-01-05',
-      avatar: null
-    },
-    {
-      id: '3',
-      firstName: 'Mike',
-      lastName: 'Cashier',
-      email: 'mike@company.com',
-      phone: '+1 555-0003',
-      role: 'employee',
-      department: 'Sales',
-      isActive: true,
-      lastLogin: '2024-01-25',
-      createdAt: '2024-01-10',
-      avatar: null
-    }
-  ]);
 
   const getRoleBadge = (role: string) => {
     switch (role) {

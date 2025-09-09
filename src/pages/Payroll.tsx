@@ -56,41 +56,6 @@ const Payroll = () => {
   const { currentBusiness } = useBusiness();
 
   const [payrollRecords] = useState<PayrollRecord[]>([
-    {
-      id: 1,
-      employeeId: 'EMP001',
-      employeeName: 'Alice Johnson',
-      department: 'Operations',
-      position: 'Store Manager',
-      payPeriod: 'January 2024',
-      baseSalary: 4500,
-      overtime: 200,
-      bonuses: 300,
-      deductions: 100,
-      grossPay: 5000,
-      taxes: 750,
-      netPay: 4250,
-      status: 'paid',
-      payDate: '2024-01-31'
-    },
-    {
-      id: 2,
-      employeeId: 'EMP002',
-      employeeName: 'Bob Smith',
-      department: 'Sales',
-      position: 'Sales Associate',
-      payPeriod: 'January 2024',
-      baseSalary: 3000,
-      overtime: 150,
-      bonuses: 100,
-      deductions: 50,
-      grossPay: 3250,
-      taxes: 487,
-      netPay: 2763,
-      status: 'processed',
-      payDate: '2024-01-31'
-    }
-  ]);
 
   const filteredPayroll = useMemo(() => {
     return payrollRecords.filter(record => {

@@ -19,28 +19,6 @@ interface Role {
 }
 
 const roles: Role[] = [
-  {
-    id: '1',
-    name: 'Store Manager',
-    permissions: 'All Access',
-    description: 'Full access to all system features',
-    userCount: 2
-  },
-  {
-    id: '2',
-    name: 'Cashier',
-    permissions: 'Sales, Checkout',
-    description: 'Access to POS and sales functions only',
-    userCount: 5
-  },
-  {
-    id: '3',
-    name: 'Inventory Staff',
-    permissions: 'Products, Stock',
-    description: 'Manage inventory and stock operations',
-    userCount: 3
-  }
-];
 
 const Roles: React.FC = () => {
   const { toast } = useToast();
@@ -152,7 +130,7 @@ const Roles: React.FC = () => {
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-blue-500" />
               <div>
-                <p className="text-2xl font-bold">{roles.length}</p>
+                <p className="text-2xl font-bold">0</p>
                 <p className="text-sm text-muted-foreground">Total Roles</p>
               </div>
             </div>
@@ -163,7 +141,7 @@ const Roles: React.FC = () => {
             <div className="flex items-center gap-2">
               <Users className="w-8 h-8 text-green-500" />
               <div>
-                <p className="text-2xl font-bold">{roles.reduce((sum, role) => sum + role.userCount, 0)}</p>
+                <p className="text-2xl font-bold">0</p>
                 <p className="text-sm text-muted-foreground">Total Users</p>
               </div>
             </div>
@@ -174,7 +152,7 @@ const Roles: React.FC = () => {
             <div className="flex items-center gap-2">
               <Settings className="w-8 h-8 text-purple-500" />
               <div>
-                <p className="text-2xl font-bold">12</p>
+                <p className="text-2xl font-bold">0</p>
                 <p className="text-sm text-muted-foreground">Permissions</p>
               </div>
             </div>
@@ -200,7 +178,7 @@ const Roles: React.FC = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {roles.map((role, index) => (
+                  {[].map((role, index) => (
                     <TableRow key={role.id} className="animate-fadeInUp" style={{ animationDelay: `${index * 0.05}s` }}>
                       <TableCell className="font-medium">{role.name}</TableCell>
                       <TableCell>{role.permissions}</TableCell>
@@ -234,6 +212,17 @@ const Roles: React.FC = () => {
                       </TableCell>
                     </TableRow>
                   ))}
+                  {[].length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                        <div className="flex flex-col items-center gap-2">
+                          <Shield className="h-8 w-8 text-muted-foreground" />
+                          <p>No roles found</p>
+                          <p className="text-sm">Create roles to manage user permissions</p>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </div>

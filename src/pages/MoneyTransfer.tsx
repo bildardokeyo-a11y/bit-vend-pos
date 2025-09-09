@@ -27,31 +27,6 @@ const MoneyTransfer = () => {
   const [typeFilter, setTypeFilter] = useState('all');
 
   const [transfers] = useState([
-    {
-      id: 'TRF-001',
-      reference: 'TRF-2024-001',
-      fromAccount: 'Business Checking (****1234)',
-      toAccount: 'Business Savings (****5678)',
-      amount: 5000,
-      fees: 10,
-      type: 'internal',
-      status: 'completed',
-      date: '2024-01-20',
-      completedAt: '2024-01-20 14:30'
-    },
-    {
-      id: 'TRF-002',
-      reference: 'TRF-2024-002',
-      fromAccount: 'Business Checking (****1234)',
-      toAccount: 'Supplier Account',
-      amount: 2500,
-      fees: 25,
-      type: 'external',
-      status: 'pending',
-      date: '2024-01-25',
-      completedAt: null
-    }
-  ]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {

@@ -69,39 +69,6 @@ const EmployeesContent = () => {
   });
 
   const [employees, setEmployees] = useState<Employee[]>([
-    {
-      id: '1',
-      firstName: 'Alice',
-      lastName: 'Johnson',
-      email: 'alice.johnson@company.com',
-      phone: '+1 555-0111',
-      position: 'Store Manager',
-      department: 'Operations',
-      salary: 55000,
-      employeeId: 'EMP001',
-      hireDate: '2023-06-15',
-      status: 'active',
-      workType: 'full_time',
-      manager: 'N/A',
-      createdAt: '2023-06-15'
-    },
-    {
-      id: '2',
-      firstName: 'Bob',
-      lastName: 'Smith',
-      email: 'bob.smith@company.com',
-      phone: '+1 555-0222',
-      position: 'Sales Associate',
-      department: 'Sales',
-      salary: 35000,
-      employeeId: 'EMP002',
-      hireDate: '2023-08-01',
-      status: 'active',
-      workType: 'full_time',
-      manager: 'Alice Johnson',
-      createdAt: '2023-08-01'
-    }
-  ]);
 
   const filteredEmployees = employees.filter(employee =>
     `${employee.firstName} ${employee.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||

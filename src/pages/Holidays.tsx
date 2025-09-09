@@ -38,37 +38,6 @@ const Holidays = () => {
   });
 
   const [holidays] = useState<Holiday[]>([
-    {
-      id: 1,
-      name: 'New Year\'s Day',
-      startDate: '2024-01-01',
-      endDate: '2024-01-01',
-      type: 'public',
-      description: 'New Year celebration',
-      isRecurring: true,
-      createdAt: '2024-01-01'
-    },
-    {
-      id: 2,
-      name: 'Independence Day',
-      startDate: '2024-07-04',
-      endDate: '2024-07-04',
-      type: 'national',
-      description: 'National Independence Day',
-      isRecurring: true,
-      createdAt: '2024-01-01'
-    },
-    {
-      id: 3,
-      name: 'Company Anniversary',
-      startDate: '2024-03-15',
-      endDate: '2024-03-15',
-      type: 'company',
-      description: 'Annual company celebration',
-      isRecurring: true,
-      createdAt: '2024-01-01'
-    }
-  ]);
 
   const filteredHolidays = useMemo(() => {
     return holidays.filter(holiday => {

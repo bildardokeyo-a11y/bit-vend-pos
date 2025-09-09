@@ -22,19 +22,6 @@ const BusinessReports: React.FC = () => {
   const { toast } = useToast();
 
   const [businessMetrics] = useState([
-    { title: 'Outstanding Amounts', value: '$0', icon: AlertTriangle, trend: 'neutral', change: '0%', color: 'text-orange-500' },
-    { title: 'Net Profit', value: '$0', icon: TrendingUp, trend: 'neutral', change: '0%', color: 'text-green-500' },
-    { title: 'Total Payments Received', value: '$0', icon: CreditCard, trend: 'neutral', change: '0%', color: 'text-blue-500' },
-    { title: 'Total Expenses', value: '$0', icon: Receipt, trend: 'neutral', change: '0%', color: 'text-red-500' },
-    { title: 'Bills & Overdue Amounts', value: '$0', icon: XCircle, trend: 'neutral', change: '0%', color: 'text-red-500' },
-    { title: 'Draft Invoices', value: '0', icon: FileBarChart, trend: 'neutral', change: '0%', color: 'text-gray-500' },
-    { title: 'Tax Collected & Payable', value: '$0', icon: Percent, trend: 'neutral', change: '0%', color: 'text-purple-500' },
-    { title: 'Gross Margin %', value: '0%', icon: Target, trend: 'neutral', change: '0%', color: 'text-green-500' }
-  ]);
-
-  const [topCustomers] = useState([]);
-
-  const [topVendors] = useState([]);
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {

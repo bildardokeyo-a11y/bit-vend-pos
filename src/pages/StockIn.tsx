@@ -66,33 +66,6 @@ const StockIn: React.FC = () => {
 
   // Sample stock in history
   const [stockInHistory] = useState<StockInTransaction[]>([
-    {
-      id: 'SI-001',
-      referenceNo: 'SI-2024-001',
-      supplierName: 'Tech Supplies Inc.',
-      receivedDate: '2024-01-20',
-      totalItems: 25,
-      totalAmount: 2500.00,
-      status: 'received',
-      notes: 'All items received in good condition',
-      items: [],
-      addedBy: 'Admin',
-      addedAt: '2024-01-20T10:00:00Z'
-    },
-    {
-      id: 'SI-002',
-      referenceNo: 'SI-2024-002',
-      supplierName: 'Global Electronics Ltd.',
-      receivedDate: '2024-01-22',
-      totalItems: 15,
-      totalAmount: 1800.00,
-      status: 'partial',
-      notes: 'Partial delivery - remaining items expected tomorrow',
-      items: [],
-      addedBy: 'Manager',
-      addedAt: '2024-01-22T14:30:00Z'
-    }
-  ]);
 
   const [selectedProduct, setSelectedProduct] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'new' | 'history'>('new');

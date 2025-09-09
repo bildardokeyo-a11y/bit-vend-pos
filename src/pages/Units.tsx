@@ -42,36 +42,6 @@ const Units = () => {
   });
 
   const [units, setUnits] = useState<Unit[]>([
-    {
-      id: '1',
-      name: 'Piece',
-      shortName: 'pcs',
-      type: 'quantity',
-      isActive: true,
-      usageCount: 0,
-      createdAt: '2024-01-01'
-    },
-    {
-      id: '2',
-      name: 'Kilogram',
-      shortName: 'kg',
-      type: 'weight',
-      baseUnit: 'gram',
-      conversionFactor: 1000,
-      isActive: true,
-      usageCount: 0,
-      createdAt: '2024-01-02'
-    },
-    {
-      id: '3',
-      name: 'Liter',
-      shortName: 'L',
-      type: 'volume',
-      isActive: true,
-      usageCount: 0,
-      createdAt: '2024-01-03'
-    }
-  ]);
 
   const filteredUnits = units.filter(unit =>
     unit.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

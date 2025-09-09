@@ -18,6 +18,7 @@ import Receipt from "./pages/Receipt";
 import Sales from "./pages/Sales";
 import SalesReturn from "./pages/SalesReturn";
 import Quotation from "./pages/Quotation";
+import NewQuotationPage from "./pages/NewQuotationPage";
 import Purchases from "./pages/Purchases";
 import Products from "./pages/Products";
 import ProductAdd from "./pages/ProductAdd";
@@ -107,6 +108,7 @@ const App = () => (
                   <Route path="sales" element={<Sales />} />
                   <Route path="sales-return" element={<SalesReturn />} />
                   <Route path="quotation" element={<Quotation />} />
+                  <Route path="quotation/new" element={<NewQuotationPage />} />
                   <Route path="purchases" element={<Purchases />} />
                   <Route path="products" element={<Products />} />
                   <Route path="products/add" element={<ProductAdd />} />

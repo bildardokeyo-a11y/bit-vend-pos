@@ -41,31 +41,6 @@ const Categories = () => {
   });
 
   const [categories, setCategories] = useState<Category[]>([
-    {
-      id: '1',
-      name: 'Electronics',
-      description: 'Electronic devices and accessories',
-      productCount: 25,
-      status: 'active',
-      createdAt: '2024-01-01'
-    },
-    {
-      id: '2',
-      name: 'Clothing',
-      description: 'Apparel and fashion items',
-      productCount: 18,
-      status: 'active',
-      createdAt: '2024-01-05'
-    },
-    {
-      id: '3',
-      name: 'Books',
-      description: 'Books and educational materials',
-      productCount: 12,
-      status: 'active',
-      createdAt: '2024-01-10'
-    }
-  ]);
 
   const filteredCategories = categories.filter(category =>
     category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

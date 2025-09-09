@@ -79,36 +79,6 @@ const Expenses: React.FC = () => {
 
   // Use real database data - placeholder data removed for clean production app
   const [expenses] = useState<Expense[]>([
-    {
-      id: '1',
-      referenceNo: 'EXP-2024-001',
-      date: '2024-01-20',
-      categoryId: '1',
-      categoryName: 'Office Supplies',
-      description: 'Office stationery and supplies',
-      amount: 150.00,
-      paymentMethod: 'card',
-      vendor: 'Office Depot',
-      receiptNo: 'REC-001',
-      status: 'approved',
-      approvedBy: 'Manager',
-      notes: 'Monthly office supplies'
-    },
-    {
-      id: '2',
-      referenceNo: 'EXP-2024-002',
-      date: '2024-01-22',
-      categoryId: '2',
-      categoryName: 'Utilities',
-      description: 'Electricity bill payment',
-      amount: 320.00,
-      paymentMethod: 'bank',
-      vendor: 'Power Company',
-      receiptNo: 'REC-002',
-      status: 'pending',
-      notes: 'Monthly electricity bill'
-    }
-  ]);
 
   const handleSaveExpense = () => {
     if (!formData.categoryId || !formData.description || !formData.amount) {

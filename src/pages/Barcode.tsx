@@ -40,31 +40,6 @@ const Barcode = () => {
   });
 
   const [products] = useState<Product[]>([
-    {
-      id: '1',
-      name: 'Laptop Dell XPS 13',
-      sku: 'LAP-001',
-      barcode: '1234567890123',
-      price: 1200.00,
-      category: 'Electronics'
-    },
-    {
-      id: '2',
-      name: 'iPhone 15 Pro',
-      sku: 'PHN-002',
-      barcode: '1234567890124',
-      price: 999.00,
-      category: 'Electronics'
-    },
-    {
-      id: '3',
-      name: 'Wireless Mouse',
-      sku: 'ACC-003',
-      barcode: '1234567890125',
-      price: 25.00,
-      category: 'Accessories'
-    }
-  ]);
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

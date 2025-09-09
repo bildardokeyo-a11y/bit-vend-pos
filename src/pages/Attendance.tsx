@@ -27,43 +27,6 @@ const Attendance = () => {
   const [statusFilter, setStatusFilter] = useState('all');
 
   const [attendanceData] = useState([
-    {
-      id: '1',
-      name: 'Alice Johnson',
-      employeeId: 'EMP001',
-      position: 'Store Manager',
-      department: 'Operations',
-      status: 'present',
-      checkIn: '09:00 AM',
-      checkOut: '05:30 PM',
-      totalHours: '8.5 hours',
-      date: new Date().toISOString().split('T')[0]
-    },
-    {
-      id: '2',
-      name: 'Bob Smith',
-      employeeId: 'EMP002',
-      position: 'Sales Associate',
-      department: 'Sales',
-      status: 'present',
-      checkIn: '09:15 AM',
-      checkOut: 'Not checked out',
-      totalHours: 'In progress',
-      date: new Date().toISOString().split('T')[0]
-    },
-    {
-      id: '3',
-      name: 'Carol Wilson',
-      employeeId: 'EMP003',
-      position: 'Cashier',
-      department: 'Sales',
-      status: 'late',
-      checkIn: '09:45 AM',
-      checkOut: 'Not checked out',
-      totalHours: 'In progress',
-      date: new Date().toISOString().split('T')[0]
-    }
-  ]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {

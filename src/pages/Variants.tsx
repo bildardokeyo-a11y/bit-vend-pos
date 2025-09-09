@@ -39,34 +39,6 @@ const Variants = () => {
   });
 
   const [variants, setVariants] = useState<Variant[]>([
-    {
-      id: '1',
-      name: 'Size',
-      values: ['Small', 'Medium', 'Large', 'Extra Large'],
-      type: 'size',
-      isActive: true,
-      productCount: 8,
-      createdAt: '2024-01-01'
-    },
-    {
-      id: '2',
-      name: 'Color',
-      values: ['Red', 'Blue', 'Green', 'Black', 'White'],
-      type: 'color',
-      isActive: true,
-      productCount: 12,
-      createdAt: '2024-01-02'
-    },
-    {
-      id: '3',
-      name: 'Material',
-      values: ['Cotton', 'Polyester', 'Wool', 'Silk'],
-      type: 'material',
-      isActive: true,
-      productCount: 5,
-      createdAt: '2024-01-03'
-    }
-  ]);
 
   const filteredVariants = variants.filter(variant =>
     variant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
