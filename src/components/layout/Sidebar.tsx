@@ -145,7 +145,9 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
     {
       title: 'Settings',
       items: [
-        { href: '/settings', icon: Settings, label: 'Settings' },
+        { href: '/dashboard/general-settings', icon: Settings, label: 'General Settings' },
+        { href: '/dashboard/invoice-settings', icon: FileText, label: 'Invoice Settings' },
+        { href: '/dashboard/tax-settings', icon: Calculator, label: 'Tax Settings' },
         { href: '/dashboard/subscription', icon: CreditCard, label: 'Subscription' },
         { href: '/dashboard/backup', icon: Database, label: 'Backup & Restore' },
       ]
